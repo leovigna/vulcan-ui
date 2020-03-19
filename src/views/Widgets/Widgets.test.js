@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Widgets from './Widgets';

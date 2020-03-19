@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React, { Component } from 'react';
 import { Nav, NavItem, NavLink, Progress, TabContent, TabPane, ListGroup, ListGroupItem } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -30,7 +32,7 @@ class DefaultAside extends Component {
 
     render() {
         // eslint-disable-next-line
-    const { children, ...attributes } = this.props;
+        const { children, ...attributes } = this.props;
 
         return (
             <React.Fragment>

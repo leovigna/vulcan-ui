@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 
@@ -28,14 +30,14 @@ class Breadcrumbs extends Component {
                                 </Breadcrumb>
                                 <Breadcrumb>
                                     {/*eslint-disable-next-line*/}
-                  <BreadcrumbItem><a href="#">Home</a></BreadcrumbItem>
+                                    <BreadcrumbItem><a href="#">Home</a></BreadcrumbItem>
                                     <BreadcrumbItem active>Library</BreadcrumbItem>
                                 </Breadcrumb>
                                 <Breadcrumb>
                                     {/*eslint-disable-next-line*/}
-                  <BreadcrumbItem><a href="#">Home</a></BreadcrumbItem>
+                                    <BreadcrumbItem><a href="#">Home</a></BreadcrumbItem>
                                     {/* eslint-disable-next-line*/}
-                  <BreadcrumbItem><a href="#">Library</a></BreadcrumbItem>
+                                    <BreadcrumbItem><a href="#">Library</a></BreadcrumbItem>
                                     <BreadcrumbItem active>Data</BreadcrumbItem>
                                 </Breadcrumb>
                                 <Breadcrumb tag="nav">

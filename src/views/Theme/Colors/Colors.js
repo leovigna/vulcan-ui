@@ -1,3 +1,6 @@
+/* eslint react/no-find-dom-node:0 */
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';

@@ -1,3 +1,6 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+/* eslint react/no-unescaped-entities:0 */
+
 import React, { Component } from 'react';
 import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Col, Collapse, Fade, Row } from 'reactstrap';
 

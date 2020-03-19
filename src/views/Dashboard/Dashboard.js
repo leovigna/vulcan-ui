@@ -1,3 +1,6 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+/* eslint prefer-spread:0 */
+
 import React, { Component, lazy, Suspense } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import {

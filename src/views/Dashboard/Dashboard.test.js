@@ -18,4 +18,6 @@
 //   shallow(<Dashboard />);
 // });
 
+/* eslint-disable @typescript-eslint/no-empty-function */
+
 it('', () => {});

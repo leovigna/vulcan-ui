@@ -1,3 +1,5 @@
+/* eslint react/jsx-key:0 */
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
 import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 

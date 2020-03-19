@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardHeader, Tooltip, UncontrolledTooltip } from 'reactstrap';
 
@@ -93,7 +95,7 @@ class Tooltips extends Component {
                     </CardHeader>
                     <CardBody>
                         {/*eslint-disable-next-line*/}
-            <p>Somewhere in here is a <a href="#" id="TooltipExample">tooltip</a>.</p>
+                        <p>Somewhere in here is a <a href="#" id="TooltipExample">tooltip</a>.</p>
                         <Tooltip
                             placement="right"
                             isOpen={this.state.tooltipOpen[0]}
@@ -114,7 +116,7 @@ class Tooltips extends Component {
                     </CardHeader>
                     <CardBody>
                         {/*eslint-disable-next-line*/}
-            <p>Sometimes you need to allow users to select text within a <a href="#" id="DisabledAutoHideExample">tooltip</a>.</p>
+                        <p>Sometimes you need to allow users to select text within a <a href="#" id="DisabledAutoHideExample">tooltip</a>.</p>
                         <Tooltip
                             placement="top"
                             isOpen={this.state.tooltipOpen[1]}
@@ -148,7 +150,7 @@ class Tooltips extends Component {
                     </CardHeader>
                     <CardBody>
                         {/*eslint-disable-next-line*/}
-            <p>Somewhere in here is a <a href="#" id="UncontrolledTooltipExample">tooltip</a>.</p>
+                        <p>Somewhere in here is a <a href="#" id="UncontrolledTooltipExample">tooltip</a>.</p>
                         <UncontrolledTooltip placement="right" target="UncontrolledTooltipExample">
                             Hello world!
                         </UncontrolledTooltip>

@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+
 import React, { Component } from 'react';
 import { Alert, Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 

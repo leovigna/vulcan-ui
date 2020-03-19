@@ -1,3 +1,5 @@
+/* eslint-disable quotes*/
+
 const usersData = [
     { id: 0, name: 'John Doe', registered: '2018/01/01', role: 'Guest', status: 'Pending' },
     { id: 1, name: 'Samppa Nori', registered: '2018/01/01', role: 'Member', status: 'Active' },
@@ -25,7 +27,7 @@ const usersData = [
     { id: 23, name: 'Einar Randall', registered: '2018/02/01', role: 'Admin', status: 'Inactive' },
     { id: 24, name: 'Félix Troels', registered: '2018/03/21', role: 'Staff', status: 'Active' },
     { id: 25, name: 'Aulus Agmundr', registered: '2018/01/01', role: 'Member', status: 'Pending' },
-    { id: 42, name: 'Ford Prefex', registered: '2001/05/21', role: 'Alien', status: 'Don\'t panic!' },
+    { id: 42, name: 'Ford Prefex', registered: '2001/05/21', role: 'Alien', status: "Don't panic!" },
 ];
 
 export default usersData;

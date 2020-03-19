@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+
 import React, { Component } from 'react';
 import { CardGroup, Col, Row } from 'reactstrap';
 import Widget01 from './Widget01';

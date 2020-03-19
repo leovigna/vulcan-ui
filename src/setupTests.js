@@ -1,3 +1,7 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+/* eslint react/no-unescaped-entities:0 */
+/* eslint @typescript-eslint/no-empty-function:0 */
+
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 

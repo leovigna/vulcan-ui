@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+
 import React, { Component } from 'react';
 import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
 import { Card, CardBody, CardColumns, CardHeader } from 'reactstrap';

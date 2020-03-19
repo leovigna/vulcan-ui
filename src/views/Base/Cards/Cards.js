@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React, { Component } from 'react';
 import { Badge, Card, CardBody, CardFooter, CardHeader, Col, Row, Collapse, Fade } from 'reactstrap';
 import { AppSwitch } from '@coreui/react';
@@ -418,11 +420,11 @@ class Cards extends Component {
                                     Card actions
                                     <div className="card-header-actions">
                                         {/*eslint-disable-next-line*/}
-                    <a href="#" className="card-header-action btn btn-setting"><i className="icon-settings"></i></a>
+                                        <a href="#" className="card-header-action btn btn-setting"><i className="icon-settings"></i></a>
                                         {/*eslint-disable-next-line*/}
-                    <a className="card-header-action btn btn-minimize" data-target="#collapseExample" onClick={this.toggle}><i className="icon-arrow-up"></i></a>
+                                        <a className="card-header-action btn btn-minimize" data-target="#collapseExample" onClick={this.toggle}><i className="icon-arrow-up"></i></a>
                                         {/*eslint-disable-next-line*/}
-                    <a className="card-header-action btn btn-close" onClick={this.toggleFade}><i className="icon-close"></i></a>
+                                        <a className="card-header-action btn btn-close" onClick={this.toggleFade}><i className="icon-close"></i></a>
                                     </div>
                                 </CardHeader>
                                 <Collapse isOpen={this.state.collapse} id="collapseExample">

@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -17,7 +19,7 @@ const defaultProps = {
 class Widget03 extends Component {
     render() {
         // eslint-disable-next-line
-    const { children, className, cssModule, dataBox, ...attributes } = this.props;
+        const { children, className, cssModule, dataBox, ...attributes } = this.props;
 
         // demo purposes only
         const data = dataBox();

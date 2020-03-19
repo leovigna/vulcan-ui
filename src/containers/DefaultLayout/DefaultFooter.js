@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,7 +12,7 @@ const defaultProps = {};
 class DefaultFooter extends Component {
     render() {
         // eslint-disable-next-line
-    const { children, ...attributes } = this.props;
+        const { children, ...attributes } = this.props;
 
         return (
             <React.Fragment>

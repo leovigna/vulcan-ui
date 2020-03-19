@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody, Progress } from 'reactstrap';

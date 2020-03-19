@@ -1,3 +1,6 @@
+/* eslint @typescript-eslint/explicit-function-return-type:0 */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody, CardFooter } from 'reactstrap';
