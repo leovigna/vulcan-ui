@@ -6,17 +6,13 @@ import {
     Col,
     Row,
 } from 'reactstrap';
+//Drizzle
+import Aggregator from "../../components/Aggregator/Aggregator"
 
-import { dispatch } from "react-redux";
-import store from "../../store"
-
-class Dashboard extends Component {
+class AggregatorView extends Component {
     constructor(props) {
         super(props);
-        store.dispatch({ type: 'VULCAN/TODOS_FETCH', data: "test" })
-        console.log(store)
     }
-
 
     loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
@@ -26,7 +22,7 @@ class Dashboard extends Component {
             <div className="animated fadeIn">
                 <Row>
                     <Col>
-                        Hello World
+                        <Aggregator contract="AggregatorUSDBTC" />
                     </Col>
                 </Row>
             </div>
@@ -34,4 +30,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default AggregatorView;

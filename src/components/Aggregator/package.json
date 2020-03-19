@@ -1,0 +1,6 @@
+{
+    "name": "Aggregator",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./Aggregator.jsx"
+}

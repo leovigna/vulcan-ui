@@ -22,16 +22,21 @@ dependencies:
   enzyme-adapter-react-16: 1.15.2_5021c1ae276c9f382041a18220a366e7
   flag-icon-css: 3.4.6
   font-awesome: 4.7.0
+  moment: 2.24.0
   node-sass: 4.13.1
   react: 16.13.0
   react-app-polyfill: 1.0.6
   react-chartjs-2: 2.9.0_d7255fa9c129e8b0846d17313f30fa0a
   react-dom: 16.13.0_react@16.13.0
+  react-moment: 0.9.7_moment@2.24.0+react@16.13.0
+  react-redux: 7.2.0_89edbdcf35ebf07960559427ad340367
   react-router-config: 5.1.1_react@16.13.0
   react-router-dom: 5.1.2_react@16.13.0
   react-scripts: 3.4.0_a4f1093162180b0de057e31a5d2c1cc3
   react-test-renderer: 16.13.0_react@16.13.0
   reactstrap: 8.4.1_react-dom@16.13.0+react@16.13.0
+  redux: 4.0.5
+  redux-saga: 0.16.2
   sass-loader: 8.0.2_node-sass@4.13.1
   simple-line-icons: 2.4.1
   typescript: 3.7.5
@@ -10926,6 +10931,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+  /react-moment/0.9.7_moment@2.24.0+react@16.13.0:
+    dependencies:
+      moment: 2.24.0
+      react: 16.13.0
+    dev: false
+    peerDependencies:
+      moment: ^2.24.0
+      prop-types: ^15.7.2
+      react: ^15.6.0 || ^16.0.0
+    resolution:
+      integrity: sha512-ifzUrUGF6KRsUN2pRG5k56kO0mJBr8kRkWb0wNvtFIsBIxOuPxhUpL1YlXwpbQCbHq23hUu6A0VEk64HsFxk9g==
   /react-onclickout/2.0.8_react-dom@16.13.0+react@16.13.0:
     dependencies:
       react: 16.13.0
@@ -10963,6 +10979,29 @@ packages:
       react: 0.14.x || ^15.0.0 || ^16.0.0
     resolution:
       integrity: sha512-nmqYTx7QVjCm3WUZLeuOomna138R1luC4EqkW3hxJUrAe+3eNz3oFCLYdnPwILfn0mX1Ew2c3wctrjlUMYYUww==
+  /react-redux/7.2.0_89edbdcf35ebf07960559427ad340367:
+    dependencies:
+      '@babel/runtime': 7.8.7
+      hoist-non-react-statics: 3.3.2
+      loose-envify: 1.4.0
+      prop-types: 15.7.2
+      react: 16.13.0
+      react-dom: 16.13.0_react@16.13.0
+      react-is: 16.13.0
+      redux: 4.0.5
+    dev: false
+    peerDependencies:
+      react: ^16.8.3
+      react-dom: '*'
+      react-native: '*'
+      redux: ^2.0.0 || ^3.0.0 || ^4.0.0-0
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    resolution:
+      integrity: sha512-EvCAZYGfOLqwV7gh849xy9/pt55rJXPwmYvI4lilPM5rUT/1NxuuN59ipdBksRVSvz0KInbPnp4IfoXJXCqiDA==
   /react-router-config/5.1.1_react@16.13.0:
     dependencies:
       '@babel/runtime': 7.8.7
@@ -14520,17 +14559,22 @@ specifiers:
   gh-pages: ^2.2.0
   husky: ^4.2.3
   lint-staged: ^10.0.8
+  moment: ^2.24.0
   node-sass: ^4.13.1
   prettier: ^1.19.1
   react: ^16.13.0
   react-app-polyfill: ^1.0.6
   react-chartjs-2: ^2.9.0
   react-dom: ^16.13.0
+  react-moment: ^0.9.7
+  react-redux: ^7.2.0
   react-router-config: ^5.1.1
   react-router-dom: ^5.1.2
   react-scripts: 3.4.0
   react-test-renderer: ^16.13.0
   reactstrap: ^8.4.1
+  redux: ^4.0.5
+  redux-saga: ^0.16
   sass-loader: ^8.0.2
   simple-line-icons: ^2.4.1
   typescript: ~3.7.2

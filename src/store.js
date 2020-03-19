@@ -1,22 +1,18 @@
-import { Drizzle, generateStore } from "@drizzle/store"
+import { generateStore } from '@drizzle/store'
+
 import drizzleOptions from "./drizzleOptions"
 //import { loadLocalStorage, saveLocalStorage } from "./localstorage"
 import { contractEventNotifier, contractAddNotifier } from "./middleware"
+import { txReducer, txRootSaga } from "./reducers/txcache";
+import { todosReducer, todosRootSaga } from "./reducers/todos";
+import { blocksReducer, blocksRootSaga } from "./reducers/blocks";
 
-//import { todosReducer, appRootSaga } from "./reducers/todos.js"
-//import contractMetadataReducer from "./reducers/contractMetadataReducer"
-
-// Load saved Web3 contracts
-/*
 const appReducers = {
-  todos: todosReducer,
-  contractMetadata: contractMetadataReducer
+    todos: todosReducer,
+    tx: txReducer,
+    blocks: blocksReducer
 }
-const appSagas = [appRootSaga]
-*/
-const appReducers = {
-}
-const appSagas = []
+const appSagas = [todosRootSaga, txRootSaga, blocksRootSaga]
 const appMiddlewares = [contractEventNotifier, contractAddNotifier]
 const config = {
     drizzleOptions,
@@ -25,7 +21,4 @@ const config = {
     appMiddlewares,
     disableReduxDevTools: false // enable ReduxDevTools!
 }
-const store = generateStore(config)
-const drizzle = new Drizzle(drizzleOptions, store)
-
-export default drizzle
+export default generateStore(config)
