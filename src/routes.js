@@ -1,5 +1,6 @@
 import React from 'react';
 
+/*
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/Base/Cards'));
 const Carousels = React.lazy(() => import('./views/Base/Carousels'));
@@ -22,7 +23,9 @@ const ButtonDropdowns = React.lazy(() => import('./views/Buttons/ButtonDropdowns
 const ButtonGroups = React.lazy(() => import('./views/Buttons/ButtonGroups'));
 const Buttons = React.lazy(() => import('./views/Buttons/Buttons'));
 const Charts = React.lazy(() => import('./views/Charts'));
+*/
 const Dashboard = React.lazy(() => import('./views/Dashboard'));
+/*
 const CoreUIIcons = React.lazy(() => import('./views/Icons/CoreUIIcons'));
 const Flags = React.lazy(() => import('./views/Icons/Flags'));
 const FontAwesome = React.lazy(() => import('./views/Icons/FontAwesome'));
@@ -35,11 +38,13 @@ const Typography = React.lazy(() => import('./views/Theme/Typography'));
 const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
+*/
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
     { path: '/', exact: true, name: 'Home' },
     { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+    /*
     { path: '/theme', exact: true, name: 'Theme', component: Colors },
     { path: '/theme/colors', name: 'Colors', component: Colors },
     { path: '/theme/typography', name: 'Typography', component: Typography },
@@ -79,6 +84,7 @@ const routes = [
     { path: '/charts', name: 'Charts', component: Charts },
     { path: '/users', exact: true, name: 'Users', component: Users },
     { path: '/users/:id', exact: true, name: 'User Details', component: User },
+    */
 ];
 
 export default routes;

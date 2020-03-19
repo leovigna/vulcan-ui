@@ -9,6 +9,7 @@ export default {
                 text: 'NEW',
             },
         },
+        /*
         {
             title: true,
             name: 'Theme',
@@ -277,5 +278,6 @@ export default {
             variant: 'danger',
             attributes: { target: '_blank', rel: 'noopener' },
         },
+        */
     ],
 };
