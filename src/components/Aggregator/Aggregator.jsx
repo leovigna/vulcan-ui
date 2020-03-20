@@ -99,6 +99,7 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
     const [roundIdKey, setRoundIdKey] = useState()
     const [roundId, setRoundId] = useState()
     const [answers, setAnswers] = useState({})
+    const [oracleCount, setOracleCount] = useState(5)
 
     useEffect(() => {
         const key = drizzle.contracts[contract].methods.latestRound.cacheCall()
@@ -123,6 +124,14 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
     }, [roundId])
 
 
+    useEffect(() => {
+        const answersLength = Object.keys(answers).length;
+        if (answersLength > oracleCount) {
+            //console.debug(answersLength)
+            setOracleCount(answersLength);
+        }
+    })
+
     const newRound = drizzleState.contracts[contract].latestRound[roundIdKey]?.value
     if (newRound != roundId) setRoundId(newRound)
 
@@ -139,7 +148,7 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
             </thead>
             <tbody>
                 {
-                    [...Array(20).keys()].map((i) => {
+                    [...Array(oracleCount).keys()].map((i) => {
                         return (
                             <ContractData
                                 key={i}
