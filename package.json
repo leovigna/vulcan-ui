@@ -2,7 +2,7 @@
     "name": "react-admin-starter",
     "version": "0.1.0",
     "private": false,
-    "homepage": "https://leovigna.github.io/",
+    "homepage": "https://leovigna.github.io/vulcan-ui",
     "copyright": "Copyright 2020 Leo Vigna",
     "license": "MIT",
     "dependencies": {
