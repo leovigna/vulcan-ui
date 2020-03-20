@@ -36,7 +36,7 @@ const EtherScan = ({ address, tx }) => {
 
 
 const AggregatorHead = ({ contract }) => {
-    console.debug(contract)
+    //console.debug(contract)
     const drizzleContext = useContext(DrizzleContext.Context)
     const { drizzle, drizzleState, initialized } = drizzleContext
 
@@ -101,10 +101,7 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
     const [answers, setAnswers] = useState({})
 
     useEffect(() => {
-        const m = drizzle.contracts[contract].methods.latestRound
-        console.log(m)
         const key = drizzle.contracts[contract].methods.latestRound.cacheCall()
-        console.log(key)
         setRoundIdKey(key)
     }, []);
 
