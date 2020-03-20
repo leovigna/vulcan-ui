@@ -43,7 +43,6 @@ class Dashboard extends Component {
                             </Col>
                         )
                     })}
-                        Hello World
                 </Row>
             </div>
         );
