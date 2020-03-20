@@ -11,17 +11,12 @@ import {
     Button
 } from 'reactstrap';
 
-import { dispatch } from "react-redux";
-import store from "../../store"
 import { contracts, contractAliases } from "../../data/contracts"
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
-        store.dispatch({ type: 'VULCAN/TODOS_FETCH', data: "test" })
-        console.log(store)
     }
-
 
     loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 

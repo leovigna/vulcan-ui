@@ -22,6 +22,7 @@ dependencies:
   enzyme-adapter-react-16: 1.15.2_5021c1ae276c9f382041a18220a366e7
   flag-icon-css: 3.4.6
   font-awesome: 4.7.0
+  formik: 2.1.4_react@16.13.0
   moment: 2.24.0
   node-sass: 4.13.1
   qs: 6.9.1
@@ -4260,6 +4261,12 @@ packages:
   /deep-is/0.1.3:
     resolution:
       integrity: sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
+  /deepmerge/2.2.1:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==
   /deepmerge/3.3.0:
     dev: false
     engines:
@@ -5858,6 +5865,22 @@ packages:
       node: '>= 0.12'
     resolution:
       integrity: sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==
+  /formik/2.1.4_react@16.13.0:
+    dependencies:
+      deepmerge: 2.2.1
+      hoist-non-react-statics: 3.3.2
+      lodash: 4.17.15
+      lodash-es: 4.17.15
+      react: 16.13.0
+      react-fast-compare: 2.0.4
+      scheduler: 0.18.0
+      tiny-warning: 1.0.3
+      tslib: 1.11.1
+    dev: false
+    peerDependencies:
+      react: '>=16.3.0'
+    resolution:
+      integrity: sha512-oKz8S+yQBzuQVSEoxkqqJrKQS5XJASWGVn6mrs+oTWrBoHgByVwwI1qHiVc9GKDpZBU9vAxXYAKz2BvujlwunA==
   /forwarded/0.1.2:
     dev: false
     engines:
@@ -8257,6 +8280,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
+  /lodash-es/4.17.15:
+    dev: false
+    resolution:
+      integrity: sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
   /lodash._reinterpolate/3.0.0:
     dev: false
     resolution:
@@ -10931,6 +10958,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Yzpno3enVzSrSCnnljmr4b/2KUQSMZaPuqmS26t9k4nW7uwJk6STWmH9heNjPuvqUTO3jOSPkHoKgO4+Dw7uIw==
+  /react-fast-compare/2.0.4:
+    dev: false
+    resolution:
+      integrity: sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
   /react-is/16.13.0:
     resolution:
       integrity: sha512-GFMtL0vHkiBv9HluwNZTggSn/sCyEt9n02aM0dSAjGGyqyNlAyftYm4phPxdvCigG15JreC5biwxCgTAJZ7yAA==
@@ -11792,6 +11823,13 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-Ydydq3zC+WYDJK1+gRxRapLIED9PWeSuuS41wqyoRmzvhhh9nc+QQrVMKJYzJFULazeGhzSV0QleN2wD3boh2g==
+  /scheduler/0.18.0:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+    dev: false
+    resolution:
+      integrity: sha512-agTSHR1Nbfi6ulI0kYNK0203joW2Y5W4po4l+v03tOoiJKpTBbxpNhWDvqc/4IcOw+KLmSiQLTasZ4cab2/UWQ==
   /scheduler/0.19.0:
     dependencies:
       loose-envify: 1.4.0
@@ -14563,6 +14601,7 @@ specifiers:
   eslint-plugin-react-hooks: ^2.5.0
   flag-icon-css: ^3.4.6
   font-awesome: ^4.7.0
+  formik: ^2.1.4
   gh-pages: ^2.2.0
   husky: ^4.2.3
   lint-staged: ^10.0.8

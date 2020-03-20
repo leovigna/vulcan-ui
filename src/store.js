@@ -6,8 +6,10 @@ import { contractEventNotifier, contractAddNotifier } from "./middleware"
 import { txReducer, txRootSaga } from "./reducers/txcache";
 import { todosReducer, todosRootSaga } from "./reducers/todos";
 import { blocksReducer, blocksRootSaga } from "./reducers/blocks";
+import { customContractsReducer } from "./reducers/customContracts";
 
 const appReducers = {
+    customContracts: customContractsReducer,
     todos: todosReducer,
     tx: txReducer,
     blocks: blocksReducer

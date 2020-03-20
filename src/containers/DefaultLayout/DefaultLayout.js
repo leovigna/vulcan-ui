@@ -18,15 +18,20 @@ import {
     AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
-import navigation from '../../_nav';
+import defaultNavigation from '../../_nav';
 // routes config
 import routes from '../../routes';
+import { connect } from "react-redux"
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 class DefaultLayout extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
     signOut(e) {
@@ -34,7 +39,20 @@ class DefaultLayout extends Component {
         this.props.history.push('/login');
     }
 
+    compo
+
     render() {
+        //Custom
+        const navigation = JSON.parse(JSON.stringify(defaultNavigation));
+        const customContractsNav = (this.props.customContracts || []).map(contract => {
+            return ({
+                name: contract.name,
+                url: `/aggregator/${contract.address}`,
+                icon: 'icon-speedometer'
+            })
+        })
+        navigation.items[3].children.push(...customContractsNav)
+
         return (
             <div className="app">
                 <AppHeader fixed>
@@ -90,4 +108,10 @@ class DefaultLayout extends Component {
     }
 }
 
-export default DefaultLayout;
+
+function mapStateToProps(state) {
+    const { customContracts } = state
+    return { customContracts }
+}
+
+export default connect(mapStateToProps)(DefaultLayout);

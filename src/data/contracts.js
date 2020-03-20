@@ -6,6 +6,7 @@ export const contracts = {
     },
     */
     'BTCUSD': {
+        name: 'BTCUSD',
         count: 21,
         address: '0xF5fff180082d6017036B771bA883025c654BC935'
     },

@@ -25,6 +25,18 @@ const AggregatorNav = () => {
             children: [
 
             ]
+        },
+        {
+            name: 'Custom Aggregators',
+            url: '/aggregator',
+            icon: 'icon-speedometer',
+            children: [
+                {
+                    name: 'Add Aggregator',
+                    url: '/aggregator/add',
+                    icon: 'icon-speedometer',
+                }
+            ]
         }
     ]
     const data = { 'USD': [], 'ETH': [] }
