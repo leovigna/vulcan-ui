@@ -2,13 +2,15 @@
 import React, { Component } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+
 import { Drizzle } from "@drizzle/store"
 import { DrizzleContext } from "@drizzle/react-plugin"
 
 import './App.scss';
 
 import drizzleOptions from "./drizzleOptions"
-import store from "./store"
+import store, { persistor } from "./store"
 
 const drizzle = new Drizzle(drizzleOptions, store)
 
@@ -27,19 +29,21 @@ class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                <DrizzleContext.Provider drizzle={drizzle}>
-                    <HashRouter>
-                        <React.Suspense fallback={loading()}>
-                            <Switch>
-                                <Route exact path="/login" name="Login Page" render={props => <Login {...props} />} />
-                                <Route exact path="/register" name="Register Page" render={props => <Register {...props} />} />
-                                <Route exact path="/404" name="Page 404" render={props => <Page404 {...props} />} />
-                                <Route exact path="/500" name="Page 500" render={props => <Page500 {...props} />} />
-                                <Route path="/" name="Home" render={props => <DefaultLayout {...props} />} />
-                            </Switch>
-                        </React.Suspense>
-                    </HashRouter>
-                </DrizzleContext.Provider>
+                <PersistGate loading={null} persistor={persistor}>
+                    <DrizzleContext.Provider drizzle={drizzle}>
+                        <HashRouter>
+                            <React.Suspense fallback={loading()}>
+                                <Switch>
+                                    <Route exact path="/login" name="Login Page" render={props => <Login {...props} />} />
+                                    <Route exact path="/register" name="Register Page" render={props => <Register {...props} />} />
+                                    <Route exact path="/404" name="Page 404" render={props => <Page404 {...props} />} />
+                                    <Route exact path="/500" name="Page 500" render={props => <Page500 {...props} />} />
+                                    <Route path="/" name="Home" render={props => <DefaultLayout {...props} />} />
+                                </Switch>
+                            </React.Suspense>
+                        </HashRouter>
+                    </DrizzleContext.Provider>
+                </PersistGate>
             </Provider>
         );
     }

@@ -45,6 +45,7 @@
         "react-test-renderer": "^16.13.0",
         "reactstrap": "^8.4.1",
         "redux": "^4.0.5",
+        "redux-persist": "^6.0.0",
         "redux-saga": "^0.16",
         "sass-loader": "^8.0.2",
         "simple-line-icons": "^2.4.1",

@@ -110,8 +110,8 @@ class DefaultLayout extends Component {
 
 
 function mapStateToProps(state) {
-    const { customContracts } = state
-    return { customContracts }
+    const { persisted } = state
+    return { customContracts: persisted.customContracts }
 }
 
 export default connect(mapStateToProps)(DefaultLayout);

@@ -8,12 +8,24 @@ import { todosReducer, todosRootSaga } from "./reducers/todos";
 import { blocksReducer, blocksRootSaga } from "./reducers/blocks";
 import { customContractsReducer } from "./reducers/customContracts";
 
+import { createStore, combineReducers } from 'redux'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+
+const persistConfig = {
+    key: 'persisted',
+    storage,
+    whitelist: ['customContracts']
+}
+
 const appReducers = {
-    customContracts: customContractsReducer,
-    todos: todosReducer,
+    persisted: persistReducer(persistConfig, combineReducers({
+        customContracts: customContractsReducer,
+    })),
     tx: txReducer,
     blocks: blocksReducer
 }
+
 const appSagas = [todosRootSaga, txRootSaga, blocksRootSaga]
 const appMiddlewares = [contractEventNotifier, contractAddNotifier]
 const config = {
@@ -23,4 +35,7 @@ const config = {
     appMiddlewares,
     disableReduxDevTools: false // enable ReduxDevTools!
 }
-export default generateStore(config)
+const store = generateStore(config)
+
+export const persistor = persistStore(store);
+export default store;

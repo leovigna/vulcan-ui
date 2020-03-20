@@ -38,6 +38,7 @@ dependencies:
   react-test-renderer: 16.13.0_react@16.13.0
   reactstrap: 8.4.1_react-dom@16.13.0+react@16.13.0
   redux: 4.0.5
+  redux-persist: 6.0.0_redux@4.0.5
   redux-saga: 0.16.2
   sass-loader: 8.0.2_node-sass@4.13.1
   simple-line-icons: 2.4.1
@@ -11333,6 +11334,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==
+  /redux-persist/6.0.0_redux@4.0.5:
+    dependencies:
+      redux: 4.0.5
+    dev: false
+    peerDependencies:
+      redux: '>4.0.0'
+    resolution:
+      integrity: sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==
   /redux-saga/0.16.2:
     dev: false
     resolution:
@@ -14621,6 +14630,7 @@ specifiers:
   react-test-renderer: ^16.13.0
   reactstrap: ^8.4.1
   redux: ^4.0.5
+  redux-persist: ^6.0.0
   redux-saga: ^0.16
   sass-loader: ^8.0.2
   simple-line-icons: ^2.4.1
