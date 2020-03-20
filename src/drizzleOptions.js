@@ -15,13 +15,8 @@ const options = {
     },
     */
     contracts: [
-        {
-            contractName: 'AggregatorUSDBTC',
-            web3Contract: AggregatorUSDBTC
-        }
     ],
     events: {
-        AggregatorUSDBTC: ["AnswerUpdated", "ResponseReceived"]
     },
     polls: {
         accounts: 1500

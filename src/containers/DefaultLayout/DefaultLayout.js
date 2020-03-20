@@ -68,7 +68,8 @@ class DefaultLayout extends Component {
                                             />
                                         ) : null;
                                     })}
-                                    <Redirect from="/" to="/dashboard" />
+                                    <Redirect from="/" to="/aggregator" />
+                                    <Redirect from="/dashboard" to="/aggregator" />
                                 </Switch>
                             </Suspense>
                         </Container>

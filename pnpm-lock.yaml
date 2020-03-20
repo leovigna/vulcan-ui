@@ -24,6 +24,7 @@ dependencies:
   font-awesome: 4.7.0
   moment: 2.24.0
   node-sass: 4.13.1
+  qs: 6.9.1
   react: 16.13.0
   react-app-polyfill: 1.0.6
   react-chartjs-2: 2.9.0_d7255fa9c129e8b0846d17313f30fa0a
@@ -10762,6 +10763,12 @@ packages:
       node: '>=0.6'
     resolution:
       integrity: sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
+  /qs/6.9.1:
+    dev: false
+    engines:
+      node: '>=0.6'
+    resolution:
+      integrity: sha512-Cxm7/SS/y/Z3MHWSxXb8lIFqgqBowP5JMlTUFyJN88y0SGQhVmZnqFK/PeuMX9LzUyWsqqhNxIyg0jlzq946yA==
   /query-string/4.3.4:
     dependencies:
       object-assign: 4.1.1
@@ -14562,6 +14569,7 @@ specifiers:
   moment: ^2.24.0
   node-sass: ^4.13.1
   prettier: ^1.19.1
+  qs: ^6.9.1
   react: ^16.13.0
   react-app-polyfill: ^1.0.6
   react-chartjs-2: ^2.9.0

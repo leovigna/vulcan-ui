@@ -36,6 +36,7 @@ const EtherScan = ({ address, tx }) => {
 
 
 const AggregatorHead = ({ contract }) => {
+    console.debug(contract)
     const drizzleContext = useContext(DrizzleContext.Context)
     const { drizzle, drizzleState, initialized } = drizzleContext
 
@@ -46,14 +47,14 @@ const AggregatorHead = ({ contract }) => {
             <ListGroupItem>Round ID <ContractData
                 drizzle={drizzle}
                 drizzleState={drizzleState}
-                contract="AggregatorUSDBTC"
+                contract={contract}
                 method="latestRound"
                 render={(value) => value}
             /></ListGroupItem>
             <ListGroupItem>$ <ContractData
                 drizzle={drizzle}
                 drizzleState={drizzleState}
-                contract="AggregatorUSDBTC"
+                contract={contract}
                 method="latestAnswer"
                 render={(value) => (value * 1e-8).toFixed(2)}
             /></ListGroupItem>
@@ -61,7 +62,7 @@ const AggregatorHead = ({ contract }) => {
             <ContractData
                     drizzle={drizzle}
                     drizzleState={drizzleState}
-                    contract="AggregatorUSDBTC"
+                    contract={contract}
                     method="latestTimestamp"
                     render={(value) => {
                         const updateDate = moment(value, 'X');
@@ -69,11 +70,11 @@ const AggregatorHead = ({ contract }) => {
                     }
                     } />
             </ListGroupItem>
-            <ListGroupItem>Next update&nbsp;
+            <ListGroupItem>Next update (every 1hr)&nbsp;
                         <ContractData
                     drizzle={drizzle}
                     drizzleState={drizzleState}
-                    contract="AggregatorUSDBTC"
+                    contract={contract}
                     method="latestTimestamp"
                     render={(value) => {
                         const updateDate = moment(value, 'X');
@@ -100,22 +101,28 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
     const [answers, setAnswers] = useState({})
 
     useEffect(() => {
-        setRoundIdKey(drizzle.contracts[contract].methods.latestRound.cacheCall())
+        const m = drizzle.contracts[contract].methods.latestRound
+        console.log(m)
+        const key = drizzle.contracts[contract].methods.latestRound.cacheCall()
+        console.log(key)
+        setRoundIdKey(key)
     }, []);
 
     useEffect(() => {
         const events = {};
         const web3Contract = drizzle.contracts[contract]
-        web3Contract.events.ResponseReceived({
-            fromBlock: 0,
-            toBlock: 'latest',
-            filter: { answerId: roundId }
-        }).on('data', (event) => {
-            events[event.returnValues.sender] = event;
-            const transactionHash = event.transactionHash
-            drizzle.store.dispatch({ type: TX_FETCH, transactionHash })
-            setAnswers(events);
-        })
+        if (roundId) {
+            web3Contract.events.ResponseReceived({
+                fromBlock: 9700000,
+                toBlock: 'latest',
+                filter: { answerId: roundId }
+            }).on('data', (event) => {
+                events[event.returnValues.sender] = event;
+                const transactionHash = event.transactionHash
+                drizzle.store.dispatch({ type: TX_FETCH, transactionHash })
+                setAnswers(events);
+            })
+        }
     }, [roundId])
 
 

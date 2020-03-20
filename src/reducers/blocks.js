@@ -7,10 +7,14 @@ export const BLOCK_RECEIVED = 'VULCAN/BLOCK_RECEIVED'
 
 // reducers
 export const blocksReducer = (state = {}, action) => {
+    const data = {}
+
     switch (action.type) {
         case BLOCK_RECEIVED:
-            const data = {}
             data[action.block.number] = action.block;
+            return Object.assign({}, state, data)
+        case BLOCK_FETCH:
+            data[action.block] = true
             return Object.assign({}, state, data)
         default:
             return state
