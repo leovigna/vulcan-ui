@@ -19,7 +19,9 @@ else if (window.web3) {
 
 // Non-DApp Browsers
 else {
-    alert('You have to install MetaMask !');
+    console.debug(process.env.REACT_APP_INFURA_MAINNET)
+    web3 = new Web3(process.env.REACT_APP_INFURA_MAINNET)
+    //alert('You have to install MetaMask !');
 }
 
 export default web3;

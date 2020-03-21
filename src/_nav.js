@@ -3,7 +3,7 @@ import { contracts } from './data/contracts'
 const DashboardNav = [
     {
         name: 'Aggregator',
-        url: '/aggregator',
+        url: '/dashboard',
         icon: 'icon-speedometer'
     }
 ]
