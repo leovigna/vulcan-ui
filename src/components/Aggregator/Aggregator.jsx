@@ -35,7 +35,7 @@ const EtherScan = ({ address, tx }) => {
 }
 
 
-const AggregatorHead = ({ contract }) => {
+const AggregatorHead = ({ contract, answerRender }) => {
     //console.debug(contract)
     const drizzleContext = useContext(DrizzleContext.Context)
     const { drizzle, drizzleState, initialized } = drizzleContext
@@ -56,7 +56,7 @@ const AggregatorHead = ({ contract }) => {
                 drizzleState={drizzleState}
                 contract={contract}
                 method="latestAnswer"
-                render={(value) => value}
+                render={answerRender}
             /></ListGroupItem>
             <ListGroupItem>Last update&nbsp;
             <ContractData
@@ -92,7 +92,7 @@ function mapStateToProps(state) {
     return { tx, blocks }
 }
 
-const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
+const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks, answerRender }) => {
     const drizzleContext = useContext(DrizzleContext.Context)
     const { drizzle, drizzleState } = drizzleContext
 
@@ -170,7 +170,7 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
                                             <div><EtherScan address={address} /></div>
                                         </td>
                                         <td>
-                                            <div>{answer}</div>
+                                            <div>{answerRender(answer)}</div>
                                         </td>
                                         <td>
                                             <div>{gasPrice} Gwei</div>
@@ -197,24 +197,26 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
     );
 })
 
-const Aggregator = ({ contract }) => {
+const Aggregator = ({ contract, answerRender }) => {
     const drizzleContext = useContext(DrizzleContext.Context)
     const { initialized } = drizzleContext
 
     if (!initialized) return null;
+    let ansRend = answerRender;
+    if (!ansRend) ansRend = (v) => v;
 
     return (
         <div>
             <Card>
                 <CardHeader>{contract} Aggregate data</CardHeader>
                 <CardBody>
-                    <AggregatorHead contract={contract} />
+                    <AggregatorHead contract={contract} answerRender={ansRend} />
                 </CardBody>
             </Card>
             <Card>
                 <CardHeader>Oracles data</CardHeader>
                 <CardBody>
-                    <AggregatorTable contract={contract} />
+                    <AggregatorTable contract={contract} answerRender={ansRend} />
                 </CardBody>
             </Card>
         </div>

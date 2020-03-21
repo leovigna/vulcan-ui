@@ -49,11 +49,11 @@ const AggregatorNav = () => {
             name: k,
             url: `/dashboard/${v.path}`,
         }
-        if (k.includes('USD')) {
+        if (v.path.startsWith('usd')) {
             data.USD.push(n)
-        } else if (k.includes('ETH')) {
+        } else if (v.path.startsWith('eth')) {
             data.ETH.push(n)
-        } else if (k.includes('COVID-19')) {
+        } else if (v.path.startsWith('covid-19')) {
             data['COVID-19'].push(n)
         }
     })

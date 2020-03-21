@@ -39,7 +39,6 @@ class DefaultLayout extends Component {
         this.props.history.push('/login');
     }
 
-    compo
 
     render() {
         //Custom
