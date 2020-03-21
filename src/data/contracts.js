@@ -109,7 +109,31 @@ export const contracts = {
     'SNXETH': {
         count: 7,
         address: '0xE23d1142dE4E83C08bb048bcab54d50907390828'
-    }
+    },
+    'COVID-19 (China)': {
+        count: 1,
+        address: '0x8DCD39e5deF7bb50E1840e30662B3225A98C6220'
+    },
+    'COVID-19 (Italy)': {
+        count: 1,
+        address: '0x2f4A30ddc1FE8D1F2Ea0a2F4735BEcCF85C16C2f'
+    },
+    'COVID-19 (France)': {
+        count: 1,
+        address: '0x49ba496eE2c02d12DAB90Df89282222a1c43F1b1'
+    },
+    'COVID-19 (US)': {
+        count: 1,
+        address: '0x01456dce7730a60b83a0bb767f9e29ac9a0e6353'
+    },
+    'COVID-19 (UK)': {
+        count: 1,
+        address: '0xe61488faa89023b50b06c9fa9bd76ddd61d1d7ee'
+    },
+    'COVID-19 (Australia)': {
+        count: 1,
+        address: '0x9b952670c4378672c758bff6055c6cb3a0df8727'
+    },
 }
 
 export const contractAliases = {

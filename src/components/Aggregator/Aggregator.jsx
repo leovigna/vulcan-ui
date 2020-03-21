@@ -51,12 +51,12 @@ const AggregatorHead = ({ contract }) => {
                 method="latestRound"
                 render={(value) => value}
             /></ListGroupItem>
-            <ListGroupItem>$ <ContractData
+            <ListGroupItem><ContractData
                 drizzle={drizzle}
                 drizzleState={drizzleState}
                 contract={contract}
                 method="latestAnswer"
-                render={(value) => (value * 1e-8).toFixed(2)}
+                render={(value) => value}
             /></ListGroupItem>
             <ListGroupItem>Last update&nbsp;
             <ContractData
@@ -111,7 +111,7 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
         const web3Contract = drizzle.contracts[contract]
         if (roundId) {
             web3Contract.events.ResponseReceived({
-                fromBlock: 9700000,
+                fromBlock: 0,
                 toBlock: 'latest',
                 filter: { answerId: roundId }
             }).on('data', (event) => {
@@ -160,7 +160,7 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks }) => {
                                 render={(address) => {
                                     const event = answers[address];
                                     const { returnValues, transactionHash } = event || {};
-                                    const answer = ((returnValues?.response || 0) * 1e-8).toFixed(2)
+                                    const answer = (returnValues?.response || 0)
                                     const txData = tx[transactionHash] || {}
                                     const gasPrice = ((txData.gasPrice || 0) * 1e-9).toFixed(2);
                                     const blockData = blocks[txData.blockNumber] || {}

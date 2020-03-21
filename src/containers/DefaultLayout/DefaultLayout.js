@@ -51,7 +51,7 @@ class DefaultLayout extends Component {
                 icon: 'icon-speedometer'
             })
         })
-        navigation.items[3].children.push(...customContractsNav)
+        navigation.items[navigation.items.length - 1].children.push(...customContractsNav)
 
         return (
             <div className="app">
