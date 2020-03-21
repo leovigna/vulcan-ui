@@ -87,12 +87,21 @@ const AggregatorHead = ({ contract, answerRender }) => {
         </ListGroup>)
 }
 
-function mapStateToProps(state) {
-    const { tx, blocks } = state
-    return { tx, blocks }
+function mapStateToProps(state, ownProps) {
+    const { contract } = ownProps;
+    const { tx, blocks, contracts } = state
+    const events = contracts[contract]?.events || [];
+
+    return { tx, blocks, events }
 }
 
-const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks, answerRender }) => {
+function mapDipatchToProps(dispatch) {
+    return {
+        reponseReceived: ({ event, name }) => dispatch({ type: 'EVENT_FIRED', name, event }),
+    }
+}
+
+const AggregatorTable = connect(mapStateToProps, mapDipatchToProps)(({ contract, tx, blocks, answerRender, reponseReceived, events }) => {
     const drizzleContext = useContext(DrizzleContext.Context)
     const { drizzle, drizzleState } = drizzleContext
 
@@ -115,13 +124,17 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks, answer
                 toBlock: 'latest',
                 filter: { answerId: roundId }
             }).on('data', (event) => {
-                events[event.returnValues.sender] = event;
-                const transactionHash = event.transactionHash
-                drizzle.store.dispatch({ type: TX_FETCH, transactionHash })
-                setAnswers(events);
+                reponseReceived({ event, name: contract })
             })
         }
     }, [roundId])
+
+    useEffect(() => {
+        const eventsFiltered = events.filter((e) => e.returnValues.answerId === roundId)
+        let a = {}
+        eventsFiltered.forEach((e) => a[e.returnValues.sender] = e);
+        setAnswers(a);
+    }, [events])
 
 
     useEffect(() => {
@@ -130,7 +143,7 @@ const AggregatorTable = connect(mapStateToProps)(({ contract, tx, blocks, answer
             //console.debug(answersLength)
             setOracleCount(answersLength);
         }
-    })
+    }, [answers])
 
     const newRound = drizzleState.contracts[contract].latestRound[roundIdKey]?.value
     if (newRound != roundId) setRoundId(newRound)

@@ -6,12 +6,9 @@ import { BLOCK_FETCH, BLOCK_RECEIVED } from "./reducers/blocks"
 export const contractEventNotifier = store => next => action => {
     if (action.type === EventActions.EVENT_FIRED) {
         const contract = action.name
-        const contractEvent = action.event.event
-        const contractMessage = action.event.returnValues._message
-        const display = `${contract}(${contractEvent}): ${contractMessage}`
+        const contractEvent = action.event
 
-        // interact with your service
-        console.log("Contract event fired", display)
+        console.debug(`${contract} ${contractEvent}`)
     }
     return next(action)
 }
@@ -23,6 +20,11 @@ export const contractAddNotifier = store => next => action => {
     } else if (action.type === "CONTRACT_INITIALIZING") {
         // interact with your service
         console.log("Contract initializing fired", action)
+    } else if (action.type === EventActions.EVENT_FIRED) {
+        if (action.event.event === "ResponseReceived") {
+            const transactionHash = action.event.transactionHash
+            store.dispatch({ type: TX_FETCH, transactionHash })
+        }
     } else if (action.type === TX_RECEIVED) {
         const block = action.tx.blockNumber;
         if (!store.getState().blocks[block]) store.dispatch({ type: BLOCK_FETCH, block });
