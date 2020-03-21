@@ -11,7 +11,7 @@ import {
     Button
 } from 'reactstrap';
 
-import { contracts, contractAliases } from "../../data/contracts"
+import { contracts, categories } from "../../data/contracts"
 import qs from 'qs'
 
 class Dashboard extends Component {
@@ -28,13 +28,9 @@ class Dashboard extends Component {
         let displayContracts = Object.entries(contracts);
 
         if (category) {
-            displayContracts = displayContracts.filter(([k, v]) => k.includes(category))
+            displayContracts = displayContracts.filter(([_, v]) => v.path.startsWith(category))
         } else {
             //Display categories
-            const categories = [
-                { name: 'USD', title: 'USD Pairs' },
-                { name: 'ETH', title: 'ETH Pairs' },
-                { name: 'COVID-19', title: 'COVID-19 Cases' }]
 
             return (
                 <div className="animated fadeIn">
@@ -45,7 +41,7 @@ class Dashboard extends Component {
                                     <Card>
                                         <CardHeader>{c.title}</CardHeader>
                                         <CardBody>
-                                            <Button block href={`#/dashboard/${c.name}`} color="secondary">View</Button>
+                                            <Button block href={`/#/dashboard/${c.path}`} color="secondary">View</Button>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -67,7 +63,7 @@ class Dashboard extends Component {
                                     <CardHeader>{k}</CardHeader>
                                     <CardBody>
                                         {v.address}<br />{v.count} oracles
-                                        <Button block href={`#/aggregator/${v.address}`} color="secondary">View</Button>
+                                        <Button block href={`/#/dashboard/${v.path}`} color="secondary">View</Button>
                                     </CardBody>
                                 </Card>
                             </Col>

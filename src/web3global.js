@@ -10,6 +10,7 @@ if (window.ethereum) {
         });
     } catch (e) {
         // User has denied account access to DApp...
+        web3 = new Web3(process.env.REACT_APP_INFURA_MAINNET)
     }
 }
 // Legacy DApp Browsers
@@ -19,9 +20,11 @@ else if (window.web3) {
 
 // Non-DApp Browsers
 else {
-    console.debug(process.env.REACT_APP_INFURA_MAINNET)
     web3 = new Web3(process.env.REACT_APP_INFURA_MAINNET)
     //alert('You have to install MetaMask !');
+    //Patch Window with fallback
+    window.ethereum = web3;
+    window.web3 = { currentProvider: web3 };
 }
 
 export default web3;

@@ -2,7 +2,7 @@
     "name": "vulcan-ui",
     "version": "0.1.0",
     "private": false,
-    "homepage": "https://leovigna.github.io/vulcan-ui",
+    "homepage": "./",
     "copyright": "Copyright 2020 Leo Vigna",
     "license": "MIT",
     "dependencies": {

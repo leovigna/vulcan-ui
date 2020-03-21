@@ -2,7 +2,7 @@ import { contracts } from './data/contracts'
 
 const DashboardNav = [
     {
-        name: 'Aggregator',
+        name: 'Feeds',
         url: '/dashboard',
         icon: 'icon-speedometer'
     }
@@ -12,24 +12,21 @@ const AggregatorNav = () => {
     const nav = [
         {
             name: 'USD Pairs',
-            url: '/aggregator',
-            icon: 'icon-speedometer',
+            url: '/dashboard/usd',
             children: [
 
             ]
         },
         {
             name: 'ETH Pairs',
-            url: '/aggregator',
-            icon: 'icon-speedometer',
+            url: '/dashboard/eth',
             children: [
 
             ]
         },
         {
             name: 'COVID-19',
-            url: '/aggregator',
-            icon: 'icon-speedometer',
+            url: '/dashboard/covid-19',
             children: [
 
             ]
@@ -37,12 +34,10 @@ const AggregatorNav = () => {
         {
             name: 'Custom Aggregators',
             url: '/aggregator',
-            icon: 'icon-speedometer',
             children: [
                 {
                     name: 'Add Aggregator',
                     url: '/aggregator/add',
-                    icon: 'icon-speedometer',
                 }
             ]
         }
@@ -52,8 +47,7 @@ const AggregatorNav = () => {
     Object.entries(contracts).forEach(([k, v]) => {
         const n = {
             name: k,
-            url: `/aggregator/${v.address}`,
-            icon: 'icon-speedometer'
+            url: `/dashboard/${v.path}`,
         }
         if (k.includes('USD')) {
             data.USD.push(n)

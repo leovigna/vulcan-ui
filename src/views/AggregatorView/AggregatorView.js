@@ -13,6 +13,7 @@ import { DrizzleContext } from "@drizzle/react-plugin"
 import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
 
 import Aggregator from "../../components/Aggregator/Aggregator"
+import { contracts } from "../../data/contracts"
 
 class AggregatorView extends Component {
     static contextType = DrizzleContext.Context;
@@ -36,12 +37,25 @@ class AggregatorView extends Component {
     render() {
         const queryParams = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
         const matchParams = this.props.match.params;
-        const address = matchParams.address || queryParams.address;
+        const category = matchParams.category || queryParams.category;
+        const name = matchParams.name || queryParams.name;
 
         const { drizzle, drizzleState, initialized } = this.context;
         //console.log(`[LV] ${initialized} ${address}: ${!!drizzle.contracts[address]}`)
 
         if (!initialized) return null;
+        if (!drizzle.web3) return null;
+
+
+        let address;
+        if (category && name) {
+            const searchPath = `${category}/${name}`
+            const searchResult = Object.entries(contracts).filter(([_, c]) => c.path === searchPath)
+            address = searchResult[0][1]?.address
+        } else {
+            address = matchParams.address || queryParams.address;
+        }
+
         if (!drizzle.contracts[address]) {
             const web3Contract = new drizzle.web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
 
