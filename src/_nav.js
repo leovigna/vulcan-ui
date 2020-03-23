@@ -11,14 +11,14 @@ const DashboardNav = [
 const AggregatorNav = () => {
     const nav = [
         {
-            name: 'CL USD Pairs',
+            name: 'USD Pairs',
             url: '/dashboard/usd',
             children: [
 
             ]
         },
         {
-            name: 'CL ETH Pairs',
+            name: 'ETH Pairs',
             url: '/dashboard/eth',
             children: [
 

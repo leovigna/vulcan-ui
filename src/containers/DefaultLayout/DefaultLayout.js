@@ -23,6 +23,10 @@ import defaultNavigation from '../../_nav';
 import routes from '../../routes';
 import { connect } from "react-redux"
 
+import styles from './AppHeader.scss'
+import classNames from 'classnames/bind'
+const cx = classNames.bind(styles)
+
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -54,13 +58,15 @@ class DefaultLayout extends Component {
 
         return (
             <div className="app">
-                <AppHeader fixed>
-                    <Suspense fallback={this.loading()}>
-                        <DefaultHeader onLogout={e => this.signOut(e)} />
-                    </Suspense>
-                </AppHeader>
+                <div className={cx('app-header')}>
+                    <AppHeader fixed>
+                        <Suspense fallback={this.loading()}>
+                            <DefaultHeader onLogout={e => this.signOut(e)} />
+                        </Suspense>
+                    </AppHeader>
+                </div>
                 <div className="app-body">
-                    <AppSidebar fixed display="lg">
+                    <AppSidebar className={cx('app-sidebar')} fixed display="lg">
                         <AppSidebarHeader />
                         <AppSidebarForm />
                         <Suspense>

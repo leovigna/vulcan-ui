@@ -106,7 +106,7 @@ const AggregatorTable = connect(mapStateToProps, mapDipatchToProps)(({ contract,
     const [roundIdKey, setRoundIdKey] = useState()
     const [roundId, setRoundId] = useState()
     const [answers, setAnswers] = useState({})
-    const [oracleCount, setOracleCount] = useState(5)
+    const [oracleCount, setOracleCount] = useState(1)
 
     useEffect(() => {
         const key = drizzle.contracts[contract].methods.latestRound.cacheCall()
