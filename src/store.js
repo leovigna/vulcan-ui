@@ -7,6 +7,7 @@ import { txReducer, txRootSaga } from "./reducers/txcache";
 import { todosReducer, todosRootSaga } from "./reducers/todos";
 import { blocksReducer, blocksRootSaga } from "./reducers/blocks";
 import { customContractsReducer } from "./reducers/customContracts";
+import { neworkIdReducer } from "./reducers/web3";
 
 import { createStore, combineReducers } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
@@ -23,7 +24,8 @@ const appReducers = {
         customContracts: customContractsReducer,
     })),
     tx: txReducer,
-    blocks: blocksReducer
+    blocks: blocksReducer,
+    web3: neworkIdReducer
 }
 
 const appSagas = [todosRootSaga, txRootSaga, blocksRootSaga]

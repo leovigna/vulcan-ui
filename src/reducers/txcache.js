@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import web3 from '../web3global'
+import web3Default from '../web3global'
 
 // actions
 export const TX_FETCH = 'VULCAN/TX_FETCH'
@@ -19,6 +19,7 @@ export const txReducer = (state = {}, action) => {
 
 // fetch data from service using sagas
 export function* fetchTx(action) {
+    const web3 = action.web3 || web3Default
     const tx = yield call(web3.eth.getTransaction, action.transactionHash)
     yield put({ type: TX_RECEIVED, tx })
 }

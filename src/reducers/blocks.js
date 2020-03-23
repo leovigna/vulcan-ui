@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import web3 from '../web3global'
+import web3Default from '../web3global'
 
 // actions
 export const BLOCK_FETCH = 'VULCAN/BLOCK_FETCH'
@@ -23,6 +23,7 @@ export const blocksReducer = (state = {}, action) => {
 
 // fetch data from service using sagas
 export function* fetchBlock(action) {
+    const web3 = action.web3 || web3Default
     const block = yield call(web3.eth.getBlock, action.block)
     yield put({ type: BLOCK_RECEIVED, block })
 }

@@ -19,9 +19,6 @@ import { connect } from "react-redux"
 
 import moment from 'moment';
 import Moment from 'react-moment';
-import { TX_RECEIVED, TX_FETCH } from "../../reducers/txcache"
-import { TODOS_RECEIVED, TODOS_FETCH } from "../../reducers/todos"
-import { BLOCK_RECEIVED, BLOCK_FETCH } from "../../reducers/blocks"
 
 const { ContractData } = newContextComponents
 

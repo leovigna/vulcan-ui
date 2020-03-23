@@ -1,6 +1,7 @@
 import { EventActions } from "@drizzle/store"
 import { TX_FETCH, TX_RECEIVED } from "./reducers/txcache"
 import { BLOCK_FETCH, BLOCK_RECEIVED } from "./reducers/blocks"
+import { ropstenWeb3, mainnetWeb3 } from "./web3global"
 
 
 export const contractEventNotifier = store => next => action => {
@@ -23,11 +24,23 @@ export const contractAddNotifier = store => next => action => {
     } else if (action.type === EventActions.EVENT_FIRED) {
         if (action.event.event === "ResponseReceived") {
             const transactionHash = action.event.transactionHash
-            store.dispatch({ type: TX_FETCH, transactionHash })
+            const networkId = store.getState().web3?.networkId
+            if (networkId === 1) {
+                store.dispatch({ type: TX_FETCH, transactionHash, web3: mainnetWeb3 })
+            } else if (networkId === 3) {
+                store.dispatch({ type: TX_FETCH, transactionHash, web3: ropstenWeb3 })
+            }
         }
     } else if (action.type === TX_RECEIVED) {
         const block = action.tx.blockNumber;
-        if (!store.getState().blocks[block]) store.dispatch({ type: BLOCK_FETCH, block });
+        if (!store.getState().blocks[block]) {
+            const networkId = store.getState().web3?.networkId
+            if (networkId === 1) {
+                store.dispatch({ type: BLOCK_FETCH, block, web3: mainnetWeb3 });
+            } else if (networkId === 3) {
+                store.dispatch({ type: BLOCK_FETCH, block, web3: ropstenWeb3 });
+            }
+        }
     } else if (action.type !== "ACCOUNT_BALANCE_FETCHED" &&
         action.type !== "ACCOUNTS_FETCHED" && action.type !== "SYNCING_ACCOUNTS") {
         console.log(action.type)
