@@ -2,6 +2,10 @@ import Web3 from 'web3'
 
 let web3;
 // Modern DApp Browsers
+export const mainnetWeb3 = new Web3(process.env.REACT_APP_INFURA_MAINNET_WSS)
+export const ropstenWeb3 = new Web3(process.env.REACT_APP_INFURA_ROPSTEN_WSS)
+
+
 if (window.ethereum) {
     web3 = new Web3(window.ethereum);
     try {
@@ -10,7 +14,7 @@ if (window.ethereum) {
         });
     } catch (e) {
         // User has denied account access to DApp...
-        web3 = new Web3(process.env.REACT_APP_INFURA_MAINNET)
+        web3 = new Web3(process.env.REACT_APP_INFURA_MAINNET_WSS)
     }
 }
 // Legacy DApp Browsers
@@ -20,7 +24,7 @@ else if (window.web3) {
 
 // Non-DApp Browsers
 else {
-    web3 = new Web3(process.env.REACT_APP_INFURA_MAINNET)
+    web3 = new Web3(process.env.REACT_APP_INFURA_MAINNET_WSS)
     //alert('You have to install MetaMask !');
     //Patch Window with fallback
     window.ethereum = web3;

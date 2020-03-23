@@ -41,7 +41,7 @@ class Dashboard extends Component {
                                     <Card>
                                         <CardHeader>{c.title}</CardHeader>
                                         <CardBody>
-                                            <Button block href={`/#/dashboard/${c.path}`} color="secondary">View</Button>
+                                            <Button block href={`#/dashboard/${c.path}`} color="secondary">View</Button>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -63,7 +63,7 @@ class Dashboard extends Component {
                                     <CardHeader>{k}</CardHeader>
                                     <CardBody>
                                         {v.address}<br />{v.count} oracles
-                                        <Button block href={`/#/dashboard/${v.path}`} color="secondary">View</Button>
+                                        <Button block href={`#/dashboard/${v.path}`} color="secondary">View</Button>
                                     </CardBody>
                                 </Card>
                             </Col>

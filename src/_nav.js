@@ -11,14 +11,14 @@ const DashboardNav = [
 const AggregatorNav = () => {
     const nav = [
         {
-            name: 'USD Pairs',
+            name: 'CL USD Pairs',
             url: '/dashboard/usd',
             children: [
 
             ]
         },
         {
-            name: 'ETH Pairs',
+            name: 'CL ETH Pairs',
             url: '/dashboard/eth',
             children: [
 
@@ -27,6 +27,20 @@ const AggregatorNav = () => {
         {
             name: 'COVID-19',
             url: '/dashboard/covid-19',
+            children: [
+
+            ]
+        },
+        {
+            name: 'US Markets',
+            url: '/dashboard/markets-us',
+            children: [
+
+            ]
+        },
+        {
+            name: 'EU Markets',
+            url: '/dashboard/markets-eu',
             children: [
 
             ]
@@ -42,25 +56,24 @@ const AggregatorNav = () => {
             ]
         }
     ]
-    const data = { 'USD': [], 'ETH': [], 'COVID-19': [] }
 
     Object.entries(contracts).forEach(([k, v]) => {
         const n = {
-            name: k,
+            name: v.navTitle || v.title || k,
             url: `/dashboard/${v.path}`,
         }
         if (v.path.startsWith('usd')) {
-            data.USD.push(n)
+            nav[0].children.push(n)
         } else if (v.path.startsWith('eth')) {
-            data.ETH.push(n)
+            nav[1].children.push(n)
         } else if (v.path.startsWith('covid-19')) {
-            data['COVID-19'].push(n)
+            nav[2].children.push(n)
+        } else if (v.path.startsWith('markets-us')) {
+            nav[3].children.push(n)
+        } else if (v.path.startsWith('markets-eu')) {
+            nav[4].children.push(n)
         }
     })
-
-    nav[0].children = data.USD
-    nav[1].children = data.ETH
-    nav[2].children = data['COVID-19']
 
     return nav
 }

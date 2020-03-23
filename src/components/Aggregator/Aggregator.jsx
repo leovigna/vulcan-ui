@@ -44,6 +44,7 @@ const AggregatorHead = ({ contract, answerRender }) => {
 
     return (
         <ListGroup>
+            <ListGroupItem><EtherScan address={contract} /></ListGroupItem>
             <ListGroupItem>Round ID <ContractData
                 drizzle={drizzle}
                 drizzleState={drizzleState}
@@ -210,7 +211,7 @@ const AggregatorTable = connect(mapStateToProps, mapDipatchToProps)(({ contract,
     );
 })
 
-const Aggregator = ({ contract, answerRender }) => {
+const Aggregator = ({ contract, answerRender, title }) => {
     const drizzleContext = useContext(DrizzleContext.Context)
     const { initialized } = drizzleContext
 
@@ -221,7 +222,7 @@ const Aggregator = ({ contract, answerRender }) => {
     return (
         <div>
             <Card>
-                <CardHeader>{contract} Aggregate data</CardHeader>
+                <CardHeader>{title}</CardHeader>
                 <CardBody>
                     <AggregatorHead contract={contract} answerRender={ansRend} />
                 </CardBody>

@@ -46,18 +46,20 @@ class AggregatorView extends Component {
         if (!initialized) return null;
         if (!drizzle.web3) return null;
 
-        let answerRender = (value) => value;
 
-        let address;
+        let searchContract;
         if (category && name) {
             const searchPath = `${category}/${name}`
             const searchResult = Object.entries(contracts).filter(([_, c]) => c.path === searchPath)
-            const searchContract = searchResult[0][1]
-            address = searchContract?.address
-            answerRender = searchContract.answerRender || answerRender
-        } else {
-            address = matchParams.address || queryParams.address;
+            searchContract = searchResult[0][1]
         }
+
+        const address = searchContract?.address || matchParams.address || queryParams.address;
+        const answerRender = searchContract?.answerRender || ((value) => value);
+
+        const titleString = searchContract?.title || 'Aggregator'
+        const title = `${titleString} at ${address}`;
+
 
         if (!drizzle.contracts[address]) {
             const web3Contract = new drizzle.web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
@@ -77,7 +79,7 @@ class AggregatorView extends Component {
             <div className="animated fadeIn">
                 <Row>
                     <Col>
-                        <Aggregator contract={address} answerRender={answerRender} />
+                        <Aggregator contract={address} answerRender={answerRender} title={title} />
                     </Col>
                 </Row>
             </div>

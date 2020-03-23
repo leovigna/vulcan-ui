@@ -1,6 +1,5 @@
 # Vulcan Data Oracle Aggregator
-Deployed at https://leovigna.github.io/vulcan-ui/
-
+Deployed at https://feeds.vulcandata.eth.link
 Display Chainlink Oracle Aggregator Data.
 
 ## Getting Started
