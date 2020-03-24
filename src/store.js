@@ -8,6 +8,7 @@ import { todosReducer, todosRootSaga } from "./reducers/todos";
 import { blocksReducer, blocksRootSaga } from "./reducers/blocks";
 import { customContractsReducer } from "./reducers/customContracts";
 import { neworkIdReducer } from "./reducers/web3";
+import { contractEventsReducer, eventsRootSaga } from "./reducers/events";
 
 import { createStore, combineReducers } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
@@ -25,10 +26,11 @@ const appReducers = {
     })),
     tx: txReducer,
     blocks: blocksReducer,
-    web3: neworkIdReducer
+    web3: neworkIdReducer,
+    events: contractEventsReducer
 }
 
-const appSagas = [todosRootSaga, txRootSaga, blocksRootSaga]
+const appSagas = [todosRootSaga, txRootSaga, blocksRootSaga, eventsRootSaga]
 const appMiddlewares = [contractEventNotifier, contractAddNotifier]
 const config = {
     drizzleOptions,

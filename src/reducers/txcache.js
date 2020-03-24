@@ -7,14 +7,12 @@ export const TX_RECEIVED = 'VULCAN/TX_RECEIVED'
 
 // reducers
 export const txReducer = (state = {}, action) => {
-    switch (action.type) {
-        case TX_RECEIVED:
-            const data = {}
-            data[action.tx.hash] = action.tx;
-            return Object.assign({}, state, data)
-        default:
-            return state
+    if (action.type === TX_RECEIVED) {
+        const tx = action.tx
+        return { ...state, [action.tx.hash]: tx }
     }
+
+    return state;
 }
 
 // fetch data from service using sagas

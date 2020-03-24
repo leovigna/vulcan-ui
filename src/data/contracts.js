@@ -277,7 +277,7 @@ export const contracts = {
         count: 1,
         address: '0x03d4D4ade00C3aaA5234E9573c0Ac1f3f2565EC3',
         path: 'markets-us/spx',
-        answerRender: (value) => `$ ${((value || 0) * 1e-4).toFixed(2)}`,
+        answerRender: (value) => `${((value || 0) * 1e-4).toFixed(2)}`,
         networkId: '3'
     },
     'DJI': {
@@ -286,7 +286,7 @@ export const contracts = {
         count: 1,
         address: '0xee22292C4D89fb112B5E749cc1Af70CFa9a9B9b0',
         path: 'markets-us/dji',
-        answerRender: (value) => `$ ${((value || 0) * 1e-4).toFixed(2)}`,
+        answerRender: (value) => `${((value || 0) * 1e-4).toFixed(2)}`,
         networkId: '3'
     },
     'TSLA': {

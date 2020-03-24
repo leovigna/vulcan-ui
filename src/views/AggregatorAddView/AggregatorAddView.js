@@ -104,7 +104,7 @@ class AggregatorAddView extends Component {
 
 function mapStateToProps(state) {
     const { persisted } = state
-    return { customContracts: persisted.customContracts }
+    return { customcontracts: persisted.customcontracts }
 }
 
 function mapDipatchToProps(dispatch) {

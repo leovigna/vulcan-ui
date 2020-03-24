@@ -27,6 +27,7 @@ class AggregatorView extends Component {
 
     loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
+    /*
     static getDerivedStateFromError(error) {
         // Update state so the next render will show the fallback UI.
         return { hasError: true };
@@ -36,6 +37,7 @@ class AggregatorView extends Component {
         // You can also log the error to an error reporting service
         console.error(error, errorInfo);
     }
+    */
 
     render() {
         const queryParams = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
@@ -86,7 +88,7 @@ class AggregatorView extends Component {
             // Or using the Drizzle context object
             drizzle.addContract(contractConfig, events);
 
-            return null;
+            return <div>Loading...</div>;
         }
 
         return (

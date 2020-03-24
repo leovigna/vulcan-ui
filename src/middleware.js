@@ -1,15 +1,13 @@
 import { EventActions } from "@drizzle/store"
 import { TX_FETCH, TX_RECEIVED } from "./reducers/txcache"
+import { EVENT_FETCH, EVENT_ADDED } from "./reducers/events"
 import { BLOCK_FETCH, BLOCK_RECEIVED } from "./reducers/blocks"
 import { ropstenWeb3, mainnetWeb3 } from "./web3global"
 
 
 export const contractEventNotifier = store => next => action => {
-    if (action.type === EventActions.EVENT_FIRED) {
-        const contract = action.name
-        const contractEvent = action.event
-
-        console.debug(`${contract} ${contractEvent}`)
+    if (action.type === EventActions.EVENT_FIRED || action.type === EventActions.EVENT_CHANGED) {
+        //console.debug(`${action.type} ${action.name} ${action.event.event}`)
     }
     return next(action)
 }
@@ -43,7 +41,7 @@ export const contractAddNotifier = store => next => action => {
         }
     } else if (action.type !== "ACCOUNT_BALANCE_FETCHED" &&
         action.type !== "ACCOUNTS_FETCHED" && action.type !== "SYNCING_ACCOUNTS") {
-        console.log(action.type)
+        //console.debug(action.type)
     }
     return next(action)
 }

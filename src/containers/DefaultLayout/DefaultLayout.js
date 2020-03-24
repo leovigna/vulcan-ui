@@ -47,14 +47,14 @@ class DefaultLayout extends Component {
     render() {
         //Custom
         const navigation = JSON.parse(JSON.stringify(defaultNavigation));
-        const customContractsNav = (this.props.customContracts || []).map(contract => {
+        const customcontractsNav = (this.props.customcontracts || []).map(contract => {
             return ({
                 name: contract.name,
                 url: `/aggregator/${contract.address}`,
                 icon: 'icon-speedometer'
             })
         })
-        navigation.items[navigation.items.length - 1].children.push(...customContractsNav)
+        navigation.items[navigation.items.length - 1].children.push(...customcontractsNav)
 
         return (
             <div className="app">
@@ -115,7 +115,7 @@ class DefaultLayout extends Component {
 
 function mapStateToProps(state) {
     const { persisted } = state
-    return { customContracts: persisted.customContracts }
+    return { customcontracts: persisted.customContracts }
 }
 
 export default connect(mapStateToProps)(DefaultLayout);
