@@ -17,15 +17,15 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 const persistConfig = {
     key: 'persisted',
     storage,
-    whitelist: ['customContracts']
+    whitelist: ['customContracts', 'orm']
 }
 
 const appReducers = {
     persisted: persistReducer(persistConfig, combineReducers({
         customContracts: customContractsReducer,
+        orm: ormReducer
     })),
     web3: neworkIdReducer,
-    orm: ormReducer
 }
 
 const appSagas = [transactionRootSaga, blocksRootSaga, eventsRootSaga]

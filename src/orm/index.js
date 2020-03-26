@@ -4,7 +4,7 @@ import { Event, Transaction, Block, EventByContractTypeIndex } from './models';
 
 
 const orm = new ORM({
-    stateSelector: state => state.orm,
+    stateSelector: state => state.persisted.orm,
 });
 orm.register(Event, Transaction, Block, EventByContractTypeIndex);
 

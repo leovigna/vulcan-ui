@@ -59,7 +59,7 @@ class AggregatorView extends Component {
 
         const networkId = searchContract?.networkId || '1'
         if (networkId) {
-            console.debug(`NETWORK ${networkId}`)
+            //console.debug(`NETWORK ${networkId}`)
             const web3 = drizzle.web3.givenProvider.networkVersion === networkId ? drizzle.web3 : web3ForNetworkId(networkId)
             drizzle.web3 = web3
         }
