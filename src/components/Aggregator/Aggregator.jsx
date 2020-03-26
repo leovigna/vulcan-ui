@@ -25,6 +25,7 @@ import Moment from 'react-moment';
 import { createSelectorCreator, createSelector, defaultMemoize } from 'reselect'
 import { isEqual, cloneDeep } from 'lodash'
 import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
+import { withRenderCount } from 'react-render-counter';
 
 
 import AggregatorChart from "./AggregatorChart"
@@ -41,7 +42,8 @@ import {
     emptyArray,
     eventByContractTypeIndexSelector,
     eventIndexedFilterSelector,
-    eventIndexedFilterSelector2
+    eventIndexedFilterSelector2,
+    makeEventIndexedFilterSelector
 } from "../../selectors"
 
 const { ContractData } = newContextComponents
@@ -58,7 +60,9 @@ const Aggregator = ({
     answers = [],
     tx = {},
     blocks = {},
-    graphData = [] }) => {
+    graphData = [],
+    count }) => {
+    console.debug(`Aggregator ${count}`)
 
     const [roundIdKey, setRoundIdKey] = useState()
     const [roundId, setRoundId] = useState()
@@ -83,6 +87,8 @@ const Aggregator = ({
     useEffect(() => {
         const web3Contract = drizzle.contracts[contract]
         if (roundId) {
+
+
             fetchEvent({
                 event: web3Contract.events.ResponseReceived,
                 name: contract,
@@ -99,17 +105,27 @@ const Aggregator = ({
             for (let i = roundId - historyRange; i <= roundId; i++) {
                 pastRounds.push(i)
             }
+            /*
             console.debug(pastRounds)
 
-            fetchEvent({
-                event: web3Contract.events.AnswerUpdated,
-                name: contract,
-                options: {
-                    fromBlock: 0,
-                    toBlock: 'latest',
-                    filter: { roundId: pastRounds }
-                },
-                max: 1000000
+            console.debug(web3Contract)
+            web3Contract.events.AnswerUpdated({
+                fromBlock: 0,
+                toBlock: 'latest',
+                filter: { roundId }
+            }, (e) => console.debug(`EVENT ${e}`))
+            */
+            pastRounds.forEach((roundId) => {
+                fetchEvent({
+                    event: web3Contract.events.AnswerUpdated,
+                    name: contract,
+                    options: {
+                        fromBlock: 0,
+                        toBlock: 'latest',
+                        filter: { roundId: roundId }
+                    },
+                    max: 1
+                })
             })
         }
     }, [roundId])
@@ -125,14 +141,14 @@ const Aggregator = ({
             <Card>
                 <CardHeader>History</CardHeader>
                 <CardBody>
-                    <AggregatorChart contract={contract} historyRange={historyRange} />
+                    <AggregatorChart data={graphData} historyRange={historyRange} />
                 </CardBody>
             </Card>
             <Card>
                 <CardHeader>Oracles data</CardHeader>
                 <CardBody>
                     <AggregatorTable
-                        contract={contract}
+                        responses={responses}
                         answerRender={answerRender}
                     />
                 </CardBody>
@@ -141,9 +157,18 @@ const Aggregator = ({
     )
 }
 
+const ResponseReceivedSelector = makeEventIndexedFilterSelector()
+
 const mapStateToProps = (state, props) => {
+    const ResponseReceivedIndexData = { address: props.contract, event: 'ResponseReceived' }
+    const ResponseReceivedIndexId = indexAddressEvent(ResponseReceivedIndexData)
+    const AnswerUpdatedIndexData = { address: props.contract, event: 'AnswerUpdated' }
+    const AnswerUpdatedIndexId = indexAddressEvent(AnswerUpdatedIndexData)
+
     return {
         contractState: contractByNameSelector(state, props.contract),
+        responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
+        graphData: graphDataSelector(state, AnswerUpdatedIndexId)
     }
 }
 
@@ -153,7 +178,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-const ConnectedAggregator = memo(connect(mapStateToProps, mapDispatchToProps)(Aggregator))
+const ConnectedAggregator = connect(mapStateToProps, mapDispatchToProps)(memo(withRenderCount(Aggregator)))
 
 const WrappedAggregator = (props) => {
 
@@ -167,7 +192,7 @@ const WrappedAggregator = (props) => {
                 }
 
                 return (
-                    <ConnectedAggregator historyRange={24} drizzle={drizzle} {...props} />
+                    <ConnectedAggregator historyRange={50} drizzle={drizzle} {...props} />
                 )
             }}
         </DrizzleContext.Consumer></div>)

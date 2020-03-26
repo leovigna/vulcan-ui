@@ -31,6 +31,7 @@ import {
     emptyArray
 } from "../../selectors"
 import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
+import { withRenderCount } from 'react-render-counter';
 
 
 
@@ -102,8 +103,10 @@ const mainChartOpts = {
     }
 };
 
-const AggregatorChart = ({ data = [], historyRange = 0, title }) => {
+const AggregatorChart = ({ data = [], historyRange = 0, count }) => {
     //const labels = [new Date(), moment(1585052820 * 1e3)]
+    console.debug(`AggregatorChart ${count}`)
+
     if (data.length < historyRange) {
         return (<div>Loading...</div>)
     }
@@ -148,19 +151,4 @@ const AggregatorChart = ({ data = [], historyRange = 0, title }) => {
     )
 }
 
-const mapStateToProps = (state, props) => {
-    const indexData = { address: props.contract, event: 'AnswerUpdated' }
-    const indexId = indexAddressEvent(indexData)
-
-    return {
-        data: graphDataSelector(state, indexId), //emptyArray
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-
-    }
-}
-
-export default memo(connect(mapStateToProps, mapDispatchToProps)(AggregatorChart), isEqual);
+export default memo(withRenderCount(AggregatorChart));
