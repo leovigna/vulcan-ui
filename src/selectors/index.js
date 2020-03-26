@@ -33,8 +33,8 @@ export const contractsSelector = ormCreateSelector(
             const { ref } = item;
             return {
                 ...ref,
-                answerRender: item.answerRenderFunction(),
-                answerTransform: item.answerTransformFunction(),
+                answerRender: item.answerRender.bind(item),
+                answerTransform: item.answerTransform.bind(item),
             };
         });
 
@@ -144,7 +144,7 @@ export const graphDataSelector = createCachedSelector(
         return Object.values(answersPerRound).map(v => {
             return ({
                 'x': moment.unix(v.returnValues.timestamp),
-                'y': v.returnValues.current * 1e-8
+                'y': v.returnValues.current
             })
         })
 

@@ -75,10 +75,10 @@ const Aggregator = ({
 
     const web3 = drizzle.web3._provider.networkVersion === networkId ? drizzle.web3 : web3ForNetworkId(networkId)
     drizzle.web3 = web3 //Override
-    console.debug(web3)
+    //console.debug(web3)
 
     useEffect(() => {
-        console.debug(drizzle.web3)
+        //console.debug(drizzle.web3)
         const latestRoundKey = drizzle.contracts[contract].methods.latestRound.cacheCall()
         const latestAnswerKey = drizzle.contracts[contract].methods.latestAnswer.cacheCall()
         const latestTimestampKey = drizzle.contracts[contract].methods.latestTimestamp.cacheCall()
@@ -102,7 +102,8 @@ const Aggregator = ({
     useEffect(() => {
         const web3Contract = drizzle.contracts[contract]
         const web3 = web3Contract.web3;
-        console.debug(web3)
+        //console.debug(web3)
+
         if (roundId) {
             fetchEvent({
                 event: web3Contract.events.ResponseReceived,
