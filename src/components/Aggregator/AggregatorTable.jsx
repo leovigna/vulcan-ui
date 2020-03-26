@@ -30,7 +30,7 @@ const AggregatorTable = ({
     responses = [],
     answerRender }) => {
 
-    console.debug(`AggregatorTable ${count}`)
+    console.debug(`[RENDER] AggregatorTable ${count}`)
 
     return (
         <Table hover responsive className="table-outline mb-0 d-sm-table">

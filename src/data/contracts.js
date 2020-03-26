@@ -1,7 +1,9 @@
 export const categories = [
     { name: 'USD', title: 'USD Pairs', path: 'usd' },
     { name: 'ETH', title: 'ETH Pairs', path: 'eth' },
-    { name: 'COVID-19', title: 'COVID-19 Cases', path: 'covid-19' }
+    { name: 'COVID-19', title: 'COVID-19 Cases', path: 'covid-19' },
+    { name: 'US Markets', title: 'US Markets', path: 'markets-us' },
+    { name: 'EU Markets', title: 'EU Markets', path: 'markets-eu' }
 ]
 
 export const contracts = {

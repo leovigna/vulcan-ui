@@ -1,11 +1,9 @@
 import { call, put, cancel, fork, take, takeEvery } from "redux-saga/effects"
-
-import web3Default from '../web3global'
 import { FETCH_TRANSACTION, CREATE_TRANSACTION, UPDATE_TRANSACTION } from "../actions"
 
 // fetch data from service using sagas
 export function* fetchTransaction(action) {
-    const web3 = action.web3 || web3Default
+    const web3 = action.web3
     const transactionHash = (action.payload.transactionHash || action.payload.hash)
 
     //yield put({ type: CREATE_TRANSACTION, payload: { transactionHash }, web3 })

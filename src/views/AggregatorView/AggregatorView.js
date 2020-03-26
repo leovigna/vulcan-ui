@@ -16,7 +16,7 @@ import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
 
 import Aggregator from "../../components/Aggregator/Aggregator"
 import { contracts } from "../../data/contracts"
-import { ropstenWeb3, mainnetWeb3 } from "../../web3global"
+import { web3ForNetworkId } from "../../web3global"
 
 class AggregatorView extends Component {
     static contextType = DrizzleContext.Context;
@@ -57,17 +57,11 @@ class AggregatorView extends Component {
             searchContract = searchResult[0][1]
         }
 
-        if (searchContract?.networkId) {
-            const networkId = this.props.networkId
-            if (searchContract.networkId != networkId) {
-                if (searchContract.networkId === '1') {
-                    drizzle.web3 = mainnetWeb3
-                    this.props.changeNetworkId(1)
-                } else if (searchContract.networkId === '3') {
-                    drizzle.web3 = ropstenWeb3
-                    this.props.changeNetworkId(3)
-                }
-            }
+        const networkId = searchContract?.networkId || '1'
+        if (networkId) {
+            console.debug(`NETWORK ${networkId}`)
+            const web3 = drizzle.web3.givenProvider.networkVersion === networkId ? drizzle.web3 : web3ForNetworkId(networkId)
+            drizzle.web3 = web3
         }
 
         const address = searchContract?.address || matchParams.address || queryParams.address;
@@ -95,7 +89,7 @@ class AggregatorView extends Component {
             <div className="animated fadeIn">
                 <Row>
                     <Col>
-                        <Aggregator contract={address} answerRender={answerRender} title={title} />
+                        <Aggregator networkId={networkId} contract={address} answerRender={answerRender} title={title} />
                     </Col>
                 </Row>
             </div>
@@ -115,4 +109,4 @@ function mapDipatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDipatchToProps)(AggregatorView);
+export default AggregatorView;//connect(mapStateToProps, mapDipatchToProps)(AggregatorView);

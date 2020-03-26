@@ -33,6 +33,8 @@ import AggregatorTable from "./AggregatorTable"
 import AggregatorHead from "./AggregatorHead"
 
 import EtherScan from "./EtherScan"
+import { web3ForNetworkId } from '../../web3global'
+
 
 import {
     eventSelector,
@@ -49,6 +51,7 @@ import {
 const { ContractData } = newContextComponents
 
 const Aggregator = ({
+    networkId = '1',
     historyRange = 10,
     drizzle,
     contract,
@@ -62,21 +65,27 @@ const Aggregator = ({
     blocks = {},
     graphData = [],
     count }) => {
-    console.debug(`Aggregator ${count}`)
+    console.debug(`[RENDER] AggregatorMain ${count}`)
 
-    const [roundIdKey, setRoundIdKey] = useState()
+    const [latestRoundKey, setLatestRoundKey] = useState()
+    const [latestAnswerKey, setLatestAnswerKey] = useState()
+    const [latestTimestampKey, setLatestTimestampKey] = useState()
     const [roundId, setRoundId] = useState()
 
     useEffect(() => {
-        const key = drizzle.contracts[contract].methods.latestRound.cacheCall()
-        setRoundIdKey(key)
+        const latestRoundKey = drizzle.contracts[contract].methods.latestRound.cacheCall()
+        const latestAnswerKey = drizzle.contracts[contract].methods.latestAnswer.cacheCall()
+        const latestTimestampKey = drizzle.contracts[contract].methods.latestTimestamp.cacheCall()
+        setLatestRoundKey(latestRoundKey)
+        setLatestAnswerKey(latestAnswerKey)
+        setLatestTimestampKey(latestTimestampKey)
     }, []);
 
     useEffect(() => {
-        if (roundIdKey) {
+        if (latestRoundKey) {
             const latestRound = contractState?.latestRound
             if (latestRound) {
-                const newRound = latestRound[roundIdKey]?.value;
+                const newRound = latestRound[latestRoundKey]?.value;
                 if (newRound != roundId) {
                     setRoundId(newRound)
                 }
@@ -86,9 +95,13 @@ const Aggregator = ({
 
     useEffect(() => {
         const web3Contract = drizzle.contracts[contract]
+        //console.debug(networkId)
+        console.debug(drizzle.web3.currentProvider)
+        console.debug(web3ForNetworkId(networkId).currentProvider)
+        const web3 = drizzle.web3.givenProvider.networkVersion === networkId ? drizzle.web3 : web3ForNetworkId(networkId)
+        //drizzle.web3 = web3
+
         if (roundId) {
-
-
             fetchEvent({
                 event: web3Contract.events.ResponseReceived,
                 name: contract,
@@ -97,7 +110,7 @@ const Aggregator = ({
                     toBlock: 'latest',
                     filter: { answerId: roundId }
                 },
-                //web3: drizzleState.web3,
+                web3,
                 max: 100
             })
 
@@ -105,16 +118,7 @@ const Aggregator = ({
             for (let i = roundId - historyRange; i <= roundId; i++) {
                 pastRounds.push(i)
             }
-            /*
-            console.debug(pastRounds)
 
-            console.debug(web3Contract)
-            web3Contract.events.AnswerUpdated({
-                fromBlock: 0,
-                toBlock: 'latest',
-                filter: { roundId }
-            }, (e) => console.debug(`EVENT ${e}`))
-            */
             pastRounds.forEach((roundId) => {
                 fetchEvent({
                     event: web3Contract.events.AnswerUpdated,
@@ -124,18 +128,28 @@ const Aggregator = ({
                         toBlock: 'latest',
                         filter: { roundId: roundId }
                     },
+                    web3,
                     max: 1
                 })
             })
         }
     }, [roundId])
 
+    const latestRound = contractState?.latestRound[latestRoundKey]?.value
+    const latestAnswer = contractState?.latestAnswer[latestAnswerKey]?.value
+    const latestTimestamp = contractState?.latestTimestamp[latestTimestampKey]?.value
+
     return (
         <div>
             <Card>
                 <CardHeader>{title}</CardHeader>
                 <CardBody>
-                    <AggregatorHead contract={contract} answerRender={answerRender} />
+                    <AggregatorHead
+                        address={contract}
+                        latestRound={latestRound}
+                        latestAnswer={latestAnswer}
+                        latestTimestamp={latestTimestamp}
+                        answerRender={answerRender} />
                 </CardBody>
             </Card>
             <Card>
@@ -174,7 +188,7 @@ const mapStateToProps = (state, props) => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchEvent: ({ event, web3, name, options, max }) => dispatch({ type: FETCH_EVENT, name, event, options, max }),
+        fetchEvent: ({ event, web3, name, options, max }) => dispatch({ type: FETCH_EVENT, name, event, options, max, web3 }),
     }
 }
 

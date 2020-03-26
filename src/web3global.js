@@ -5,9 +5,17 @@ let web3;
 export const mainnetWeb3 = new Web3(process.env.REACT_APP_INFURA_MAINNET_WSS)
 export const ropstenWeb3 = new Web3(process.env.REACT_APP_INFURA_ROPSTEN_WSS)
 
+export const web3ForNetworkId = (id) => {
+    if (id === '1' || id === '0x1') return mainnetWeb3;
+    else if (id === '3' || id === '0x3') return ropstenWeb3;
+}
+
 
 if (window.ethereum) {
+    window.ethereum.autoRefreshOnNetworkChange = false
+
     web3 = new Web3(window.ethereum);
+
     try {
         window.ethereum.enable().then(function () {
             // User has allowed account access to DApp...

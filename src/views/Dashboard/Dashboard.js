@@ -25,13 +25,8 @@ class Dashboard extends Component {
         const queryParams = qs.parse(this.props.location.category, { ignoreQueryPrefix: true });
         const matchParams = this.props.match.params;
         const category = matchParams.category || queryParams.category;
-        let displayContracts = Object.entries(contracts);
-
-        if (category) {
-            displayContracts = displayContracts.filter(([_, v]) => v.path.startsWith(category))
-        } else {
+        if (!category) {
             //Display categories
-
             return (
                 <div className="animated fadeIn">
                     <Row>
@@ -50,8 +45,9 @@ class Dashboard extends Component {
                     </Row>
                 </div>
             )
-
         }
+
+        let displayContracts = Object.entries(contracts).filter(([_, v]) => v.path.startsWith(category))
 
         return (
             <div className="animated fadeIn">

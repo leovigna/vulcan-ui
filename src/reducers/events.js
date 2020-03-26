@@ -3,7 +3,6 @@ import { eventChannel, END } from 'redux-saga'
 import { EventActions } from "@drizzle/store"
 import dotProp from "dot-prop-immutable";
 
-import web3Default, { mainnetWeb3 } from '../web3global'
 import {
     FETCH_EVENT,
     CREATE_EVENT
@@ -39,8 +38,7 @@ function web3EventChannel(eventSelector, options, max) {
 
 // fetch data from service using sagas
 export function* fetchEvent(action) {
-    console.warn('USING MAINNET DEFAULT')
-    const web3 = action.web3 || mainnetWeb3 //web3Default
+    const web3 = action.web3
     const web3Event = action.event
     const options = action.options
     const name = action.name //Drizzle Contract name

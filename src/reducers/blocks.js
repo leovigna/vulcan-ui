@@ -1,5 +1,4 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import web3Default from '../web3global'
 import { FETCH_BLOCK, CREATE_BLOCK, UPDATE_BLOCK } from "../actions"
 
 // reducers
@@ -7,7 +6,7 @@ import { FETCH_BLOCK, CREATE_BLOCK, UPDATE_BLOCK } from "../actions"
 
 // fetch data from service using sagas
 export function* fetchBlock(action) {
-    const web3 = action.web3 || web3Default
+    const web3 = action.web3
     const blockNumber = (action.payload.blockNumber || action.payload.number)
 
     const block = yield call(web3.eth.getBlock, blockNumber)
