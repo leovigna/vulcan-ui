@@ -14,10 +14,15 @@ import { createStore, combineReducers } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
+const persistedWhitelist = ['customContracts']
+if (process.env.NODE_ENV === 'production') {
+    persistedWhitelist.push('orm')
+}
+
 const persistConfig = {
     key: 'persisted',
     storage,
-    whitelist: ['customContracts', 'orm']
+    whitelist: persistedWhitelist
 }
 
 const appReducers = {

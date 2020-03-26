@@ -103,7 +103,10 @@ const mainChartOpts = {
     }
 };
 
-const AggregatorChart = ({ data = [], historyRange = 0, count }) => {
+const AggregatorChart = ({
+    data = [], historyRange = 0,
+    count,
+    answerTransform = (v) => v }) => {
     //const labels = [new Date(), moment(1585052820 * 1e3)]
     console.debug(`[RENDER] AggregatorChart ${count}`)
 
@@ -120,7 +123,12 @@ const AggregatorChart = ({ data = [], historyRange = 0, count }) => {
                 borderColor: brandInfo,
                 pointHoverBackgroundColor: '#fff',
                 borderWidth: 2,
-                data: data,
+                data: data.map((d) => {
+                    return {
+                        'x': d.x,
+                        'y': answerTransform(d.y)
+                    }
+                }),
             }
         ],
     };

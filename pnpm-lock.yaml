@@ -53,6 +53,7 @@ dependencies:
   reselect: 4.0.0
   sass-loader: 8.0.2_node-sass@4.13.1
   simple-line-icons: 2.4.1
+  sprintf-js: 1.1.2
   typescript: 3.7.5
   web3: 1.2.6
 devDependencies:
@@ -12628,6 +12629,10 @@ packages:
   /sprintf-js/1.0.3:
     resolution:
       integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
+  /sprintf-js/1.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug==
   /sshpk/1.16.1:
     dependencies:
       asn1: 0.2.4
@@ -14950,5 +14955,6 @@ specifiers:
   reselect: ^4.0.0
   sass-loader: ^8.0.2
   simple-line-icons: ^2.4.1
+  sprintf-js: ^1.1.2
   typescript: ~3.7.2
   web3: ^1.2.6

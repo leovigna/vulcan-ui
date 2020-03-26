@@ -4,6 +4,8 @@ let web3;
 // Modern DApp Browsers
 export const mainnetWeb3 = new Web3(process.env.REACT_APP_INFURA_MAINNET_WSS)
 export const ropstenWeb3 = new Web3(process.env.REACT_APP_INFURA_ROPSTEN_WSS)
+mainnetWeb3._provider.networkVersion = '1'
+ropstenWeb3._provider.networkVersion = '3'
 
 export const web3ForNetworkId = (id) => {
     if (id === '1' || id === '0x1') return mainnetWeb3;

@@ -60,6 +60,7 @@
         "reselect": "^4.0.0",
         "sass-loader": "^8.0.2",
         "simple-line-icons": "^2.4.1",
+        "sprintf-js": "^1.1.2",
         "typescript": "~3.7.2",
         "web3": "^1.2.6"
     },

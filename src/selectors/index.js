@@ -26,6 +26,23 @@ export const objectCacheSelector = createCachedSelector(
     ((...args) => hash(args[args.length - 1]))
 
 
+export const contractsSelector = ormCreateSelector(
+    orm,
+    (session) => {
+        const indexes = session.Contract.all().toModelArray().map(item => {
+            const { ref } = item;
+            return {
+                ...ref,
+                answerRender: item.answerRenderFunction(),
+                answerTransform: item.answerTransformFunction(),
+            };
+        });
+
+        if (indexes.length == 0) return emptyArray;
+        return indexes;
+    }
+);
+
 /*
 export const events = ormCreateSelector(orm.Event)
 //export const eventById = ormCreateSelector(orm.Event.withId)

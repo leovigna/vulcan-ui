@@ -56,6 +56,7 @@ const Aggregator = ({
     drizzle,
     contract,
     contractState = {},
+    answerTransform = (v) => v,
     answerRender = (v) => v,
     title,
     fetchEvent,
@@ -72,7 +73,12 @@ const Aggregator = ({
     const [latestTimestampKey, setLatestTimestampKey] = useState()
     const [roundId, setRoundId] = useState()
 
+    const web3 = drizzle.web3._provider.networkVersion === networkId ? drizzle.web3 : web3ForNetworkId(networkId)
+    drizzle.web3 = web3 //Override
+    console.debug(web3)
+
     useEffect(() => {
+        console.debug(drizzle.web3)
         const latestRoundKey = drizzle.contracts[contract].methods.latestRound.cacheCall()
         const latestAnswerKey = drizzle.contracts[contract].methods.latestAnswer.cacheCall()
         const latestTimestampKey = drizzle.contracts[contract].methods.latestTimestamp.cacheCall()
@@ -95,12 +101,8 @@ const Aggregator = ({
 
     useEffect(() => {
         const web3Contract = drizzle.contracts[contract]
-        //console.debug(networkId)
-        console.debug(drizzle.web3.currentProvider)
-        console.debug(web3ForNetworkId(networkId).currentProvider)
-        const web3 = drizzle.web3.givenProvider.networkVersion === networkId ? drizzle.web3 : web3ForNetworkId(networkId)
-        //drizzle.web3 = web3
-
+        const web3 = web3Contract.web3;
+        console.debug(web3)
         if (roundId) {
             fetchEvent({
                 event: web3Contract.events.ResponseReceived,
@@ -155,7 +157,7 @@ const Aggregator = ({
             <Card>
                 <CardHeader>History</CardHeader>
                 <CardBody>
-                    <AggregatorChart data={graphData} historyRange={historyRange} />
+                    <AggregatorChart data={graphData} historyRange={historyRange} answerTransform={answerTransform} />
                 </CardBody>
             </Card>
             <Card>
@@ -192,24 +194,12 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-const ConnectedAggregator = connect(mapStateToProps, mapDispatchToProps)(memo(withRenderCount(Aggregator)))
+function areEqual(prevProps, nextProps) {
+    const areEqual = Object.keys(prevProps).map((k) => prevProps[k] === nextProps[k])
 
-const WrappedAggregator = (props) => {
+    areEqual.push(prevProps.drizzle.web3._provider.networkVersion === nextProps.drizzle.web3._provider.networkVersion)
 
-    return (<div>
-        <DrizzleContext.Consumer>
-            {drizzleContext => {
-                const { drizzle, initialized } = drizzleContext;
-
-                if (!initialized) {
-                    return "Loading..."
-                }
-
-                return (
-                    <ConnectedAggregator historyRange={50} drizzle={drizzle} {...props} />
-                )
-            }}
-        </DrizzleContext.Consumer></div>)
+    return areEqual.reduce((acc, val) => acc && val);
 }
 
-export default WrappedAggregator;
+export default connect(mapStateToProps, mapDispatchToProps)(memo(withRenderCount(Aggregator), areEqual));

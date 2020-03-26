@@ -14,6 +14,9 @@ import {
     CREATE_EVENT_CT_INDEX,
     UPDATE_EVENT_CT_INDEX,
     REMOVE_EVENT_CT_INDEX,
+    CREATE_CONTRACT,
+    UPDATE_CONTRACT,
+    REMOVE_CONTRACT
 } from "../actions"
 
 import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
@@ -23,7 +26,7 @@ export function ormReducer(dbState, action) {
 
     // Session-specific Models are available
     // as properties on the Session instance.
-    const { Transaction, Block, Event, EventByContractTypeIndex } = sess;
+    const { Transaction, Block, Event, EventByContractTypeIndex, Contract } = sess;
     let transactionHash;
     let blockNumber;
     switch (action.type) {
@@ -77,6 +80,15 @@ export function ormReducer(dbState, action) {
             break;
         case REMOVE_EVENT_CT_INDEX:
             EventByContractTypeIndex.withId(action.payload.contractTypeIndexId).delete();
+            break;
+        case CREATE_CONTRACT:
+            Contract.create(action.payload);
+            break;
+        case UPDATE_CONTRACT:
+            Contract.withId(action.payload.address).update(action.payload);
+            break;
+        case REMOVE_CONTRACT:
+            Contract.withId(action.payload.address).delete();
             break;
 
     }

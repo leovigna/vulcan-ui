@@ -11,12 +11,14 @@ import qs from 'qs';
 import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
 import { NETWORK_ID_CHANGED } from "../../reducers/web3"
+import { CREATE_CONTRACT } from "../../actions"
 
 import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
 
 import Aggregator from "../../components/Aggregator/Aggregator"
-import { contracts } from "../../data/contracts"
+import { contracts as contractsDefault } from "../../data/contracts"
 import { web3ForNetworkId } from "../../web3global"
+import { contractsSelector } from "../../selectors"
 
 class AggregatorView extends Component {
     static contextType = DrizzleContext.Context;
@@ -39,6 +41,12 @@ class AggregatorView extends Component {
     }
     */
 
+    componentDidMount() {
+        //createContract()
+        console.debug('DIDMOUNT')
+        Object.values(contractsDefault).forEach(this.props.createContract)
+    }
+
     render() {
         const queryParams = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
         const matchParams = this.props.match.params;
@@ -53,25 +61,22 @@ class AggregatorView extends Component {
         let searchContract;
         if (category && name) {
             const searchPath = `${category}/${name}`
-            const searchResult = Object.entries(contracts).filter(([_, c]) => c.path === searchPath)
-            searchContract = searchResult[0][1]
+            searchContract = Object.values(this.props.contracts).find((c) => c.path === searchPath)
         }
 
         const networkId = searchContract?.networkId || '1'
-        if (networkId) {
-            //console.debug(`NETWORK ${networkId}`)
-            const web3 = drizzle.web3.givenProvider.networkVersion === networkId ? drizzle.web3 : web3ForNetworkId(networkId)
-            drizzle.web3 = web3
-        }
-
         const address = searchContract?.address || matchParams.address || queryParams.address;
         const answerRender = searchContract?.answerRender || ((value) => value);
+        const answerTransform = searchContract?.answerTransform || ((value) => value);
 
         const titleString = searchContract?.title || 'Aggregator'
         const title = `${titleString} at ${address}`;
 
 
         if (!drizzle.contracts[address]) {
+            const web3 = drizzle.web3._provider.networkVersion === networkId ? drizzle.web3 : web3ForNetworkId(networkId)
+            drizzle.web3 = web3
+
             const web3Contract = new drizzle.web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
 
             const contractConfig = {
@@ -82,6 +87,7 @@ class AggregatorView extends Component {
             // Or using the Drizzle context object
             drizzle.addContract(contractConfig, events);
 
+
             return <div>Loading...</div>;
         }
 
@@ -89,7 +95,7 @@ class AggregatorView extends Component {
             <div className="animated fadeIn">
                 <Row>
                     <Col>
-                        <Aggregator networkId={networkId} contract={address} answerRender={answerRender} title={title} />
+                        <Aggregator historyRange={50} drizzle={drizzle} networkId={networkId} contract={address} answerTransform={answerTransform} answerRender={answerRender} title={title} />
                     </Col>
                 </Row>
             </div>
@@ -99,14 +105,18 @@ class AggregatorView extends Component {
 
 function mapStateToProps(state, ownProps) {
     const { web3 } = state
-    return { networkId: web3?.networkId }
+    return {
+        networkId: web3?.networkId,
+        contracts: contractsSelector(state)
+    }
 }
 
 function mapDipatchToProps(dispatch) {
     return {
         changeNetworkId: (networkId) => dispatch({ type: NETWORK_ID_CHANGED, networkId }),
+        createContract: (payload) => dispatch({ type: CREATE_CONTRACT, payload }),
     }
 }
 
 
-export default AggregatorView;//connect(mapStateToProps, mapDipatchToProps)(AggregatorView);
+export default connect(mapStateToProps, mapDipatchToProps)(AggregatorView);
