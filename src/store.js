@@ -9,6 +9,7 @@ import { customContractsReducer } from "./reducers/customContracts";
 import { neworkIdReducer } from "./reducers/web3";
 import { eventsRootSaga } from "./reducers/events";
 import { ormReducer } from './reducers/orm';
+import { ormRootSaga } from './sagas/orm';
 
 import { createStore, combineReducers } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
@@ -33,7 +34,7 @@ const appReducers = {
     web3: neworkIdReducer,
 }
 
-const appSagas = [transactionRootSaga, blocksRootSaga, eventsRootSaga]
+const appSagas = [transactionRootSaga, blocksRootSaga, eventsRootSaga, ormRootSaga]
 const appMiddlewares = [actionDebugger, eventAddNotifier, transactionAddNotifier, contractAddNotifier]
 const config = {
     drizzleOptions,

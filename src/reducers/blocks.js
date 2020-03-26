@@ -1,17 +1,16 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { FETCH_BLOCK, CREATE_BLOCK, UPDATE_BLOCK } from "../actions"
-
+import { web3ForNetworkId } from "../web3global"
 // reducers
 
 
 // fetch data from service using sagas
 export function* fetchBlock(action) {
-    const web3 = action.web3
+    const web3 = web3ForNetworkId(action.payload.networkId)
     const blockNumber = (action.payload.blockNumber || action.payload.number)
 
     const block = yield call(web3.eth.getBlock, blockNumber)
-    yield put({ type: CREATE_BLOCK, payload: block, web3 })
-    //yield put({ type: UPDATE_BLOCK, payload: block, web3 })
+    yield put({ type: CREATE_BLOCK, payload: { ...block, networkId: action.payload.networkId }, })
 }
 
 // Combine all your redux concerns

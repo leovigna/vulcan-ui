@@ -7,10 +7,15 @@ import {
     FETCH_EVENT,
     CREATE_EVENT
 } from "../actions"
+import { web3ForNetworkId } from "../web3global"
+
 
 // actions
-function web3EventChannel(eventSelector, options, max) {
-    const events = eventSelector(options);
+function web3EventChannel(web3Contract, eventName, options, max) {
+    console.debug('web3EventChannel')
+    console.debug(web3Contract)
+
+    const events = web3Contract.events[eventName](options);
     let count = 0;
     if (!max) { max = 100 };
 
@@ -38,32 +43,31 @@ function web3EventChannel(eventSelector, options, max) {
 
 // fetch data from service using sagas
 export function* fetchEvent(action) {
-    const web3 = action.web3
-    const web3Event = action.event
-    const options = action.options
-    const name = action.name //Drizzle Contract name
-    const max = action.max || 100
-    const chan = yield call(web3EventChannel, web3Event, options, max)
+    const { eventName, web3Contract, options, name } = action.payload
+    const web3 = action.payload.web3 || web3Contract._provider || web3ForNetworkId(action.networkId)
+    const max = action.payload.max || 100
+    const chan = yield call(web3EventChannel, web3Contract, eventName, options, max)
     try {
         while (true) {
-            // take(END) will cause the saga to terminate by jumping to the finally block
+            //take('END')// will cause the saga to terminate by jumping to the finally block
             const e = yield take(chan)
             const { message, event, error } = e
             if (message === 'data') {
                 //yield put({ type: EventActions.EVENT_FIRED, name, event, error })
-                yield put({ type: CREATE_EVENT, payload: event, web3 })
+                yield put({ type: CREATE_EVENT, payload: { ...event, networkId: action.networkId }, web3 })
+
             } else if (message === 'error') {
                 yield put({ type: EventActions.EVENT_ERROR, name, event, error })
             } else if (message === 'changed') {
                 yield put({ type: EventActions.EVENT_CHANGED, name, event, error })
             }
         }
+    } catch (error) {
+        console.error(error)
     } finally {
         console.log('Event subscriber terminated')
     }
 }
-
-// Combine all your redux concerns
 
 // app root saga
 export function* eventsRootSaga() {

@@ -42,9 +42,24 @@ class AggregatorView extends Component {
     */
 
     componentDidMount() {
-        //createContract()
-        console.debug('DIDMOUNT')
-        Object.values(contractsDefault).forEach(this.props.createContract)
+        const { drizzle } = this.context;
+
+        Object.values(contractsDefault).forEach((c) => {
+            const { networkId, address } = c
+            const web3 = web3ForNetworkId(networkId)
+            const web3Contract = new web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
+            const events = ["AnswerUpdated", "ResponseReceived"]
+            /*
+            const contractConfig = {
+                contractName: address,
+                web3Contract
+            }
+            
+            drizzle.addContract(contractConfig, events);
+            */
+
+            this.props.createContract({ ...c, web3Contract, events })
+        })
     }
 
     render() {
@@ -74,9 +89,8 @@ class AggregatorView extends Component {
 
 
         if (!drizzle.contracts[address]) {
-            const web3 = drizzle.web3._provider.networkVersion === networkId ? drizzle.web3 : web3ForNetworkId(networkId)
-            drizzle.web3 = web3
 
+            /*
             const web3Contract = new drizzle.web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
 
             const contractConfig = {
@@ -86,6 +100,7 @@ class AggregatorView extends Component {
             const events = ["AnswerUpdated", "ResponseReceived"]
             // Or using the Drizzle context object
             drizzle.addContract(contractConfig, events);
+            */
 
 
             return <div>Loading...</div>;

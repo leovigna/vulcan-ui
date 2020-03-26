@@ -50,7 +50,9 @@ Contract.fields = {
     address: attr(),
     path: attr(),
     answerRenderFormat: attr(),
-    networkId: attr()
+    networkId: attr(),
+    web3Contract: attr(),
+    events: attr()
 };
 
 

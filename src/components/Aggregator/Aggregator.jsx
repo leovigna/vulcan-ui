@@ -102,11 +102,13 @@ const Aggregator = ({
     useEffect(() => {
         const web3Contract = drizzle.contracts[contract]
         const web3 = web3Contract.web3;
+        console.debug(web3Contract)
         //console.debug(web3)
 
         if (roundId) {
             fetchEvent({
-                event: web3Contract.events.ResponseReceived,
+                eventName: 'ResponseReceived',
+                web3Contract: web3Contract,//.events.ResponseReceived,
                 name: contract,
                 options: {
                     fromBlock: 0,
@@ -124,7 +126,8 @@ const Aggregator = ({
 
             pastRounds.forEach((roundId) => {
                 fetchEvent({
-                    event: web3Contract.events.AnswerUpdated,
+                    eventName: 'AnswerUpdated',
+                    web3Contract: web3Contract,
                     name: contract,
                     options: {
                         fromBlock: 0,
@@ -191,7 +194,7 @@ const mapStateToProps = (state, props) => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchEvent: ({ event, web3, name, options, max }) => dispatch({ type: FETCH_EVENT, name, event, options, max, web3 }),
+        fetchEvent: (data) => { },//dispatch({ type: FETCH_EVENT, ...data }),
     }
 }
 
