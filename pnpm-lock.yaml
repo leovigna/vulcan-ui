@@ -30,7 +30,9 @@ dependencies:
   moment: 2.24.0
   node-sass: 4.13.1
   npm: 6.14.3
+  object-hash: 2.0.3
   qs: 6.9.1
+  re-reselect: 3.4.0_reselect@4.0.0
   react: 16.13.0
   react-app-polyfill: 1.0.6
   react-chartjs-2: 2.9.0_d7255fa9c129e8b0846d17313f30fa0a
@@ -44,6 +46,8 @@ dependencies:
   reactstrap: 8.4.1_react-dom@16.13.0+react@16.13.0
   recompose: 0.30.0_react@16.13.0
   redux: 4.0.5
+  redux-orm: 0.16.1
+  redux-orm-proptypes: 0.1.0
   redux-persist: 6.0.0_redux@4.0.5
   redux-saga: 0.16.2
   reselect: 4.0.0
@@ -6771,6 +6775,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-O3sR1/opvCDGLEVcvrGTMtLac8GJ5IwZC4puPrLuRj3l7ICKvkmA0vGuU9OW8mV9WIBRnaxp5GJh9IEAaNOoYg==
+  /immutable-ops/0.7.0:
+    dependencies:
+      '@babel/runtime': 7.9.2
+      ramda: 0.26.1
+    dev: false
+    resolution:
+      integrity: sha512-5tOOKVgMr3fzSX92vMJTf8CchlVxSmMm1m7nnv4pXZ6w5feLmBFIAFA1arQ+TM785kd0nzV1kUvDWlytpEnQZw==
   /import-cwd/2.1.0:
     dependencies:
       import-from: 2.1.0
@@ -11057,6 +11068,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-635iZ1SN3t+4mcG5Dlc3RVnN234=
+  /ramda/0.26.1:
+    dev: false
+    resolution:
+      integrity: sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
   /randexp/0.4.6:
     dependencies:
       discontinuous-range: 1.0.0
@@ -11101,6 +11116,22 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-4Oz8DUIwdvoa5qMJelxipzi/iJIi40O5cGV1wNYp5hvZP8ZN0T+jiNkL0QepXs+EsQ9XJ8ipEDoiH70ySUJP3Q==
+  /re-reselect/3.4.0_reselect@3.0.1:
+    dependencies:
+      reselect: 3.0.1
+    dev: false
+    peerDependencies:
+      reselect: '>1.0.0'
+    resolution:
+      integrity: sha512-JsecfN+JlckncVXTWFWjn0Vk6uInl8GSf4eEd9tTk5qXHlgqkPdILpnYpgZcISXNYAzvfvsCZviaDk8AxyS5sg==
+  /re-reselect/3.4.0_reselect@4.0.0:
+    dependencies:
+      reselect: 4.0.0
+    dev: false
+    peerDependencies:
+      reselect: '>1.0.0'
+    resolution:
+      integrity: sha512-JsecfN+JlckncVXTWFWjn0Vk6uInl8GSf4eEd9tTk5qXHlgqkPdILpnYpgZcISXNYAzvfvsCZviaDk8AxyS5sg==
   /react-app-polyfill/1.0.6:
     dependencies:
       core-js: 3.6.4
@@ -11564,6 +11595,22 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==
+  /redux-orm-proptypes/0.1.0:
+    dependencies:
+      lodash: 4.17.15
+    dev: false
+    resolution:
+      integrity: sha1-9TA5RUGa4ivxrV8aR5pbobbaW6A=
+  /redux-orm/0.16.1:
+    dependencies:
+      '@babel/runtime': 7.9.2
+      immutable-ops: 0.7.0
+      lodash: 4.17.15
+      re-reselect: 3.4.0_reselect@3.0.1
+      reselect: 3.0.1
+    dev: false
+    resolution:
+      integrity: sha512-bXzGW10g67LVO5YXaVpF3GMLwMRYyXfspsZmIBNZrwhzaQM0nmTb5cGrWTj5VUv9TkHihMyFk2kJQCLtiQDRlg==
   /redux-persist/6.0.0_redux@4.0.5:
     dependencies:
       redux: 4.0.5
@@ -11778,6 +11825,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+  /reselect/3.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-79qpjqdFEyTQkrKyFjpqHXqaIUc=
   /reselect/4.0.0:
     dev: false
     resolution:
@@ -14859,8 +14910,10 @@ specifiers:
   moment: ^2.24.0
   node-sass: ^4.13.1
   npm: ^6.14.3
+  object-hash: ^2.0.3
   prettier: ^1.19.1
   qs: ^6.9.1
+  re-reselect: ^3.4.0
   react: ^16.13.0
   react-app-polyfill: ^1.0.6
   react-chartjs-2: ^2.9.0
@@ -14874,6 +14927,8 @@ specifiers:
   reactstrap: ^8.4.1
   recompose: ^0.30.0
   redux: ^4.0.5
+  redux-orm: ^0.16.1
+  redux-orm-proptypes: ^0.1.0
   redux-persist: ^6.0.0
   redux-saga: ^0.16
   reselect: ^4.0.0

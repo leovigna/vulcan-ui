@@ -2,13 +2,13 @@ import { generateStore } from '@drizzle/store'
 
 import drizzleOptions from "./drizzleOptions"
 //import { loadLocalStorage, saveLocalStorage } from "./localstorage"
-import { contractEventNotifier, contractAddNotifier } from "./middleware"
-import { txReducer, txRootSaga } from "./reducers/txcache";
-import { todosReducer, todosRootSaga } from "./reducers/todos";
-import { blocksReducer, blocksRootSaga } from "./reducers/blocks";
+import { actionDebugger, eventAddNotifier, contractAddNotifier, transactionAddNotifier } from "./middleware"
+import { transactionRootSaga } from "./reducers/transactions";
+import { blocksRootSaga } from "./reducers/blocks";
 import { customContractsReducer } from "./reducers/customContracts";
 import { neworkIdReducer } from "./reducers/web3";
-import { contractEventsReducer, eventsRootSaga } from "./reducers/events";
+import { eventsRootSaga } from "./reducers/events";
+import { ormReducer } from './reducers/orm';
 
 import { createStore, combineReducers } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
@@ -24,14 +24,12 @@ const appReducers = {
     persisted: persistReducer(persistConfig, combineReducers({
         customContracts: customContractsReducer,
     })),
-    tx: txReducer,
-    blocks: blocksReducer,
     web3: neworkIdReducer,
-    events: contractEventsReducer
+    orm: ormReducer
 }
 
-const appSagas = [todosRootSaga, txRootSaga, blocksRootSaga, eventsRootSaga]
-const appMiddlewares = [contractEventNotifier, contractAddNotifier]
+const appSagas = [transactionRootSaga, blocksRootSaga, eventsRootSaga]
+const appMiddlewares = [actionDebugger, eventAddNotifier, transactionAddNotifier, contractAddNotifier]
 const config = {
     drizzleOptions,
     appReducers,
@@ -40,6 +38,7 @@ const config = {
     disableReduxDevTools: false // enable ReduxDevTools!
 }
 const store = generateStore(config)
+
 
 export const persistor = persistStore(store);
 export default store;

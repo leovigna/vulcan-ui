@@ -3,49 +3,13 @@ import { eventChannel, END } from 'redux-saga'
 import { EventActions } from "@drizzle/store"
 import dotProp from "dot-prop-immutable";
 
-
-import web3Default from '../web3global'
+import web3Default, { mainnetWeb3 } from '../web3global'
+import {
+    FETCH_EVENT,
+    CREATE_EVENT
+} from "../actions"
 
 // actions
-export const EVENT_FETCH = 'VULCAN/EVENT_FETCH'
-export const EVENT_ADDED = 'VULCAN/EVENT_ADDED'
-
-// reducers
-export const contractEventsReducer = (state = {}, action) => {
-    if (action.type === EVENT_ADDED) {
-        const contractName = action.name
-        const eventName = action.event.event
-
-        let currState = state;
-        if (!currState[contractName]) {
-            const d = {}
-            d[eventName] = []
-            currState = dotProp.set(
-                state,
-                `${contractName}`,
-                _ => { return { [eventName]: [] } }
-            );
-        } else if (!currState[contractName][eventName]) {
-            currState = dotProp.set(
-                currState,
-                `${contractName}`,
-                c => { return { ...c, [eventName]: [] } }
-            );
-            //console.debug(currState)
-        }
-
-        const updatedWithEvent = dotProp.set(
-            currState,
-            `${contractName}.${eventName}`,
-            events => events.concat(action.event)
-        );
-
-        //console.debug(updatedWithEvent)
-        return updatedWithEvent;
-    }
-    return state
-}
-
 function web3EventChannel(eventSelector, options, max) {
     const events = eventSelector(options);
     let count = 0;
@@ -75,6 +39,8 @@ function web3EventChannel(eventSelector, options, max) {
 
 // fetch data from service using sagas
 export function* fetchEvent(action) {
+    console.warn('USING MAINNET DEFAULT')
+    const web3 = action.web3 || mainnetWeb3 //web3Default
     const web3Event = action.event
     const options = action.options
     const name = action.name //Drizzle Contract name
@@ -86,8 +52,8 @@ export function* fetchEvent(action) {
             const e = yield take(chan)
             const { message, event, error } = e
             if (message === 'data') {
-                yield put({ type: EventActions.EVENT_FIRED, name, event, error })
-                yield put({ type: EVENT_ADDED, name, event, error })
+                //yield put({ type: EventActions.EVENT_FIRED, name, event, error })
+                yield put({ type: CREATE_EVENT, payload: event, web3 })
             } else if (message === 'error') {
                 yield put({ type: EventActions.EVENT_ERROR, name, event, error })
             } else if (message === 'changed') {
@@ -103,5 +69,5 @@ export function* fetchEvent(action) {
 
 // app root saga
 export function* eventsRootSaga() {
-    yield takeEvery(EVENT_FETCH, fetchEvent)
+    yield takeEvery(FETCH_EVENT, fetchEvent)
 }

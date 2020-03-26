@@ -25,7 +25,13 @@ import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
 import { Chart, Bar, Line } from 'react-chartjs-2';
 import moment from "moment"
-import { merge } from 'lodash';
+import { merge, isEqual } from 'lodash';
+import {
+    graphDataSelector,
+    emptyArray
+} from "../../selectors"
+import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
+
 
 
 const brandPrimary = getStyle('--primary')
@@ -96,8 +102,12 @@ const mainChartOpts = {
     }
 };
 
-const AggregatorChart = ({ data, title }) => {
+const AggregatorChart = ({ data = [], title }) => {
     //const labels = [new Date(), moment(1585052820 * 1e3)]
+    if (data.length < 10) {
+        return (<div>Loading...</div>)
+    }
+
 
     const mainChart = {
         datasets: [
@@ -138,4 +148,19 @@ const AggregatorChart = ({ data, title }) => {
     )
 }
 
-export default memo(AggregatorChart);
+const mapStateToProps = (state, props) => {
+    const indexData = { address: props.contract, event: 'AnswerUpdated' }
+    const indexId = indexAddressEvent(indexData)
+
+    return {
+        data: graphDataSelector(state, indexId), //emptyArray
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+
+    }
+}
+
+export default memo(connect(mapStateToProps, mapDispatchToProps)(AggregatorChart), isEqual);
