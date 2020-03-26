@@ -102,9 +102,9 @@ const mainChartOpts = {
     }
 };
 
-const AggregatorChart = ({ data = [], title }) => {
+const AggregatorChart = ({ data = [], historyRange = 0, title }) => {
     //const labels = [new Date(), moment(1585052820 * 1e3)]
-    if (data.length < 10) {
+    if (data.length < historyRange) {
         return (<div>Loading...</div>)
     }
 

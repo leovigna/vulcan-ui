@@ -45,10 +45,9 @@ import {
 } from "../../selectors"
 
 const { ContractData } = newContextComponents
-const HISTORY_RANGE = 10
 
 const Aggregator = ({
-    refreshCount,
+    historyRange = 10,
     drizzle,
     contract,
     contractState = {},
@@ -97,7 +96,7 @@ const Aggregator = ({
             })
 
             const pastRounds = []
-            for (let i = roundId - HISTORY_RANGE; i <= roundId; i++) {
+            for (let i = roundId - historyRange; i <= roundId; i++) {
                 pastRounds.push(i)
             }
             console.debug(pastRounds)
@@ -110,7 +109,7 @@ const Aggregator = ({
                     toBlock: 'latest',
                     filter: { roundId: pastRounds }
                 },
-                max: 1000
+                max: 1000000
             })
         }
     }, [roundId])
@@ -126,7 +125,7 @@ const Aggregator = ({
             <Card>
                 <CardHeader>History</CardHeader>
                 <CardBody>
-                    <AggregatorChart contract={contract} />
+                    <AggregatorChart contract={contract} historyRange={historyRange} />
                 </CardBody>
             </Card>
             <Card>
@@ -157,11 +156,8 @@ function mapDispatchToProps(dispatch) {
 const ConnectedAggregator = memo(connect(mapStateToProps, mapDispatchToProps)(Aggregator))
 
 const WrappedAggregator = (props) => {
-    const [refreshCount, setRefreshCount] = useState(0)
-
 
     return (<div>
-        <Button onClick={() => setRefreshCount(refreshCount + 1)}>REFRESH</Button>
         <DrizzleContext.Consumer>
             {drizzleContext => {
                 const { drizzle, initialized } = drizzleContext;
@@ -171,7 +167,7 @@ const WrappedAggregator = (props) => {
                 }
 
                 return (
-                    <ConnectedAggregator refreshCount={refreshCount} drizzle={drizzle} {...props} />
+                    <ConnectedAggregator historyRange={24} drizzle={drizzle} {...props} />
                 )
             }}
         </DrizzleContext.Consumer></div>)
