@@ -2,5 +2,5 @@
     "name": "AggregatorAddView",
     "version": "0.0.0",
     "private": true,
-    "main": "./AggregatorAddView.js"
+    "main": "./AggregatorAddView.tsx"
 }

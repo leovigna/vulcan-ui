@@ -14,6 +14,10 @@ dependencies:
   '@types/node': 12.12.30
   '@types/react': 16.9.23
   '@types/react-dom': 16.9.5
+  '@types/react-redux': 7.1.7
+  '@types/react-router-dom': 5.1.3
+  '@types/reactstrap': 8.4.2
+  '@types/redux-orm': 0.13.6
   '@welldone-software/why-did-you-render': 4.0.5_react@16.13.0
   bootstrap: 4.4.1
   chart.js: 2.9.3
@@ -31,13 +35,14 @@ dependencies:
   node-sass: 4.13.1
   npm: 6.14.3
   object-hash: 2.0.3
+  prop-types: 15.7.2
   qs: 6.9.1
   re-reselect: 3.4.0_reselect@4.0.0
   react: 16.13.0
   react-app-polyfill: 1.0.6
   react-chartjs-2: 2.9.0_d7255fa9c129e8b0846d17313f30fa0a
   react-dom: 16.13.0_react@16.13.0
-  react-moment: 0.9.7_moment@2.24.0+react@16.13.0
+  react-moment: 0.9.7_86e3b60197d3c35893c58d91a4707681
   react-redux: 7.2.0_89edbdcf35ebf07960559427ad340367
   react-router-config: 5.1.1_react@16.13.0
   react-router-dom: 5.1.2_react@16.13.0
@@ -1798,6 +1803,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
+  /@types/history/4.7.5:
+    dev: false
+    resolution:
+      integrity: sha512-wLD/Aq2VggCJXSjxEwrMafIP51Z+13H78nXIX0ABEuIGhmB5sNGbR113MOKo+yfw+RDo1ZU3DM6yfnnRF/+ouw==
+  /@types/hoist-non-react-statics/3.3.1:
+    dependencies:
+      '@types/react': 16.9.25
+      hoist-non-react-statics: 3.3.2
+    dev: false
+    resolution:
+      integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
   /@types/inquirer/6.5.0:
     dependencies:
       '@types/through': 0.0.30
@@ -1865,6 +1881,30 @@ packages:
     dev: false
     resolution:
       integrity: sha512-BX6RQ8s9D+2/gDhxrj8OW+YD4R+8hj7FEM/OJHGNR0KipE1h1mSsf39YeyC81qafkq+N3rU3h3RFbLSwE5VqUg==
+  /@types/react-redux/7.1.7:
+    dependencies:
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/react': 16.9.25
+      hoist-non-react-statics: 3.3.2
+      redux: 4.0.5
+    dev: false
+    resolution:
+      integrity: sha512-U+WrzeFfI83+evZE2dkZ/oF/1vjIYgqrb5dGgedkqVV8HEfDFujNgWCwHL89TDuWKb47U0nTBT6PLGq4IIogWg==
+  /@types/react-router-dom/5.1.3:
+    dependencies:
+      '@types/history': 4.7.5
+      '@types/react': 16.9.25
+      '@types/react-router': 5.1.4
+    dev: false
+    resolution:
+      integrity: sha512-pCq7AkOvjE65jkGS5fQwQhvUp4+4PVD9g39gXLZViP2UqFiFzsEpB3PKf0O6mdbKsewSK8N14/eegisa/0CwnA==
+  /@types/react-router/5.1.4:
+    dependencies:
+      '@types/history': 4.7.5
+      '@types/react': 16.9.25
+    dev: false
+    resolution:
+      integrity: sha512-PZtnBuyfL07sqCJvGg3z+0+kt6fobc/xmle08jBiezLS8FrmGeiGkJnuxL/8Zgy9L83ypUhniV5atZn/L8n9MQ==
   /@types/react/16.9.23:
     dependencies:
       '@types/prop-types': 15.7.3
@@ -1872,6 +1912,31 @@ packages:
     dev: false
     resolution:
       integrity: sha512-SsGVT4E7L2wLN3tPYLiF20hmZTPGuzaayVunfgXzUn1x4uHVsKH6QDJQ/TdpHqwsTLd4CwrmQ2vOgxN7gE24gw==
+  /@types/react/16.9.25:
+    dependencies:
+      '@types/prop-types': 15.7.3
+      csstype: 2.6.9
+    dev: false
+    resolution:
+      integrity: sha512-Dlj2V72cfYLPNscIG3/SMUOzhzj7GK3bpSrfefwt2YT9GLynvLCCZjbhyF6VsT0q0+aRACRX03TDJGb7cA0cqg==
+  /@types/react/16.9.26:
+    dependencies:
+      '@types/prop-types': 15.7.3
+      csstype: 2.6.9
+    dev: false
+    resolution:
+      integrity: sha512-dGuSM+B0Pq1MKXYUMlUQWeS6Jj9IhSAUf9v8Ikaimj+YhkBcQrihWBkmyEhK/1fzkJTwZQkhZp5YhmWa2CH+Rw==
+  /@types/reactstrap/8.4.2:
+    dependencies:
+      '@types/react': 16.9.26
+      popper.js: 1.16.1
+    dev: false
+    resolution:
+      integrity: sha512-ag4hfFqBZaeoNSSTKjCtedvdcO68QqqlBrFd3obg94JSmhgNTmHz50BvNJkf9NjSzx1yGTW4l/OyP/khLPKqww==
+  /@types/redux-orm/0.13.6:
+    dev: false
+    resolution:
+      integrity: sha512-tThEs7JSH1fao+vv6dpqR3HVCV3Z14+QU7nQuEgL8+pkWOWb4HXkGZy262K8/3lBhGqWyOGwph5/IgBx0MGOpA==
   /@types/stack-utils/1.0.1:
     dev: false
     resolution:
@@ -6506,7 +6571,7 @@ packages:
       integrity: sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
   /hoist-non-react-statics/3.3.2:
     dependencies:
-      react-is: 16.13.0
+      react-is: 16.13.1
     dev: false
     resolution:
       integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -11214,9 +11279,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
-  /react-moment/0.9.7_moment@2.24.0+react@16.13.0:
+  /react-moment/0.9.7_86e3b60197d3c35893c58d91a4707681:
     dependencies:
       moment: 2.24.0
+      prop-types: 15.7.2
       react: 16.13.0
     dev: false
     peerDependencies:
@@ -14902,6 +14968,10 @@ specifiers:
   '@types/node-sass': ^4.11.0
   '@types/react': ^16.9.0
   '@types/react-dom': ^16.9.0
+  '@types/react-redux': ^7.1.7
+  '@types/react-router-dom': ^5.1.3
+  '@types/reactstrap': ^8.4.2
+  '@types/redux-orm': ^0.13.6
   '@typescript-eslint/eslint-plugin': ^2.24.0
   '@typescript-eslint/parser': ^2.24.0
   '@welldone-software/why-did-you-render': ^4.0.5
@@ -14932,6 +15002,7 @@ specifiers:
   npm: ^6.14.3
   object-hash: ^2.0.3
   prettier: ^1.19.1
+  prop-types: ^15.7.2
   qs: ^6.9.1
   re-reselect: ^3.4.0
   react: ^16.13.0
