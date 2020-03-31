@@ -24,13 +24,13 @@ const AggregatorHead = ({
     return (
         <ListGroup>
             <ListGroupItem><EtherScan address={address} /></ListGroupItem>
-            <ListGroupItem>Round ID {latestRound}</ListGroupItem>
-            <ListGroupItem>{answerRender(latestAnswer)}</ListGroupItem>
+            <ListGroupItem>Round ID {latestRound || 'Loading...'}</ListGroupItem>
+            <ListGroupItem>{latestAnswer ? answerRender(latestAnswer) : 'Loading...'}</ListGroupItem>
             <ListGroupItem>Last update&nbsp;
-            {updateDate.format('LLLL')}
+            {latestTimestamp ? updateDate.format('LLLL') : 'Loading...'}
             </ListGroupItem>
             <ListGroupItem>Next update (every 1hr)&nbsp;
-                {`${diff.hours()}:${diff.minutes()}:${diff.seconds()}`}
+                {latestTimestamp ? `${diff.hours()}:${diff.minutes()}:${diff.seconds()}` : 'Loading...'}
             </ListGroupItem>
         </ListGroup>)
 }

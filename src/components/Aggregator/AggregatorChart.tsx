@@ -77,7 +77,6 @@ const AggregatorChart = ({
     data = [], historyRange = 0,
     count,
     answerTransform = (v) => v }) => {
-    //const labels = [new Date(), moment(1585052820 * 1e3)]
     console.debug(`[RENDER] AggregatorChart ${count}`)
 
     if (data.length < historyRange) {

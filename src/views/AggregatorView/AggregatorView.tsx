@@ -55,6 +55,7 @@ class AggregatorView extends Component {
         const address = searchContract?.address || matchParams.address || queryParams.address;
         const answerRender = searchContract?.answerRender || ((value) => value);
         const answerTransform = searchContract?.answerTransform || ((value) => value);
+        const historyRange = searchContract?.historyRange || 50
 
         const titleString = searchContract?.title || 'Aggregator'
         const title = `${titleString} at ${address}`;
@@ -82,7 +83,7 @@ class AggregatorView extends Component {
             <div className="animated fadeIn">
                 <Row>
                     <Col>
-                        <Aggregator historyRange={50} drizzle={drizzle} networkId={networkId} contract={address} answerTransform={answerTransform} answerRender={answerRender} title={title} />
+                        <Aggregator historyRange={historyRange} drizzle={drizzle} networkId={networkId} contract={address} answerTransform={answerTransform} answerRender={answerRender} title={title} />
                     </Col>
                 </Row>
             </div>

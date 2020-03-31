@@ -31,7 +31,7 @@ const AggregatorTable = ({
                     responses.map((e) => {
                         const { returnValues, transactionHash, transaction, block } = e;
                         const answer = (returnValues?.response || 0);
-                        const gasPrice = ((transaction?.gasPrice || 0) * 1e-9).toFixed(2);
+                        const gasPrice = transaction?.gasPrice ? `${(transaction?.gasPrice * 1e-9).toFixed(2)} Gwei` : 'Loading...';
                         const timestamp = block?.timestamp;
 
                         return (<tr key={transactionHash}>
@@ -42,7 +42,7 @@ const AggregatorTable = ({
                                 <div>{answerRender(answer)}</div>
                             </td>
                             <td>
-                                <div>{gasPrice} Gwei</div>
+                                <div>{gasPrice}</div>
                             </td>
                             <td>
                                 <div><EtherScan tx={transactionHash} /></div>
@@ -52,7 +52,7 @@ const AggregatorTable = ({
                                     {timestamp ?
                                         <Moment unix format="LLLL">
                                             {timestamp}
-                                        </Moment> : "loading..."}
+                                        </Moment> : "Loading..."}
                                 </div>
                             </td>
                         </tr>
