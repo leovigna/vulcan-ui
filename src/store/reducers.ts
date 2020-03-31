@@ -9,7 +9,13 @@ import {
 
 import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
 
-export function ormReducer(dbState, action) {
+type Action = {
+    type: string,
+    payload: any,
+    [key: string]: any
+}
+
+export function ormReducer(dbState: any, action: Action) {
     const sess = orm.session(dbState);
 
     // Session-specific Models are available

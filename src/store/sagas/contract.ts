@@ -16,17 +16,15 @@ import {
 
 function* setupDefaultContracts() {
     yield all(Object.values(contractsDefault).map((c) => {
-        const { networkId, address } = c
-        const web3 = web3ForNetworkId(networkId)
-        const web3Contract = new web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
+        const abi = AggregatorABI.compilerOutput.abi
         const events = ["AnswerUpdated", "ResponseReceived"]
 
-        return put(ContractActions.createContract({ ...c, web3Contract, events }))
+        return put(ContractActions.createContract({ ...c, abi, events }))
     }))
 }
 
 
-function* updateContractEvents(web3Contract, address: string, networkId: string) {
+function* updateContractEvents(web3Contract: any, address: string, networkId: string) {
     try {
         const latestRound = yield call(web3Contract.methods.latestRound().call)
 
@@ -44,9 +42,7 @@ function* updateContractEvents(web3Contract, address: string, networkId: string)
 
 
         yield put(EventActions.fetchEvent({
-            eventName: 'ResponseReceived',
-            web3Contract: web3Contract,
-            name: address,
+            event: 'ResponseReceived',
             options: {
                 fromBlock: 0,
                 toBlock: 'latest',
@@ -54,7 +50,7 @@ function* updateContractEvents(web3Contract, address: string, networkId: string)
             },
             networkId: networkId,
             max: 25
-        }))
+        }, web3Contract))
 
         const pastRounds = []
         for (let i = latestRound - 50; i <= latestRound; i++) {
@@ -62,8 +58,7 @@ function* updateContractEvents(web3Contract, address: string, networkId: string)
         }
 
         yield all(pastRounds.map((roundId) => put(EventActions.fetchEvent({
-            eventName: 'AnswerUpdated',
-            web3Contract: web3Contract,
+            event: 'AnswerUpdated',
             name: address,
             options: {
                 fromBlock: 0,
@@ -72,7 +67,7 @@ function* updateContractEvents(web3Contract, address: string, networkId: string)
             },
             networkId: networkId,
             max: 1
-        }))))
+        }, web3Contract))))
 
     } catch (error) {
         console.error(error)
@@ -84,19 +79,20 @@ function* updateContractEvents(web3Contract, address: string, networkId: string)
 
 // fetch data from service using sagas
 export function* contractSetup(action: ContractTypes.SetupContractAction) {
-    const { address, events, web3Contract } = action.payload
+    const { address, events, abi, networkId } = action.payload
+    const web3 = web3ForNetworkId(networkId)!;
+    const web3Contract = new web3.eth.Contract(abi, address)
     const contractConfig = {
         contractName: address,
         web3Contract
     }
 
-    console.debug('CONTRACT SETUP')
     //yield all(events.map(event => put(EventActions.createEvent({ address, event }))));
     yield all(events.map(event => put(EventActions.createEventIndex({ address, event }))));
 
     yield put(DrizzleActions.addDrizzleContract({ contractConfig, events }))
 
-    const pattern = (action) => action.type === DrizzleTypes.DRIZZLE_CONTRACT_INITIALIZED
+    const pattern = (action: { type: string }) => action.type === DrizzleTypes.DRIZZLE_CONTRACT_INITIALIZED
     yield take(pattern)
 
     yield fork(updateContractEvents, web3Contract, address, action.payload.networkId)

@@ -11,20 +11,20 @@ import {
 } from "../actions"
 
 // actions
-function web3EventChannel(web3Contract, eventName, options, max) {
+function web3EventChannel(web3Contract: any, eventName: string, options: object, max: number) {
     const events = web3Contract.events[eventName](options);
     let count = 0;
     if (!max) { max = 100 };
 
     return eventChannel(emitter => {
-        events.on('data', (event) => {
+        events.on('data', (event: any) => {
             emitter({ message: 'data', event })
             count += 1;
             if (count >= max) { emitter(END); }
-        }).on('error', (error) => {
+        }).on('error', (error: any) => {
             emitter({ message: 'error', error })
             emitter(END)
-        }).on('changed', (event) => {
+        }).on('changed', (event: any) => {
             emitter({ message: 'changed', event })
             count += 1;
             if (count >= max) { emitter(END); }
@@ -40,9 +40,10 @@ function web3EventChannel(web3Contract, eventName, options, max) {
 
 // fetch data from service using sagas
 export function* fetchEvent(action: EventTypes.FetchEventAction) {
-    const { eventName, web3Contract, options, name } = action.payload
+    const { event, options } = action.payload
+    const web3Contract = action.web3Contract
     const max = action.payload.max || 100
-    const chan = yield call(web3EventChannel, web3Contract, eventName, options, max)
+    const chan = yield call(web3EventChannel, web3Contract, event, options, max)
     try {
         while (true) {
             //take('END')// will cause the saga to terminate by jumping to the finally block
@@ -54,9 +55,9 @@ export function* fetchEvent(action: EventTypes.FetchEventAction) {
                 yield put(EventActions.createEvent({ ...event, networkId: action.payload.networkId }))
 
             } else if (message === 'error') {
-                yield put({ type: DrizzleEventActions.EVENT_ERROR, name, event, error })
+                yield put({ type: DrizzleEventActions.EVENT_ERROR, name: web3Contract.address, event, error })
             } else if (message === 'changed') {
-                yield put({ type: DrizzleEventActions.EVENT_CHANGED, name, event, error })
+                yield put({ type: DrizzleEventActions.EVENT_CHANGED, name: web3Contract.address, event, error })
             }
         }
     } catch (error) {

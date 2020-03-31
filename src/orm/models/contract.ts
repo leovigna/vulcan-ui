@@ -11,7 +11,8 @@ interface Contract {
     address: string,
     path: string,
     answerRenderFormat: any,
-    events: any,
+    events: string[],
+    abi: object
 }
 
 class Contract extends Model {
@@ -62,7 +63,7 @@ Contract.fields = {
     path: attr(),
     answerRenderFormat: attr(),
     networkId: attr(),
-    web3Contract: attr(),
+    abi: attr(),
     events: attr()
 };
 

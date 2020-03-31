@@ -11,10 +11,21 @@ export interface CreateEventAction {
     payload: CreateEventActionInput
 }
 
-export type FetchEventActionInput = Event;
+export type FetchEventActionInput = {
+    event: string,
+    options: {
+        fromBlock: number | string,
+        toBlock: number | string,
+        filter: any
+    },
+    networkId: number | string,
+    max: 25
+};
+
 export interface FetchEventAction {
     type: typeof FETCH_EVENT
-    payload: FetchEventActionInput
+    payload: FetchEventActionInput,
+    web3Contract: any
 }
 
 export const CREATE_EVENT_CT_INDEX = 'ORM/CREATE_EVENT_CT_INDEX'
