@@ -12,7 +12,8 @@ interface Contract {
     path: string,
     answerRenderFormat: any,
     events: string[],
-    abi: object
+    abi: object,
+    updated?: boolean
 }
 
 class Contract extends Model {
@@ -64,7 +65,8 @@ Contract.fields = {
     answerRenderFormat: attr(),
     networkId: attr(),
     abi: attr(),
-    events: attr()
+    events: attr(),
+    updated: attr()
 };
 
 

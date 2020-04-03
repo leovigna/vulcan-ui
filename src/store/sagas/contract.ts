@@ -15,7 +15,8 @@ import {
 } from "../actions"
 
 function* setupDefaultContracts() {
-    yield all(Object.values(contractsDefault).map((c) => {
+    const allContracts = [].concat.apply([], Object.values(contractsDefault));
+    yield all(allContracts.map((c) => {
         const abi = AggregatorABI.compilerOutput.abi
         const events = ["AnswerUpdated", "ResponseReceived"]
 
@@ -24,7 +25,9 @@ function* setupDefaultContracts() {
 }
 
 
-function* updateContractEvents(web3Contract: any, address: string, networkId: string) {
+function* updateContractEvents(action: ContractTypes.UpdateContractEventsAction) {
+    const { web3Contract, address, networkId } = action.payload
+
     try {
         const latestRound = yield call(web3Contract.methods.latestRound().call)
 
@@ -89,13 +92,8 @@ export function* contractSetup(action: ContractTypes.SetupContractAction) {
 
     //yield all(events.map(event => put(EventActions.createEvent({ address, event }))));
     yield all(events.map(event => put(EventActions.createEventIndex({ address, event }))));
-
     yield put(DrizzleActions.addDrizzleContract({ contractConfig, events }))
 
-    const pattern = (action: { type: string }) => action.type === DrizzleTypes.DRIZZLE_CONTRACT_INITIALIZED
-    yield take(pattern)
-
-    yield fork(updateContractEvents, web3Contract, address, action.payload.networkId)
 }
 
 // Combine all your redux concerns
@@ -104,4 +102,5 @@ export function* contractSetup(action: ContractTypes.SetupContractAction) {
 export function* contractRootSaga() {
     yield takeEvery(DrizzleTypes.DRIZZLE_INITIALIZED, setupDefaultContracts)
     yield takeEvery(ContractTypes.SETUP_CONTRACT, contractSetup)
+    yield takeEvery(ContractTypes.UPDATE_CONTRACT_EVENTS, updateContractEvents)
 }

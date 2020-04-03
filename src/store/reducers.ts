@@ -84,6 +84,9 @@ export function ormReducer(dbState: any, action: Action) {
         case ContractTypes.REMOVE_CONTRACT:
             Contract.withId(action.payload.address).delete();
             break;
+        case ContractTypes.UPDATE_CONTRACT_EVENTS:
+            Contract.withId(action.payload.address).updated = true
+            break;
 
     }
 

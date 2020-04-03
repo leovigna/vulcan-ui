@@ -47,18 +47,18 @@ class Dashboard extends Component {
             )
         }
 
-        let displayContracts = Object.entries(contracts).filter(([_, v]) => v.path.startsWith(category))
+        let displayContracts = contracts[category]
 
         return (
             <div className="animated fadeIn">
                 <Row>
-                    {displayContracts.map(([k, v]) => {
+                    {displayContracts.map((v) => {
                         return (
                             <Col xs="12" sm="6" md="4">
                                 <Card>
-                                    <CardHeader>{k}</CardHeader>
+                                    <CardHeader>{v.title}</CardHeader>
                                     <CardBody>
-                                        {v.address}<br />{v.count} oracles
+                                        {v.address}<br />
                                         <Button block href={`#/dashboard/${v.path}`} color="secondary">View</Button>
                                     </CardBody>
                                 </Card>

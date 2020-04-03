@@ -10,10 +10,11 @@ import { transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga }
 import { ormReducer } from './reducers';
 
 const persistedWhitelist = []
-if (process.env.NODE_ENV === 'production' || true) {
+/*
+if (process.env.NODE_ENV === 'production') {
     persistedWhitelist.push('orm')
 }
-
+*/
 const persistConfig = {
     key: 'persisted',
     storage,

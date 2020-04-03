@@ -12,6 +12,8 @@ import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
 import Aggregator from "../../components/Aggregator/Aggregator"
 import { contractsSelector } from "../../store/selectors"
+import { ContractActions } from "../../store/actions"
+import { ContractTypes } from "../../store/types"
 
 class AggregatorView extends Component {
     static contextType = DrizzleContext.Context;
@@ -50,6 +52,9 @@ class AggregatorView extends Component {
             const searchPath = `${category}/${name}`
             searchContract = Object.values(this.props.contracts).find((c) => c.path === searchPath)
         }
+        if (!searchContract) {
+            return <div>Loading...</div>;
+        }
 
         const networkId = searchContract?.networkId || '1'
         const address = searchContract?.address || matchParams.address || queryParams.address;
@@ -60,9 +65,7 @@ class AggregatorView extends Component {
         const titleString = searchContract?.title || 'Aggregator'
         const title = `${titleString} at ${address}`;
 
-
         if (!drizzle.contracts[address]) {
-
             /*
             const web3Contract = new drizzle.web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
 
@@ -77,6 +80,10 @@ class AggregatorView extends Component {
 
 
             return <div>Loading...</div>;
+        }
+
+        if (!searchContract.updated) {
+            this.props.updateContractEvents({ address, web3Contract: drizzle.contracts[address], networkId })
         }
 
         return (
@@ -97,4 +104,11 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(AggregatorView);
+function mapDispatchToProps(dispatch) {
+    return {
+        updateContractEvents: (data: ContractTypes.UpdateContractEventsActionInput) => dispatch(ContractActions.updateContractEvents(data)),
+        setupContract: (data: ContractTypes.SetupContractActionInput) => dispatch(ContractActions.setupContract(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AggregatorView);
