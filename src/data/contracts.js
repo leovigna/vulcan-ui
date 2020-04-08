@@ -1,6 +1,7 @@
 export const categories = [
     { title: 'Chainlink USD Pairs', path: 'usd' },
     { title: 'Chainlink ETH Pairs', path: 'eth' },
+    { title: 'Chainlink Markets', path: 'markets' },
     { title: 'COVID-19 Cases', path: 'covid-19' },
     { title: 'Vulcan US Markets', path: 'markets-us' },
     { title: 'Vulcan EU Markets', path: 'markets-eu' },
@@ -353,6 +354,38 @@ export const contracts = {
             },
             "networkId": "1"
         }
+    ],
+    "markets": [
+        {
+            "title": "FTSE 100 Index (UKX)",
+            "navTitle": "FTSE/GBP",
+            "address": "0x16924ae9C2ac6cdbC9D6bB16FAfCD38BeD560936",
+            "path": "markets/ftse",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "£ %(value)s"
+            },
+            "networkId": "1",
+            "historyRange": 50
+        },
+        {
+            "title": "Nikkei 225 Index (NI225)",
+            "navTitle": "N225/JPY",
+            "address": "0x3f6E09A4EC3811765F5b2ad15c0279910dbb2c04",
+            "path": "markets/nikkei",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "¥ %(value)s"
+            },
+            "networkId": "1",
+            "historyRange": 50
+        },
     ],
     "covid-19": [
         {
