@@ -56,7 +56,7 @@ function* updateContractEvents(action: ContractTypes.UpdateContractEventsAction)
         }, web3Contract))
 
         const pastRounds = []
-        for (let i = latestRound - 50; i <= latestRound; i++) {
+        for (let i = Math.max(latestRound - 50, 0); i <= latestRound; i++) {
             pastRounds.push(i)
         }
 

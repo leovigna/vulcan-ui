@@ -2,6 +2,7 @@ export const categories = [
     { title: 'Chainlink USD Pairs', path: 'usd' },
     { title: 'Chainlink ETH Pairs', path: 'eth' },
     { title: 'Chainlink Markets', path: 'markets' },
+    { title: 'Vulcan Mainnet', path: 'vulcan' },
     { title: 'COVID-19 Cases', path: 'covid-19' },
     { title: 'Vulcan US Markets', path: 'markets-us' },
     { title: 'Vulcan EU Markets', path: 'markets-eu' },
@@ -386,6 +387,45 @@ export const contracts = {
             "networkId": "1",
             "historyRange": 50
         },
+    ],
+    "vulcan": [
+        {
+            "from": "BTC",
+            "to": "USD",
+            "times": 100000000,
+            "address": "0x6909337A49e831CF7De4A4842eD2384A5C39Cc4a",
+            "cronJobId": "c1fa59786ee645dbb934a588b0766641",
+            "jobId": "ef2d11f7da774d528c174f97957f9ea6",
+            "path": "vulcan/btc-usd",
+            "title": "BTC/USD",
+            "navTitle": "BTC/USD",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            },
+            "networkId": "1"
+        },
+        /*
+        {
+            "title": "Nikkei 225 Index (NI225)",
+            "navTitle": "N225/JPY",
+            "address": "0x6909337a49e831cf7de4a4842ed2384a5c39cc4a",
+            "path": "vulcan/nikkei",
+            "cronJobId": "c1fa59786ee645dbb934a588b0766641",
+            "jobId": "ef2d11f7da774d528c174f97957f9ea6",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "¥ %(value)s"
+            },
+            "networkId": "1",
+            "historyRange": 50
+        },*/
     ],
     "covid-19": [
         {

@@ -18,16 +18,23 @@ export const actionDebugger = store => next => action => {
         case ContractTypes.SETUP_CONTRACT:
         case DrizzleTypes.DRIZZLE_CONTRACT_INITIALIZED:
         case DrizzleTypes.DRIZZLE_CONTRACT_INITIALIZING:
-        case EventTypes.FETCH_EVENT:
-        case EventTypes.CREATE_EVENT:
+        //case EventTypes.FETCH_EVENT:
+        //case EventTypes.CREATE_EVENT:
         case BlockTypes.FETCH_BLOCK:
         case BlockTypes.CREATE_BLOCK:
-            break
-        case TransactionTypes.CREATE_TRANSACTION:
-        case TransactionTypes.UPDATE_TRANSACTION:
-            break
         case BlockTypes.CREATE_BLOCK:
         case BlockTypes.UPDATE_BLOCK:
+        case TransactionTypes.CREATE_TRANSACTION:
+        case TransactionTypes.UPDATE_TRANSACTION:
+        case EventTypes.CREATE_EVENT_CT_INDEX:
+        case EventTypes.UPDATE_EVENT_CT_INDEX:
+        case EventTypes.REMOVE_EVENT_CT_INDEX:
+        case "BLOCK_RECEIVED":
+        case "BLOCK_PROCESSING":
+        case "SYNCING_ACCOUNTS":
+        case "ACCOUNTS_FETCHED":
+        case "ACCOUNT_BALANCE_FETCHED":
+        case "ACCOUNT_BALANCES_FETCHED":
             break
         default:
             console.debug(action)
