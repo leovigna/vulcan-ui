@@ -1,6 +1,4 @@
-import { call, put, takeEvery, take, fork, all } from 'redux-saga/effects'
-import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
-import { contracts as contractsDefault } from "../../data/contracts"
+import { call, put, takeEvery, all } from 'redux-saga/effects'
 import { web3ForNetworkId } from "../../web3global"
 
 import {
@@ -14,7 +12,48 @@ import {
     ContractActions,
 } from "../actions"
 
-function* setupDefaultContracts() {
+import gql from "graphql-tag"
+import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
+
+import { contracts as contractsDefault } from "../../data/contracts"
+import client from "../../client";
+
+const queryOracleAggregators = gql`
+query {
+contractDefinition(where: {id: 1}) {
+    compilerOutput
+  }
+oracleAggregators {
+    title
+    path
+    answerRenderFormat
+    Contract {
+      networkId
+      address
+      specId
+    }
+  }
+}`
+
+function* setupDefaultContractsGraphQLAPI() {
+    const response = yield call(client.query, { query: queryOracleAggregators });
+    //console.debug(response)
+    const contracts = response.data.oracleAggregators;
+    const abi = JSON.parse(response.data.contractDefinition.compilerOutput).abi
+    //const allContracts = [].concat.apply([], Object.values(contractsDefault));
+    yield all(contracts.map((c) => {
+        const { title, path, answerRenderFormat, Contract } = c;
+        const answerRenderOptions = JSON.parse(answerRenderFormat);
+        const { address, networkId } = Contract;
+        const events = ["AnswerUpdated", "ResponseReceived"]
+        const payload = { address, title, path, networkId, answerRenderOptions, abi, events }
+        //console.debug(payload)
+        return put(ContractActions.createContract(payload))
+    }))
+}
+
+
+function* setupDefaultContractsJSON() {
     const allContracts = [].concat.apply([], Object.values(contractsDefault));
     yield all(allContracts.map((c) => {
         const abi = AggregatorABI.compilerOutput.abi
@@ -22,6 +61,15 @@ function* setupDefaultContracts() {
 
         return put(ContractActions.createContract({ ...c, abi, events }))
     }))
+}
+
+function* setupDefaultContracts() {
+    if (process.env.REACT_APP_GRAPHQL_API) {
+        yield call(setupDefaultContractsGraphQLAPI);
+    }
+    else {
+        yield call(setupDefaultContractsJSON);
+    }
 }
 
 
@@ -41,8 +89,6 @@ function* updateContractEvents(action: ContractTypes.UpdateContractEventsAction)
             argsHash,
             sync: true
           })*/
-
-
 
         yield put(EventActions.fetchEvent({
             event: 'ResponseReceived',

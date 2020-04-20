@@ -6,7 +6,16 @@ export const UPDATE_CONTRACT = 'ORM/UPDATE_CONTRACT'
 export const REMOVE_CONTRACT = 'ORM/REMOVE_CONTRACT'
 export const UPDATE_CONTRACT_EVENTS = 'ORM/GET_CONTRACT_EVENTS'
 
-export type CreateContractActionInput = Contract;
+export type CreateContractActionInput = {
+    networkId: string,
+    title: string,
+    address: string,
+    path: string,
+    answerRenderOptions: any,
+    events: string[],
+    abi: object,
+    updated?: boolean
+};
 
 export interface CreateContractAction {
     type: typeof CREATE_CONTRACT

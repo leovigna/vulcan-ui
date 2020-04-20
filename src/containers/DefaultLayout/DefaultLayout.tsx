@@ -18,12 +18,17 @@ import {
     AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
-import defaultNavigation from '../../_nav';
+import navCreate from '../../_nav';
 // routes config
 import routes from '../../routes';
 import { connect } from "react-redux"
 
 import styles from './AppHeader.scss'
+
+import { categories } from '../../data/contracts';
+import { contractsSelector, customContractsSelector } from '../../store/selectors'
+
+
 import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
 
@@ -43,18 +48,15 @@ class DefaultLayout extends Component {
         this.props.history.push('/login');
     }
 
-
     render() {
         //Custom
-        const navigation = JSON.parse(JSON.stringify(defaultNavigation));
-        const customcontractsNav = (this.props.customcontracts || []).map(contract => {
-            return ({
-                name: contract.name,
-                url: `/aggregator/${contract.address}`,
-                icon: 'icon-speedometer'
-            })
-        })
-        navigation.items[navigation.items.length - 1].children.push(...customcontractsNav)
+        const { contracts, categories, customcontracts } = this.props;
+
+        const navigation = navCreate({
+            contracts: (contracts || []),
+            categories: (categories || {}),
+            customcontracts: (customcontracts || [])
+        });
 
         return (
             <div className="app">
@@ -114,8 +116,11 @@ class DefaultLayout extends Component {
 
 
 function mapStateToProps(state) {
-    const { persisted } = state
-    return { customcontracts: persisted.customContracts }
+    return {
+        categories,
+        contracts: contractsSelector(state),
+        customcontracts: customContractsSelector(state)
+    }
 }
 
 export default connect(mapStateToProps)(DefaultLayout);

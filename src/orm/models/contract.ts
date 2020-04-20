@@ -10,7 +10,7 @@ interface Contract {
     count: number,
     address: string,
     path: string,
-    answerRenderFormat: any,
+    answerRenderOptions: any,
     events: string[],
     abi: object,
     updated?: boolean
@@ -62,7 +62,7 @@ Contract.fields = {
     count: attr(),
     address: attr(),
     path: attr(),
-    answerRenderFormat: attr(),
+    answerRenderOptions: attr(),
     networkId: attr(),
     abi: attr(),
     events: attr(),

@@ -3,6 +3,26 @@
 React app deployed at [feeds.link](https://feeds.link)
 Opensource dashboard displaying custom Chainlink Aggregator data feeds.
 
+## Environment Variables
+### Fallback RPC
+The vulcan dashboard uses a Mainnet and Ropsten fallback RPC for users who do not have a web3 plugin such as Metamask. Make sure to set the respective environment variables. You will need a websocket connection to listen to event updates.
+```
+REACT_APP_INFURA_MAINNET=<REPLACE_HERE>
+REACT_APP_INFURA_MAINNET_WSS=<REPLACE_HERE>
+REACT_APP_INFURA_ROPSTEN=<REPLACE_HERE>
+REACT_APP_INFURA_ROPSTEN_WSS=<REPLACE_HERE>
+```
+
+### Default Contracts
+The default Aggregator Contracts tracked by the app can either be defined under `./data/contracts.js` or leverage a GraphQL API. We recommend getting started with the hard-coded `contracts.js` file. Note that the app always offers the option to locally add custom contracts through the "Add Contract" tab.
+
+If you wish to use the GraphQL API, be sure to get familiar with [vulcan-api](https://github.com/leovigna/vulcan-api) first. Then add the following environment variables.
+```
+REACT_APP_GRAPHQL_HTTP_URI=<REPLACE_HERE>
+REACT_APP_GRAPHQL_WSS_URI=<REPLACE_HERE>
+REACT_APP_GRAPHQL_API=true
+```
+
 ## Installing
 Install dependencies.
 ```

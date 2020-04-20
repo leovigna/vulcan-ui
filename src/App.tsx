@@ -6,6 +6,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import { Drizzle, IDrizzleOptions } from "@drizzle/store"
 import { DrizzleContext } from "@drizzle/react-plugin"
+import { ApolloProvider } from '@apollo/react-hooks';
+import client from './client'
 
 import './App.scss';
 
@@ -46,12 +48,20 @@ class App extends Component {
     }
 }
 
+//Environment variable optional use GraphQL API
 const WrappedApp = (props) => (
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-            <DrizzleContext.Provider drizzle={drizzle}>
-                <App {...props} />
-            </DrizzleContext.Provider>
+            {process.env.REACT_APP_GRAPHQL_API ?
+                <ApolloProvider client={client}>
+                    <DrizzleContext.Provider drizzle={drizzle}>
+                        <App {...props} />
+                    </DrizzleContext.Provider>
+                </ApolloProvider> :
+                <DrizzleContext.Provider drizzle={drizzle}>
+                    <App {...props} />
+                </DrizzleContext.Provider>
+            }
         </PersistGate>
     </Provider >
 )
