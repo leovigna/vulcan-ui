@@ -1,5 +1,4 @@
-import { contracts, categories } from './data/contracts'
-
+//Use Redux Data
 const DashboardNav = [
     {
         name: 'Feeds',
@@ -8,15 +7,36 @@ const DashboardNav = [
     }
 ]
 
-const AggregatorNav = () => {
-    const nav = categories.map(({ title, path }) => {
-        return {
+const AggregatorNav = ({ contracts, categories, customcontracts }) => {
+    const categoryNavs = {}
+
+    Object.entries(categories).forEach(([key, { title, path }]) => {
+        categoryNavs[key] = {
             name: title,
             url: '/dashboard/' + path,
-            children: [
-
-            ]
+            children: []
         }
+    })
+
+    contracts.forEach((c) => {
+        const contractCategory = c.path.split("/")[0];
+        const contractNav = {
+            name: c.navTitle || c.title,
+            url: `/dashboard/${c.path}`,
+        };
+        //@ts-ignore
+        categoryNavs[contractCategory].children.push(contractNav);
+    })
+
+    const nav = []
+    nav.push(...Object.values(categoryNavs))
+
+    const customcontractsChildren = (customcontracts || []).map(contract => {
+        return ({
+            name: contract.name,
+            url: `/aggregator/${contract.address}`,
+            icon: 'icon-speedometer'
+        })
     })
     nav.push({
         name: 'Custom Aggregators',
@@ -25,25 +45,24 @@ const AggregatorNav = () => {
             {
                 name: 'Add Aggregator',
                 url: '/aggregator/add',
-            }
+            },
+            ...customcontractsChildren
         ]
     })
 
-
-    categories.forEach((c, idx) => {
-        nav[idx].children = contracts[c.path].map((v) => {
-            return {
-                name: v.navTitle || v.title,
-                url: `/dashboard/${v.path}`,
-            }
-        })
-    })
+    //console.debug(nav)
+    //console.debug(categoryNavs)
 
     return nav
 }
 
-const nav = {
-    items: [...DashboardNav, ...AggregatorNav()],
-};
+const navCreate = ({ contracts, categories, customcontracts }) => {
+    const nav = {
+        items: [...DashboardNav, ...AggregatorNav({ contracts, categories, customcontracts })],
+    };
+    return nav
+}
 
-export default nav;
+
+
+export default navCreate;

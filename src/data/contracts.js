@@ -1,14 +1,14 @@
-export const categories = [
-    { title: 'Chainlink USD Pairs', path: 'usd' },
-    { title: 'Chainlink ETH Pairs', path: 'eth' },
-    { title: 'Chainlink Markets', path: 'markets' },
-    { title: 'Vulcan Mainnet', path: 'vulcan' },
-    { title: 'COVID-19 Cases', path: 'covid-19' },
-    { title: 'Vulcan US Markets', path: 'markets-us' },
-    { title: 'Vulcan EU Markets', path: 'markets-eu' },
-    { title: 'Vulcan USD Pairs', path: 'vulcan-usd' },
-    { title: 'Vulcan ETH Pairs', path: 'vulcan-eth' },
-]
+export const categories = {
+    usd: { title: 'Chainlink USD Pairs', path: 'usd' },
+    eth: { title: 'Chainlink ETH Pairs', path: 'eth' },
+    markets: { title: 'Chainlink Markets', path: 'markets' },
+    vulcan: { title: 'Vulcan Mainnet', path: 'vulcan' },
+    "covid-19": { title: 'COVID-19 Cases', path: 'covid-19' },
+    'markets-us': { title: 'Vulcan US Markets', path: 'markets-us' },
+    'markets-eu': { title: 'Vulcan EU Markets', path: 'markets-eu' },
+    'vulcan-usd': { title: 'Vulcan USD Pairs', path: 'vulcan-usd' },
+    'vulcan-eth': { title: 'Vulcan ETH Pairs', path: 'vulcan-eth' }
+}
 
 export const contracts = {
     "usd": [

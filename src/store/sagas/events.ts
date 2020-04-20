@@ -12,6 +12,7 @@ import {
 
 // actions
 function web3EventChannel(web3Contract: any, eventName: string, options: object, max: number) {
+    //console.debug(web3Contract.events)
     const events = web3Contract.events[eventName](options);
     let count = 0;
     if (!max) { max = 100 };
@@ -63,7 +64,7 @@ export function* fetchEvent(action: EventTypes.FetchEventAction) {
     } catch (error) {
         console.error(error)
     } finally {
-        console.log('Event subscriber terminated')
+        //console.debug('Event subscriber terminated')
     }
 }
 
