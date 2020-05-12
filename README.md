@@ -19,7 +19,6 @@ The default Aggregator Contracts tracked by the app can either be defined under 
 If you wish to use the GraphQL API, be sure to get familiar with [vulcan-api](https://github.com/leovigna/vulcan-api) first. Then add the following environment variables.
 ```
 REACT_APP_GRAPHQL_HTTP_URI=<REPLACE_HERE>
-REACT_APP_GRAPHQL_WSS_URI=<REPLACE_HERE>
 REACT_APP_GRAPHQL_API=true
 ```
 

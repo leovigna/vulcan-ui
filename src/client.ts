@@ -10,16 +10,20 @@ import { onError } from 'apollo-link-error';
 
 let client;
 if (process.env.REACT_APP_GRAPHQL_API) {
+    /*
     const wsClient = new SubscriptionClient(
         process.env.REACT_APP_GRAPHQL_WSS_URI as string,
         { reconnect: true },
     )
+    */
 
     // Create an http link:
     const httpLink = new HttpLink({
         uri: process.env.REACT_APP_GRAPHQL_HTTP_URI
     });
 
+    /*
+    //For Websocket Connections (DISABLED for now)
     const wsLink = new WebSocketLink(wsClient);
     const hasSubscriptionOperation = ({ query }: any) => {
         const definition = getMainDefinition(query);
@@ -35,6 +39,8 @@ if (process.env.REACT_APP_GRAPHQL_API) {
         httpLink,
     );
 
+    */
+
     client = new ApolloClient({
         link: ApolloLink.from([
             onError(({ graphQLErrors, networkError }) => {
@@ -45,7 +51,7 @@ if (process.env.REACT_APP_GRAPHQL_API) {
                         ),
                     );
                 if (networkError) console.log(`[Network error]: ${networkError}`);
-            }), link]),
+            }), httpLink]),
         cache: new InMemoryCache()
     });
 
