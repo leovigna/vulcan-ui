@@ -1,0 +1,11 @@
+// Body
+//
+// Settings for the `<body>` element.
+
+$body-bg:     $primary;
+$body-color:  $light;
+
+$body-theme-map: (
+    "body-bg":     $body-bg,
+    "body-color":  $body-color
+);

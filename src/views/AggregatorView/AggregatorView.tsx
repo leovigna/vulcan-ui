@@ -6,6 +6,12 @@ import {
     Col,
     Row,
 } from 'reactstrap';
+/*
+import {
+    CCol as Col,
+    CRow as Row,
+} from '@coreui/react';
+*/
 //Drizzle
 import qs from 'qs';
 import { DrizzleContext } from "@drizzle/react-plugin"

@@ -14,6 +14,20 @@ import {
     Label,
     Input
 } from 'reactstrap';
+/*
+import {
+    CCol as Col,
+    CRow as Row,
+    CCard as Card,
+    CCardBody as CardBody,
+    CCardHeader as CardHeader,
+    CButton as Button,
+    CForm as Form,
+    CFormGroup as FormGroup,
+    CLabel as Label,
+    CInput as Input
+} from '@coreui/react';
+*/
 
 import { Formik } from 'formik';
 import { connect } from 'react-redux'

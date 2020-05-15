@@ -10,6 +10,16 @@ import {
     CardHeader,
     Button
 } from 'reactstrap';
+/*
+import {
+    CCol as Col,
+    CRow as Row,
+    CCard as Card,
+    CCardBody as CardBody,
+    CCardHeader as CardHeader,
+    CButton as Button
+} from '@coreui/react';
+*/
 
 //USe Redux Data
 import { categories } from "../../data/contracts"

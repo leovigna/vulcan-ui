@@ -1,10 +1,9 @@
-import React, { useContext, memo } from 'react';
-import {
-    Table
-} from 'reactstrap';
-
+import React, { memo } from 'react';
 import Moment from 'react-moment';
 import { withRenderCount } from 'react-render-counter';
+import {
+    Table
+} from 'reactstrap'
 
 import EtherScan from "./EtherScan"
 
