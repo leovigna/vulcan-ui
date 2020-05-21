@@ -5,9 +5,11 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
     Nav,
-    NavItem,
+    NavItem
 } from 'reactstrap';
-import vulcan from "../../assets/img/brand/vulcan.png"
+import { AppNavbarBrand } from '@coreui/react';
+
+import vulcan from "../../assets/img/brand/vulcanwhite.png"
 /*
 import {
     CNav as Nav,
@@ -28,14 +30,20 @@ class DefaultHeader extends Component {
 
         return (
             <React.Fragment>
+
                 <Nav className="d-md-down-none" navbar>
                     <NavItem className="px-3">
-                        <NavLink to="/dashboard" className="nav-link">
-                            <img style={{ height: "55px", width: "100%", objectFit: 'contain' }} src={vulcan} alt="Vulcan Link" />
-                        </NavLink>
-                    </NavItem>
-                </Nav>
+                        <NavLink to="/dashboard" className="nav-link"><AppNavbarBrand
+                            full={{ src: vulcan, width: 353, height: 55, alt: 'Vulcan Link' }}
+                            minimized={{ src: vulcan, width: 30, height: 30, alt: 'Vulcan Link' }}
+                        /></NavLink>
+
+
+                    </NavItem></Nav>
                 <Nav className="ml-auto" navbar>
+                    <NavItem className="px-3">
+                        <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>
+                    </NavItem>
                 </Nav>
             </React.Fragment>
         );

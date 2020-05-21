@@ -20,6 +20,7 @@ const loading = () => <div className="animated fadeIn pt-3 text-center">Loading.
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
+const VulcanLayout = React.lazy(() => import('./containers/VulcanLayout'));
 
 class App extends Component {
     render() {
@@ -27,6 +28,7 @@ class App extends Component {
             <HashRouter>
                 <React.Suspense fallback={loading()}>
                     <Switch>
+                        <Route path="/vulcan" name="Vulcan" render={props => <VulcanLayout {...props} />} />
                         <Route path="/" name="Home" render={props => <DefaultLayout {...props} />} />
                     </Switch>
                 </React.Suspense>
