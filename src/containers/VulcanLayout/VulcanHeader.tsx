@@ -3,19 +3,11 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {
-    Nav,
-    NavItem
-} from 'reactstrap';
-import { AppNavbarBrand } from '@coreui/react';
-
 import vulcan from "../../assets/img/brand/vulcanwhite.png"
-/*
 import {
     CNav as Nav,
     CNavItem as NavItem,
 } from '@coreui/react';
-*/
 
 const propTypes = {
     children: PropTypes.node,
@@ -33,10 +25,9 @@ class DefaultHeader extends Component {
 
                 <Nav className="d-md-down-none" navbar>
                     <NavItem className="px-3">
-                        <NavLink to="/dashboard" className="nav-link"><AppNavbarBrand
-                            full={{ src: vulcan, width: 353, height: 55, alt: 'Vulcan Link' }}
-                            minimized={{ src: vulcan, width: 30, height: 30, alt: 'Vulcan Link' }}
-                        /></NavLink>
+                        <NavLink to="/dashboard" className="nav-link">
+                            <div className="c-header-brand" full={{ src: vulcan, width: 353, height: 55, alt: 'Vulcan Link' }} />
+                        </NavLink>
 
 
                     </NavItem></Nav>

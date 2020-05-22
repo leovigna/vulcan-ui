@@ -4,11 +4,6 @@ import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import {
-    Container,
-} from 'reactstrap';
-
-import {
-    AppAside,
     AppFooter,
     AppHeader,
     AppSidebar,
@@ -18,23 +13,11 @@ import {
     AppSidebarMinimizer,
     AppBreadcrumb2 as AppBreadcrumb,
     AppSidebarNav2 as AppSidebarNav,
-} from '@coreui/react';
+} from '@coreui/react2';
 
-/*
 import {
-    CContainer as Container,
-    //CAside as AppAside,
-    CFooter as AppFooter,
-    CHeader as AppHeader,
-    CSidebar as AppSidebar,
-    CSidebarFooter as AppSidebarFooter,
-    CSidebarForm as AppSidebarForm,
-    CSidebarHeader as AppSidebarHeader,
-    CSidebarMinimizer as AppSidebarMinimizer,
-    CBreadcrumb as AppBreadcrumb,
-    CSidebarNav as AppSidebarNav
+    CContainer as Container
 } from '@coreui/react';
-*/
 
 // sidebar nav config
 import navCreate from '../../_nav';

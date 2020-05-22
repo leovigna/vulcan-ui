@@ -3,17 +3,10 @@
 
 import React, { useState, useEffect, memo } from 'react';
 import {
-    Card,
-    CardHeader,
-    CardBody
-} from 'reactstrap';
-/*
-import {
     CCard as Card,
     CCardHeader as CardHeader,
     CCardBody as CardBody
 } from '@coreui/react';
-*/
 
 //Drizzle
 import { connect } from "react-redux"

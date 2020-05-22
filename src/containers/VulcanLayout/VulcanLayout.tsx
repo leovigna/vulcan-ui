@@ -3,37 +3,10 @@
 import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
-import {
-    Container,
-} from 'reactstrap';
 
 import {
-    AppFooter,
-    AppHeader,
-    AppSidebar,
-    AppSidebarFooter,
-    AppSidebarForm,
-    AppSidebarHeader,
-    AppSidebarMinimizer,
-    AppBreadcrumb2 as AppBreadcrumb,
-    AppSidebarNav2 as AppSidebarNav,
+    CContainer as Container
 } from '@coreui/react';
-
-/*
-import {
-    CContainer as Container,
-    //CAside as AppAside,
-    CFooter as AppFooter,
-    CHeader as AppHeader,
-    CSidebar as AppSidebar,
-    CSidebarFooter as AppSidebarFooter,
-    CSidebarForm as AppSidebarForm,
-    CSidebarHeader as AppSidebarHeader,
-    CSidebarMinimizer as AppSidebarMinimizer,
-    CBreadcrumb as AppBreadcrumb,
-    CSidebarNav as AppSidebarNav
-} from '@coreui/react';
-*/
 
 // routes config
 import { connect } from "react-redux"
@@ -50,26 +23,24 @@ class VulcanLayout extends Component {
 
     render() {
         return (
-            <div className="app">
-                <div className='app-header'>
-                    <AppHeader fixed>
-                        <Suspense fallback={this.loading()}>
-                            <VulcanHeader onLogout={e => this.signOut(e)} />
-                        </Suspense>
-                    </AppHeader>
+            <div className="c-app">
+                <div className='c-header'>
+                    <Suspense fallback={this.loading()}>
+                        <VulcanHeader onLogout={e => this.signOut(e)} />
+                    </Suspense>
                 </div>
-                <div className="app-body">
-                    <main className="main">
+                <div className="c-body">
+                    <main className="c-main">
                         <Container fluid>
                             TEST
                         </Container>
                     </main>
                 </div>
-                <AppFooter>
+                <div className='c-footer'>
                     <Suspense fallback={this.loading()}>
                         <VulcanFooter />
                     </Suspense>
-                </AppFooter>
+                </div>
             </div>
         );
     }
