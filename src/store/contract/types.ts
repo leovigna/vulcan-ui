@@ -1,4 +1,4 @@
-import { Contract } from '../../orm/models'
+import { Contract } from '../orm/models'
 
 export const CREATE_CONTRACT = 'ORM/CREATE_CONTRACT'
 export const SETUP_CONTRACT = 'ORM/SETUP_CONTRACT'

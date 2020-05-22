@@ -1,4 +1,4 @@
-import { Transaction } from '../../orm/models'
+import { Transaction } from '../orm/models'
 
 export const FETCH_TRANSACTION = 'ORM/FETCH_TRANSACTION'
 export const CREATE_TRANSACTION = 'ORM/CREATE_TRANSACTION'

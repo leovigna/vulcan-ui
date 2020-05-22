@@ -1,4 +1,4 @@
-import { Block } from '../../orm/models'
+import { Block } from '../orm/models'
 
 export const CREATE_BLOCK = 'ORM/CREATE_BLOCK'
 export const UPDATE_BLOCK = 'ORM/UPDATE_BLOCK'

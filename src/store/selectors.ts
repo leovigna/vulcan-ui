@@ -4,8 +4,8 @@ import createCachedSelector from 're-reselect';
 import hash from 'object-hash'
 import moment from 'moment';
 
-import orm from '../orm';
-import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
+import orm from './orm';
+import { indexAddressEvent } from "./orm/models/eventByContractTypeIndex"
 
 export const emptyArray = []
 export const emptyObj = {}

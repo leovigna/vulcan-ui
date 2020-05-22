@@ -21,7 +21,7 @@ import { withRenderCount } from 'react-render-counter';
 
 import { web3ForNetworkId } from '../../web3global'
 
-import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
+import { indexAddressEvent } from "../../store/orm/models/eventByContractTypeIndex"
 import {
     graphDataSelector,
     contractByNameSelector,
