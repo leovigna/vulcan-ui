@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import footer from "../../assets/img/triangleup.svg"
+import triangleup from "../../assets/img/triangleup.svg"
 import vulcan from "../../assets/img/brand/vulcanwhite.svg"
 import telegram from "../../assets/img/icons/telegram.png"
 import discord from "../../assets/img/icons/discord.png"
@@ -28,10 +28,10 @@ class DefaultFooter extends Component {
         return (
             <>
                 <div style={{ height: 0, position: 'relative', zIndex: -1, top: -200, backgroundColor: '#002C69' }} >
-                    <img style={{ width: '100%', height: 200 }} src={footer}></img>
+                    <img style={{ width: '100%', height: 200 }} src={triangleup}></img>
                 </div>
                 <div style={{ color: '#FFFFFF', backgroundColor: '#002C69' }} >
-                    <Container clasName='py-5'>
+                    <Container>
                         <Row>
                             <Col xs={12} sm={6} md={5} lg={5}>
                                 <div className="Useful-link">

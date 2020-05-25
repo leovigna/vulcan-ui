@@ -1,3 +1,8 @@
+import ChainlinkBadge from '../assets/img/protocols/ChainlinkBadge.png'
+import TellorBadge from '../assets/img/protocols/TellorBadge.png'
+import CoinbaseBadge from '../assets/img/protocols/CoinbaseBadge.png'
+import MKRBadge from '../assets/img/protocols/MKRBadge.png'
+
 export const placeholderText = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'
 
 export const users = {
@@ -58,3 +63,78 @@ export const listData = [
     'Porta ac consectetur ac',
     'Vestibulum at eros'
 ]
+
+export const protocols = {
+    'chainlink': {
+        name: 'Chainlink',
+        img: ChainlinkBadge,
+        description: 'Decentralized Oracle Network using LINK token.'
+    },
+    'tellor': {
+        name: 'Tellor.io',
+        img: TellorBadge,
+        description: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.'
+    },
+    'coinbase': {
+        name: 'Coinbase',
+        img: CoinbaseBadge,
+        description: 'On-chain market data signed by Coinbase.'
+    },
+    'mkrdao': {
+        name: 'MKRDao',
+        img: MKRBadge,
+        description: 'Anonymous data feeds backing the DAI stablecoin.'
+    }
+}
+
+export const feeds = {
+    'btcusd': {
+        name: 'BTC / USD',
+        protocol: 'chainlink',
+        ens: 'btcusd.feeds.eth',
+        hearted: false,
+        value: '$ XX.XX'
+    },
+    'ethusd': {
+        name: 'ETH / USD',
+        protocol: 'tellor',
+        ens: 'ethusd.feeds.eth',
+        hearted: true,
+        value: '$ XX.XX'
+    },
+    'linkusd': {
+        name: 'LINK / USD',
+        protocol: 'chainlink',
+        ens: 'linkusd.feeds.eth',
+        hearted: false,
+        value: '$ XX.XX'
+    },
+    'eurusd': {
+        name: 'EUR / USD',
+        protocol: 'chainlink',
+        ens: 'eurusd.feeds.eth',
+        hearted: true,
+        value: '$ XX.XX'
+    },
+    'gpusd': {
+        name: 'GBP / USD',
+        protocol: 'chainlink',
+        ens: 'gbpusd.feeds.eth',
+        hearted: false,
+        value: '$ XX.XX'
+    },
+    'bchusd': {
+        name: 'BCH / USD',
+        protocol: 'chainlink',
+        ens: 'bchusd.feeds.eth',
+        hearted: true,
+        value: '$ XX.XX'
+    },
+    'ltcusd': {
+        name: 'LTC / USD',
+        protocol: 'chainlink',
+        ens: 'ltcusd.feeds.eth',
+        hearted: false,
+        value: '$ XX.XX'
+    }
+}
