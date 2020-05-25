@@ -93,48 +93,98 @@ export const feeds = {
         protocol: 'chainlink',
         ens: 'btcusd.feeds.eth',
         hearted: false,
-        value: '$ XX.XX'
+        value: '$ XX.XX',
+        responses: [
+            {
+                answer: '$ XXXX.XX',
+                address: '0x4565300C576431e5228e8aA32642D5739CF9247d',
+                transactionHash: '0xa58a1317...',
+                timestamp: 1590449006,
+                gasPrice: '15.0'
+            },
+            {
+                answer: '$ XXXX.XX',
+                address: '0x4565300C576431e5228e8aA32642D5739CF9247d',
+                transactionHash: '0xa58a1317...',
+                timestamp: 1590449006,
+                gasPrice: '15.0'
+            },
+            {
+                answer: '$ XXXX.XX',
+                address: '0x4565300C576431e5228e8aA32642D5739CF9247d',
+                transactionHash: '0xa58a1317...',
+                timestamp: 1590449006,
+                gasPrice: '15.0'
+            },
+            {
+                answer: '$ XXXX.XX',
+                address: '0x4565300C576431e5228e8aA32642D5739CF9247d',
+                transactionHash: '0xa58a1317...',
+                timestamp: 1590449006,
+                gasPrice: '15.0'
+            },
+            {
+                answer: '$ XXXX.XX',
+                address: '0x4565300C576431e5228e8aA32642D5739CF9247d',
+                transactionHash: '0xa58a1317...',
+                timestamp: 1590449006,
+                gasPrice: '15.0'
+            },
+            {
+                answer: '$ XXXX.XX',
+                address: '0x4565300C576431e5228e8aA32642D5739CF9247d',
+                transactionHash: '0xa58a1317...',
+                timestamp: 1590449006,
+                gasPrice: '15.0'
+            }
+        ]
     },
     'ethusd': {
         name: 'ETH / USD',
         protocol: 'tellor',
         ens: 'ethusd.feeds.eth',
         hearted: true,
-        value: '$ XX.XX'
+        value: '$ XX.XX',
+        responses: []
     },
     'linkusd': {
         name: 'LINK / USD',
         protocol: 'chainlink',
         ens: 'linkusd.feeds.eth',
         hearted: false,
-        value: '$ XX.XX'
+        value: '$ XX.XX',
+        responses: []
     },
     'eurusd': {
         name: 'EUR / USD',
         protocol: 'chainlink',
         ens: 'eurusd.feeds.eth',
         hearted: true,
-        value: '$ XX.XX'
+        value: '$ XX.XX',
+        responses: []
     },
     'gpusd': {
         name: 'GBP / USD',
         protocol: 'chainlink',
         ens: 'gbpusd.feeds.eth',
         hearted: false,
-        value: '$ XX.XX'
+        value: '$ XX.XX',
+        responses: []
     },
     'bchusd': {
         name: 'BCH / USD',
         protocol: 'chainlink',
         ens: 'bchusd.feeds.eth',
         hearted: true,
-        value: '$ XX.XX'
+        value: '$ XX.XX',
+        responses: []
     },
     'ltcusd': {
         name: 'LTC / USD',
         protocol: 'chainlink',
         ens: 'ltcusd.feeds.eth',
         hearted: false,
-        value: '$ XX.XX'
+        value: '$ XX.XX',
+        responses: []
     }
 }

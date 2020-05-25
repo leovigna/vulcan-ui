@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    CContainer as Container,
     CCard as Card,
     CCardBody as CardBody,
     CRow as Row,
@@ -11,7 +12,6 @@ import externalLink from "../../assets/img/icons/external_link.svg"
 
 import HeartFilled from '../../assets/img/icons/heart_filled.svg'
 import HeartEmpty from '../../assets/img/icons/heart_empty.svg'
-import { Container } from 'reactstrap';
 
 const FeedCardDetailed = ({ protocolImg, feedName, hearted, value, feedENS, lastUpdate, nodeCount }) => <Card style={{
     maxWidth: '350px',

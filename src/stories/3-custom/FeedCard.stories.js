@@ -12,13 +12,6 @@ import {
 import { withKnobs, select, boolean } from "@storybook/addon-knobs";
 
 import { placeholderText, protocols, feeds } from '../data';
-
-import ChainlinkBadge from '../../assets/img/protocols/ChainlinkBadge.svg'
-import TellorBadge from '../../assets/img/protocols/TellorBadge.svg'
-import CoinbaseBadge from '../../assets/img/protocols/CoinbaseBadge.png'
-import MKRBadge from '../../assets/img/protocols/MKRBadge.png'
-import HeartFilled from '../../assets/img/icons/heart_filled.svg'
-import HeartEmpty from '../../assets/img/icons/heart_empty.svg'
 import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
 import ArrowRight from '../../assets/img/icons/arrow_right.svg'
 

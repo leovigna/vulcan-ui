@@ -11,11 +11,13 @@ import {
     CBadge as Badge,
     CButton as Button
 } from '@coreui/react'
-import { placeholderText } from '../data';
 import VulcanLayout from '../../containers/VulcanLayout'
 import HomeView from '../../views/HomeView'
 import store, { persistor } from "../../store"
 import { Provider } from 'react-redux'
+
+import { placeholderText } from '../data';
+
 
 export default {
     title: 'Custom/VulcanLayout',
