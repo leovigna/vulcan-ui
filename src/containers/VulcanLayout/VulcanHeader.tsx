@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import vulcan from "../../assets/img/brand/vulcanwhite.png"
+import header from "../../assets/img/header.svg"
+
 import {
     CNav as Nav,
     CNavItem as NavItem,
@@ -21,22 +23,24 @@ class DefaultHeader extends Component {
         const { children, ...attributes } = this.props;
 
         return (
-            <React.Fragment>
+            <>
+                <img style={{ position: 'absolute', zIndex: 1, top: 0 }} src={header}></img>
+                <div style={{ position: 'relative', zIndex: 2 }} >
+                    <Nav className="d-md-down-none" navbar>
+                        <NavItem className="px-3">
+                            <NavLink to="/dashboard" className="nav-link">
+                                <div className="c-header-brand" full={{ src: vulcan, width: 353, height: 55, alt: 'Vulcan Link' }} />
+                            </NavLink>
 
-                <Nav className="d-md-down-none" navbar>
-                    <NavItem className="px-3">
-                        <NavLink to="/dashboard" className="nav-link">
-                            <div className="c-header-brand" full={{ src: vulcan, width: 353, height: 55, alt: 'Vulcan Link' }} />
-                        </NavLink>
 
-
-                    </NavItem></Nav>
-                <Nav className="ml-auto" navbar>
-                    <NavItem className="px-3">
-                        <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>
-                    </NavItem>
-                </Nav>
-            </React.Fragment>
+                        </NavItem></Nav>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem className="px-3">
+                            <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>
+                        </NavItem>
+                    </Nav>
+                </div>
+            </>
         );
     }
 }
