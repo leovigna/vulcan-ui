@@ -7,12 +7,13 @@ import {
 } from '@coreui/react'
 import VulcanLayout from '../../containers/VulcanLayout'
 import HomeView from '../../views/HomeView'
-import FeedView from '../../views/FeedView'
+import FeedView, { AddressFeedView } from '../../views/FeedView'
 
 import store from "../../store"
 import { Provider } from 'react-redux'
 
 import { placeholderText, feeds } from '../data';
+import { connectApp, connectDrizzle, connectStore } from '../../App'
 
 
 export default {
@@ -98,4 +99,21 @@ export const Feed = () => {
                 </Switch>
             </HashRouter>
         </Provider>)
+}
+
+export const AddressFeed = () => {
+    const address = '0xF79D6aFBb6dA890132F9D7c355e3015f15F3406F'
+    const routes = [
+        { path: '/', name: 'FeedView', component: () => <AddressFeedView address={address} /> }
+    ];
+
+    const App = () => (
+        <HashRouter>
+            <Switch>
+                <Route path="/" name="FeedView" render={props =>
+                    <VulcanLayout routes={routes} />} />
+            </Switch>
+        </HashRouter>)
+
+    return connectStore(connectDrizzle(App))();
 }

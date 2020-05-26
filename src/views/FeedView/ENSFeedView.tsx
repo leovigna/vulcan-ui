@@ -10,7 +10,7 @@ interface Props {
 
 const ENSFeedView = ({ ens, ...props }: Props) => {
     return (<FeedView {...props} />)
-})
+}
 
 function mapStateToProps(state: any, { ens }: Props) {
     return {
