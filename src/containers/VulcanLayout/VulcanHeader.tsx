@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import vulcan from "../../assets/img/brand/vulcanwhite.png"
 import triangledown from "../../assets/img/triangledown.svg"
-import header from "../../assets/img/header.svg"
 import externalLink from "../../assets/img/icons/external_link.png"
 
 import {
@@ -29,22 +28,6 @@ class DefaultHeader extends Component {
 
         return (
             <>
-                {/*
-                <div style={{ position: 'relative', zIndex: 2 }} >
-                    <Nav className="d-md-down-none" navbar>
-                        <NavItem className="px-3">
-                            <NavLink to="/dashboard" className="nav-link">
-                                <div className="c-header-brand" full={{ src: vulcan, width: 353, height: 55, alt: 'Vulcan Link' }} />
-                            </NavLink>
-
-
-                        </NavItem></Nav>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem className="px-3">
-                            <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>
-                        </NavItem>
-                    </Nav>
-                </div> */}
                 <div style={{ color: '#FFFFFF', backgroundColor: '#002C69' }} >
                     <Container>
                         <Row>

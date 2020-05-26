@@ -13,6 +13,8 @@ import {
 } from '@coreui/react'
 import VulcanLayout from '../../containers/VulcanLayout'
 import HomeView from '../../views/HomeView'
+import FeedView from '../../views/FeedView'
+
 import store, { persistor } from "../../store"
 import { Provider } from 'react-redux'
 
@@ -54,7 +56,23 @@ export const Feeds = () => {
         <Provider store={store}>
             <HashRouter>
                 <Switch>
-                    <Route path="/" name="VulcanLayout" render={props =>
+                    <Route path="/" name="Feeds" render={props =>
+                        <VulcanLayout routes={routes} />} />
+                </Switch>
+            </HashRouter>
+        </Provider>)
+}
+
+export const Feed = () => {
+    const routes = [
+        { path: '/', name: 'FeedView', component: FeedView }
+    ];
+
+    return (
+        <Provider store={store}>
+            <HashRouter>
+                <Switch>
+                    <Route path="/" name="FeedView" render={props =>
                         <VulcanLayout routes={routes} />} />
                 </Switch>
             </HashRouter>

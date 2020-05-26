@@ -27,7 +27,7 @@ class DefaultFooter extends Component {
 
         return (
             <>
-                <div style={{ height: 0, position: 'relative', zIndex: -1, top: -200, backgroundColor: '#002C69' }} >
+                <div style={{ height: 0, position: 'relative', zIndex: 1, top: -200, backgroundColor: '#002C69' }} >
                     <img style={{ width: '100%', height: 200 }} src={triangleup}></img>
                 </div>
                 <div style={{ color: '#FFFFFF', backgroundColor: '#002C69' }} >
