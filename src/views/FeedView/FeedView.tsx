@@ -8,7 +8,19 @@ import {
 import FeedTable from '../../components/FeedTable'
 import FeedChart from '../../components/FeedChart'
 
-const FeedView = ({ title, address, answer, responses, chartData, minResponses, maxResponses, lastUpdate, deviationThreshold }) => {
+interface Props {
+    title: string,
+    address: string,
+    answer: string,
+    responses: any,
+    chartData: any,
+    minResponses: number,
+    maxResponses: number,
+    lastUpdate: string,
+    deviationThreshold: number
+}
+
+const FeedView = ({ title, address, answer, responses, chartData, minResponses, maxResponses, lastUpdate, deviationThreshold }: Props) => {
     return (
         <>
             <div style={{ backgroundColor: '#F2F2F2', marginTop: -200, paddingTop: 100, paddingBottom: 50, marginRight: -15, marginLeft: -15 }}>

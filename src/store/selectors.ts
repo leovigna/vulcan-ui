@@ -10,9 +10,8 @@ import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
 export const emptyArray = []
 export const emptyObj = {}
 
-export const customContractsSelector = (state: object) => state.persisted.customContracts;
-
-export const contractSelector = (state: object) => state.contracts;
+export const contractByAddressSelector = () => { }
+export const contractByENSSelector = () => { }
 export const contractByNameSelector = createCachedSelector(
     contractSelector,
     (_state_, name) => name,
@@ -20,6 +19,11 @@ export const contractByNameSelector = createCachedSelector(
 )(
     (_state_, name) => name
 );
+
+export const customContractsSelector = (state: object) => state.persisted.customContracts;
+
+export const contractSelector = (state: object) => state.contracts;
+
 
 export const objectCacheSelector = createCachedSelector(
     (...args) => args[args.length - 1],
