@@ -3,15 +3,9 @@ import moment from 'moment';
 import EtherScan from "./EtherScan"
 import { withRenderCount } from 'react-render-counter';
 import {
-    ListGroup,
-    ListGroupItem,
-} from 'reactstrap';
-/*
-import {
     CListGroup as ListGroup,
     CListGroupItem as ListGroupItem,
 } from '@coreui/react';
-*/
 
 
 const AggregatorHead = ({

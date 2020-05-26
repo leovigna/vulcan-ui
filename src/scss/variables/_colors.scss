@@ -2,17 +2,15 @@
 // CoreUI default colors
 //
 
-$primary: #002e6b;
+$primary: #fff; //#002e6b;
 $secondary: #fa4804;
 $light: #9bb3d6;
 $dark: #526787;
 
-$theme-colors: (
-    "primary":    $primary,
-    "secondary":  $secondary,
-    "light":      $light,
-    "dark":       $dark
-);
+$theme-colors: ("primary": $primary,
+    "secondary": $secondary,
+    "light": $light,
+    "dark": $dark);
 
 //#20314c   Headers Dark
 //#fff      Headers Light

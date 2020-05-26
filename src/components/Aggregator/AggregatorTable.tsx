@@ -1,9 +1,6 @@
 import React, { memo } from 'react';
 import Moment from 'react-moment';
 import { withRenderCount } from 'react-render-counter';
-import {
-    Table
-} from 'reactstrap'
 
 import EtherScan from "./EtherScan"
 
@@ -15,7 +12,7 @@ const AggregatorTable = ({
     console.debug(`[RENDER] AggregatorTable ${count}`)
 
     return (
-        <Table hover responsive className="table-outline mb-0 d-sm-table">
+        <table hover responsive className="table table-outline mb-0 d-sm-table">
             <thead className="thead-light">
                 <tr>
                     <th>Oracle</th>
@@ -59,7 +56,7 @@ const AggregatorTable = ({
                     })
                 }
             </tbody>
-        </Table>
+        </table>
     );
 };
 

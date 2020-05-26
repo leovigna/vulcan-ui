@@ -3,17 +3,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-    Nav,
-    NavItem,
-    NavLink,
-    Progress,
-    TabContent,
-    TabPane,
-    ListGroup,
-    ListGroupItem,
-} from 'reactstrap';
-/*
-import {
     CNav as Nav,
     CNavItem as NavItem,
     CNavLink as NavLink,
@@ -24,7 +13,6 @@ import {
     CListGroupItem as ListGroupItem,
     CSwitch as AppSwitch
 } from '@coreui/react';
-*/
 
 const propTypes = {
     children: PropTypes.node,

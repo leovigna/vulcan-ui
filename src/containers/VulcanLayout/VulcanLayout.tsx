@@ -3,10 +3,10 @@
 import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
-import {
-    Container,
-} from 'reactstrap';
 
+import {
+    CContainer as Container
+} from '@coreui/react';
 import {
     AppFooter,
     AppHeader,
@@ -17,23 +17,7 @@ import {
     AppSidebarMinimizer,
     AppBreadcrumb2 as AppBreadcrumb,
     AppSidebarNav2 as AppSidebarNav,
-} from '@coreui/react';
-
-/*
-import {
-    CContainer as Container,
-    //CAside as AppAside,
-    CFooter as AppFooter,
-    CHeader as AppHeader,
-    CSidebar as AppSidebar,
-    CSidebarFooter as AppSidebarFooter,
-    CSidebarForm as AppSidebarForm,
-    CSidebarHeader as AppSidebarHeader,
-    CSidebarMinimizer as AppSidebarMinimizer,
-    CBreadcrumb as AppBreadcrumb,
-    CSidebarNav as AppSidebarNav
-} from '@coreui/react';
-*/
+} from '@coreui/react2';
 
 // routes config
 import { connect } from "react-redux"
@@ -49,27 +33,35 @@ class VulcanLayout extends Component {
     loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
     render() {
+        const { routes } = this.props;
+
         return (
             <div className="app">
-                <div className='app-header'>
-                    <AppHeader fixed>
+                <Suspense fallback={this.loading()}>
+                    <VulcanHeader />
+                </Suspense>
+                <div className="c-body">
+                    <Container style={{ minHeight: 500, paddingTop: 200, paddingBottom: 200 }} fluid>
                         <Suspense fallback={this.loading()}>
-                            <VulcanHeader onLogout={e => this.signOut(e)} />
+                            <Switch>
+                                {routes.map((route, idx) => {
+                                    return route.component ? (
+                                        <Route
+                                            key={idx}
+                                            path={route.path}
+                                            exact={route.exact}
+                                            name={route.name}
+                                            render={props => <route.component {...props} />}
+                                        />
+                                    ) : null;
+                                })}
+                            </Switch>
                         </Suspense>
-                    </AppHeader>
+                    </Container>
                 </div>
-                <div className="app-body">
-                    <main className="main">
-                        <Container fluid>
-                            TEST
-                        </Container>
-                    </main>
-                </div>
-                <AppFooter>
-                    <Suspense fallback={this.loading()}>
-                        <VulcanFooter />
-                    </Suspense>
-                </AppFooter>
+                <Suspense fallback={this.loading()}>
+                    <VulcanFooter />
+                </Suspense>
             </div>
         );
     }

@@ -3,17 +3,11 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {
-    Nav,
-    NavItem,
-} from 'reactstrap';
 import vulcan from "../../assets/img/brand/vulcan.png"
-/*
 import {
     CNav as Nav,
     CNavItem as NavItem,
 } from '@coreui/react';
-*/
 
 const propTypes = {
     children: PropTypes.node,

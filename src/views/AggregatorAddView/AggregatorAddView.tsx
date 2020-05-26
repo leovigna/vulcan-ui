@@ -3,19 +3,6 @@
 
 import React, { Component } from 'react';
 import {
-    Col,
-    Row,
-    Card,
-    CardBody,
-    CardHeader,
-    Button,
-    Form,
-    FormGroup,
-    Label,
-    Input
-} from 'reactstrap';
-/*
-import {
     CCol as Col,
     CRow as Row,
     CCard as Card,
@@ -27,7 +14,6 @@ import {
     CLabel as Label,
     CInput as Input
 } from '@coreui/react';
-*/
 
 import { Formik } from 'formik';
 import { connect } from 'react-redux'

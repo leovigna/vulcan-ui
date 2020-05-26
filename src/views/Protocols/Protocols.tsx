@@ -3,15 +3,6 @@
 
 import React, { Component } from 'react';
 import {
-    Col,
-    Row,
-    Card,
-    CardBody,
-    CardHeader,
-    Button
-} from 'reactstrap';
-/*
-import {
     CCol as Col,
     CRow as Row,
     CCard as Card,
@@ -19,8 +10,6 @@ import {
     CCardHeader as CardHeader,
     CButton as Button
 } from '@coreui/react';
-*/
-
 //USe Redux Data
 import { connect } from "react-redux"
 import { contractsSelector } from '../../store/selectors'
