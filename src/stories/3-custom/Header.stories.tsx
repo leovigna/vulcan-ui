@@ -1,6 +1,5 @@
 import React from 'react';
 import VulcanHeader from '../../containers/VulcanLayout/VulcanHeader'
-import { withKnobs, select, boolean } from "@storybook/addon-knobs";
 import { HashRouter, Route, Switch } from 'react-router-dom';
 
 export default {

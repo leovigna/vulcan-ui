@@ -8,12 +8,20 @@ import {
     CButton as Button
 } from '@coreui/react'
 
-import externalLink from "../../assets/img/icons/external_link.svg"
-
 import HeartFilled from '../../assets/img/icons/heart_filled.svg'
 import HeartEmpty from '../../assets/img/icons/heart_empty.svg'
 
-const FeedCardDetailed = ({ protocolImg, feedName, hearted, value, feedENS, lastUpdate, nodeCount }) => <Card style={{
+interface Props {
+    protocolImg: string,
+    feedName: string,
+    hearted: boolean,
+    value: string,
+    feedENS: string,
+    lastUpdate: string,
+    nodeCount: number
+}
+
+const FeedCardDetailed = ({ protocolImg, feedName, hearted, value, feedENS, lastUpdate, nodeCount }: Props) => <Card style={{
     maxWidth: '350px',
     height: '320px',
     boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.5)",

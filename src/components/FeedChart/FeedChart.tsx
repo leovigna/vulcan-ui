@@ -1,33 +1,6 @@
 import React from 'react';
-import {
-    CCard as Card,
-    CCardBody as CardBody,
-    CRow as Row,
-    CCol as Col,
-    CButton as Button
-} from '@coreui/react'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { Chart, Line } from 'react-chartjs-2';
-
-/**
- * Custom positioner
- * @function Chart.Tooltip.positioners.custom
- * @param elements {Chart.Element[]} the tooltip elements
- * @param eventPosition {Point} the position of the event in canvas coordinates
- * @returns {Point} the tooltip position
- */
-
-/*
-Chart.Tooltip.positioners.custom = function (elements, eventPosition) {
-var tooltip = this;
-
-
-return {
-    x: 0,
-    y: 0
-};
-};
-*/
+import { Line } from 'react-chartjs-2';
 
 const mainChartOpts = {
     tooltips: {
@@ -96,7 +69,15 @@ const mainChartOpts = {
     }
 };
 
-const FeedChart = ({ data = [] }) => {
+interface Point {
+    x: number,
+    y: number
+}
+interface Props {
+    data: [Point]
+}
+
+const FeedChart = ({ data }: Props) => {
     const mainChart = {
         datasets: [
             {

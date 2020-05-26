@@ -1,17 +1,13 @@
 import React from 'react';
 import {
-    CCard as Card,
-    CCardHeader as CardHeader,
-    CCardBody as CardBody,
     CRow as Row,
     CCol as Col,
     CContainer as Container,
-    CBadge as Badge,
     CButton as Button
 } from '@coreui/react'
-import { withKnobs, select, boolean } from "@storybook/addon-knobs";
+import { select } from "@storybook/addon-knobs";
 
-import { placeholderText, protocols, feeds } from '../data';
+import { protocols, feeds } from '../data';
 import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
 import ArrowRight from '../../assets/img/icons/arrow_right.svg'
 
@@ -29,7 +25,7 @@ const groupId = 'GROUP-ID1';
 
 export const Default = () => {
     const feedName = select('feed', feedOptions, feedDefault, groupId);
-    const { name, protocol, ens, hearted, value } = feeds[feedName]
+    const { name, protocol, hearted, value } = feeds[feedName]
     const feedProtocol = protocols[protocol]
 
     return (<Container>

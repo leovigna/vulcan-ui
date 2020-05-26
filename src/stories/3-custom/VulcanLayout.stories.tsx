@@ -2,23 +2,17 @@ import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import {
-    CCard as Card,
-    CCardHeader as CardHeader,
-    CCardBody as CardBody,
     CRow as Row,
-    CCol as Col,
-    CContainer as Container,
-    CBadge as Badge,
-    CButton as Button
+    CContainer as Container
 } from '@coreui/react'
 import VulcanLayout from '../../containers/VulcanLayout'
 import HomeView from '../../views/HomeView'
 import FeedView from '../../views/FeedView'
 
-import store, { persistor } from "../../store"
+import store from "../../store"
 import { Provider } from 'react-redux'
 
-import { placeholderText } from '../data';
+import { placeholderText, feeds } from '../data';
 
 
 export default {
@@ -64,8 +58,35 @@ export const Feeds = () => {
 }
 
 export const Feed = () => {
+    const title = 'BTC / ETH Aggregator'
+    const address = '0x000000000000'
+    const minResponses = 5
+    const maxResponses = 9
+    const deviationThreshold = 1
+    const answer = 'Ξ 0.01918345'
+    const lastUpdate = '7:42 AM'
+    const responses = feeds.btcusd.responses
+    const chartData = [{
+        'x': 1590449000000,
+        'y': 0
+    }, {
+        'x': 1590450000000,
+        'y': 1
+    }, {
+        'x': 1590451000000,
+        'y': 3
+    }, {
+        'x': 1590452000000,
+        'y': 1
+    }, {
+        'x': 1590460000000,
+        'y': 0
+    }]
+
+    const feedViewProps = { title, address, answer, responses, chartData, minResponses, maxResponses, lastUpdate, deviationThreshold }
+
     const routes = [
-        { path: '/', name: 'FeedView', component: FeedView }
+        { path: '/', name: 'FeedView', component: () => <FeedView {...feedViewProps} /> }
     ];
 
     return (

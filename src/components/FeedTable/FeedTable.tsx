@@ -1,15 +1,20 @@
 import React from 'react';
-import {
-    CCard as Card,
-    CCardBody as CardBody,
-    CRow as Row,
-    CCol as Col,
-    CButton as Button
-} from '@coreui/react'
 import Moment from 'react-moment';
 import EtherScan from "../Aggregator/EtherScan"
 
-const FeedTable = ({ responses }) =>
+interface Response {
+    transactionHash: string,
+    address: string,
+    answer: string,
+    timestamp: string,
+    gasPrice: string
+}
+
+interface Props {
+    responses: [Response]
+}
+
+const FeedTable = ({ responses }: Props) =>
     <table className="table table-outline mb-0 d-sm-table table-responsive table-borderless" style={{ borderCollapse: 'collapse', border: 'none', borderSpacing: 0 }}>
         <thead>
             <tr>

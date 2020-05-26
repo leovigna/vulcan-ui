@@ -10,7 +10,14 @@ import {
 import HeartFilled from '../../assets/img/icons/heart_filled.svg'
 import HeartEmpty from '../../assets/img/icons/heart_empty.svg'
 
-const FeedCard = ({ protocolImg, feedName, hearted, value }) => <Card style={{
+interface Props {
+    protocolImg: string,
+    feedName: string,
+    hearted: boolean,
+    value: string,
+}
+
+const FeedCard = ({ protocolImg, feedName, hearted, value }: Props) => <Card style={{
     width: '350px',
     height: '220px',
     boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.5)",

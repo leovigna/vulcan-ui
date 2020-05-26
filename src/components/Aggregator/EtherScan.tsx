@@ -3,7 +3,13 @@
 
 import React from 'react';
 
-const EtherScan = ({ address, tx, ...props }) => {
+interface Props {
+    address?: string,
+    tx?: string,
+    [key: string]: any
+}
+
+const EtherScan = ({ address, tx, ...props }: Props) => {
     if (address)
         return (<a href={"https://etherscan.io/address/" + address} {...props}>{address}</a>)
     if (tx)

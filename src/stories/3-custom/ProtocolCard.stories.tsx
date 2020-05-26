@@ -1,17 +1,12 @@
 import React from 'react';
 import {
-    CCard as Card,
-    CCardHeader as CardHeader,
-    CCardBody as CardBody,
     CRow as Row,
     CCol as Col,
-    CContainer as Container,
-    CBadge as Badge,
-    CButton as Button
+    CContainer as Container
 } from '@coreui/react'
-import { withKnobs, select, boolean } from "@storybook/addon-knobs";
+import { select } from "@storybook/addon-knobs";
 
-import { placeholderText, protocols } from '../data';
+import { protocols } from '../data';
 import ProtocolCard from '../../components/ProtocolCard'
 
 
