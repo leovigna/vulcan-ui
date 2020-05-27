@@ -66,16 +66,6 @@ export const eventAddNotifier = store => next => action => {
     return next(action)
 }
 
-export const transactionAddNotifier = store => next => action => {
-    switch (action.type) {
-        case TransactionTypes.CREATE_TRANSACTION:
-        case TransactionTypes.UPDATE_TRANSACTION:
-            break;
-    }
-
-    return next(action)
-}
-
 export const contractAddNotifier = store => next => action => {
     switch (action.type) {
         case ContractTypes.CREATE_CONTRACT:

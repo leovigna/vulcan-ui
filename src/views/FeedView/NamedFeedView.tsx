@@ -10,7 +10,7 @@ interface Props {
 
 const NamedFeedView = ({ name, ...props }: Props) => {
     return (<FeedView {...props} />)
-})
+}
 
 function mapStateToProps(state: any, { name }: Props) {
     return {
@@ -18,4 +18,4 @@ function mapStateToProps(state: any, { name }: Props) {
     }
 }
 
-export default connect(mapStateToProps)(NamedFeedView);
+export default connect(mapStateToProps)(NamedFeedView)

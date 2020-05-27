@@ -65,7 +65,7 @@ class DefaultFooter extends Component {
                                         <form
                                             action="https://link.us19.list-manage.com/subscribe/post?u=66e21f9472d7271632b2dc06a&amp;id=87420076fe"
                                             method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
-                                            className="validate" target="_blank" novalidate>
+                                            className="validate" target="_blank" noValidate>
                                             <div id="mc_embed_signup_scroll">
                                                 <div className="mc-field-group">
                                                     <input type="email" placeholder="Enter Email Address" value="" name="EMAIL"
@@ -76,14 +76,14 @@ class DefaultFooter extends Component {
                                                     <div className="response" id="mce-success-response" style={{ display: "none" }}></div>
                                                 </div>
                                                 <div style={{ position: "absolute", left: "-5000px" }} aria-hidden="true"><input
-                                                    type="text" name="b_66e21f9472d7271632b2dc06a_87420076fe" tabindex="-1"
+                                                    type="text" name="b_66e21f9472d7271632b2dc06a_87420076fe" tabIndex="-1"
                                                     value="" /></div>
                                             </div>
                                             <div className="main-link">
                                                 <div className="link-to-go">
                                                 </div>
                                                 <a href="#"
-                                                    onclick="document.getElementById('mc-embedded-subscribe-form').submit();">Subscribe
+                                                    onClick={() => { document.getElementById('mc-embedded-subscribe-form').submit(); }}>Subscribe
                                         <span><img src={arrow} className="img-fluid" alt="" /></span></a>
                                             </div>
                                         </form>

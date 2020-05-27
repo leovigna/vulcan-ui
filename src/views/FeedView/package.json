@@ -2,5 +2,5 @@
     "name": "FeedView",
     "version": "0.0.0",
     "private": true,
-    "main": "./FeedView.tsx"
+    "main": "./index.tsx"
 }
