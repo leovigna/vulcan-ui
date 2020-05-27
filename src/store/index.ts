@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 
 import drizzleOptions from "../drizzleOptions"
 //import { loadLocalStorage, saveLocalStorage } from "./localstorage"
-import { actionDebugger, eventAddNotifier, contractAddNotifier, transactionAddNotifier } from "./middleware"
+import { actionDebugger, eventAddNotifier, contractAddNotifier } from "./middleware"
 import { transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga } from "./sagas";
 import { ormReducer } from './reducers';
 
@@ -28,7 +28,7 @@ const appReducers = {
 }
 
 const appSagas = [transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga]
-const appMiddlewares = [actionDebugger, eventAddNotifier, transactionAddNotifier, contractAddNotifier]
+const appMiddlewares = [actionDebugger, eventAddNotifier, contractAddNotifier]
 const config = {
     drizzleOptions,
     appReducers,

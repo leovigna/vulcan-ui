@@ -3,9 +3,18 @@ import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
 import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
 
-import { contractByAddressSelector } from "../../store/selectors"
+import {
+    contractByAddressSelector,
+    graphDataSelector,
+    makeEventIndexedFilterSelector
+} from "../../store/selectors"
+import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
 
 import FeedView from './FeedView'
+
+
+import { ContractActions } from "../../store/actions"
+import { ContractTypes } from "../../store/types"
 
 interface ContractState {
     latestRound?: any,
@@ -16,10 +25,12 @@ interface ContractState {
 
 interface Props {
     address: string,
-    contractState: ContractState
+    responses: any,
+    contractState: ContractState,
+    createContract(data: ContractTypes.CreateContractActionInput): any
 }
 
-const AddressFeedView = ({ address, contractState, ...props }: Props) => {
+const AddressFeedView = ({ address, responses, contractState, createContract, ...props }: Props) => {
     const drizzleContext = useContext(DrizzleContext.Context)
 
     const [contractInitialized, setContractInitialized] = useState(false)
@@ -32,13 +43,17 @@ const AddressFeedView = ({ address, contractState, ...props }: Props) => {
     useEffect(() => {
         console.debug('Initialize contract')
         if (!drizzle.contracts[address]) {
+            /*
             const web3Contract = new drizzle.web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
             const contractConfig = {
                 contractName: address,
                 web3Contract
             }
-            const events = ["AnswerUpdated", "ResponseReceived"]
+            
             drizzle.addContract(contractConfig, events);
+            */
+            const events = ["AnswerUpdated", "ResponseReceived"]
+            createContract({ address, networkId: '1', abi: AggregatorABI.compilerOutput.abi, events })
             setContractInitialized(true)
         } else {
             setContractInitialized(true)
@@ -67,6 +82,7 @@ const AddressFeedView = ({ address, contractState, ...props }: Props) => {
     const latestAnswer = contractState?.latestAnswer[latestAnswerKey]?.value
     const latestTimestamp = contractState?.latestTimestamp[latestTimestampKey]?.value
 
+    console.debug(responses)
     const feedViewProps = {
         title: `Oracle Aggregator`,
         address,
@@ -82,10 +98,25 @@ const AddressFeedView = ({ address, contractState, ...props }: Props) => {
     return (<FeedView {...feedViewProps} {...props} />);
 }
 
-function mapStateToProps(state: any, { address }: Props) {
+const ResponseReceivedSelector = makeEventIndexedFilterSelector()
+
+const mapStateToProps = (state: any, { address }: Props) => {
+    const ResponseReceivedIndexData = { address: address, event: 'ResponseReceived' }
+    const ResponseReceivedIndexId = indexAddressEvent(ResponseReceivedIndexData)
+    const AnswerUpdatedIndexData = { address: address, event: 'AnswerUpdated' }
+    const AnswerUpdatedIndexId = indexAddressEvent(AnswerUpdatedIndexData)
+
     return {
-        contractState: contractByAddressSelector(state, address)
+        contractState: contractByAddressSelector(state, address),
+        responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
+        graphData: graphDataSelector(state, AnswerUpdatedIndexId)
     }
 }
 
-export default connect(mapStateToProps)(AddressFeedView);
+function mapDispatchToProps(dispatch) {
+    return {
+        createContract: (data: ContractTypes.CreateContractActionInput) => dispatch(ContractActions.createContract(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddressFeedView);

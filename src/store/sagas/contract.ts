@@ -136,7 +136,7 @@ export function* contractSetup(action: ContractTypes.SetupContractAction) {
         web3Contract
     }
 
-    //yield all(events.map(event => put(EventActions.createEvent({ address, event }))));
+    yield all(events.map(event => put(EventActions.createEvent({ address, event }))));
     yield all(events.map(event => put(EventActions.createEventIndex({ address, event }))));
     yield put(DrizzleActions.addDrizzleContract({ contractConfig, events }))
 
@@ -146,7 +146,7 @@ export function* contractSetup(action: ContractTypes.SetupContractAction) {
 
 // app root saga
 export function* contractRootSaga() {
-    yield takeEvery(DrizzleTypes.DRIZZLE_INITIALIZED, setupDefaultContracts)
+    //yield takeEvery(DrizzleTypes.DRIZZLE_INITIALIZED, setupDefaultContracts)
     yield takeEvery(ContractTypes.SETUP_CONTRACT, contractSetup)
     yield takeEvery(ContractTypes.UPDATE_CONTRACT_EVENTS, updateContractEvents)
 }

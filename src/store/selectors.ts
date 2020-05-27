@@ -12,6 +12,7 @@ export const emptyObj = {}
 
 export const customContractsSelector = (state: object) => state.persisted.customContracts;
 export const contractSelector = (state: object) => state.contracts;
+
 export const contractByAddressSelector = createCachedSelector(
     contractSelector,
     (_state_: any, address: string) => address,
@@ -68,6 +69,7 @@ export const eventByContractTypeIndexSelector = ormCreateSelector(
     (session) => {
         const indexes = session.EventByContractTypeIndex.all().toModelArray().map(item => {
             const { ref } = item;
+
             return {
                 ...ref,
                 events: item.events.toRefArray(),
@@ -85,6 +87,8 @@ export const eventIndexedFilterSelector = ormCreateSelector(
     (session, indexParams) => {
         const indexId = indexAddressEvent(JSON.parse(indexParams))
         const item = session.EventByContractTypeIndex.withId(indexId)
+        if (!item) return emptyArray;
+
         const { ref } = item;
         const events = item.events.toModelArray().map(item => {
             const { ref } = item;
@@ -106,6 +110,8 @@ export const makeEventIndexedFilterSelector = () => {
         (session, indexId) => indexId,
         (session, indexId) => {
             const item = session.EventByContractTypeIndex.withId(indexId)
+            if (!item) return emptyArray;
+
             const { ref } = item;
             const events = item.events.toModelArray().map(item => {
                 const { ref } = item;
