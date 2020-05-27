@@ -136,7 +136,7 @@ export function* contractSetup(action: ContractTypes.SetupContractAction) {
         web3Contract
     }
 
-    yield all(events.map(event => put(EventActions.createEvent({ address, event }))));
+    //yield all(events.map(event => put(EventActions.createEvent({ address, event }))));
     yield all(events.map(event => put(EventActions.createEventIndex({ address, event }))));
     yield put(DrizzleActions.addDrizzleContract({ contractConfig, events }))
 

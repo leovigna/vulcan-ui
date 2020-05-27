@@ -8,8 +8,9 @@ import { Drizzle, IDrizzleOptions } from "@drizzle/store"
 import { DrizzleContext } from "@drizzle/react-plugin"
 import { ApolloProvider } from '@apollo/react-hooks';
 import client from './client'
+import routes from './routes'
 
-//import './App.scss';
+import './App.scss';
 
 import drizzleOptions from "./drizzleOptions"
 import store, { persistor } from "./store"
@@ -19,7 +20,6 @@ const drizzle = new Drizzle(drizzleOptions as IDrizzleOptions, store)
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 // Containers
-const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
 const VulcanLayout = React.lazy(() => import('./containers/VulcanLayout'));
 
 class App extends Component {
@@ -28,8 +28,7 @@ class App extends Component {
             <HashRouter>
                 <React.Suspense fallback={loading()}>
                     <Switch>
-                        <Route path="/vulcan" name="Vulcan" render={props => <VulcanLayout {...props} />} />
-                        <Route path="/" name="Home" render={props => <DefaultLayout {...props} />} />
+                        <Route path="/" name="Vulcan" render={props => <VulcanLayout routes={routes} {...props} />} />
                     </Switch>
                 </React.Suspense>
             </HashRouter>
