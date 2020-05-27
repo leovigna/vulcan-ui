@@ -10,7 +10,7 @@ import NamedFeedView from './NamedFeedView'
 import ENSFeedView from './ENSFeedView'
 
 const WrappedFeedView = ({ match, ...props }) => {
-    const drizzleContext = useContext(DrizzleContext)
+    const drizzleContext = useContext(DrizzleContext.Context)
     const { drizzle, initialized } = drizzleContext;
 
     const matchParams = match.params;

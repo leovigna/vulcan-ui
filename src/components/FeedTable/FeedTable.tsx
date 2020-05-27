@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'react-moment';
 import EtherScan from "../Aggregator/EtherScan"
 
-interface Response {
+export interface Response {
     transactionHash: string,
     address: string,
     answer: string,

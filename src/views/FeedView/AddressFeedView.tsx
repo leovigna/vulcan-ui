@@ -12,9 +12,10 @@ import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
 
 import FeedView from './FeedView'
 
-
 import { ContractActions } from "../../store/actions"
-import { ContractTypes } from "../../store/types"
+import { ContractTypes, EventTypes } from "../../store/types"
+import { Response } from '../../components/FeedTable'
+
 
 interface ContractState {
     latestRound?: any,
@@ -25,12 +26,14 @@ interface ContractState {
 
 interface Props {
     address: string,
-    responses: any,
+    responses: [EventTypes.Event],
     contractState: ContractState,
+    chartData: any,
     createContract(data: ContractTypes.CreateContractActionInput): any
+    updateContractEvents(data: ContractTypes.UpdateContractEventsActionInput): any
 }
 
-const AddressFeedView = ({ address, responses, contractState, createContract, ...props }: Props) => {
+const AddressFeedView = ({ address, responses, contractState, chartData, createContract, updateContractEvents, ...props }: Props) => {
     const drizzleContext = useContext(DrizzleContext.Context)
 
     const [contractInitialized, setContractInitialized] = useState(false)
@@ -43,19 +46,14 @@ const AddressFeedView = ({ address, responses, contractState, createContract, ..
     useEffect(() => {
         console.debug('Initialize contract')
         if (!drizzle.contracts[address]) {
-            /*
             const web3Contract = new drizzle.web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
-            const contractConfig = {
-                contractName: address,
-                web3Contract
-            }
-            
-            drizzle.addContract(contractConfig, events);
-            */
             const events = ["AnswerUpdated", "ResponseReceived"]
             createContract({ address, networkId: '1', abi: AggregatorABI.compilerOutput.abi, events })
+            updateContractEvents({ address, networkId: '1', web3Contract })
+
             setContractInitialized(true)
         } else {
+
             setContractInitialized(true)
         }
     }, [address]);
@@ -81,16 +79,26 @@ const AddressFeedView = ({ address, responses, contractState, createContract, ..
     const latestRound = contractState?.latestRound[latestRoundKey]?.value
     const latestAnswer = contractState?.latestAnswer[latestAnswerKey]?.value
     const latestTimestamp = contractState?.latestTimestamp[latestTimestampKey]?.value
+    const feedViewResponses: [Response] = responses.map((r) => {
+        const { returnValues, block, transactionHash, transaction } = r
+        return {
+            transactionHash,
+            address: returnValues?.sender,
+            answer: returnValues?.response,
+            timestamp: block?.timestamp,
+            gasPrice: transaction?.gasPrice
+        }
+    })
 
-    console.debug(responses)
+
     const feedViewProps = {
         title: `Oracle Aggregator`,
         address,
         answer: latestAnswer || 'Loading...',
-        responses: [],
-        chartData: [],
-        minResponses: 0,
-        maxResponses: 0,
+        responses: feedViewResponses,
+        chartData,
+        minResponses: -1,
+        maxResponses: -1,
         lastUpdate: latestTimestamp || 'Loading...',
         deviationThreshold: 0
     }
@@ -109,13 +117,14 @@ const mapStateToProps = (state: any, { address }: Props) => {
     return {
         contractState: contractByAddressSelector(state, address),
         responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
-        graphData: graphDataSelector(state, AnswerUpdatedIndexId)
+        chartData: graphDataSelector(state, AnswerUpdatedIndexId)
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        createContract: (data: ContractTypes.CreateContractActionInput) => dispatch(ContractActions.createContract(data))
+        createContract: (data: ContractTypes.CreateContractActionInput) => dispatch(ContractActions.createContract(data)),
+        updateContractEvents: (data: ContractTypes.UpdateContractEventsActionInput) => dispatch(ContractActions.updateContractEvents(data))
     }
 }
 

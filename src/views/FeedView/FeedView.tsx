@@ -5,15 +5,15 @@ import {
     CContainer as Container,
 } from '@coreui/react'
 
-import FeedTable from '../../components/FeedTable'
-import FeedChart from '../../components/FeedChart'
+import FeedTable, { Response } from '../../components/FeedTable'
+import FeedChart, { Point } from '../../components/FeedChart'
 
 interface Props {
     title: string,
     address: string,
     answer: string,
-    responses: any,
-    chartData: any,
+    responses: [Response],
+    chartData: [Point],
     minResponses: number,
     maxResponses: number,
     lastUpdate: string,
@@ -42,8 +42,8 @@ const FeedView = ({ title, address, answer, responses, chartData, minResponses, 
                         </Col>
                         <Col xs={6}>
                             <div className='py-4'>
-                                <h4 style={{ fontSize: 20, fontWeight: 300, color: '#000000' }}>Oracle responses (minimum {minResponses})</h4>
-                                <h1 style={{ fontSize: 30, fontWeight: 'bold', color: '#000000' }}>{responses.length}/{maxResponses}</h1>
+                                <h4 style={{ fontSize: 20, fontWeight: 300, color: '#000000' }}>Oracle responses {minResponses >= 0 ? <>(minimum {minResponses})</> : ''}</h4>
+                                <h1 style={{ fontSize: 30, fontWeight: 'bold', color: '#000000' }}>{responses.length}{minResponses >= 0 ? <>/{maxResponses}</> : ''}</h1 >
                             </div>
                             <h4 style={{ fontSize: 20, fontWeight: 300, color: '#000000' }}>Last Update</h4>
                             <h1 style={{ fontSize: 30, fontWeight: 'bold', color: '#000000', height: 95 }}>{lastUpdate}</h1>
