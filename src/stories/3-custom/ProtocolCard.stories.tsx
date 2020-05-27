@@ -6,7 +6,7 @@ import {
 } from '@coreui/react'
 import { select } from "@storybook/addon-knobs";
 
-import { protocols } from '../data';
+import { protocols } from '../../data/data';
 import ProtocolCard from '../../components/ProtocolCard'
 
 

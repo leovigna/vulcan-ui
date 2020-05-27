@@ -2,7 +2,7 @@ import React from 'react';
 import { CCard, CCardHeader, CCardBody, CRow, CCol, CContainer, CBadge } from '@coreui/react'
 import { withKnobs, select, boolean } from "@storybook/addon-knobs";
 
-import { placeholderText } from '../data';
+import { placeholderText } from '../../data/data';
 
 export default {
     title: 'Base/Cards',

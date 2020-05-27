@@ -12,7 +12,7 @@ import FeedView, { AddressFeedView } from '../../views/FeedView'
 import store from "../../store"
 import { Provider } from 'react-redux'
 
-import { placeholderText, feeds, protocols } from '../data';
+import { placeholderText, feeds, protocols } from '../../data/data';
 import { connectApp, connectDrizzle, connectStore } from '../../App'
 
 

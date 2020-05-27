@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
 import HomeView, { Feed, Protocol } from './HomeView'
-import { protocols } from '../../stories/data';
+import { protocols } from '../../data/data';
 import { contractsSelector, customContractsSelector } from '../../store/selectors'
 
 interface Props {

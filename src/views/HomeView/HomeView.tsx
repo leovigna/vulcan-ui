@@ -96,7 +96,7 @@ const HomeView = ({ feeds, protocols }: Props) => {
                 }
                 <Col xs={12}>
                     <div className="d-flex justify-content-center">
-                        <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>View All</Button>
+                        <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>
                     </div>
                 </Col>
             </Row>

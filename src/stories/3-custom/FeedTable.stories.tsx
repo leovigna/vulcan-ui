@@ -7,7 +7,7 @@ import {
 import FeedTable from '../../components/FeedTable'
 import { select } from "@storybook/addon-knobs";
 
-import { feeds } from '../data';
+import { feeds } from '../../data/data';
 
 export default {
     title: 'Custom/FeedTable',
