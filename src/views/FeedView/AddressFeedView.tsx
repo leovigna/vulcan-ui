@@ -13,7 +13,9 @@ import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
 import FeedView from './FeedView'
 
 import { ContractActions } from "../../store/actions"
-import { ContractTypes, EventTypes } from "../../store/types"
+import { ContractTypes } from "../../store/types"
+import Event from "../../orm/models/event"
+
 import { Response } from '../../components/FeedTable'
 
 
@@ -26,7 +28,7 @@ interface ContractState {
 
 interface Props {
     address: string,
-    responses: [EventTypes.Event],
+    responses: [Event],
     contractState: ContractState,
     chartData: any,
     createContract(data: ContractTypes.CreateContractActionInput): any

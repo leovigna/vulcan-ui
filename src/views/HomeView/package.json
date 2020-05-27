@@ -2,5 +2,5 @@
     "name": "HomeView",
     "version": "0.0.0",
     "private": true,
-    "main": "./HomeView.tsx"
+    "main": "./index.tsx"
 }

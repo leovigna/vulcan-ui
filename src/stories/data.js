@@ -68,32 +68,46 @@ export const protocols = {
     'chainlink': {
         name: 'Chainlink',
         img: ChainlinkBadge,
-        description: 'Decentralized Oracle Network using LINK token.'
+        description: 'Decentralized Oracle Network using LINK token.',
+        feedCount: 5,
+        nodeCount: 5,
+        sponsorCount: 5
     },
     'tellor': {
         name: 'Tellor.io',
         img: TellorBadge,
-        description: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.'
+        description: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
+        feedCount: 5,
+        nodeCount: 5,
+        sponsorCount: 5
     },
     'coinbase': {
         name: 'Coinbase',
         img: CoinbaseBadge,
-        description: 'On-chain market data signed by Coinbase.'
+        description: 'On-chain market data signed by Coinbase.',
+        feedCount: 5,
+        nodeCount: 5,
+        sponsorCount: 5
     },
     'mkrdao': {
         name: 'MKRDao',
         img: MKRBadge,
-        description: 'Anonymous data feeds backing the DAI stablecoin.'
+        description: 'Anonymous data feeds backing the DAI stablecoin.',
+        feedCount: 5,
+        nodeCount: 5,
+        sponsorCount: 5
     }
 }
 
 export const feeds = {
     'btcusd': {
-        name: 'BTC / USD',
+        title: 'BTC / USD',
         protocol: 'chainlink',
         ens: 'btcusd.feeds.eth',
         hearted: false,
         value: '$ XX.XX',
+        nodeCount: 21,
+        lastUpdate: 'Jan 1st 1971',
         responses: [
             {
                 answer: '$ XXXX.XX',
@@ -140,51 +154,63 @@ export const feeds = {
         ]
     },
     'ethusd': {
-        name: 'ETH / USD',
+        title: 'ETH / USD',
         protocol: 'tellor',
         ens: 'ethusd.feeds.eth',
         hearted: true,
         value: '$ XX.XX',
-        responses: []
+        responses: [],
+        nodeCount: 21,
+        lastUpdate: 'Jan 1st 1971',
     },
     'linkusd': {
-        name: 'LINK / USD',
+        title: 'LINK / USD',
         protocol: 'chainlink',
         ens: 'linkusd.feeds.eth',
         hearted: false,
         value: '$ XX.XX',
-        responses: []
+        responses: [],
+        nodeCount: 21,
+        lastUpdate: 'Jan 1st 1971',
     },
     'eurusd': {
-        name: 'EUR / USD',
+        title: 'EUR / USD',
         protocol: 'chainlink',
         ens: 'eurusd.feeds.eth',
         hearted: true,
         value: '$ XX.XX',
-        responses: []
+        responses: [],
+        nodeCount: 21,
+        lastUpdate: 'Jan 1st 1971',
     },
     'gpusd': {
-        name: 'GBP / USD',
+        title: 'GBP / USD',
         protocol: 'chainlink',
         ens: 'gbpusd.feeds.eth',
         hearted: false,
         value: '$ XX.XX',
-        responses: []
+        responses: [],
+        nodeCount: 21,
+        lastUpdate: 'Jan 1st 1971',
     },
     'bchusd': {
-        name: 'BCH / USD',
+        title: 'BCH / USD',
         protocol: 'chainlink',
         ens: 'bchusd.feeds.eth',
         hearted: true,
         value: '$ XX.XX',
-        responses: []
+        responses: [],
+        nodeCount: 21,
+        lastUpdate: 'Jan 1st 1971',
     },
     'ltcusd': {
-        name: 'LTC / USD',
+        title: 'LTC / USD',
         protocol: 'chainlink',
         ens: 'ltcusd.feeds.eth',
         hearted: false,
         value: '$ XX.XX',
-        responses: []
+        responses: [],
+        nodeCount: 21,
+        lastUpdate: 'Jan 1st 1971',
     }
 }
