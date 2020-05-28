@@ -20,9 +20,10 @@ interface Props {
     feedENS?: string,
     lastUpdate?: string,
     nodeCount?: number
+    handleClickViewButton: any
 }
 
-const FeedCardDetailed = ({ protocolImg, feedName, hearted, value, feedENS, lastUpdate, nodeCount, address }: Props) => <Card style={{
+const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearted, value, feedENS, lastUpdate, nodeCount, address }: Props) => <Card style={{
     maxWidth: '350px',
     height: '320px',
     boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.5)",
@@ -71,7 +72,7 @@ const FeedCardDetailed = ({ protocolImg, feedName, hearted, value, feedENS, last
             </Row>
             <Row>
                 <Col sm="12" className="d-flex justify-content-center">
-                    <Button style={{
+                    <Button onClick={handleClickViewButton} style={{
                         width: 160,
                         height: 48,
                         background: "#FA4706",

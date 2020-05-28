@@ -92,7 +92,6 @@ const AddressFeedView = ({ address, responses, contractState, chartData, createC
         }
     })
 
-
     const feedViewProps = {
         title: `Oracle Aggregator`,
         address,

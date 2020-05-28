@@ -5,6 +5,9 @@ import {
     CContainer as Container,
     CButton as Button
 } from '@coreui/react'
+import {
+    useHistory
+} from "react-router-dom";
 
 import ProtocolCard from '../../components/ProtocolCard'
 import FeedCardDetailed from '../../components/FeedCardDetailed'
@@ -42,6 +45,8 @@ interface Props {
 const HomeView = ({ feeds, protocols }: Props) => {
     const [minimizeFeeds, setMinimizeFeeds] = useState(true);
     const toggleMinimizeFeeds = () => setMinimizeFeeds(!minimizeFeeds);
+
+    const history = useHistory();
 
     const displayedFeeds = minimizeFeeds ? feeds.slice(0, 9) : feeds
 
@@ -90,7 +95,7 @@ const HomeView = ({ feeds, protocols }: Props) => {
                     displayedFeeds.map(({ title: name, value, hearted, ens, protocol, nodeCount, lastUpdate, address }, idx) => {
                         const feedProtocol = protocols[protocol ? protocol : 'chainlink']
                         return (<Col key={idx} lg="4" md="6" xs="12">
-                            <FeedCardDetailed address={address} protocolImg={feedProtocol?.img} feedName={name} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
+                            <FeedCardDetailed handleClickViewButton={() => history.push(`/feeds/${address}`)} address={address} protocolImg={feedProtocol?.img} feedName={name} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
                         </Col>)
                     })
                 }

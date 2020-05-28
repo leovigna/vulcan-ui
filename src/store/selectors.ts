@@ -5,21 +5,33 @@ import hash from 'object-hash'
 import moment from 'moment';
 
 import orm from '../orm';
+import { Contract, Event, Block, Transaction } from '../orm/models';
+
 import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
 
 export const emptyArray = []
 export const emptyObj = {}
 
+//Other selectors
 export const customContractsSelector = (state: object) => state.persisted.customContracts;
 export const contractSelector = (state: object) => state.contracts;
 
-export const contractByAddressSelector = createCachedSelector(
+const contractByAddressSelector: (state: any, address: string) => Contract = createCachedSelector(
     contractSelector,
     (_state_: any, address: string) => address,
     (contracts, address) => contracts[address],
 )(
     (_state_, address) => address
 );
+
+
+//ORM Selectors
+export const contractById = ormCreateSelector(orm.Contract)
+export const eventsSelector = ormCreateSelector(orm.Event)
+export const transactionsSelector = ormCreateSelector(orm.Transaction)
+export const blocksSelector = ormCreateSelector(orm.Block)
+export { contractByAddressSelector };
+
 
 export const contractByENSSelector = () => { }
 
@@ -55,13 +67,7 @@ export const contractsSelector = ormCreateSelector(
 );
 
 /*
-export const events = ormCreateSelector(orm.Event)
-//export const eventById = ormCreateSelector(orm.Event.withId)
-export const transactions = ormCreateSelector(orm.Transaction)
-export const blocks = ormCreateSelector(orm.Block)
-export const eventIndexes = ormCreateSelector(orm.EventByContractTypeIndex)
-export const eventIndexById = ormCreateSelector(orm.Event.contractTypeIndexId.map(orm.EventByContractTypeIndex.contractTypeIndexId))
-//export const eventIndex = ormCreateSelector(orm.EventByContractTypeIndex.events)
+
 */
 
 export const eventByContractTypeIndexSelector = ormCreateSelector(
