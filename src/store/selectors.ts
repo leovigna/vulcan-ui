@@ -30,18 +30,29 @@ export const contractById = ormCreateSelector(orm.Contract)
 export const eventsSelector = ormCreateSelector(orm.Event)
 export const transactionsSelector = ormCreateSelector(orm.Transaction)
 export const blocksSelector = ormCreateSelector(orm.Block)
-export { contractByAddressSelector };
 
-
-export const contractByENSSelector = () => { }
-
-export const contractByNameSelector = createCachedSelector(
-    contractSelector,
-    (_state_, name) => name,
-    (contracts, name) => contracts[name],
-)(
-    (_state_, name) => name
+export const contractByENSSelector = ormCreateSelector(
+    orm,
+    (_session_, ens) => ens,
+    (session, ens) => {
+        const item = session.Contract.filter({ path: ens }).first()
+        if (!item) return emptyObj;
+        return item;
+    }
 );
+export const contractByNameSelector = ormCreateSelector(
+    orm,
+    (_session_, name) => name,
+    (session, name) => {
+        const item = session.Contract.filter({ path: name }).first()
+        if (!item) return emptyObj;
+        const { ref } = item;
+        return ref;
+    }
+);
+
+
+export { contractByAddressSelector };
 
 export const objectCacheSelector = createCachedSelector(
     (...args) => args[args.length - 1],

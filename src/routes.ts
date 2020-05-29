@@ -19,7 +19,8 @@ const routes2 = [
 
 const routes = [
     { path: '/', exact: true, name: 'Home', component: WrappedHomeView },
-    { path: '/feeds/:contract', exact: true, name: 'Feeds', component: WrappedFeedView },
+    { path: '/feeds/:address', exact: true, name: 'Feeds', component: WrappedFeedView },
+    { path: '/feeds/:category/:name', exact: true, name: 'Feeds', component: WrappedFeedView },
 ];
 
 export default routes;

@@ -24,15 +24,17 @@ interface Props {
             contract: string
         }
     },
-    contractMatchParam: string,
     contractName: string,
+    contractCategory: string,
+    contractPath: string,
     contractAddress: string,
     contractENS: string
 }
 
 const WrappedFeedView = ({
-    contractMatchParam,
     contractName,
+    contractCategory,
+    contractPath,
     contractAddress,
     contractENS }: Props) => {
 
@@ -45,44 +47,45 @@ const WrappedFeedView = ({
     if (!drizzle.web3) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
     //Known contract
-    if (contractName) {
-        if (contractName !== contractMatchParam) {
+    if (contractAddress) {
+        if (contractPath) {
             //Redirect
-            history.replace(`/feeds/${contractName}`)
+            history.replace(`/feeds/${contractPath}`)
             return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
         }
-        return (<NamedFeedView name={contractName} />)
-    }
-
-    if (contractAddress) {
         return (<AddressFeedView address={contractAddress} />)
     }
 
+    if (contractPath) {
+        return (<NamedFeedView name={contractName} category={contractCategory} path={contractPath} />)
+    }
+
     return 404
-    //Vulcan API Contract
-    return (<NamedFeedView name={contractENS} />)
     //ENS Domain
     //TBD
 }
 
 const mapStateToProps = (state: any, { match }: Props) => {
-    const contractMatchParam = match.params.contract;
-    let contractName;
-    let contractAddress;
+    const contractAddress = match.params.address;
+    const contractName = match.params.name;
+    const contractCategory = match.params.category;
+    let contractPath;
     let contractENS;
 
-    if (web3.utils.isAddress(contractMatchParam)) {
-        contractAddress = contractMatchParam;
+    if (contractAddress && web3.utils.isAddress(contractAddress)) {
         const contract = contractById(state, contractAddress)
         console.debug(contract)
         if (contract) {
-            contractName = contract.path;
+            contractPath = contract.path;
         }
+    } else if (contractName && contractCategory) {
+        contractPath = contractCategory + '/' + contractName
     }
 
     return {
-        contractMatchParam,
+        contractPath,
         contractName,
+        contractCategory,
         contractAddress,
         contractENS,
     }
