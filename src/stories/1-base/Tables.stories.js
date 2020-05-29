@@ -1,7 +1,7 @@
 import React from 'react';
 import { withKnobs, select, boolean } from "@storybook/addon-knobs";
 
-import { users } from '../data';
+import { users } from '../../data/data';
 
 export default {
     title: 'Base/Tables',

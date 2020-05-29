@@ -3,7 +3,7 @@ import React from 'react';
 const Dashboard = React.lazy(() => import('./views/Dashboard'));
 const AggregatorView = React.lazy(() => import('./views/AggregatorView'));
 const AggregatorAddView = React.lazy(() => import('./views/AggregatorAddView'));
-const HomeView = React.lazy(() => import('./views/HomeView'));
+const WrappedHomeView = React.lazy(() => import('./views/HomeView/WrappedHomeView'));
 const WrappedFeedView = React.lazy(() => import('./views/FeedView/WrappedFeedView'));
 
 
@@ -18,8 +18,9 @@ const routes2 = [
 ];
 
 const routes = [
-    { path: '/', exact: true, name: 'Home', component: HomeView },
-    { path: '/feeds/:contract', exact: true, name: 'Feeds', component: WrappedFeedView },
+    { path: '/', exact: true, name: 'Home', component: WrappedHomeView },
+    { path: '/feeds/:address', exact: true, name: 'Feeds', component: WrappedFeedView },
+    { path: '/feeds/:category/:name', exact: true, name: 'Feeds', component: WrappedFeedView },
 ];
 
 export default routes;

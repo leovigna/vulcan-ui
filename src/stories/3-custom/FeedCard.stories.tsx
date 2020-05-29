@@ -7,7 +7,7 @@ import {
 } from '@coreui/react'
 import { select } from "@storybook/addon-knobs";
 
-import { protocols, feeds } from '../data';
+import { protocols, feeds } from '../../data/data';
 import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
 import ArrowRight from '../../assets/img/icons/arrow_right.svg'
 

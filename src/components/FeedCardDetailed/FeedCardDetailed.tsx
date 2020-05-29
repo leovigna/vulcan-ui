@@ -12,16 +12,18 @@ import HeartFilled from '../../assets/img/icons/heart_filled.svg'
 import HeartEmpty from '../../assets/img/icons/heart_empty.svg'
 
 interface Props {
+    address: string,
     protocolImg: string,
     feedName: string,
     hearted: boolean,
     value: string,
-    feedENS: string,
-    lastUpdate: string,
-    nodeCount: number
+    feedENS?: string,
+    lastUpdate?: string,
+    nodeCount?: number
+    handleClickViewButton: any
 }
 
-const FeedCardDetailed = ({ protocolImg, feedName, hearted, value, feedENS, lastUpdate, nodeCount }: Props) => <Card style={{
+const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearted, value, feedENS, lastUpdate, nodeCount, address }: Props) => <Card style={{
     maxWidth: '350px',
     height: '320px',
     boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.5)",
@@ -47,23 +49,30 @@ const FeedCardDetailed = ({ protocolImg, feedName, hearted, value, feedENS, last
                     <p style={{ color: '#002C69', fontSize: 16, textAlign: 'center' }}>{lastUpdate}</p>
                 </Col>
                 <Col sm="12">
-                    <div className="d-flex justify-content-center">
-                        <b style={{ color: '#002C69', fontSize: 16 }}>ENS:&nbsp;</b><a style={{ color: '#002C69', fontSize: 16 }} href='https://etherscan.com'>{feedENS}</a>
-                    </div>
+                    {
+                        feedENS ? <div className="d-flex justify-content-center">
+                            <b style={{ color: '#002C69', fontSize: 16 }}>ENS:&nbsp;</b><a style={{ color: '#002C69', fontSize: 16 }} href='https://etherscan.com'>{feedENS}</a>
+                        </div> : ''
+                    }
+
                 </Col>
             </Row>
             <Row>
                 <Col sm="6">
-                    <div style={{ color: '#002C69', fontSize: 16, textAlign: 'center' }}>{nodeCount} Nodes</div>
+                    {
+                        nodeCount ? <div style={{ color: '#002C69', fontSize: 16, textAlign: 'center' }}>{nodeCount} Nodes</div> : ''
+                    }
                 </Col>
                 <Col sm="6">
-                    <a style={{ color: '#828282', fontStyle: 'italic' }} href='https://etherscan.com' target="blank">Etherscan</a>
+                    {
+                        address ? <a style={{ color: '#828282', fontStyle: 'italic' }} href={`https://etherscan.com/address/${address}`} target="blank">Etherscan</a> : ''
+                    }
                 </Col>
                 <Col className="py-3" sm="12"></Col>
             </Row>
             <Row>
                 <Col sm="12" className="d-flex justify-content-center">
-                    <Button style={{
+                    <Button onClick={handleClickViewButton} style={{
                         width: 160,
                         height: 48,
                         background: "#FA4706",

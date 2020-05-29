@@ -33,7 +33,7 @@ class DefaultHeader extends Component {
                         <Row>
                             <Col xs={12} sm={8} md={8} lg={8}>
                                 <Nav className="navbar navbar-expand-lg navbar-dark static-top ">
-                                    <a className="navbar-brand" href="index.html">
+                                    <a className="navbar-brand" href="#">
                                         <img src={vulcan} alt="" />
                                     </a>
                                     <button className="navbar-toggler" type="button" data-toggle="collapse"

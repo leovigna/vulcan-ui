@@ -1,7 +1,7 @@
 import React from 'react';
 import { CCard, CCardHeader, CCardBody, CListGroup, CListGroupItem } from '@coreui/react'
 import { select, boolean } from "@storybook/addon-knobs";
-import { listData } from '../data'
+import { listData } from '../../data/data'
 
 export default {
     title: 'Base/ListGroup',

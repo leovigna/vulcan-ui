@@ -11,9 +11,9 @@ import {
 import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
 
 import FeedView from './FeedView'
-
 import { ContractActions } from "../../store/actions"
-import { ContractTypes, EventTypes } from "../../store/types"
+import { ContractTypes } from "../../store/types"
+import Event from "../../orm/models/event"
 import { Response } from '../../components/FeedTable'
 
 
@@ -26,14 +26,20 @@ interface ContractState {
 
 interface Props {
     address: string,
-    responses: [EventTypes.Event],
+    responses: [Event],
     contractState: ContractState,
     chartData: any,
     createContract(data: ContractTypes.CreateContractActionInput): any
     updateContractEvents(data: ContractTypes.UpdateContractEventsActionInput): any
 }
 
-const AddressFeedView = ({ address, responses, contractState, chartData, createContract, updateContractEvents, ...props }: Props) => {
+const AddressFeedView = ({
+    address,
+    responses,
+    contractState,
+    chartData,
+    createContract,
+    updateContractEvents }: Props) => {
     const drizzleContext = useContext(DrizzleContext.Context)
 
     const [contractInitialized, setContractInitialized] = useState(false)
@@ -76,10 +82,9 @@ const AddressFeedView = ({ address, responses, contractState, chartData, createC
 
     if (!drizzle.contracts[address]) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
-    const latestRound = contractState?.latestRound[latestRoundKey]?.value
     const latestAnswer = contractState?.latestAnswer[latestAnswerKey]?.value
     const latestTimestamp = contractState?.latestTimestamp[latestTimestampKey]?.value
-    const feedViewResponses: [Response] = responses.map((r) => {
+    const feedViewResponses: [Response] = responses.map((r): Response => {
         const { returnValues, block, transactionHash, transaction } = r
         return {
             transactionHash,
@@ -90,20 +95,16 @@ const AddressFeedView = ({ address, responses, contractState, chartData, createC
         }
     })
 
-
     const feedViewProps = {
         title: `Oracle Aggregator`,
         address,
         answer: latestAnswer || 'Loading...',
         responses: feedViewResponses,
         chartData,
-        minResponses: -1,
-        maxResponses: -1,
         lastUpdate: latestTimestamp || 'Loading...',
-        deviationThreshold: 0
     }
 
-    return (<FeedView {...feedViewProps} {...props} />);
+    return (<FeedView {...feedViewProps} />);
 }
 
 const ResponseReceivedSelector = makeEventIndexedFilterSelector()

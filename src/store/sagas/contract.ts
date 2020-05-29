@@ -144,7 +144,7 @@ export function* contractSetup(action: ContractTypes.SetupContractAction) {
 
 // app root saga
 export function* contractRootSaga() {
-    //yield takeEvery(DrizzleTypes.DRIZZLE_INITIALIZED, setupDefaultContracts)
+    yield takeEvery(DrizzleTypes.DRIZZLE_INITIALIZED, setupDefaultContracts)
     yield takeEvery(ContractTypes.SETUP_CONTRACT, contractSetup)
     yield takeEvery(ContractTypes.UPDATE_CONTRACT_EVENTS, updateContractEvents)
 }

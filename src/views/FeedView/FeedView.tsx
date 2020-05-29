@@ -65,4 +65,13 @@ const FeedView = ({ title, address, answer, responses, chartData, minResponses, 
     )
 }
 
+FeedView.defaultProps = {
+    maxResponses: -1,
+    minResponses: -1,
+    responses: [],
+    chartData: [],
+    lastUpdate: '',
+    deviationThreshold: 0
+}
+
 export default FeedView;

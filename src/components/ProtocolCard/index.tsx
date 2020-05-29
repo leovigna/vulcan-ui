@@ -7,14 +7,14 @@ import {
     CButton as Button
 } from '@coreui/react'
 
-const ProtocolCard = ({ protocolName, protocolDescription, protocolImg, protocolFeedCount, protocolNodeCount, protocolSponsorCount }) => <Card style={{
+const ProtocolCard = ({ href, protocolName, protocolDescription, protocolImg, protocolFeedCount, protocolNodeCount, protocolSponsorCount }) => <Card style={{
     width: '260px',
     height: '290px',
     boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.5)",
     borderRadius: '8px'
 }} >
     <CardBody>
-        <a href="#" className="stretched-link"></a>
+        <a href={href} className="stretched-link"></a>
         <Row>
             <Col className="py-2" sm="12">
                 <div className="d-flex justify-content-center">

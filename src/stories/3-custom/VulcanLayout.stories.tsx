@@ -12,7 +12,7 @@ import FeedView, { AddressFeedView } from '../../views/FeedView'
 import store from "../../store"
 import { Provider } from 'react-redux'
 
-import { placeholderText, feeds } from '../data';
+import { placeholderText, feeds, protocols } from '../../data/data';
 import { connectApp, connectDrizzle, connectStore } from '../../App'
 
 
@@ -44,7 +44,7 @@ export const Default = () => {
 
 export const Feeds = () => {
     const routes = [
-        { path: '/', name: 'Feeds', component: HomeView }
+        { path: '/', name: 'Feeds', component: () => <HomeView feeds={Object.values(feeds)} protocols={protocols} /> }
     ];
 
     return (
