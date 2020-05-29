@@ -1,7 +1,7 @@
-import HomeView from './HomeView'
-import WrappedHomeView from './WrappedHomeView'
+import ProtocolView from './ProtocolView'
+import WrappedProtocolView from './WrappedProtocolView'
 
-export default HomeView;
+export default ProtocolView;
 export {
-    WrappedHomeView
+    WrappedProtocolView
 }
