@@ -52,30 +52,32 @@ const HomeView = ({ feeds, protocols }: Props) => {
 
     return (
         <Container>
-            <Row>
-                <Col xs={12}>
-                    <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite feeds</h1>
-                </Col>
+            {/*
                 <Row>
-                    <div className="d-flex flex-column justify-content-center" style={{ width: 0, height: '100%', position: 'relative', left: -70 }}>
-                        <Button><img style={{ height: 30 }} src={ArrowLeft} alt='' /></Button>
-                    </div>
+                    <Col xs={12}>
+                        <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite feeds</h1>
+                    </Col>
+                    <Row>
+                        <div className="d-flex flex-column justify-content-center" style={{ width: 0, height: '100%', position: 'relative', left: -70 }}>
+                            <Button><img style={{ height: 30 }} src={ArrowLeft} alt='' /></Button>
+                        </div>
 
-                    {
-                        feeds.filter(obj => obj.hearted).map(({ title: name, value, hearted, protocol }, idx) => {
-                            const feedProtocol = protocols[protocol ? protocol : 'chainlink']
-                            return (<Col key={idx} lg="4" md="6" xs="12">
-                                <FeedCard protocolImg={feedProtocol.img} feedName={name} value={value} hearted={hearted} />
-                            </Col>)
-                        })
-                    }
+                        {
+                            feeds.filter(obj => obj.hearted).map(({ title: name, value, hearted, protocol }, idx) => {
+                                const feedProtocol = protocols[protocol ? protocol : 'chainlink']
+                                return (<Col key={idx} lg="4" md="6" xs="12">
+                                    <FeedCard protocolImg={feedProtocol.img} feedName={name} value={value} hearted={hearted} />
+                                </Col>)
+                            })
+                        }
 
-                    <div className="d-flex flex-column justify-content-center" style={{ width: 0, height: '100%', position: 'relative', right: 0 }}>
-                        <Button><img style={{ height: 30 }} src={ArrowRight} alt='' /></Button>
-                    </div>
+                        <div className="d-flex flex-column justify-content-center" style={{ width: 0, height: '100%', position: 'relative', right: 0 }}>
+                            <Button><img style={{ height: 30 }} src={ArrowRight} alt='' /></Button>
+                        </div>
 
+                    </Row>
                 </Row>
-            </Row>
+                */}
             <Row>
                 <Col xs={12}>
                     <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939', height: 95 }}>Protocols</h1>
@@ -83,7 +85,7 @@ const HomeView = ({ feeds, protocols }: Props) => {
                 {
                     Object.values(protocols).map(({ description, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
                         <Col key={idx} lg="3" md="6" xs="12">
-                            <ProtocolCard protocolName={name} protocolDescription={description} protocolImg={img} protocolFeedCount={feedCount} protocolNodeCount={nodeCount} protocolSponsorCount={sponsorCount} />
+                            <ProtocolCard href={`#/protocols/${name}`} protocolName={name} protocolDescription={description} protocolImg={img} protocolFeedCount={feedCount} protocolNodeCount={nodeCount} protocolSponsorCount={sponsorCount} />
                         </Col>)
                 }
             </Row>
