@@ -1,6 +1,7 @@
 import React from 'react';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { Line } from 'react-chartjs-2';
+import { Point } from '../../store/types'
 
 const mainChartOpts = {
     tooltips: {
@@ -69,10 +70,7 @@ const mainChartOpts = {
     }
 };
 
-export interface Point {
-    x: number,
-    y: number
-}
+
 interface Props {
     data: [Point]
 }

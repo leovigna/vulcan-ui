@@ -5,19 +5,13 @@ import {
     CContainer as Container,
 } from '@coreui/react'
 
-import FeedTable, { Response } from '../../components/FeedTable'
+import FeedTable from '../../components/FeedTable'
 import FeedChart, { Point } from '../../components/FeedChart'
-
-interface Props {
-    title: string,
+import { FeedTypes } from '../../store/types'
+interface Props extends FeedTypes.Feed {
     address: string,
     answer: string,
-    responses: [Response],
-    chartData: [Point],
-    minResponses: number,
-    maxResponses: number,
-    lastUpdate: string,
-    deviationThreshold: number
+    chartData: [Point]
 }
 
 const FeedView = ({ title, address, answer, responses, chartData, minResponses, maxResponses, lastUpdate, deviationThreshold }: Props) => {

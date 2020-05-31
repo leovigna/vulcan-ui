@@ -15,30 +15,12 @@ import FeedCard from '../../components/FeedCard'
 
 import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
 import ArrowRight from '../../assets/img/icons/arrow_right.svg'
+import { ProtocolTypes, FeedTypes } from '../../store/types'
 
-export interface Protocol {
-    name: string,
-    img: string,
-    description: string
-    feedCount: number,
-    nodeCount: number,
-    sponsorCount: number
-}
-
-export interface Feed {
-    address: string,
-    title: string,
-    protocol: string,
-    ens: string,
-    value: string,
-    hearted: boolean,
-    nodeCount: number,
-    lastUpdate: string
-}
 interface Props {
-    feeds: [Feed],
+    feeds: [FeedTypes.Feed],
     protocols: {
-        [key: string]: Protocol
+        [key: string]: ProtocolTypes.Protocol
     }
 }
 
@@ -47,7 +29,6 @@ const HomeView = ({ feeds, protocols }: Props) => {
     const toggleMinimizeFeeds = () => setMinimizeFeeds(!minimizeFeeds);
 
     const history = useHistory();
-
     const displayedFeeds = minimizeFeeds ? feeds.slice(0, 9) : feeds
 
     return (
@@ -85,7 +66,7 @@ const HomeView = ({ feeds, protocols }: Props) => {
                 {
                     Object.values(protocols).map(({ description, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
                         <Col key={idx} lg="3" md="6" xs="12">
-                            <ProtocolCard href={`#/protocols/${name}`} protocolName={name} protocolDescription={description} protocolImg={img} protocolFeedCount={feedCount} protocolNodeCount={nodeCount} protocolSponsorCount={sponsorCount} />
+                            <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
                         </Col>)
                 }
             </Row>
@@ -107,8 +88,7 @@ const HomeView = ({ feeds, protocols }: Props) => {
                     </div>
                 </Col>
             </Row>
-
-        </Container>
+        </Container >
     )
 }
 
