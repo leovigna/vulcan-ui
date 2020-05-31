@@ -3,7 +3,7 @@ import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
 import ProtocolView from './ProtocolView'
 import { protocols } from '../../data/data';
-import { contractsSelector, customContractsSelector } from '../../store/selectors'
+import { contractsSelector } from '../../store/selectors'
 import { ProtocolTypes } from '../../store/types'
 
 interface Props extends ProtocolTypes.Protocol {
@@ -24,7 +24,8 @@ const WrappedProtocolView = (props: Props) => {
 const mapStateToProps = (state: any, { match }: MatchProps) => {
     const name = match.params.name
     const protocol = protocols[name]
-    return { ...protocol }
+    const feeds = name === 'chainlink' ? contractsSelector(state) : []
+    return { feeds, ...protocol }
 }
 
 export default connect(mapStateToProps)(WrappedProtocolView);

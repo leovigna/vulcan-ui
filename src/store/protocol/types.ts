@@ -4,8 +4,9 @@ import { Node } from '../node/types';
 export interface Protocol {
     name: string,
     img: string,
-    feeds?: [Feed],
-    nodes?: [Node],
+    url: string,
+    feeds: [Feed],
+    nodes: [Node],
     feedCount: number,
     nodeCount: number,
     sponsorCount: number,

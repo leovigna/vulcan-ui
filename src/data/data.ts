@@ -68,6 +68,7 @@ export const listData = [
 export const protocols: { [key: string]: ProtocolTypes.Protocol } = {
     'chainlink': {
         name: 'Chainlink',
+        url: 'https://chain.link',
         img: ChainlinkBadge,
         description: 'Decentralized Oracle Network using LINK token.',
         feedCount: 5,
@@ -77,6 +78,7 @@ export const protocols: { [key: string]: ProtocolTypes.Protocol } = {
     },
     'tellor.io': {
         name: 'Tellor.io',
+        url: 'https://chain.link',
         img: TellorBadge,
         description: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
         feedCount: 5,
@@ -87,6 +89,7 @@ export const protocols: { [key: string]: ProtocolTypes.Protocol } = {
     },
     'coinbase': {
         name: 'Coinbase',
+        url: 'https://chain.link',
         img: CoinbaseBadge,
         description: 'On-chain market data signed by Coinbase.',
         feedCount: 5,
@@ -97,6 +100,7 @@ export const protocols: { [key: string]: ProtocolTypes.Protocol } = {
     },
     'mkrdao': {
         name: 'MKRDao',
+        url: 'https://chain.link',
         img: MKRBadge,
         description: 'Anonymous data feeds backing the DAI stablecoin.',
         feedCount: 5,

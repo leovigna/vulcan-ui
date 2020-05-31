@@ -29,7 +29,6 @@ const HomeView = ({ feeds, protocols }: Props) => {
     const toggleMinimizeFeeds = () => setMinimizeFeeds(!minimizeFeeds);
 
     const history = useHistory();
-
     const displayedFeeds = minimizeFeeds ? feeds.slice(0, 9) : feeds
 
     return (
@@ -89,8 +88,7 @@ const HomeView = ({ feeds, protocols }: Props) => {
                     </div>
                 </Col>
             </Row>
-
-        </Container>
+        </Container >
     )
 }
 
