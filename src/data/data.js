@@ -71,7 +71,8 @@ export const protocols = {
         description: 'Decentralized Oracle Network using LINK token.',
         feedCount: 5,
         nodeCount: 5,
-        sponsorCount: 5
+        sponsorCount: 5,
+        descriptionLong: 'The Chainlink Network provides the largest collection of secure and decentralized on-chain price reference data available. Composed of security reviewed, sybil resistant and fully independent nodes which are run by leading blockchain devops and security teams. Creating a shared global resource which is sponsored by a growing list of top DeFi Dapps.',
     },
     'tellor': {
         name: 'Tellor.io',
@@ -79,7 +80,8 @@ export const protocols = {
         description: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
         feedCount: 5,
         nodeCount: 5,
-        sponsorCount: 5
+        sponsorCount: 5,
+        descriptionLong: ''
     },
     'coinbase': {
         name: 'Coinbase',
@@ -87,7 +89,8 @@ export const protocols = {
         description: 'On-chain market data signed by Coinbase.',
         feedCount: 5,
         nodeCount: 5,
-        sponsorCount: 5
+        sponsorCount: 5,
+        descriptionLong: ''
     },
     'mkrdao': {
         name: 'MKRDao',
@@ -95,7 +98,8 @@ export const protocols = {
         description: 'Anonymous data feeds backing the DAI stablecoin.',
         feedCount: 5,
         nodeCount: 5,
-        sponsorCount: 5
+        sponsorCount: 5,
+        descriptionLong: ''
     }
 }
 
