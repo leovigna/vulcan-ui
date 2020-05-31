@@ -75,14 +75,15 @@ export const protocols: { [key: string]: ProtocolTypes.Protocol } = {
         sponsorCount: 5,
         descriptionLong: 'The Chainlink Network provides the largest collection of secure and decentralized on-chain price reference data available. Composed of security reviewed, sybil resistant and fully independent nodes which are run by leading blockchain devops and security teams. Creating a shared global resource which is sponsored by a growing list of top DeFi Dapps.',
     },
-    'tellor': {
+    'tellor.io': {
         name: 'Tellor.io',
         img: TellorBadge,
         description: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
         feedCount: 5,
         nodeCount: 5,
         sponsorCount: 5,
-        descriptionLong: ''
+        descriptionLong: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
+
     },
     'coinbase': {
         name: 'Coinbase',
@@ -91,7 +92,8 @@ export const protocols: { [key: string]: ProtocolTypes.Protocol } = {
         feedCount: 5,
         nodeCount: 5,
         sponsorCount: 5,
-        descriptionLong: ''
+        descriptionLong: 'On-chain market data signed by Coinbase.',
+
     },
     'mkrdao': {
         name: 'MKRDao',
@@ -100,7 +102,8 @@ export const protocols: { [key: string]: ProtocolTypes.Protocol } = {
         feedCount: 5,
         nodeCount: 5,
         sponsorCount: 5,
-        descriptionLong: ''
+        descriptionLong: 'Anonymous data feeds backing the DAI stablecoin.',
+
     }
 }
 

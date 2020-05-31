@@ -9,16 +9,22 @@ import { ProtocolTypes } from '../../store/types'
 interface Props extends ProtocolTypes.Protocol {
     networkId: string
 }
+interface MatchProps {
+    match: {
+        params: {
+            name: string
+        }
+    }
+}
 
 const WrappedProtocolView = (props: Props) => {
     return (<ProtocolView {...props} />)
 }
 
-const mapStateToProps = (state: any, { networkId }: Props) => {
-    return {
-        feeds: contractsSelector(state) || [],
-        protocols
-    }
+const mapStateToProps = (state: any, { match }: MatchProps) => {
+    const name = match.params.name
+    const protocol = protocols[name]
+    return { ...protocol }
 }
 
 export default connect(mapStateToProps)(WrappedProtocolView);
