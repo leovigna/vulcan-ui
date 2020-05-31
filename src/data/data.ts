@@ -2,6 +2,7 @@ import ChainlinkBadge from '../assets/img/protocols/ChainlinkBadge.png'
 import TellorBadge from '../assets/img/protocols/TellorBadge.png'
 import CoinbaseBadge from '../assets/img/protocols/CoinbaseBadge.png'
 import MKRBadge from '../assets/img/protocols/MKRBadge.png'
+import { ProtocolTypes, FeedTypes } from '../store/types'
 
 export const placeholderText = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'
 
@@ -64,42 +65,53 @@ export const listData = [
     'Vestibulum at eros'
 ]
 
-export const protocols = {
+export const protocols: { [key: string]: ProtocolTypes.Protocol } = {
     'chainlink': {
         name: 'Chainlink',
+        url: 'https://chain.link',
         img: ChainlinkBadge,
         description: 'Decentralized Oracle Network using LINK token.',
         feedCount: 5,
         nodeCount: 5,
-        sponsorCount: 5
+        sponsorCount: 5,
+        descriptionLong: 'The Chainlink Network provides the largest collection of secure and decentralized on-chain price reference data available. Composed of security reviewed, sybil resistant and fully independent nodes which are run by leading blockchain devops and security teams. Creating a shared global resource which is sponsored by a growing list of top DeFi Dapps.',
     },
-    'tellor': {
+    'tellor.io': {
         name: 'Tellor.io',
+        url: 'https://chain.link',
         img: TellorBadge,
         description: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
         feedCount: 5,
         nodeCount: 5,
-        sponsorCount: 5
+        sponsorCount: 5,
+        descriptionLong: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
+
     },
     'coinbase': {
         name: 'Coinbase',
+        url: 'https://chain.link',
         img: CoinbaseBadge,
         description: 'On-chain market data signed by Coinbase.',
         feedCount: 5,
         nodeCount: 5,
-        sponsorCount: 5
+        sponsorCount: 5,
+        descriptionLong: 'On-chain market data signed by Coinbase.',
+
     },
     'mkrdao': {
         name: 'MKRDao',
+        url: 'https://chain.link',
         img: MKRBadge,
         description: 'Anonymous data feeds backing the DAI stablecoin.',
         feedCount: 5,
         nodeCount: 5,
-        sponsorCount: 5
+        sponsorCount: 5,
+        descriptionLong: 'Anonymous data feeds backing the DAI stablecoin.',
+
     }
 }
 
-export const feeds = {
+export const feeds: { [key: string]: FeedTypes.Feed } = {
     'btcusd': {
         title: 'BTC / USD',
         protocol: 'chainlink',

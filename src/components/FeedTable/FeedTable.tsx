@@ -1,17 +1,10 @@
 import React from 'react';
 import Moment from 'react-moment';
 import EtherScan from "../Aggregator/EtherScan"
-
-export interface Response {
-    transactionHash: string,
-    address: string,
-    answer: string,
-    timestamp: string,
-    gasPrice: string
-}
+import { FeedTypes } from "../../store/types"
 
 interface Props {
-    responses: [Response]
+    responses: [FeedTypes.Response]
 }
 
 const FeedTable = ({ responses }: Props) =>
