@@ -5,29 +5,9 @@ import {
     CContainer as Container,
     CButton as Button
 } from '@coreui/react'
+import { ProtocolTypes } from '../../store/types'
 
-export interface Protocol {
-    name: string,
-    img: string,
-    description: string
-    feedCount: number,
-    nodeCount: number,
-    sponsorCount: number
-}
-
-export interface Feed {
-    address: string,
-    title: string,
-    protocol: string,
-    ens: string,
-    value: string,
-    hearted: boolean,
-    nodeCount: number,
-    lastUpdate: string
-}
-interface Props {
-    feeds: [Feed],
-    nodes: [any]
+interface Props extends ProtocolTypes.Protocol {
 }
 
 const ProtocolView = ({ name, description, nodes, feeds }: Props) => {

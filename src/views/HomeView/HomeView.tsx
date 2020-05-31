@@ -15,30 +15,12 @@ import FeedCard from '../../components/FeedCard'
 
 import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
 import ArrowRight from '../../assets/img/icons/arrow_right.svg'
+import { ProtocolTypes, FeedTypes } from '../../store/types'
 
-export interface Protocol {
-    name: string,
-    img: string,
-    description: string
-    feedCount: number,
-    nodeCount: number,
-    sponsorCount: number
-}
-
-export interface Feed {
-    address: string,
-    title: string,
-    protocol: string,
-    ens: string,
-    value: string,
-    hearted: boolean,
-    nodeCount: number,
-    lastUpdate: string
-}
 interface Props {
-    feeds: [Feed],
+    feeds: [FeedTypes.Feed],
     protocols: {
-        [key: string]: Protocol
+        [key: string]: ProtocolTypes.Protocol
     }
 }
 
@@ -83,9 +65,9 @@ const HomeView = ({ feeds, protocols }: Props) => {
                     <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939', height: 95 }}>Protocols</h1>
                 </Col>
                 {
-                    Object.values(protocols).map(({ description, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
+                    Object.values(protocols).map(({ description, name, img, feeds, nodes, sponsorCount }, idx) =>
                         <Col key={idx} lg="3" md="6" xs="12">
-                            <ProtocolCard href={`#/protocols/${name}`} protocolName={name} protocolDescription={description} protocolImg={img} protocolFeedCount={feedCount} protocolNodeCount={nodeCount} protocolSponsorCount={sponsorCount} />
+                            <ProtocolCard href={`#/protocols/${name}`} name={name} description={description} img={img} feedCount={feeds?.length} nodeCount={nodes?.length} sponsorCount={sponsorCount} />
                         </Col>)
                 }
             </Row>

@@ -2,6 +2,7 @@ import ChainlinkBadge from '../assets/img/protocols/ChainlinkBadge.png'
 import TellorBadge from '../assets/img/protocols/TellorBadge.png'
 import CoinbaseBadge from '../assets/img/protocols/CoinbaseBadge.png'
 import MKRBadge from '../assets/img/protocols/MKRBadge.png'
+import { ProtocolTypes, FeedTypes } from '../store/types'
 
 export const placeholderText = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'
 
@@ -64,7 +65,7 @@ export const listData = [
     'Vestibulum at eros'
 ]
 
-export const protocols = {
+export const protocols: { [key: string]: ProtocolTypes.Protocol } = {
     'chainlink': {
         name: 'Chainlink',
         img: ChainlinkBadge,
@@ -103,7 +104,7 @@ export const protocols = {
     }
 }
 
-export const feeds = {
+export const feeds: { [key: string]: FeedTypes.Feed } = {
     'btcusd': {
         title: 'BTC / USD',
         protocol: 'chainlink',

@@ -12,22 +12,13 @@ import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
 
 import FeedView from './FeedView'
 import { ContractActions } from "../../store/actions"
-import { ContractTypes } from "../../store/types"
+import { ContractTypes, FeedTypes } from "../../store/types"
 import Event from "../../orm/models/event"
-import { Response } from '../../components/FeedTable'
 
-
-interface ContractState {
-    latestRound?: any,
-    latestAnswer?: any,
-    latestTimestamp?: any,
-    [key: string]: any
-}
 
 interface Props {
-    address: string,
     responses: [Event],
-    contractState: ContractState,
+    contractState: FeedTypes.Feed,
     chartData: any,
     createContract(data: ContractTypes.CreateContractActionInput): any
     updateContractEvents(data: ContractTypes.UpdateContractEventsActionInput): any
