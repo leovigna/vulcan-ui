@@ -9,6 +9,7 @@ import {
 
 interface Props {
     href: string,
+    active: boolean,
     name: string,
     description: string,
     img: string,
@@ -17,7 +18,7 @@ interface Props {
     sponsorCount: number
 }
 
-const ProtocolCard = ({ href, name, description, img, feedCount, nodeCount, sponsorCount }: Props) => <Card style={{
+const ProtocolCard = ({ href, active, name, description, img, feedCount, nodeCount, sponsorCount }: Props) => <Card style={{
     width: '260px',
     height: '290px',
     boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.5)",
@@ -40,13 +41,19 @@ const ProtocolCard = ({ href, name, description, img, feedCount, nodeCount, spon
                 </div>
             </Col>
             <Col sm="12">
-                <div className="d-flex justify-content-center">
+                {active ? <div className="d-flex justify-content-center">
                     <p style={{ maxWidth: 160, fontSize: 16, textAlign: 'center', color: '#000000' }}>
                         {feedCount} Feeds<br />
                         {nodeCount} Nodes<br />
                         {sponsorCount} Sponsors
                     </p>
-                </div>
+                </div> :
+                    <div className="d-flex justify-content-center">
+                        <p style={{ maxWidth: 160, fontSize: 16, textAlign: 'center', color: '#000000' }}>
+                            Coming soon...
+                    </p>
+                    </div>
+                }
             </Col>
         </Row>
     </CardBody>

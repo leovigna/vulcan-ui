@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 
 import ProtocolCard from '../../components/ProtocolCard'
-import FeedCardDetailed from '../../components/FeedCardDetailed'
+import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
 import FeedCard from '../../components/FeedCard'
 
 import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
@@ -64,9 +64,9 @@ const HomeView = ({ feeds, protocols }: Props) => {
                     <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939', height: 95 }}>Protocols</h1>
                 </Col>
                 {
-                    Object.values(protocols).map(({ description, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
+                    Object.values(protocols).map(({ description, active, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
                         <Col key={idx} lg="3" md="6" xs="12">
-                            <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
+                            <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
                         </Col>)
                 }
             </Row>
@@ -74,14 +74,7 @@ const HomeView = ({ feeds, protocols }: Props) => {
                 <Col xs={12}>
                     <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
                 </Col>
-                {
-                    displayedFeeds.map(({ title: name, value, hearted, ens, protocol, nodeCount, lastUpdate, address }, idx) => {
-                        const feedProtocol = protocols[protocol ? protocol : 'chainlink']
-                        return (<Col key={idx} lg="4" md="6" xs="12">
-                            <FeedCardDetailed handleClickViewButton={() => history.push(`/feeds/${address}`)} address={address} protocolImg={feedProtocol?.img} feedName={name} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
-                        </Col>)
-                    })
-                }
+                <FeedCardDetailedGrid feeds={displayedFeeds} protocols={protocols} />
                 <Col xs={12}>
                     <div className="d-flex justify-content-center">
                         <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>
@@ -90,6 +83,11 @@ const HomeView = ({ feeds, protocols }: Props) => {
             </Row>
         </Container >
     )
+}
+
+HomeView.defaultProps = {
+    feeds: [],
+    protocols: {}
 }
 
 export default HomeView;

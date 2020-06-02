@@ -6,6 +6,7 @@ export const UPDATE_CONTRACT_EVENTS = 'ORM/GET_CONTRACT_EVENTS'
 
 export type CreateContractActionInput = {
     networkId: string,
+    name: string,
     title?: string,
     address: string,
     path?: string,

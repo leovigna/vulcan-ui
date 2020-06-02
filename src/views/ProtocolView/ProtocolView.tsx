@@ -8,14 +8,13 @@ import {
 import {
     useHistory
 } from "react-router-dom";
-
 import { ProtocolTypes } from '../../store/types'
-import FeedCardDetailed from '../../components/FeedCardDetailed'
+import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
 
 interface Props extends ProtocolTypes.Protocol {
 }
 
-const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, feeds }: Props) => {
+const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, feeds, protocols }: Props) => {
     const [minimizeFeeds, setMinimizeFeeds] = useState(true);
     const toggleMinimizeFeeds = () => setMinimizeFeeds(!minimizeFeeds);
 
@@ -63,13 +62,7 @@ const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, f
 
                 displayedFeeds.length > 0 ?
                     <>
-                        {
-                            displayedFeeds.map(({ title: name, value, hearted, ens, nodeCount, lastUpdate, address }, idx) => {
-                                return (<Col key={idx} lg="4" md="6" xs="12">
-                                    <FeedCardDetailed handleClickViewButton={() => history.push(`/feeds/${address}`)} address={address} protocolImg={img} feedName={name} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
-                                </Col>)
-                            })
-                        }
+                        <FeedCardDetailedGrid feeds={displayedFeeds} protocols={protocols} />
                         < Col xs={12}>
                             <div className="d-flex justify-content-center">
                                 <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>

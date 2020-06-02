@@ -12,10 +12,9 @@ import {
 } from '@coreui/react';
 
 //USe Redux Data
-import { categories } from "../../data/contracts"
 import qs from 'qs'
 import { connect } from "react-redux"
-import { contractsSelector, customContractsSelector } from '../../store/selectors'
+import { contractsSelector } from '../../store/selectors'
 
 
 class Dashboard extends Component {
@@ -26,7 +25,7 @@ class Dashboard extends Component {
     loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
     render() {
-        const { contracts, customcontracts, categories } = this.props;
+        const { contracts, categories } = this.props;
 
         const queryParams = qs.parse(this.props.location.category, { ignoreQueryPrefix: true });
         const matchParams = this.props.match.params;
@@ -79,8 +78,7 @@ class Dashboard extends Component {
 function mapStateToProps(state) {
     return {
         categories,
-        contracts: contractsSelector(state),
-        customcontracts: customContractsSelector(state)
+        contracts: contractsSelector(state)
     }
 }
 

@@ -2,5 +2,5 @@
     "name": "FeedCardDetailed",
     "version": "0.0.0",
     "private": true,
-    "main": "./FeedCardDetailed.tsx"
+    "main": "./index.tsx"
 }

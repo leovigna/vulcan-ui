@@ -1,27 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
-import HomeView, { Feed, Protocol } from './HomeView'
-import { protocols } from '../../data/data';
-import { contractsSelector, customContractsSelector } from '../../store/selectors'
-
-interface Props {
-    feeds: [Feed],
-    protocols: {
-        [key: string]: Protocol
-    },
-    networkId: string
-}
-
-const WrappedHomeView = ({ feeds, protocols }: Props) => {
-    return (<HomeView feeds={feeds} protocols={protocols} />)
-}
+import { withParsedFeeds } from '../../hoc'
+import HomeView from './HomeView'
+import protocols from '../../data/protocols'
+import { contractsSelector, contractStateSelector } from '../../store/selectors'
 
 const mapStateToProps = (state: any, { networkId }: Props) => {
     return {
-        feeds: contractsSelector(state) || [],
+        contractStates: contractStateSelector(state),
+        feeds: contractsSelector(state),
         protocols
     }
 }
 
-export default connect(mapStateToProps)(WrappedHomeView);
+export default connect(mapStateToProps)(withParsedFeeds(HomeView));

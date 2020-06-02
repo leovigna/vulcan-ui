@@ -1,14 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
+import { withParsedFeeds } from '../../hoc'
 import ProtocolView from './ProtocolView'
-import { protocols } from '../../data/data';
-import { contractsSelector } from '../../store/selectors'
-import { ProtocolTypes } from '../../store/types'
+import protocols from '../../data/protocols'
+import { contractsSelector, contractStateSelector } from '../../store/selectors'
 
-interface Props extends ProtocolTypes.Protocol {
-    networkId: string
-}
 interface MatchProps {
     match: {
         params: {
@@ -17,15 +12,16 @@ interface MatchProps {
     }
 }
 
-const WrappedProtocolView = (props: Props) => {
-    return (<ProtocolView {...props} />)
-}
-
 const mapStateToProps = (state: any, { match }: MatchProps) => {
     const name = match.params.name
     const protocol = protocols[name]
     const feeds = name === 'chainlink' ? contractsSelector(state) : []
-    return { feeds, ...protocol }
+    return {
+        contractStates: contractStateSelector(state),
+        feeds,
+        protocols,
+        ...protocol
+    }
 }
 
-export default connect(mapStateToProps)(WrappedProtocolView);
+export default connect(mapStateToProps)(withParsedFeeds(ProtocolView));
