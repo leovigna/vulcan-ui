@@ -79,7 +79,7 @@ const NamedFeedView = ({
             address: returnValues?.sender,
             answer: answerRender(returnValues?.response),
             timestamp: block?.timestamp,
-            gasPrice: transaction?.gasPrice
+            gasPrice: `${(transaction?.gasPrice || 0) / 1e9} Gwei`
         }
     })
 

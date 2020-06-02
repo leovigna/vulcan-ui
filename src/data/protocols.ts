@@ -22,9 +22,9 @@ const protocols: { [key: string]: ProtocolTypes.Protocol } = {
         url: 'https://chain.link',
         img: TellorBadge,
         description: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
-        feedCount: 5,
-        nodeCount: 5,
-        sponsorCount: 5,
+        feedCount: 0,
+        nodeCount: 0,
+        sponsorCount: 0,
         descriptionLong: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
 
     },
@@ -34,9 +34,9 @@ const protocols: { [key: string]: ProtocolTypes.Protocol } = {
         url: 'https://chain.link',
         img: CoinbaseBadge,
         description: 'On-chain market data signed by Coinbase.',
-        feedCount: 5,
-        nodeCount: 5,
-        sponsorCount: 5,
+        feedCount: 0,
+        nodeCount: 0,
+        sponsorCount: 0,
         descriptionLong: 'On-chain market data signed by Coinbase.',
 
     },
@@ -46,9 +46,9 @@ const protocols: { [key: string]: ProtocolTypes.Protocol } = {
         url: 'https://chain.link',
         img: MKRBadge,
         description: 'Anonymous data feeds backing the DAI stablecoin.',
-        feedCount: 5,
-        nodeCount: 5,
-        sponsorCount: 5,
+        feedCount: 0,
+        nodeCount: 0,
+        sponsorCount: 0,
         descriptionLong: 'Anonymous data feeds backing the DAI stablecoin.',
 
     }

@@ -82,7 +82,7 @@ const AddressFeedView = ({
             address: returnValues?.sender,
             answer: returnValues?.response,
             timestamp: block?.timestamp,
-            gasPrice: transaction?.gasPrice
+            gasPrice: `${(transaction?.gasPrice || 0) / 1e9} Gwei`
         }
     })
 
