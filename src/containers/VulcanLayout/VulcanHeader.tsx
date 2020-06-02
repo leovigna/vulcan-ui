@@ -47,29 +47,30 @@ class DefaultHeader extends Component {
                                                 <a className="nav-link" href="#">Feeds</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="https://vulcan.link" target="blank">Vulcan.Link<img
+                                                <a className="nav-link" href={process.env.REACT_APP_HOMEPAGE_URL} target="_blank">Vulcan.Link<img
                                                     src={externalLink} /></a>
                                             </li>
                                             {/*
                                             <li className="nav-item">
-                                                <a className="nav-link" href="https://bit.ly/2wjVHtI" target="blank">Request a Chainlink
+                                                <a className="nav-link" href="https://bit.ly/2wjVHtI" target="_blank">Request a Chainlink
                                         <img src={externalLink} /></a>
                                             </li> */}
                                         </ul>
                                         <form className="form-inline my-lg-0">
-                                            <a href="mailto:hello@vulcan.link" className="btn gettouch my-sm-0" type="submit"
-                                                target="blank">Contact
+                                            <a href={process.env.REACT_APP_CONTACT_URL} className="btn gettouch my-sm-0" type="submit"
+                                                target="_blank">Contact
                                     Us</a>
                                         </form>
                                     </div>
                                 </Nav>
                             </Col>
                         </Row>
-                    </Container>
-
-                    <Container>
-                        Connecting your smart contracts with real-world off-chain data.
-                        Only operator to offer free S&P500 & WHO data feeds.
+                        <Row className='py-3'>
+                            <Col xs='12'>
+                                Explore decentralized and decentralized oracle protocols on the Ethereum blockchain. Oracle feeds enable connecting smart contracts with external data that powers various DeFi protocols.<br />
+                                <br />Keep an eye out for new feeds, oracle protocols and blockchain networks that frequently get added!
+                            </Col>
+                        </Row>
                     </Container>
                 </div>
                 <div style={{ height: 0, position: 'relative', zIndex: 1, backgroundColor: '#002C69' }} >

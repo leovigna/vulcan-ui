@@ -84,7 +84,7 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
                 </Col>
                 <Col sm="12" className="d-flex py-2 justify-content-center">
                     {
-                        address ? <a style={{ color: '#828282', fontStyle: 'italic' }} href={`https://etherscan.com/address/${address}`} target="blank">Etherscan Contract</a> : ''
+                        address ? <a style={{ color: '#828282', fontStyle: 'italic' }} href={`https://etherscan.com/address/${address}`} target="_blank">Etherscan Contract</a> : ''
                     }
                 </Col>
             </Row>
