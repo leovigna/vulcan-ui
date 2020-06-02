@@ -16,9 +16,7 @@ import FeedView from './FeedView'
 import { ContractActions } from "../../store/actions"
 import { ContractTypes } from "../../store/types"
 import Event from "../../orm/models/event"
-import { protocols } from '../../data/data';
 import { Contract } from '../../orm/models';
-import { timeStamp } from 'console';
 
 interface ContractState {
     latestRound?: any,
@@ -43,12 +41,13 @@ const NamedFeedView = ({
     chartData,
     updateContractEvents }: Props) => {
     const drizzleContext = useContext(DrizzleContext.Context)
+    const { drizzle } = drizzleContext;
 
     const render = useRef(0)
     console.debug("Render: ", render.current++)
     const [cacheKeys, setCacheKeys] = useState({ roundKey: '0x0', answerKey: '0x0', timestampKey: '0x0' })
 
-    const { drizzle } = drizzleContext;
+
     const address = contract ? contract.address : null
 
     useEffect(() => {

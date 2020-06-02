@@ -93,4 +93,9 @@ const HomeView = ({ feeds, protocols }: Props) => {
     )
 }
 
+HomeView.defaultProps = {
+    feeds: [],
+    protocols: {}
+}
+
 export default HomeView;

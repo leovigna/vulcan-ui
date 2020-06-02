@@ -35,7 +35,8 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
                 <div className="d-flex justify-content-center" style={{ width: '100%' }}>
                     <img style={{ width: 37, objectFit: 'contain' }} src={protocolImg} alt=''></img>
                     <div style={{ width: 155, textAlign: 'center', fontSize: 27, fontWeight: 'bold' }}>{feedName}</div>
-                    <Button style={{ padding: 0 }}><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
+                    {//<Button style={{ padding: 0 }}><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
+                    }
                 </div>
             </Row>
             <Row>
@@ -63,7 +64,7 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
                         nodeCount ? <div style={{ color: '#002C69', fontSize: 16, textAlign: 'center' }}>{nodeCount} Nodes</div> : ''
                     }
                 </Col>
-                <Col sm="6">
+                <Col sm="12" className="d-flex justify-content-center">
                     {
                         address ? <a style={{ color: '#828282', fontStyle: 'italic' }} href={`https://etherscan.com/address/${address}`} target="blank">Etherscan</a> : ''
                     }

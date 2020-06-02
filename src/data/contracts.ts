@@ -88,9 +88,9 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
         },
         {
             protocol: "chainlink",
-            title: "Silver Spot Price (XAG/USD)",
+            title: "XAG/USD (Silver)",
             name: "xag-usd",
-            "navTitle": "XAG/USD (Silver)",
+            titleLong: "Silver Spot Price (XAG/USD)",
             address: "0x8946A183BFaFA95BEcf57c5e08fE5B7654d2807B",
             "answerRenderOptions": {
                 "transform": {
@@ -103,9 +103,9 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
         },
         {
             protocol: "chainlink",
-            title: "Philadelphia Gold and Silver Index (XAU/USD)",
+            titleLong: "Philadelphia Gold and Silver Index (XAU/USD)",
             name: "xau-usd",
-            "navTitle": "XAU/USD (Gold)",
+            title: "XAU/USD (Gold)",
             address: "0xafcE0c7b7fE3425aDb3871eAe5c0EC6d93E01935",
             "answerRenderOptions": {
                 "transform": {
