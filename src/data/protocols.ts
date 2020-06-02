@@ -1,5 +1,5 @@
-import ChainlinkBadge from '../assets/img/protocols/ChainlinkBadge.png'
-import TellorBadge from '../assets/img/protocols/TellorBadge.png'
+import ChainlinkBadge from '../assets/img/protocols/ChainlinkBadge.svg'
+import TellorBadge from '../assets/img/protocols/TellorBadge.svg'
 import CoinbaseBadge from '../assets/img/protocols/CoinbaseBadge.png'
 import MKRBadge from '../assets/img/protocols/MKRBadge.png'
 import { ProtocolTypes } from '../store/types'
@@ -19,7 +19,7 @@ const protocols: { [key: string]: ProtocolTypes.Protocol } = {
     'tellor.io': {
         active: false,
         name: 'Tellor.io',
-        url: 'https://chain.link',
+        url: 'https://tellor.io',
         img: TellorBadge,
         description: 'Decentralized Oracle Network combining Proof-of-Work and TRB token.',
         feedCount: 0,
@@ -31,7 +31,7 @@ const protocols: { [key: string]: ProtocolTypes.Protocol } = {
     'coinbase': {
         active: false,
         name: 'Coinbase',
-        url: 'https://chain.link',
+        url: 'https://docs.pro.coinbase.com/#oracle',
         img: CoinbaseBadge,
         description: 'On-chain market data signed by Coinbase.',
         feedCount: 0,
@@ -43,7 +43,7 @@ const protocols: { [key: string]: ProtocolTypes.Protocol } = {
     'mkrdao': {
         active: false,
         name: 'MKRDao',
-        url: 'https://chain.link',
+        url: 'https://developer.makerdao.com/feeds/',
         img: MKRBadge,
         description: 'Anonymous data feeds backing the DAI stablecoin.',
         feedCount: 0,

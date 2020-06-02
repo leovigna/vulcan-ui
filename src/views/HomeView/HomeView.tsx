@@ -32,8 +32,10 @@ const HomeView = ({ feeds, protocols }: Props) => {
     const displayedFeeds = minimizeFeeds ? feeds.slice(0, 9) : feeds
 
     return (
-        <Container>
-            {/*
+        <div style={{ marginTop: -200, paddingTop: 100, paddingBottom: 50, marginRight: -15, marginLeft: -15 }}>
+
+            <Container>
+                {/*
                 <Row>
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite feeds</h1>
@@ -59,29 +61,30 @@ const HomeView = ({ feeds, protocols }: Props) => {
                     </Row>
                 </Row>
                 */}
-            <Row>
-                <Col xs={12}>
-                    <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939', height: 95 }}>Protocols</h1>
-                </Col>
-                {
-                    Object.values(protocols).map(({ description, active, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
-                        <Col key={idx} lg="3" md="6" xs="12">
-                            <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
-                        </Col>)
-                }
-            </Row>
-            <Row>
-                <Col xs={12}>
-                    <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
-                </Col>
-                <FeedCardDetailedGrid feeds={displayedFeeds} protocols={protocols} />
-                <Col xs={12}>
-                    <div className="d-flex justify-content-center">
-                        <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>
-                    </div>
-                </Col>
-            </Row>
-        </Container >
+                <Row>
+                    <Col xs={12}>
+                        <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939', height: 95 }}>Protocols</h1>
+                    </Col>
+                    {
+                        Object.values(protocols).map(({ description, active, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
+                            <Col key={idx} lg="3" md="6" xs="12">
+                                <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
+                            </Col>)
+                    }
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
+                    </Col>
+                    <FeedCardDetailedGrid feeds={displayedFeeds} protocols={protocols} />
+                    <Col xs={12}>
+                        <div className="d-flex justify-content-center">
+                            <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>
+                        </div>
+                    </Col>
+                </Row>
+            </Container >
+        </div>
     )
 }
 

@@ -39,9 +39,9 @@ class DefaultFooter extends Component {
                                     <p>EU-based Experienced Chainlink Node Provider.<br /></p>
                                     <h6>Follow Us</h6>
                                     <br />
-                                    <span className="link-footer"><a href="https://t.me/vulcanlink" target="blank"><img
+                                    <span className="link-footer"><a href={process.env.REACT_APP_TELEGRAM_URL} target="_blank"><img
                                         src={telegram} className="img-fluid" alt="" /></a>
-                                        <a href="https://discord.gg/eKR5Hx" target="blank"><img src={discord}
+                                        <a href={process.env.REACT_APP_DISCORD_URL} target="_blank"><img src={discord}
                                             className="img-fluid" alt="" /></a></span>
                                 </div>
                             </Col>
@@ -49,11 +49,11 @@ class DefaultFooter extends Component {
                                 <div className="Useful-link">
                                     <h6>Useful links</h6>
                                     <ul>
-                                        <li><a href="mailto:hello@vulcan.link" target="blank">Contact Us</a></li>
-                                        <li><a href="#why-choose-us">About Us</a></li>
-                                        <li><a href="#services-home">Services</a></li>
-                                        <li><a href="https://feeds.link" target="blank">Feeds.Link</a></li>
-                                        <li><a href="https://bit.ly/2wjVHtI" target="blank">Request a Chainlink</a></li>
+                                        <li><a href={process.env.REACT_APP_CONTACT_URL} target="_blank">Contact Us</a></li>
+                                        <li><a href={`${process.env.REACT_APP_HOMEPAGE_URL}/#why-choose-us`} target="_blank">About Us</a></li>
+                                        <li><a href={`${process.env.REACT_APP_HOMEPAGE_URL}/#services-home`} target="_blank">Services</a></li>
+                                        <li><a href={process.env.REACT_APP_HOMEPAGE_URL} target="_blank">Vulcan.Link</a></li>
+                                        <li><a href={process.env.REACT_APP_FORM_URL} target="_blank">Request a Chainlink</a></li>
                                     </ul>
                                 </div>
                             </Col>
@@ -63,7 +63,7 @@ class DefaultFooter extends Component {
                                     <p>Subscribe to our newsletter</p>
                                     <div id="mc_embed_signup">
                                         <form
-                                            action="https://link.us19.list-manage.com/subscribe/post?u=66e21f9472d7271632b2dc06a&amp;id=87420076fe"
+                                            action={process.env.REACT_APP_MAILCHIMP_URL}
                                             method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
                                             className="validate" target="_blank" noValidate>
                                             <div id="mc_embed_signup_scroll">
