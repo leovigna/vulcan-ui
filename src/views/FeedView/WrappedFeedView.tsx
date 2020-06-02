@@ -26,7 +26,6 @@ interface Props {
     },
     contractName: string,
     contractCategory: string,
-    contractPath: string,
     contractAddress: string,
     contractENS: string
 }
@@ -34,7 +33,6 @@ interface Props {
 const WrappedFeedView = ({
     contractName,
     contractCategory,
-    contractPath,
     contractAddress,
     contractENS }: Props) => {
 
@@ -48,16 +46,17 @@ const WrappedFeedView = ({
 
     //Known contract
     if (contractAddress) {
-        if (contractPath) {
+        if (contractName && contractCategory) {
             //Redirect
-            history.replace(`/feeds/${contractPath}`)
+            history.replace(`/feeds/${contractCategory}/${contractName}`)
             return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
         }
+
         return (<AddressFeedView address={contractAddress} />)
     }
 
-    if (contractPath) {
-        return (<NamedFeedView name={contractName} category={contractCategory} path={contractPath} />)
+    if (contractName && contractCategory) {
+        return (<NamedFeedView name={contractName} category={contractCategory} />)
     }
 
     return 404
@@ -67,23 +66,20 @@ const WrappedFeedView = ({
 
 const mapStateToProps = (state: any, { match }: Props) => {
     const contractAddress = match.params.address;
-    const contractName = match.params.name;
-    const contractCategory = match.params.category;
-    let contractPath;
+    let contractName = match.params.name;
+    let contractCategory = match.params.category;
     let contractENS;
 
     if (contractAddress && web3.utils.isAddress(contractAddress)) {
         const contract = contractById(state, contractAddress)
         console.debug(contract)
         if (contract) {
-            contractPath = contract.path;
+            contractName = contract.name
+            contractCategory = contract.protocol
         }
-    } else if (contractName && contractCategory) {
-        contractPath = contractCategory + '/' + contractName
     }
 
     return {
-        contractPath,
         contractName,
         contractCategory,
         contractAddress,

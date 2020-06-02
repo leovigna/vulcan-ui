@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
 
 import {
-    contractByAddressSelector,
+    contractStateByAddressSelector,
     graphDataSelector,
     makeEventIndexedFilterSelector
 } from "../../store/selectors"
@@ -107,7 +107,7 @@ const mapStateToProps = (state: any, { address }: Props) => {
     const AnswerUpdatedIndexId = indexAddressEvent(AnswerUpdatedIndexData)
 
     return {
-        contractState: contractByAddressSelector(state, address),
+        contractState: contractStateByAddressSelector(state, address),
         responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
         chartData: graphDataSelector(state, AnswerUpdatedIndexId)
     }

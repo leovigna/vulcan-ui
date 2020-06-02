@@ -1,8 +1,10 @@
 export interface Feed {
+    networkId: string,
+    name: string,
     address: string,
     title: string,
     protocol: string,
-    ens: string,
+    ens?: string,
     value: string,
     hearted: boolean,
     nodeCount: number,
@@ -14,7 +16,8 @@ export interface Feed {
     answer: string,
     minResponses: number,
     maxResponses: number,
-    deviationThreshold: number
+    deviationThreshold: number,
+    answerRenderOptions?: AnswerRenderOptions
 }
 
 export interface Response {
@@ -23,4 +26,12 @@ export interface Response {
     answer: string | number,
     timestamp: number,
     gasPrice: string | number
+}
+
+export interface AnswerRenderOptions {
+    transform: {
+        multiply: number,
+        decimals: number
+    },
+    format: string
 }

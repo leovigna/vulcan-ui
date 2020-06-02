@@ -54,6 +54,7 @@ function* setupDefaultContractsGraphQLAPI() {
 
 
 function* setupDefaultContractsJSON() {
+    console.debug('JSON update')
     const allContracts = [].concat.apply([], Object.values(contractsDefault));
     yield all(allContracts.map((c) => {
         const abi = AggregatorABI.compilerOutput.abi
@@ -64,7 +65,8 @@ function* setupDefaultContractsJSON() {
 }
 
 function* setupDefaultContracts() {
-    if (process.env.REACT_APP_GRAPHQL_API) {
+    console.debug(process.env.REACT_APP_GRAPHQL_API)
+    if (process.env.REACT_APP_GRAPHQL_API === 'true') {
         yield call(setupDefaultContractsGraphQLAPI);
     }
     else {

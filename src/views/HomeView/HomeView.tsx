@@ -75,10 +75,11 @@ const HomeView = ({ feeds, protocols }: Props) => {
                     <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
                 </Col>
                 {
-                    displayedFeeds.map(({ title: name, value, hearted, ens, protocol, nodeCount, lastUpdate, address }, idx) => {
-                        const feedProtocol = protocols[protocol ? protocol : 'chainlink']
+                    displayedFeeds.map(({ title, name, value, hearted, ens, protocol, nodeCount, lastUpdate, address }, idx) => {
+                        const url = protocol && name ? `/feeds/${protocol}/${name}` : `/feeds/${address}`
+                        const feedProtocol = protocols[protocol]
                         return (<Col key={idx} lg="4" md="6" xs="12">
-                            <FeedCardDetailed handleClickViewButton={() => history.push(`/feeds/${address}`)} address={address} protocolImg={feedProtocol?.img} feedName={name} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
+                            <FeedCardDetailed href={url} handleClickViewButton={() => history.push(url)} address={address} protocolImg={feedProtocol?.img} feedName={title} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
                         </Col>)
                     })
                 }

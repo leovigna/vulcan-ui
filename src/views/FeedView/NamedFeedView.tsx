@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { connect } from "react-redux"
 import { DrizzleContext } from "@drizzle/react-plugin"
 import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
+import moment from 'moment';
 
 import {
-    contractByNameSelector,
-    contractByAddressSelector,
+    contractByFilterSelector,
+    contractStateByAddressSelector,
     graphDataSelector,
     makeEventIndexedFilterSelector
 } from "../../store/selectors"
@@ -15,6 +16,9 @@ import FeedView from './FeedView'
 import { ContractActions } from "../../store/actions"
 import { ContractTypes } from "../../store/types"
 import Event from "../../orm/models/event"
+import { protocols } from '../../data/data';
+import { Contract } from '../../orm/models';
+import { timeStamp } from 'console';
 
 interface ContractState {
     latestRound?: any,
@@ -24,10 +28,7 @@ interface ContractState {
 }
 
 interface Props {
-    name: string,
-    address: string,
-    path: string,
-    category: string,
+    contract: Contract,
     responses: [Event],
     contractState: ContractState,
     chartData: any,
@@ -36,78 +37,63 @@ interface Props {
 }
 
 const NamedFeedView = ({
-    name,
-    category,
-    path,
-    address,
+    contract,
     responses,
     contractState,
     chartData,
-    createContract,
     updateContractEvents }: Props) => {
     const drizzleContext = useContext(DrizzleContext.Context)
 
-    const [contractInitialized, setContractInitialized] = useState(false)
-    const [latestRoundKey, setLatestRoundKey] = useState('')
-    const [latestAnswerKey, setLatestAnswerKey] = useState('')
-    const [latestTimestampKey, setLatestTimestampKey] = useState('')
+    const render = useRef(0)
+    console.debug("Render: ", render.current++)
+    const [cacheKeys, setCacheKeys] = useState({ roundKey: '0x0', answerKey: '0x0', timestampKey: '0x0' })
 
     const { drizzle } = drizzleContext;
+    const address = contract ? contract.address : null
 
     useEffect(() => {
         console.debug('Initialize contract')
-        if (!drizzle.contracts[address]) {
+        if (drizzle.contracts[address]) {
             const web3Contract = new drizzle.web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
-            const events = ["AnswerUpdated", "ResponseReceived"]
-            createContract({ address, networkId: '1', abi: AggregatorABI.compilerOutput.abi, events })
             updateContractEvents({ address, networkId: '1', web3Contract })
 
-            setContractInitialized(true)
-        } else {
-            const web3Contract = new drizzle.web3.eth.Contract(AggregatorABI.compilerOutput.abi, address)
-            updateContractEvents({ address, networkId: '1', web3Contract })
-            setContractInitialized(true)
+            const roundKey = drizzle.contracts[address].methods.latestRound.cacheCall()
+            const answerKey = drizzle.contracts[address].methods.latestAnswer.cacheCall()
+            const timestampKey = drizzle.contracts[address].methods.latestTimestamp.cacheCall()
+            setCacheKeys({ roundKey, answerKey, timestampKey })
         }
-    }, [address]);
+    }, [address, !!drizzle.contracts[address]]);
 
-    useEffect(() => {
-        const latestRoundKey = drizzle.contracts[address].methods.latestRound.cacheCall()
-        setLatestRoundKey(latestRoundKey)
-    }, [address, contractInitialized])
+    const latestAnswer = contractState?.latestAnswer[cacheKeys.answerKey]?.value
+    const latestTimestamp = contractState?.latestTimestamp[cacheKeys.timestampKey]?.value
 
-    useEffect(() => {
-        const latestAnswerKey = drizzle.contracts[address].methods.latestAnswer.cacheCall()
-        setLatestAnswerKey(latestAnswerKey)
-    }, [address, contractInitialized])
+    const answerRender = contract?.answerRender || ((value: any) => value);
+    const answerTransform = contract?.answerTransform || ((value: any) => value);
+    const answer = answerRender(latestAnswer)
+    console.debug(answer)
+    const lastUpdate = latestTimestamp ? moment(latestTimestamp, 'X').format('LLLL') : '';
 
-    useEffect(() => {
-        const latestTimestamp = drizzle.contracts[address].methods.latestTimestamp.cacheCall()
-        setLatestTimestampKey(latestTimestamp)
-    }, [address, contractInitialized])
-
-
-    if (!drizzle.contracts[address]) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
-
-    const latestAnswer = contractState?.latestAnswer[latestAnswerKey]?.value
-    const latestTimestamp = contractState?.latestTimestamp[latestTimestampKey]?.value
     const feedViewResponses: [Response] = responses.map((r): Response => {
         const { returnValues, block, transactionHash, transaction } = r
         return {
             transactionHash,
             address: returnValues?.sender,
-            answer: returnValues?.response,
+            answer: answerRender(returnValues?.response),
             timestamp: block?.timestamp,
             gasPrice: transaction?.gasPrice
         }
     })
 
+    const feedViewChartData = chartData.map((r) => {
+        return { x: r.x, y: answerTransform(r.y) }
+    })
     const feedViewProps = {
         title: `Oracle Aggregator`,
         address,
-        answer: latestAnswer || 'Loading...',
+        answer,
         responses: feedViewResponses,
-        chartData,
-        lastUpdate: latestTimestamp || 'Loading...',
+        chartData: feedViewChartData,
+        lastUpdate
     }
 
     return (<FeedView {...feedViewProps} />);
@@ -115,26 +101,34 @@ const NamedFeedView = ({
 
 const ResponseReceivedSelector = makeEventIndexedFilterSelector()
 
-const mapStateToProps = (state: any, { path }: Props) => {
-    const contract = contractByNameSelector(state, path)
-    const address = contract.address;
+const mapStateToProps = (state: any, { category, name }: Props) => {
+    const contract = contractByFilterSelector(state, { protocol: category, name })
     console.debug(contract)
-    const ResponseReceivedIndexData = { address: address, event: 'ResponseReceived' }
-    const ResponseReceivedIndexId = indexAddressEvent(ResponseReceivedIndexData)
-    const AnswerUpdatedIndexData = { address: address, event: 'AnswerUpdated' }
-    const AnswerUpdatedIndexId = indexAddressEvent(AnswerUpdatedIndexData)
+    if (contract) {
+        const address = contract.address
+        const ResponseReceivedIndexData = { address: address, event: 'ResponseReceived' }
+        const ResponseReceivedIndexId = indexAddressEvent(ResponseReceivedIndexData)
+        const AnswerUpdatedIndexData = { address: address, event: 'AnswerUpdated' }
+        const AnswerUpdatedIndexId = indexAddressEvent(AnswerUpdatedIndexData)
+        return {
+            contract,
+            contractState: contractStateByAddressSelector(state, address),
+            responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
+            chartData: graphDataSelector(state, AnswerUpdatedIndexId)
+        }
+    }
 
     return {
-        address,
-        contractState: contractByAddressSelector(state, address),
-        responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
-        chartData: graphDataSelector(state, AnswerUpdatedIndexId)
+        contract
     }
 }
 
+NamedFeedView.defaultProps = {
+    chartData: [],
+    responses: []
+}
 function mapDispatchToProps(dispatch) {
     return {
-        createContract: (data: ContractTypes.CreateContractActionInput) => dispatch(ContractActions.createContract(data)),
         updateContractEvents: (data: ContractTypes.UpdateContractEventsActionInput) => dispatch(ContractActions.updateContractEvents(data))
     }
 }

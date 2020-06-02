@@ -2,7 +2,7 @@ import { attr } from 'redux-orm';
 import { Model } from 'redux-orm';
 import { sprintf } from 'sprintf-js';
 
-interface Contract {
+interface Feed {
     networkId: string,
     blockHash: string,
     blockNumber: number,
@@ -17,7 +17,7 @@ interface Contract {
     updated?: boolean
 }
 
-class Contract extends Model {
+class Feed extends Model {
     toString() {
         return `Contract: ${this.blockNumber}`;
     }
@@ -55,12 +55,11 @@ class Contract extends Model {
         idAttribute: 'address',
     };
 }
-Contract.modelName = 'Contract';
+Feed.modelName = 'Feed';
 
 // Declare your related fields.
-Contract.fields = {
+Feed.fields = {
     name: attr(),
-    protocol: attr(),
     title: attr(),
     count: attr(),
     address: attr(),
@@ -74,4 +73,4 @@ Contract.fields = {
 
 
 
-export default Contract;
+export default Feed;

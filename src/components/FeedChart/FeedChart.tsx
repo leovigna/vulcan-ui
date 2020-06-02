@@ -72,7 +72,7 @@ const mainChartOpts = {
 
 
 interface Props {
-    data: [Point]
+    data: [Point<number, number>]
 }
 
 const FeedChart = ({ data }: Props) => {

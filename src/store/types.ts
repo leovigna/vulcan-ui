@@ -7,9 +7,9 @@ import * as ProtocolTypes from './protocol/types';
 import * as FeedTypes from './feed/types';
 import * as NodeTypes from './node/types';
 
-export interface Point {
-    x: number,
-    y: number
+export interface Point<X, Y> {
+    x: X,
+    y: Y
 }
 
 export {

@@ -17,7 +17,6 @@ import { web3ForNetworkId } from '../../web3global'
 import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
 import {
     graphDataSelector,
-    contractByNameSelector,
     makeEventIndexedFilterSelector
 } from "../../store/selectors"
 
@@ -123,7 +122,7 @@ const mapStateToProps = (state, { contract }) => {
     const AnswerUpdatedIndexId = indexAddressEvent(AnswerUpdatedIndexData)
 
     return {
-        contractState: contractByNameSelector(state, contract),
+        contractState: {},
         responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
         graphData: graphDataSelector(state, AnswerUpdatedIndexId)
     }
