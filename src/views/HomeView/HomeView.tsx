@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 
 import ProtocolCard from '../../components/ProtocolCard'
-import FeedCardDetailed from '../../components/FeedCardDetailed'
+import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
 import FeedCard from '../../components/FeedCard'
 
 import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
@@ -74,15 +74,7 @@ const HomeView = ({ feeds, protocols }: Props) => {
                 <Col xs={12}>
                     <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
                 </Col>
-                {
-                    displayedFeeds.map(({ title, name, value, hearted, ens, protocol, nodeCount, lastUpdate, address }, idx) => {
-                        const url = protocol && name ? `/feeds/${protocol}/${name}` : `/feeds/${address}`
-                        const feedProtocol = protocols[protocol]
-                        return (<Col key={idx} lg="4" md="6" xs="12">
-                            <FeedCardDetailed href={url} handleClickViewButton={() => history.push(url)} address={address} protocolImg={feedProtocol?.img} feedName={title} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
-                        </Col>)
-                    })
-                }
+                <FeedCardDetailedGrid feeds={displayedFeeds} protocols={protocols} />
                 <Col xs={12}>
                     <div className="d-flex justify-content-center">
                         <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>
