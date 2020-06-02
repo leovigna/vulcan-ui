@@ -5,7 +5,7 @@ import moment from 'moment'
 
 import HomeView from './HomeView'
 import { FeedTypes, ProtocolTypes } from '../../store/types'
-import { protocols } from '../../data/data';
+import protocols from '../../data/protocols'
 import { contractsSelector, contractStateSelector } from '../../store/selectors'
 
 interface Props {

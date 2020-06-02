@@ -7,12 +7,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             protocol: "chainlink",
             title: "BTC/USD",
             address: "0xF5fff180082d6017036B771bA883025c654BC935",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
@@ -21,12 +21,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             name: "aud-usd",
             title: "AUD/USD",
             address: "0x05Cf62c4bA0ccEA3Da680f9A8744Ac51116D6231",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
@@ -35,12 +35,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             name: "eur-usd",
             title: "EUR/USD",
             address: "0x25Fa978ea1a7dc9bDc33a2959B9053EaE57169B5",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
@@ -49,12 +49,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             name: "chf-usd",
             title: "CHF/USD",
             address: "0x02D5c618DBC591544b19d0bf13543c0728A3c4Ec",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
@@ -63,12 +63,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             title: "GBP/USD",
             name: "gbp-usd",
             address: "0x151445852B0cfDf6A4CC81440F2AF99176e8AD08",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
@@ -77,27 +77,27 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             title: "JPY/USD",
             name: "jpy-usd",
             address: "0xe1407BfAa6B5965BAd1C9f38316A3b655A09d8A6",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
-            title: "XAG/USD (Silver)",
+            title: "Silver",
             name: "xag-usd",
             titleLong: "Silver Spot Price (XAG/USD)",
             address: "0x8946A183BFaFA95BEcf57c5e08fE5B7654d2807B",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
@@ -105,14 +105,14 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             protocol: "chainlink",
             titleLong: "Philadelphia Gold and Silver Index (XAU/USD)",
             name: "xau-usd",
-            title: "XAU/USD (Gold)",
+            title: "Gold",
             address: "0xafcE0c7b7fE3425aDb3871eAe5c0EC6d93E01935",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
@@ -121,25 +121,26 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             title: "LINK/USD",
             name: 'link-usd',
             address: "0x32dbd3214aC75223e27e575C53944307914F7a90",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "xhv-usd",
             title: "XHV/USD",
             address: "0xB836ADc21C241b096A98Dd677eD25a6E3EFA8e94",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         }
@@ -147,225 +148,225 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
     "eth": [
         {
             protocol: "chainlink",
+            name: "lrc-eth",
             title: "LRC/ETH",
             address: "0x8770Afe90c52Fd117f29192866DE705F63e59407",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "lend-eth",
             title: "LEND/ETH",
             address: "0x1EeaF25f2ECbcAf204ECADc8Db7B0db9DA845327",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "btc-eth",
             title: "BTC/ETH",
             address: "0x0133Aa47B6197D0BA090Bf2CD96626Eb71fFd13c",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "mkr-eth",
             title: "MKR/ETH",
             address: "0xDa3d675d50fF6C555973C4f0424964e1F6A4e7D3",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "mana-eth",
             title: "MANA/ETH",
             address: "0xc89c4ed8f52Bb17314022f6c0dCB26210C905C97",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "mnc-eth",
             title: "MNC/ETH",
             address: "0xd0e785973390fF8E77a83961efDb4F271E6B8152",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "link-eth",
             title: "LINK/ETH",
             address: "0xeCfA53A8bdA4F0c4dd39c55CC8deF3757aCFDD07",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "usdc-eth",
             title: "USDC/ETH",
             address: "0xdE54467873c3BCAA76421061036053e371721708",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "rep-eth",
             title: "REP/ETH",
             address: "0xb8b513d9cf440C1b6f5C7142120d611C94fC220c",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "zrx-eth",
             title: "ZRX/ETH",
             address: "0xA0F9D94f060836756FFC84Db4C78d097cA8C23E8",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "bat-eth",
             title: "BAT/ETH",
             address: "0x9b4e2579895efa2b4765063310Dc4109a7641129",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "dai-eth",
             title: "DAI/ETH",
             address: "0x037E8F2125bF532F3e228991e051c8A7253B642c",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "tusd-eth",
             title: "TUSD/ETH",
             address: "0x73ead35fd6A572EF763B13Be65a9db96f7643577",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "usdt-eth",
             title: "USDT/ETH",
             address: "0xa874fe207DF445ff19E7482C746C4D3fD0CB9AcE",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "susd-eth",
             title: "SUSD/ETH",
             address: "0x6d626Ff97f0E89F6f983dE425dc5B24A18DE26Ea",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         },
         {
             protocol: "chainlink",
+            name: "snx-eth",
             title: "SNX/ETH",
             address: "0xE23d1142dE4E83C08bb048bcab54d50907390828",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "1"
         }
@@ -373,32 +374,32 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
     "markets": [
         {
             protocol: "chainlink",
-            title: "FTSE 100 Index (UKX)",
-            "navTitle": "FTSE/GBP",
+            name: "ftse",
+            titleLong: "FTSE 100 Index (UKX)",
+            title: "FTSE 100",
             address: "0x16924ae9C2ac6cdbC9D6bB16FAfCD38BeD560936",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "£ %(value)s"
+                format: "£ %(value)s"
             },
             networkId: "1",
             "historyRange": 50
         },
         {
             protocol: "chainlink",
-            title: "Nikkei 225 Index (NI225)",
-            "navTitle": "N225/JPY",
+            name: "nikkei",
+            titleLong: "Nikkei 225 Index (NI225)",
+            title: "N225/JPY",
             address: "0x3f6E09A4EC3811765F5b2ad15c0279910dbb2c04",
-
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "¥ %(value)s"
+                format: "¥ %(value)s"
             },
             networkId: "1",
             "historyRange": 50
@@ -417,12 +418,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "BTC/USD",
             "navTitle": "BTC/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "1"
         },
@@ -433,12 +434,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             "cronJobId": "c1fa59786ee645dbb934a588b0766641",
             "jobId": "ef2d11f7da774d528c174f97957f9ea6",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "¥ %(value)s"
+                format: "¥ %(value)s"
             },
             networkId: "1",
             "historyRange": 50
@@ -450,8 +451,8 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             title: "COVID-19 (China)",
             address: "0x8DCD39e5deF7bb50E1840e30662B3225A98C6220",
             
-            "answerRenderOptions": {
-                "format": "%(value)s Cases"
+            answerRenderOptions: {
+                format: "%(value)s Cases"
             },
             networkId: "3"
         },
@@ -460,8 +461,8 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             title: "COVID-19 (Italy)",
             address: "0x2f4A30ddc1FE8D1F2Ea0a2F4735BEcCF85C16C2f",
             
-            "answerRenderOptions": {
-                "format": "%(value)s Cases"
+            answerRenderOptions: {
+                format: "%(value)s Cases"
             },
             networkId: "3"
         },
@@ -470,8 +471,8 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             title: "COVID-19 (France)",
             address: "0x49ba496eE2c02d12DAB90Df89282222a1c43F1b1",
             
-            "answerRenderOptions": {
-                "format": "%(value)s Cases"
+            answerRenderOptions: {
+                format: "%(value)s Cases"
             },
             networkId: "3"
         },
@@ -480,8 +481,8 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             title: "COVID-19 (US)",
             address: "0x01456dce7730a60b83a0bb767f9e29ac9a0e6353",
             
-            "answerRenderOptions": {
-                "format": "%(value)s Cases"
+            answerRenderOptions: {
+                format: "%(value)s Cases"
             },
             networkId: "3"
         },
@@ -490,8 +491,8 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             title: "COVID-19 (UK)",
             address: "0xe61488faa89023b50b06c9fa9bd76ddd61d1d7ee",
             
-            "answerRenderOptions": {
-                "format": "%(value)s Cases"
+            answerRenderOptions: {
+                format: "%(value)s Cases"
             },
             networkId: "3"
         },
@@ -500,8 +501,8 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             title: "COVID-19 (Australia)",
             address: "0x9b952670c4378672c758bff6055c6cb3a0df8727",
             
-            "answerRenderOptions": {
-                "format": "%(value)s Cases"
+            answerRenderOptions: {
+                format: "%(value)s Cases"
             },
             networkId: "3",
             "historyRange": 35
@@ -514,12 +515,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             "navTitle": "S&P500",
             address: "0x03d4D4ade00C3aaA5234E9573c0Ac1f3f2565EC3",
             
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-4,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-4,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3",
             "historyRange": 35
@@ -530,12 +531,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             "navTitle": "Dow Jones",
             address: "0xee22292C4D89fb112B5E749cc1Af70CFa9a9B9b0",
             
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-4,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-4,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3",
             "historyRange": 35
@@ -546,12 +547,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             "navTitle": "Tesla",
             address: "0xaE1cC1581D57b3ba9d2a0DDB18CcD1a4D1Fd6420",
             
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-4,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-4,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3",
             "historyRange": 20
@@ -570,12 +571,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "BTC/USD",
             "navTitle": "BTC/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -590,12 +591,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "ETH/USD",
             "navTitle": "ETH/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -610,12 +611,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "AUD/USD",
             "navTitle": "AUD/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -630,12 +631,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "EUR/USD",
             "navTitle": "EUR/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -650,12 +651,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "CHF/USD",
             "navTitle": "CHF/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -670,12 +671,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "GBP/USD",
             "navTitle": "GBP/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -690,12 +691,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "JPY/USD",
             "navTitle": "JPY/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -710,12 +711,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "XAG/USD",
             "navTitle": "XAG/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -730,12 +731,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "XAU/USD",
             "navTitle": "XAU/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -750,12 +751,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "LINK/USD",
             "navTitle": "LINK/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         },
@@ -770,12 +771,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "XHV/USD",
             "navTitle": "XHV/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-8,
-                    "decimals": 2
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-8,
+                    decimals: 2
                 },
-                "format": "$ %(value)s"
+                format: "$ %(value)s"
             },
             networkId: "3"
         }
@@ -792,12 +793,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "LRC/USD",
             "navTitle": "LRC/USD",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -812,12 +813,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "LEND/ETH",
             "navTitle": "LEND/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -832,12 +833,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "BTC/ETH",
             "navTitle": "BTC/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -852,12 +853,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "MKR/ETH",
             "navTitle": "MKR/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -872,12 +873,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "MANA/ETH",
             "navTitle": "MANA/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -892,12 +893,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "KNC/ETH",
             "navTitle": "KNC/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -912,12 +913,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "LINK/ETH",
             "navTitle": "LINK/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -932,12 +933,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "USDC/ETH",
             "navTitle": "USDC/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -952,12 +953,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "REP/ETH",
             "navTitle": "REP/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -973,12 +974,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "ZRX/ETH",
             "navTitle": "ZRX/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -993,12 +994,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "BAT/ETH",
             "navTitle": "BAT/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -1013,12 +1014,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "DAI/ETH",
             "navTitle": "DAI/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -1033,12 +1034,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "TUSD/ETH",
             "navTitle": "TUSD/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -1053,12 +1054,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "USDT/ETH",
             "navTitle": "USDT/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -1073,12 +1074,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "BUSD/ETH",
             "navTitle": "BUSD/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -1093,12 +1094,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "SUSD/ETH",
             "navTitle": "SUSD/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         },
@@ -1114,12 +1115,12 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             
             title: "SNX/ETH",
             "navTitle": "SNX/ETH",
-            "answerRenderOptions": {
-                "transform": {
-                    "multiply": 1e-18,
-                    "decimals": 7
+            answerRenderOptions: {
+                transform: {
+                    multiply: 1e-18,
+                    decimals: 7
                 },
-                "format": "Ξ %(value)s"
+                format: "Ξ %(value)s"
             },
             networkId: "3"
         }

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
 import ProtocolView from './ProtocolView'
-import { protocols } from '../../data/data';
+import protocols from '../../data/protocols'
 import { contractsSelector } from '../../store/selectors'
 import { ProtocolTypes } from '../../store/types'
 

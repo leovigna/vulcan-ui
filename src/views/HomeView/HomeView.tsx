@@ -64,9 +64,9 @@ const HomeView = ({ feeds, protocols }: Props) => {
                     <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939', height: 95 }}>Protocols</h1>
                 </Col>
                 {
-                    Object.values(protocols).map(({ description, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
+                    Object.values(protocols).map(({ description, active, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
                         <Col key={idx} lg="3" md="6" xs="12">
-                            <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
+                            <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
                         </Col>)
                 }
             </Row>

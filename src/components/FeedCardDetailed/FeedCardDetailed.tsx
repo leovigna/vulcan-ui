@@ -24,12 +24,12 @@ interface Props {
 }
 
 const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearted, value, feedENS, lastUpdate, nodeCount, address }: Props) => <Card style={{
-    maxWidth: '350px',
-    height: '320px',
+    maxWidth: '300px',
+    height: '270px',
     boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.5)",
     borderRadius: '8px'
 }} >
-    <CardBody>
+    <CardBody className="px-0">
         <Container>
             <Row>
                 <div className="d-flex justify-content-center" style={{ width: '100%' }}>
@@ -65,14 +65,6 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
                     }
                 </Col>
                 <Col sm="12" className="d-flex justify-content-center">
-                    {
-                        address ? <a style={{ color: '#828282', fontStyle: 'italic' }} href={`https://etherscan.com/address/${address}`} target="blank">Etherscan</a> : ''
-                    }
-                </Col>
-                <Col className="py-3" sm="12"></Col>
-            </Row>
-            <Row>
-                <Col sm="12" className="d-flex justify-content-center">
                     <Button onClick={handleClickViewButton} style={{
                         width: 160,
                         height: 48,
@@ -89,6 +81,11 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
                     }}>
                         View
                             </Button>
+                </Col>
+                <Col sm="12" className="d-flex py-2 justify-content-center">
+                    {
+                        address ? <a style={{ color: '#828282', fontStyle: 'italic' }} href={`https://etherscan.com/address/${address}`} target="blank">Etherscan Contract</a> : ''
+                    }
                 </Col>
             </Row>
         </Container>
