@@ -7,7 +7,8 @@ import drizzleOptions from "../drizzleOptions"
 //import { loadLocalStorage, saveLocalStorage } from "./localstorage"
 import { actionDebugger, eventAddNotifier, contractAddNotifier } from "./middleware"
 import { transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga } from "./sagas";
-import { ormReducer } from './reducers';
+import { ormReducer, networkIdReducer } from './reducers';
+import { networksReducer } from './network/reducers'
 
 const persistedWhitelist = []
 /*
@@ -25,6 +26,8 @@ const appReducers = {
     persisted: persistReducer(persistConfig, combineReducers({
         orm: ormReducer
     })),
+    networks: networksReducer,
+    networkId: networkIdReducer
 }
 
 const appSagas = [transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga]

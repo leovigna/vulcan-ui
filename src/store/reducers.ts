@@ -6,13 +6,18 @@ import {
     BlockTypes,
     ContractTypes,
 } from "./types"
-
+import { networkIdReducer, networksReducer } from './network/reducers'
 import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
 
 type Action = {
     type: string,
     payload: any,
     [key: string]: any
+}
+
+export {
+    networksReducer,
+    networkIdReducer
 }
 
 export function ormReducer(dbState: any, action: Action) {

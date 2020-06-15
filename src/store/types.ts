@@ -6,6 +6,7 @@ import * as DrizzleTypes from './drizzle/types';
 import * as ProtocolTypes from './protocol/types';
 import * as FeedTypes from './feed/types';
 import * as NodeTypes from './node/types';
+import * as NetworkTypes from './network/types';
 
 export interface Point<X, Y> {
     x: X,
@@ -13,6 +14,7 @@ export interface Point<X, Y> {
 }
 
 export {
+    NetworkTypes,
     NodeTypes,
     FeedTypes,
     ProtocolTypes,
