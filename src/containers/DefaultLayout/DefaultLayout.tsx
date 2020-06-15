@@ -3,10 +3,7 @@
 import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
-import { Container } from 'reactstrap';
-
 import {
-    AppAside,
     AppFooter,
     AppHeader,
     AppSidebar,
@@ -16,23 +13,22 @@ import {
     AppSidebarMinimizer,
     AppBreadcrumb2 as AppBreadcrumb,
     AppSidebarNav2 as AppSidebarNav,
+} from '@coreui/react2';
+
+import {
+    CContainer as Container
 } from '@coreui/react';
+
 // sidebar nav config
 import navCreate from '../../_nav';
 // routes config
 import routes from '../../routes';
 import { connect } from "react-redux"
 
-import styles from './AppHeader.scss'
-
 import { categories } from '../../data/contracts';
 import { contractsSelector, customContractsSelector } from '../../store/selectors'
 
-
-import classNames from 'classnames/bind'
-const cx = classNames.bind(styles)
-
-const DefaultAside = React.lazy(() => import('./DefaultAside'));
+//const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
@@ -42,11 +38,6 @@ class DefaultLayout extends Component {
     }
 
     loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
-
-    signOut(e) {
-        e.preventDefault();
-        this.props.history.push('/login');
-    }
 
     render() {
         //Custom
@@ -60,18 +51,18 @@ class DefaultLayout extends Component {
 
         return (
             <div className="app">
-                <div className={cx('app-header')}>
+                <div className='app-header'>
                     <AppHeader fixed>
                         <Suspense fallback={this.loading()}>
-                            <DefaultHeader onLogout={e => this.signOut(e)} />
+                            <DefaultHeader />
                         </Suspense>
                     </AppHeader>
                 </div>
                 <div className="app-body">
-                    <AppSidebar className={cx('app-sidebar')} fixed display="lg">
+                    <AppSidebar fixed display="lg">
                         <AppSidebarHeader />
                         <AppSidebarForm />
-                        <Suspense>
+                        <Suspense fallback={this.loading()}>
                             <AppSidebarNav navConfig={navigation} {...this.props} router={router} />
                         </Suspense>
                         <AppSidebarFooter />
@@ -98,11 +89,14 @@ class DefaultLayout extends Component {
                             </Suspense>
                         </Container>
                     </main>
-                    <AppAside fixed>
+                    {/*
+                    <AppSidebar className="c-sidebar-right" fixed>
                         <Suspense fallback={this.loading()}>
                             <DefaultAside />
                         </Suspense>
-                    </AppAside>
+                    </AppSidebar>
+                    */
+                    }
                 </div>
                 <AppFooter>
                     <Suspense fallback={this.loading()}>

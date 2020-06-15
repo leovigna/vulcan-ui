@@ -1,4 +1,3 @@
-import { Contract } from '../../orm/models'
 import {
     CREATE_CONTRACT,
     SETUP_CONTRACT,

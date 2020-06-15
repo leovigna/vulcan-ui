@@ -11,7 +11,10 @@ export interface CreateTransactionAction {
     payload: CreateTransactionActionInput
 }
 
-export type FetchTransactionActionInput = Transaction
+export type FetchTransactionActionInput = {
+    transactionHash: string,
+    networkId: string | number
+}
 export interface FetchTransactionAction {
     type: typeof FETCH_TRANSACTION
     payload: FetchTransactionActionInput

@@ -33,6 +33,15 @@ npm run build
 ```
 For more info see `REACT.md`.
 
+## S3 Deployment
+https://github.com/sumn2u/react-deploy-cli
+
+```
+react-deploy setup
+# Add config options to deploy.js file
+react-deploy deploy development
+```
+
 ## Contributing
 To contribute code, feel free to fork this repo. Feel free to contact us if you have any questions or would like to collaborate.
 

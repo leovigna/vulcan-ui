@@ -3,10 +3,10 @@
 
 import React, { useState, useEffect, memo } from 'react';
 import {
-    Card,
-    CardBody,
-    CardHeader
-} from 'reactstrap';
+    CCard as Card,
+    CCardHeader as CardHeader,
+    CCardBody as CardBody
+} from '@coreui/react';
 
 //Drizzle
 import { connect } from "react-redux"
@@ -17,7 +17,6 @@ import { web3ForNetworkId } from '../../web3global'
 import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
 import {
     graphDataSelector,
-    contractByNameSelector,
     makeEventIndexedFilterSelector
 } from "../../store/selectors"
 
@@ -123,7 +122,7 @@ const mapStateToProps = (state, { contract }) => {
     const AnswerUpdatedIndexId = indexAddressEvent(AnswerUpdatedIndexData)
 
     return {
-        contractState: contractByNameSelector(state, contract),
+        contractState: {},
         responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
         graphData: graphDataSelector(state, AnswerUpdatedIndexId)
     }

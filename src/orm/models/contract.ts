@@ -9,7 +9,8 @@ interface Contract {
     title: string,
     count: number,
     address: string,
-    path: string,
+    name: string,
+    protocol: string,
     answerRenderOptions: any,
     events: string[],
     abi: object,
@@ -58,6 +59,8 @@ Contract.modelName = 'Contract';
 
 // Declare your related fields.
 Contract.fields = {
+    name: attr(),
+    protocol: attr(),
     title: attr(),
     count: attr(),
     address: attr(),
@@ -66,7 +69,7 @@ Contract.fields = {
     networkId: attr(),
     abi: attr(),
     events: attr(),
-    updated: attr()
+    updated: attr(),
 };
 
 
