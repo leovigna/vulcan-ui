@@ -1,7 +1,6 @@
 import { FeedTypes } from '../store/types'
 
-export const contracts: { [key: string]: [FeedTypes.Feed] } = {
-    "usd": [
+export const contracts: Array<FeedTypes.Feed> = [
         {
             name: "btc-usd",
             protocol: "chainlink",
@@ -143,9 +142,7 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
                 format: "$ %(value)s"
             },
             networkId: "1"
-        }
-    ],
-    "eth": [
+        },
         {
             protocol: "chainlink",
             name: "lrc-eth",
@@ -369,9 +366,7 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
                 format: "Ξ %(value)s"
             },
             networkId: "1"
-        }
-    ],
-    "markets": [
+        },
         {
             protocol: "chainlink",
             name: "ftse",
@@ -404,7 +399,1547 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             networkId: "1",
             "historyRange": 50
         },
-    ],
+        {
+            "protocol": "chainlink",
+            "name": "ampl-eth",
+            "title": "AMPL/ETH",
+            "address": "0x9a38CdeFd74d72601a6B997024C491Ef7314E11D",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "aud-usd",
+            "title": "AUD/USD",
+            "address": "0x1c621Aab85F7879690B5407404A097068770b59a",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "bat-eth",
+            "title": "BAT/ETH",
+            "address": "0xAfd8186C962daf599f171B8600f3e19Af7B52c92",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "bat-usd",
+            "title": "BAT/USD",
+            "address": "0x0237f6c4ba705d0352a1a404e7608adddf479570",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "bnb-usd",
+            "title": "BNB/USD",
+            "address": "0x5959AFEE59d3D28bbE5995B506ee17B305096E48",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "bnt-usd",
+            "title": "BNT/USD",
+            "address": "0xed325b49944fB2042204F80B205245D083e4bf01",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "btc-eth",
+            "title": "BTC/ETH",
+            "address": "0x5b8B87A0abA4be247e660B0e0143bB30Cdf566AF",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "btc-usd",
+            "title": "BTC/USD",
+            "address": "0x882906a758207FeA9F21e0bb7d2f24E561bd0981",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "busd-eth",
+            "title": "BUSD/ETH",
+            "address": "0x0A32D96Ff131cd5c3E0E5AAB645BF009Eda61564",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "chf-usd",
+            "title": "CHF/USD",
+            "address": "0xD49c81796BccAbb5cd804f9d186B5E00E9Ac21fF",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "dai-eth",
+            "title": "DAI/ETH",
+            "address": "0x64b8e49baDeD7BFb2FD5A9235B2440C0eE02971B",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "dai-usd",
+            "title": "DAI/USD",
+            "address": "0x017d3880ee52e23dbc5bd8a855d51beae41f5cbb",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "eth-usd",
+            "title": "ETH/USD",
+            "address": "0x8468b2bDCE073A157E560AA4D9CcF6dB1DB98507",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "eur-usd",
+            "title": "EUR/USD",
+            "address": "0xe95feDE497d0c02a2DBc8e20C5E8bFFE9339F03a",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "ftm-eth",
+            "title": "FTM/ETH",
+            "address": "0xEFAaDC0dEe4Ff59788D85dD79e8B7576C3Fcc910",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "gbp-usd",
+            "title": "GBP/USD",
+            "address": "0xa2Dbd50FD09B9572a8A37ED4C2aEE4093A4b3Ef7",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "jpy-usd",
+            "title": "JPY/USD",
+            "address": "0x8eAeBAF0eA3BC2a160b461703AF409d074CDEC6e",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "knc-eth",
+            "title": "KNC/ETH",
+            "address": "0x19D97CEb36624a31d827032D8216DD2eB15e9845",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "lend-eth",
+            "title": "LEND/ETH",
+            "address": "0xf7b4834fe443d1E04D757b4b089b35F5A90F2847",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "link-eth",
+            "title": "LINK/ETH",
+            "address": "0xb8c99b98913bE2ca4899CdcaF33a3e519C20EeEc",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "link-usd",
+            "title": "LINK/USD",
+            "address": "0x060b38B197fE60cA5F36EA94452DA7F1bc3c7823",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "link-usdt",
+            "title": "LINK/USDT",
+            "address": "0xc21c178fE75aAd2017DA25071c54462e26d8face",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "lrc-eth",
+            "title": "LRC/ETH",
+            "address": "0xc85aA7D7A7EDfaD1D7d3dC41926B732e5C9C2CBA",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "ltc-usd",
+            "title": "LTC/USD",
+            "address": "0xDEC6bA5a1025117B07596A88CBb2F45dDfEdA250",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "mana-eth",
+            "title": "MANA/ETH",
+            "address": "0xDab909dedB72573c626481fC98CEE1152b81DEC2",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "mkr-eth",
+            "title": "MKR/ETH",
+            "address": "0x811B1f727F8F4aE899774B568d2e72916D91F392",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "mkr-usd",
+            "title": "MKR/USD",
+            "address": "0x4955fec0BCD97d9d83Eef48052E8ff49aeD521a4",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "oil-usd",
+            "title": "Oil/USD",
+            "address": "0x6ac3AE2492b101D349f288e3A02963157778D7de",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "rep-eth",
+            "title": "REP/ETH",
+            "address": "0xa949eE9bA80c0F381481f2eaB538bC5547a5aC67",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "rep-usd",
+            "title": "REP/USD",
+            "address": "0xaaf825b7a1e833f2b79975108a030c76756fdc1a",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "scex-usd (exchange index)",
+            "title": "sCEX/USD (Exchange index)",
+            "address": "0x16745151a140035208a5B2Ca0441b375Ece29899",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "sdefi-usd (exchange index)",
+            "title": "sDEFI/USD (Exchange index)",
+            "address": "0x71199172Af06b51c7594Afb0ea9C2D2D3ef13eb8",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "snx-eth",
+            "title": "SNX/ETH",
+            "address": "0xA95674a8Ed9aa9D2E445eb0024a9aa05ab44f6bf",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "snx-usd",
+            "title": "SNX/USD",
+            "address": "0xa3c93DC958511dcD2C85a6CC8B007E507Fb3Bb79",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "susd-eth",
+            "title": "SUSD/ETH",
+            "address": "0xe054B4AeE7AC7645642DD52f1C892Ff0128c98f0",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "sxp-usd",
+            "title": "SXP/USD",
+            "address": "0x41799e0b9270a461c995e60462740a200ac6c77b",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "trx-usd",
+            "title": "TRX/USD",
+            "address": "0xeAb37EeEbE57C9E0d734703DAEb8E43373DD079E",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "tusd-eth",
+            "title": "TUSD/ETH",
+            "address": "0x523AC85618DF56E940534443125eF16DAf785620",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "usdc-eth",
+            "title": "USDC/ETH",
+            "address": "0xE1480303DDe539E2c241bdC527649F37c9cBef7d",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "usdc-usd",
+            "title": "USDC/USD",
+            "address": "0x2384742359a5b178bd32a858213680355888c88b",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "usdt-eth",
+            "title": "USDT/ETH",
+            "address": "0xC08fe0C4D97ccda6B40649c6dA621761b628c288",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xag-usd",
+            "title": "XAG/USD",
+            "address": "0x42dE9E69B3a5a45600a11D3f37768dffA2846A8A",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xau-usd",
+            "title": "XAU/USD",
+            "address": "0x2419A5aA4A82a6A18cA9b20Ea2934d7467E6a2cf",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xhv-usd",
+            "title": "XHV/USD",
+            "address": "0xf8756803b0c1D2dE9ea3d1ED507e4a15e22bd09d",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xrp-usd",
+            "title": "XRP/USD",
+            "address": "0x9d3425CE0F3766a949e622E535Ce16EDF5098448",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xtz-usd",
+            "title": "XTZ/USD",
+            "address": "0x0256Fb6c5D26bb867571964A43a300E1770CF038",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "zrx-eth",
+            "title": "ZRX/ETH",
+            "address": "0x1d0052E4ae5b4AE4563cBAc50Edc3627Ca0460d7",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "zrx-usd",
+            "title": "ZRX/USD",
+            "address": "0x4236076ba45fffa00678f0008ab76ac79222d7fe",
+            "networkId": "3",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "aud-usd",
+            "title": "AUD/USD",
+            "address": "0xaB1311577E6B96943eA2eB20B7f6C43844436D81",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "bat-usd",
+            "title": "BAT/USD",
+            "address": "0x326C977E6efc84E512bB9C30f76E30c160eD06FB",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "bnb-usd",
+            "title": "BNB/USD",
+            "address": "0xbAC6B2702AbF4e402cF6f309eAB9B372A5d86e16",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "btc-usd",
+            "title": "BTC/USD",
+            "address": "0x5498BB86BC934c8D34FDA08E81D444153d0D06aD",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "chf-usd",
+            "title": "CHF/USD",
+            "address": "0xfFa1969B84670051779aa3aCD2dc350b810D361e",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "dai-usd",
+            "title": "DAI/USD",
+            "address": "0x572dDec9087154dC5dfBB1546Bb62713147e0Ab0",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "eth-usd",
+            "title": "ETH/USD",
+            "address": "0x0bF4e7bf3e1f6D6Dc29AA516A33134985cC3A5aA",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "eur-usd",
+            "title": "EUR/USD",
+            "address": "0x476d86Dfad0AEa4e33Cc728cd5aF0093f059368C",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "gbp-usd",
+            "title": "GBP/USD",
+            "address": "0x8653242ADcBfD3A2580d81143F2a07c91525F96f",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "jpy-usd",
+            "title": "JPY/USD",
+            "address": "0x5a7a8F877114bc15C3905D33f3733efe11b8eCb5",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "link-usd",
+            "title": "LINK/USD",
+            "address": "0x0853E36EeAd0eAA08D61E94237168696383869DD",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "ltc-usd",
+            "title": "LTC/USD",
+            "address": "0x2b481Dc923Aa050E009113Dca8dcb0daB4B68cDF",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "oil-usd",
+            "title": "Oil/USD",
+            "address": "0x52Cd2875EF48aE1f672C6A38fd64B803C1a6bc63",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "rep-usd",
+            "title": "REP/USD",
+            "address": "0xD8fB78dA76c7c9c8c1889EeA6b53967D87BF0A79",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "scex-usd (exchange index)",
+            "title": "sCEX/USD (Exchange index)",
+            "address": "0xf1723d41573928d49E18525Cc6f4b4b1A55840DC",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "sdefi-usd (exchange index)",
+            "title": "sDEFI/USD (Exchange index)",
+            "address": "0x886C163df214847f90135630BabC3891F581939b",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "snx-usd",
+            "title": "SNX/USD",
+            "address": "0x04C50558B5D0ED6cF3210bC14FEa43537E8685ad",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "trx-usd",
+            "title": "TRX/USD",
+            "address": "0x613265f5A86228c940ca055aEF03403b2DE03f0b",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "usdc-usd",
+            "title": "USDC/USD",
+            "address": "0x50390D95efcad051B78498A3D7BB3ff8Cd3dbbd7",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xag-usd",
+            "title": "XAG/USD",
+            "address": "0x43953507c1c393efCd9502AB275D6aEa6aE75aFd",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xau-usd",
+            "title": "XAU/USD",
+            "address": "0xE16f5B1F03D1db374091ecB915Dfce0b5E1C432c",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xrp-usd",
+            "title": "XRP/USD",
+            "address": "0x200F1f9C34a6e643c14a5826301b83dB7fF93D0F",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xtz-usd",
+            "title": "XTZ/USD",
+            "address": "0xBDea0eC6C994298c61Be377Bbd7E4F2a31547158",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "zrx-usd",
+            "title": "ZRX/USD",
+            "address": "0x4b387f15D803eB6635C37A2B51e0E487c11C3b79",
+            "networkId": "4",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "ampl-eth",
+            "title": "AMPL/ETH",
+            "address": "0x4b387f15D803eB6635C37A2B51e0E487c11C3b79",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "aud-usd",
+            "title": "AUD/USD",
+            "address": "0xFD4767F2136F277ddd36b563504797C46a2eFF3B",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "bat-eth",
+            "title": "BAT/ETH",
+            "address": "0x2c8d01771CCDca47c103194C5860dbEA2fE61626",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "bat-usd",
+            "title": "BAT/USD",
+            "address": "0x0853E36EeAd0eAA08D61E94237168696383869DD",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "bnb-usd",
+            "title": "BNB/USD",
+            "address": "0xc3006264638bBB3b8DE19E1296e7933EAC04f65b",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "btc-eth",
+            "title": "BTC/ETH",
+            "address": "0x33E5085E92f5b53E9A193E28ad2f76bF210550BB",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "btc-usd",
+            "title": "BTC/USD",
+            "address": "0x2445F2466898565374167859Ae5e3a231e48BB41",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "busd-eth",
+            "title": "BUSD/ETH",
+            "address": "0x63294A05C9a81b1A40CAD3f2ff30617111630393",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "chf-usd",
+            "title": "CHF/USD",
+            "address": "0x3a982Ed122bF8e2bee035fCc6CAec894823E0129",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "dai-eth",
+            "title": "DAI/ETH",
+            "address": "0x6F47077D3B6645Cb6fb7A29D280277EC1e5fFD90",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "dai-usd",
+            "title": "DAI/USD",
+            "address": "0x7418A1a6E7dA5228c8DcC0eFfd0B68bE27695E9f",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "eth-usd",
+            "title": "ETH/USD",
+            "address": "0xD21912D8762078598283B14cbA40Cb4bFCb87581",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "eur-usd",
+            "title": "EUR/USD",
+            "address": "0xf23CCdA8333f658c43E7fC19aa00f6F5722eB225",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "gbp-usd",
+            "title": "GBP/USD",
+            "address": "0xbcf04560239e5A0D8e497E8215288fF8D25C026e",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "jpy-usd",
+            "title": "JPY/USD",
+            "address": "0xcd93a652e731Bb38eA9Efc5fEbCf977EDa2a01f7",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "knc-eth",
+            "title": "KNC/ETH",
+            "address": "0x0893AaF58f62279909F9F6FF2E5642f53342e77F",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "lend-eth",
+            "title": "LEND/ETH",
+            "address": "0xdCE38940264DfbC01aD1486c21764948e511947e",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "link-eth",
+            "title": "LINK/ETH",
+            "address": "0xf1e71Afd1459C05A2F898502C4025be755aa844A",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "link-usd",
+            "title": "LINK/USD",
+            "address": "0x326C977E6efc84E512bB9C30f76E30c160eD06FB",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "ltc-usd",
+            "title": "LTC/USD",
+            "address": "0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "mana-eth",
+            "title": "MANA/ETH",
+            "address": "0x3c30c5c415B2410326297F0f65f5Cbb32f3aefCc",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "mkr-eth",
+            "title": "MKR/ETH",
+            "address": "0x14D7714eC44F44ECD0098B39e642b246fB2c38D0",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "oil-usd",
+            "title": "Oil/USD",
+            "address": "0x015A38DD4E7C392e5A971c7e436F3bD6D77E645A",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "rep-eth",
+            "title": "REP/ETH",
+            "address": "0x09F4A94F44c29d4967C761bBdB89f5bD3E2c09E6",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "scex-usd (exchange index)",
+            "title": "sCEX/USD (Exchange index)",
+            "address": "0xA602bC9609D82Da593aB072974BB132BE869B7a7",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "sdefi-usd (exchange index)",
+            "title": "sDEFI/USD (Exchange index)",
+            "address": "0x426eD6e87FAFa5A4201E5ca00435EFaBA99fFdB1",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "snx-eth",
+            "title": "SNX/ETH",
+            "address": "0x775E76cca1B5bc903c9a8C6f77416A35E5744664",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "snx-usd",
+            "title": "SNX/USD",
+            "address": "0xF2C6D3B7d2435D28a2DC973f320ECF581C92a41F",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "susd-eth",
+            "title": "SUSD/ETH",
+            "address": "0xa353F8b083F7575cfec443b5ad585D42f652E9F7",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "trx-usd",
+            "title": "TRX/USD",
+            "address": "0xc9FBeC53445C3C893aD032B878405E4064f69403",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "tusd-eth",
+            "title": "TUSD/ETH",
+            "address": "0x02424c54D78D48179Fd12ebFfB11c16f9CA984Ad",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "usdc-eth",
+            "title": "USDC/ETH",
+            "address": "0x672c1C0d1130912D83664011E7960a42E8cA05D5",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "usdt-eth",
+            "title": "USDT/ETH",
+            "address": "0xCC833A6522721B3252e7578c5BCAF65738B75Fc3",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xag-usd",
+            "title": "XAG/USD",
+            "address": "0x2447890E8b99f180e7BfA3386342CeA8EeDC64A3",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xau-usd",
+            "title": "XAU/USD",
+            "address": "0xF1302340da93EdEF6DA03C66bc52F75A956e482C",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xrp-usd",
+            "title": "XRP/USD",
+            "address": "0xaF5F268198929283927a9a427C62772D0d9dFc00",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "xtz-usd",
+            "title": "XTZ/USD",
+            "address": "0xDbdB32b0623EEFB75D8D269A99e54512A4683279",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-8,
+                    "decimals": 2
+                },
+                "format": "$ %(value)s"
+            }
+        },
+        {
+            "protocol": "chainlink",
+            "name": "zrx-eth",
+            "title": "ZRX/ETH",
+            "address": "0x2636cfdDB457a6C7A7D60A439F1E5a5a0C3d9c65",
+            "networkId": "42",
+            "answerRenderOptions": {
+                "transform": {
+                    "multiply": 1e-18,
+                    "decimals": 7
+                },
+                "format": "Ξ %(value)s"
+            }
+        }
+    ]
     /*
     "vulcan": [
         {
@@ -1126,4 +2661,3 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
         }
     ]
     */
-}

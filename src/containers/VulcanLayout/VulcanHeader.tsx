@@ -1,15 +1,14 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0 */
 
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
+import NetworkPicker from '../../components/NetworkPicker'
 import vulcan from "../../assets/img/brand/vulcanwhite.png"
 import triangledown from "../../assets/img/triangledown.svg"
 import externalLink from "../../assets/img/icons/external_link.png"
 
 import {
     CNav as Nav,
-    CNavItem as NavItem,
     CCol as Col,
     CRow as Row,
     CContainer as Container
@@ -31,7 +30,7 @@ class DefaultHeader extends Component {
                 <div style={{ color: '#FFFFFF', backgroundColor: '#002C69' }} >
                     <Container>
                         <Row>
-                            <Col xs={12} sm={8} md={8} lg={8}>
+                            <Col xs={12} sm={10} md={10} lg={10}>
                                 <Nav className="navbar navbar-expand-lg navbar-dark static-top ">
                                     <a className="navbar-brand" href="#">
                                         <img src={vulcan} alt="" />
@@ -56,11 +55,13 @@ class DefaultHeader extends Component {
                                         <img src={externalLink} /></a>
                                             </li> */}
                                         </ul>
+                                        <NetworkPicker />
                                         <form className="form-inline my-lg-0">
                                             <a href={process.env.REACT_APP_CONTACT_URL} className="btn gettouch my-sm-0" type="submit"
                                                 target="_blank">Contact
                                     Us</a>
                                         </form>
+
                                     </div>
                                 </Nav>
                             </Col>
