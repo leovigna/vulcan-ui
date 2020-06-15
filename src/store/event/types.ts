@@ -1,4 +1,4 @@
-import { Event, EventByContractTypeIndex } from '../../orm/models'
+import { Event, EventByContractTypeIndex } from '../orm/models'
 
 export const FETCH_EVENT = 'ORM/FETCH_EVENT'
 export const CREATE_EVENT = 'ORM/CREATE_EVENT'

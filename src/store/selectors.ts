@@ -4,10 +4,10 @@ import createCachedSelector from 're-reselect';
 import hash from 'object-hash'
 import moment from 'moment';
 
-import orm from '../orm';
-import { Contract, Feed, Event, Block, Transaction, Network } from '../orm/models';
+import orm from './orm';
+import { Contract, Feed, Event, Block, Transaction, Network } from './orm/models';
 import { Point } from '../store/types'
-import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
+import { indexAddressEvent } from "./orm/models/eventByContractTypeIndex"
 import { create } from 'domain';
 
 interface State {

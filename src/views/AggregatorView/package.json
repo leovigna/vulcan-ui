@@ -1,6 +1,0 @@
-{
-    "name": "AggregatorView",
-    "version": "0.0.0",
-    "private": true,
-    "main": "./AggregatorView.tsx"
-}

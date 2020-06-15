@@ -1,4 +1,4 @@
-import orm from '../orm';
+import orm from './orm';
 
 import {
     EventTypes,
@@ -7,7 +7,7 @@ import {
     ContractTypes,
 } from "./types"
 import { networkIdReducer, networksReducer } from './network/reducers'
-import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
+import { indexAddressEvent } from "./orm/models/eventByContractTypeIndex"
 
 type Action = {
     type: string,
