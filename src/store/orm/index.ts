@@ -1,7 +1,16 @@
 // orm.js
 import { ORM } from 'redux-orm';
-import { Event, Transaction, Block, EventByContractTypeIndex, Contract, Feed } from './models';
-import { EnumValueDefinitionNode } from 'graphql';
+import { defaultUpdater } from 'redux-orm/lib/redux';
+
+import {
+    Event,
+    Transaction,
+    Block,
+    EventByContractTypeIndex,
+    Contract,
+    Feed,
+    ContractFavorite
+} from './models';
 
 interface VulcanORM extends ORM {
     Event: Event,
@@ -9,12 +18,13 @@ interface VulcanORM extends ORM {
     Block: Block,
     EventByContractTypeIndex: EventByContractTypeIndex,
     Contract: Contract,
+    ContractFavorite: ContractFavorite,
     Feed: Feed
 }
 
 const orm: VulcanORM = new ORM({
-    stateSelector: state => state.persisted.orm,
+    stateSelector: state => state.persisted.orm
 });
-orm.register(Event, Transaction, Block, EventByContractTypeIndex, Contract, Feed);
+orm.register(Event, Transaction, Block, EventByContractTypeIndex, Contract, ContractFavorite, Feed);
 
 export default orm;

@@ -2,16 +2,20 @@ import { connect } from "react-redux"
 import { withParsedFeeds } from '../../hoc'
 import HomeView from './HomeView'
 import protocols from '../../data/protocols'
-import { contractsSelector, contractsByFilterSelector, contractStateSelector, networkIdSelector } from '../../store/selectors'
+import { contractFavoritesSelector, contractsByFilterSelector, contractStateSelector, networkIdSelector } from '../../store/selectors'
 
 const mapStateToProps = (state: any) => {
     const networkId = networkIdSelector(state)
+    const contractFavorites = new Set(contractFavoritesSelector(state).filter((n) => n.networkId === networkId && n.favorite).map((n) => n.address));
+    const feeds = contractsByFilterSelector(state, { networkId })
+    const favoriteFeeds = feeds.filter((f) => contractFavorites.has(f.address))
 
     return {
         networkId,
+        favorites: contractFavorites,
         contractStates: contractStateSelector(state),
-        //feeds: contractsSelector(state),
-        feeds: contractsByFilterSelector(state, { networkId }),
+        feeds,
+        favoriteFeeds,
         protocols
     }
 }
