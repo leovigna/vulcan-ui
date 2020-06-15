@@ -35,7 +35,7 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
                 <div className="d-flex justify-content-center" style={{ width: '100%' }}>
                     <img style={{ width: 37, objectFit: 'contain' }} src={protocolImg} alt=''></img>
                     <div style={{ width: 155, textAlign: 'center', fontSize: 27, fontWeight: 'bold' }}>{feedName}</div>
-                    {//<Button style={{ padding: 0 }}><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
+                    {<Button style={{ padding: 0 }}><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
                     }
                 </div>
             </Row>
