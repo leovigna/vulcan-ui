@@ -5,19 +5,26 @@ import hash from 'object-hash'
 import moment from 'moment';
 
 import orm from '../orm';
-import { Contract, Feed, Event, Block, Transaction } from '../orm/models';
+import { Contract, Feed, Event, Block, Transaction, Network } from '../orm/models';
 import { Point } from '../store/types'
 import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
+import { create } from 'domain';
 
 interface State {
     contracts: {
         [key: string]: Contract
-    }
+    },
+    networks: [Network]
+    networkId: Network["id"]
 }
 export const emptyArray = []
 export const emptyObj = {}
 
-//Other selectors
+// Network Selectors
+export const networksSelector = (state: State) => state.networks;
+export const networkIdSelector = (state: State) => state.networkId;
+
+// Drizzle State Selectors
 export const contractStateSelector = (state: State) => state.contracts;
 export const contractStateByAddressSelector: (state: State, address: string) => Contract = createCachedSelector(
     contractStateSelector,
@@ -28,11 +35,45 @@ export const contractStateByAddressSelector: (state: State, address: string) => 
 );
 
 //ORM Selectors
-export const contractById: (state: any, id: string) => Contract = ormCreateSelector(orm.Contract)
+export const contractsSelector = ormCreateSelector(
+    orm,
+    (session) => {
+        const contracts = session.Contract.all().toModelArray().map(item => {
+            const { ref } = item;
+            return {
+                ...ref,
+                answerRender: item.answerRender.bind(item),
+                answerTransform: item.answerTransform.bind(item),
+            };
+        });
+
+        if (contracts.length == 0) return emptyArray;
+        return contracts;
+    }
+);
 export const eventsSelector: (state: any, id: string) => Event = ormCreateSelector(orm.Event)
 export const transactionsSelector: (state: any, id: string) => Transaction = ormCreateSelector(orm.Transaction)
 export const blocksSelector: (state: any, id: string) => Block = ormCreateSelector(orm.Block)
 
+export const contractsByFilterSelector: (state: any, filter: any) => [Contract] = ormCreateSelector(
+    orm,
+    (_session_, filter) => filter,
+    (session, filter) => {
+        const contracts = session.Contract.filter(filter).toModelArray().map((item: Contract) => {
+            const { ref } = item;
+            return {
+                ...ref,
+                answerRender: item.answerRender.bind(item),
+                answerTransform: item.answerTransform.bind(item),
+            };
+        });
+
+        if (contracts.length == 0) return emptyArray;
+        return contracts;
+    }
+);
+
+export const contractById: (state: any, id: string) => Contract = ormCreateSelector(orm.Contract)
 export const contractByFilterSelector: (state: any, filter: any) => Contract = ormCreateSelector(
     orm,
     (_session_, filter) => filter,
@@ -49,29 +90,6 @@ export const contractByFilterSelector: (state: any, filter: any) => Contract = o
 );
 
 
-
-export const anyCacheSelector = createCachedSelector(
-    (...args) => args[args.length - 1],
-    (argLast) => argLast)
-    ((...args) => hash(args[args.length - 1]))
-
-
-export const contractsSelector = ormCreateSelector(
-    orm,
-    (session) => {
-        const indexes = session.Contract.all().toModelArray().map(item => {
-            const { ref } = item;
-            return {
-                ...ref,
-                answerRender: item.answerRender.bind(item),
-                answerTransform: item.answerTransform.bind(item),
-            };
-        });
-
-        if (indexes.length == 0) return emptyArray;
-        return indexes;
-    }
-);
 
 export const eventByContractTypeIndexSelector = ormCreateSelector(
     orm,

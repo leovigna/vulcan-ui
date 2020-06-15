@@ -1,21 +1,11 @@
-import { Network, SET_NETWORK_ID } from './types'
+import { SET_NETWORK_ID } from './types'
+import networks from '../../data/networks'
 
 type Action = {
     type: string,
     payload: any,
     [key: string]: any
 }
-
-const networks: Array<Network> = [
-    {
-        id: '1',
-        name: 'Mainnet'
-    },
-    {
-        id: '3',
-        name: 'Ropsten'
-    }
-]
 
 export function networksReducer(state = networks, action: Action) {
     return state;

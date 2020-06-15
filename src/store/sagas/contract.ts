@@ -55,8 +55,7 @@ function* setupDefaultContractsGraphQLAPI() {
 
 function* setupDefaultContractsJSON() {
     console.debug('JSON update')
-    const allContracts = [].concat.apply([], Object.values(contractsDefault));
-    yield all(allContracts.map((c) => {
+    yield all(contractsDefault.map((c) => {
         const abi = AggregatorABI.compilerOutput.abi
         const events = ["AnswerUpdated", "ResponseReceived"]
 

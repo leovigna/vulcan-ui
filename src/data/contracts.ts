@@ -1,7 +1,6 @@
 import { FeedTypes } from '../store/types'
 
-export const contracts: { [key: string]: [FeedTypes.Feed] } = {
-    "usd": [
+export const contracts: Array<FeedTypes.Feed> = [
         {
             name: "btc-usd",
             protocol: "chainlink",
@@ -143,9 +142,7 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
                 format: "$ %(value)s"
             },
             networkId: "1"
-        }
-    ],
-    "eth": [
+        },
         {
             protocol: "chainlink",
             name: "lrc-eth",
@@ -369,9 +366,7 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
                 format: "Ξ %(value)s"
             },
             networkId: "1"
-        }
-    ],
-    "markets": [
+        },
         {
             protocol: "chainlink",
             name: "ftse",
@@ -403,8 +398,8 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
             },
             networkId: "1",
             "historyRange": 50
-        },
-    ],
+        }
+    ]
     /*
     "vulcan": [
         {
@@ -1126,4 +1121,3 @@ export const contracts: { [key: string]: [FeedTypes.Feed] } = {
         }
     ]
     */
-}
