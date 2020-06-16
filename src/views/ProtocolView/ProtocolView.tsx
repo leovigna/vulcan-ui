@@ -12,9 +12,10 @@ import { ProtocolTypes } from '../../store/types'
 import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
 
 interface Props extends ProtocolTypes.Protocol {
+    setContractFavorite: any
 }
 
-const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, feeds, protocols }: Props) => {
+const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, feeds, protocols, setContractFavorite }: Props) => {
     const [minimizeFeeds, setMinimizeFeeds] = useState(true);
     const toggleMinimizeFeeds = () => setMinimizeFeeds(!minimizeFeeds);
 
@@ -23,9 +24,7 @@ const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, f
 
     return (
         <div style={{ marginTop: -200, paddingTop: 100, paddingBottom: 50, marginRight: -15, marginLeft: -15 }}>
-
             <Container>
-
                 <Row className='py-0'>
                     <Col className="py-2" sm="12">
                         <div className="d-flex justify-content-left">
@@ -63,10 +62,9 @@ const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, f
                         <p style={{ color: '#393939' }}></p>
                     </Col>
                     {
-
                         displayedFeeds.length > 0 ?
                             <>
-                                <FeedCardDetailedGrid feeds={displayedFeeds} protocols={protocols} />
+                                <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} protocols={protocols} />
                                 < Col xs={12}>
                                     <div className="d-flex justify-content-center">
                                         <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>
