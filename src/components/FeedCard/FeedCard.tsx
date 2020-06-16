@@ -14,10 +14,11 @@ interface Props {
     protocolImg: string,
     feedName: string,
     hearted: boolean,
+    onHeartClick: any,
     value: string,
 }
 
-const FeedCard = ({ protocolImg, feedName, hearted, value }: Props) => <Card style={{
+const FeedCard = ({ protocolImg, feedName, hearted, onHeartClick, value }: Props) => <Card style={{
     width: '350px',
     height: '220px',
     boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.5)",
@@ -28,7 +29,7 @@ const FeedCard = ({ protocolImg, feedName, hearted, value }: Props) => <Card sty
             <div className="d-flex justify-content-center" style={{ marginLeft: 56, marginRight: 56 }}>
                 <img style={{ width: 37, objectFit: 'contain' }} src={protocolImg} alt=''></img>
                 <div style={{ width: 155, textAlign: 'center', fontSize: 27, fontWeight: 'bold' }}>{feedName}</div>
-                <Button><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
+                <Button onClick={onHeartClick}><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
             </div>
         </Row>
         <Row>

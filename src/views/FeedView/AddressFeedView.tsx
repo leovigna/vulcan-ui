@@ -8,12 +8,12 @@ import {
     graphDataSelector,
     makeEventIndexedFilterSelector
 } from "../../store/selectors"
-import { indexAddressEvent } from "../../orm/models/eventByContractTypeIndex"
+import { indexAddressEvent } from "../../store/orm/models/eventByContractTypeIndex"
 
 import FeedView from './FeedView'
 import { ContractActions } from "../../store/actions"
 import { ContractTypes, FeedTypes } from "../../store/types"
-import Event from "../../orm/models/event"
+import Event from "../../store/orm/models/event"
 
 
 interface Props {

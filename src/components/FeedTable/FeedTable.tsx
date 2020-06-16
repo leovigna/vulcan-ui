@@ -1,6 +1,6 @@
 import React from 'react';
 import Moment from 'react-moment';
-import EtherScan from "../Aggregator/EtherScan"
+import EtherScan from "../Etherscan/EtherScan"
 import { FeedTypes } from "../../store/types"
 
 interface Props {

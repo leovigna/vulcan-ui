@@ -5,9 +5,6 @@ import {
     CContainer as Container,
     CButton as Button
 } from '@coreui/react'
-import {
-    useHistory
-} from "react-router-dom";
 
 import ProtocolCard from '../../components/ProtocolCard'
 import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
@@ -16,51 +13,33 @@ import FeedCard from '../../components/FeedCard'
 import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
 import ArrowRight from '../../assets/img/icons/arrow_right.svg'
 import { ProtocolTypes, FeedTypes } from '../../store/types'
+import { setContractFavorite } from '../../store/contractFavorite/actions';
 
 interface Props {
     feeds: [FeedTypes.Feed],
+    favoriteFeeds: [FeedTypes.Feed],
     protocols: {
         [key: string]: ProtocolTypes.Protocol
-    }
+    },
+    setContractFavorite: any
 }
 
-const HomeView = ({ feeds, protocols }: Props) => {
+const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Props) => {
     const [minimizeFeeds, setMinimizeFeeds] = useState(true);
-    const toggleMinimizeFeeds = () => setMinimizeFeeds(!minimizeFeeds);
+    const [minimizeFavoriteFeeds, setMinimizeFavoriteFeeds] = useState(true);
 
-    const history = useHistory();
-    const displayedFeeds = minimizeFeeds ? feeds.slice(0, 9) : feeds
+    const toggleMinimizeFeeds = () => setMinimizeFeeds(!minimizeFeeds);
+    const toggleMinimizeFavoriteFeeds = () => setMinimizeFavoriteFeeds(!minimizeFavoriteFeeds);
+
+    const feedsMinimizeCount = 9;
+    const favoriteFeedsMinimizeCount = 3
+    const displayedFeeds = minimizeFeeds ? feeds.slice(0, feedsMinimizeCount) : feeds
+    const displayedFavoriteFeeds = minimizeFavoriteFeeds ? favoriteFeeds.slice(0, favoriteFeedsMinimizeCount) : favoriteFeeds
 
     return (
         <div style={{ marginTop: -200, paddingTop: 100, paddingBottom: 50, marginRight: -15, marginLeft: -15 }}>
 
             <Container>
-                {/*
-                <Row>
-                    <Col xs={12}>
-                        <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite feeds</h1>
-                    </Col>
-                    <Row>
-                        <div className="d-flex flex-column justify-content-center" style={{ width: 0, height: '100%', position: 'relative', left: -70 }}>
-                            <Button><img style={{ height: 30 }} src={ArrowLeft} alt='' /></Button>
-                        </div>
-
-                        {
-                            feeds.filter(obj => obj.hearted).map(({ title: name, value, hearted, protocol }, idx) => {
-                                const feedProtocol = protocols[protocol ? protocol : 'chainlink']
-                                return (<Col key={idx} lg="4" md="6" xs="12">
-                                    <FeedCard protocolImg={feedProtocol.img} feedName={name} value={value} hearted={hearted} />
-                                </Col>)
-                            })
-                        }
-
-                        <div className="d-flex flex-column justify-content-center" style={{ width: 0, height: '100%', position: 'relative', right: 0 }}>
-                            <Button><img style={{ height: 30 }} src={ArrowRight} alt='' /></Button>
-                        </div>
-
-                    </Row>
-                </Row>
-                */}
                 <Row>
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939', height: 95 }}>Protocols</h1>
@@ -68,20 +47,36 @@ const HomeView = ({ feeds, protocols }: Props) => {
                     {
                         Object.values(protocols).map(({ description, active, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
                             <Col key={idx} lg="3" md="6" xs="12">
-                                <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
+                                <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} hearted={false} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
                             </Col>)
+                    }
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite Feeds</h1>
+                    </Col>
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFavoriteFeeds} protocols={protocols} />
+                    {favoriteFeeds.length > favoriteFeedsMinimizeCount ?
+                        <Col xs={12}>
+                            <div className="d-flex justify-content-center">
+                                <Button onClick={toggleMinimizeFavoriteFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFavoriteFeeds ? <>View All ({favoriteFeeds.length - favoriteFeedsMinimizeCount} more)</> : <>Hide</>}</Button>
+                            </div>
+                        </Col>
+                        : ''
                     }
                 </Row>
                 <Row>
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
                     </Col>
-                    <FeedCardDetailedGrid feeds={displayedFeeds} protocols={protocols} />
-                    <Col xs={12}>
-                        <div className="d-flex justify-content-center">
-                            <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>
-                        </div>
-                    </Col>
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} protocols={protocols} />
+                    {feeds.length > feedsMinimizeCount ?
+                        <Col xs={12}>
+                            <div className="d-flex justify-content-center">
+                                <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All ({feeds.length - feedsMinimizeCount} more)</> : <>Hide</>}</Button>
+                            </div>
+                        </Col>
+                        : ''}
                 </Row>
             </Container >
         </div>
@@ -90,6 +85,7 @@ const HomeView = ({ feeds, protocols }: Props) => {
 
 HomeView.defaultProps = {
     feeds: [],
+    favoriteFeeds: [],
     protocols: {}
 }
 

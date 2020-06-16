@@ -4,10 +4,10 @@ import createCachedSelector from 're-reselect';
 import hash from 'object-hash'
 import moment from 'moment';
 
-import orm from '../orm';
-import { Contract, Feed, Event, Block, Transaction, Network } from '../orm/models';
+import orm from './orm';
+import { Contract, ContractFavorite, Feed, Event, Block, Transaction, Network } from './orm/models';
 import { Point } from '../store/types'
-import { indexAddressEvent } from "../orm/models/eventByContractTypeIndex"
+import { indexAddressEvent } from "./orm/models/eventByContractTypeIndex"
 import { create } from 'domain';
 
 interface State {
@@ -51,6 +51,14 @@ export const contractsSelector = ormCreateSelector(
         return contracts;
     }
 );
+
+
+type contractFavoritesSelectorType = ((state: any) => [ContractFavorite]) |
+    ((state: any, id: string) => ContractFavorite) |
+    ((state: any, ids: [string]) => [ContractFavorite])
+
+//@ts-ignore
+export const contractFavoritesSelector: contractFavoritesSelectorType = ormCreateSelector(orm.ContractFavorite)
 export const eventsSelector: (state: any, id: string) => Event = ormCreateSelector(orm.Event)
 export const transactionsSelector: (state: any, id: string) => Transaction = ormCreateSelector(orm.Transaction)
 export const blocksSelector: (state: any, id: string) => Block = ormCreateSelector(orm.Block)

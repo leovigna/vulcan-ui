@@ -74,7 +74,7 @@ class DefaultHeader extends Component {
                         </Row>
                     </Container>
                 </div>
-                <div style={{ height: 0, position: 'relative', zIndex: 1, backgroundColor: '#002C69' }} >
+                <div style={{ height: 0, position: 'relative', backgroundColor: '#002C69' }} >
                     <img style={{ width: '100%', height: 200 }} src={triangledown}></img>
                 </div>
             </>

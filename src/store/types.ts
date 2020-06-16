@@ -1,5 +1,6 @@
 import * as BlockTypes from './block/types';
 import * as ContractTypes from './contract/types';
+import * as ContractFavoriteTypes from './contractFavorite/types';
 import * as EventTypes from './event/types';
 import * as TransactionTypes from './transaction/types';
 import * as DrizzleTypes from './drizzle/types';
@@ -20,6 +21,7 @@ export {
     ProtocolTypes,
     BlockTypes,
     ContractTypes,
+    ContractFavoriteTypes,
     EventTypes,
     TransactionTypes,
     DrizzleTypes
