@@ -31,8 +31,10 @@ const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Prop
     const toggleMinimizeFeeds = () => setMinimizeFeeds(!minimizeFeeds);
     const toggleMinimizeFavoriteFeeds = () => setMinimizeFavoriteFeeds(!minimizeFavoriteFeeds);
 
-    const displayedFeeds = minimizeFeeds ? feeds.slice(0, 9) : feeds
-    const displayedFavoriteFeeds = minimizeFavoriteFeeds ? favoriteFeeds.slice(0, 3) : favoriteFeeds
+    const feedsMinimizeCount = 9;
+    const favoriteFeedsMinimizeCount = 3
+    const displayedFeeds = minimizeFeeds ? feeds.slice(0, feedsMinimizeCount) : feeds
+    const displayedFavoriteFeeds = minimizeFavoriteFeeds ? favoriteFeeds.slice(0, favoriteFeedsMinimizeCount) : favoriteFeeds
 
     return (
         <div style={{ marginTop: -200, paddingTop: 100, paddingBottom: 50, marginRight: -15, marginLeft: -15 }}>
@@ -54,22 +56,27 @@ const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Prop
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite Feeds</h1>
                     </Col>
                     <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFavoriteFeeds} protocols={protocols} />
-                    <Col xs={12}>
-                        <div className="d-flex justify-content-center">
-                            <Button onClick={toggleMinimizeFavoriteFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFavoriteFeeds ? <>View All</> : <>Hide</>}</Button>
-                        </div>
-                    </Col>
+                    {favoriteFeeds.length > favoriteFeedsMinimizeCount ?
+                        <Col xs={12}>
+                            <div className="d-flex justify-content-center">
+                                <Button onClick={toggleMinimizeFavoriteFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFavoriteFeeds ? <>View All ({favoriteFeeds.length - favoriteFeedsMinimizeCount} more)</> : <>Hide</>}</Button>
+                            </div>
+                        </Col>
+                        : ''
+                    }
                 </Row>
                 <Row>
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
                     </Col>
                     <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} protocols={protocols} />
-                    <Col xs={12}>
-                        <div className="d-flex justify-content-center">
-                            <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>
-                        </div>
-                    </Col>
+                    {feeds.length > feedsMinimizeCount ?
+                        <Col xs={12}>
+                            <div className="d-flex justify-content-center">
+                                <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All ({feeds.length - feedsMinimizeCount} more)</> : <>Hide</>}</Button>
+                            </div>
+                        </Col>
+                        : ''}
                 </Row>
             </Container >
         </div>
