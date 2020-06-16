@@ -13,16 +13,18 @@ import FeedCard from '../../components/FeedCard'
 import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
 import ArrowRight from '../../assets/img/icons/arrow_right.svg'
 import { ProtocolTypes, FeedTypes } from '../../store/types'
+import { setContractFavorite } from '../../store/contractFavorite/actions';
 
 interface Props {
     feeds: [FeedTypes.Feed],
     favoriteFeeds: [FeedTypes.Feed],
     protocols: {
         [key: string]: ProtocolTypes.Protocol
-    }
+    },
+    setContractFavorite: any
 }
 
-const HomeView = ({ feeds, favoriteFeeds, protocols }: Props) => {
+const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Props) => {
     const [minimizeFeeds, setMinimizeFeeds] = useState(true);
     const [minimizeFavoriteFeeds, setMinimizeFavoriteFeeds] = useState(true);
 
@@ -51,7 +53,7 @@ const HomeView = ({ feeds, favoriteFeeds, protocols }: Props) => {
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite Feeds</h1>
                     </Col>
-                    <FeedCardDetailedGrid feeds={displayedFavoriteFeeds} protocols={protocols} />
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFavoriteFeeds} protocols={protocols} />
                     <Col xs={12}>
                         <div className="d-flex justify-content-center">
                             <Button onClick={toggleMinimizeFavoriteFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFavoriteFeeds ? <>View All</> : <>Hide</>}</Button>
@@ -62,7 +64,7 @@ const HomeView = ({ feeds, favoriteFeeds, protocols }: Props) => {
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
                     </Col>
-                    <FeedCardDetailedGrid feeds={displayedFeeds} protocols={protocols} />
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} protocols={protocols} />
                     <Col xs={12}>
                         <div className="d-flex justify-content-center">
                             <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>

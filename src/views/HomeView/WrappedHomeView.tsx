@@ -2,6 +2,8 @@ import { connect } from "react-redux"
 import { withParsedFeeds } from '../../hoc'
 import HomeView from './HomeView'
 import protocols from '../../data/protocols'
+import { setContractFavorite } from '../../store/contractFavorite/actions'
+import { SetContractFavoriteActionInput } from '../../store/contractFavorite/types'
 import { contractFavoritesSelector, contractsByFilterSelector, contractStateSelector, networkIdSelector } from '../../store/selectors'
 
 const mapStateToProps = (state: any) => {
@@ -21,4 +23,10 @@ const mapStateToProps = (state: any) => {
     }
 }
 
-export default connect(mapStateToProps)(withParsedFeeds(HomeView));
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setContractFavorite: (payload: SetContractFavoriteActionInput) => dispatch(setContractFavorite(payload))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withParsedFeeds(HomeView));

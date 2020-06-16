@@ -16,6 +16,7 @@ interface Props {
     protocolImg: string,
     feedName: string,
     hearted: boolean,
+    onHeartClick: any,
     value: string,
     feedENS?: string,
     lastUpdate?: string,
@@ -23,7 +24,7 @@ interface Props {
     handleClickViewButton: any
 }
 
-const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearted, value, feedENS, lastUpdate, nodeCount, address }: Props) => <Card style={{
+const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearted, onHeartClick, value, feedENS, lastUpdate, nodeCount, address }: Props) => <Card style={{
     maxWidth: '300px',
     height: '270px',
     boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.5)",
@@ -35,7 +36,7 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
                 <div className="d-flex justify-content-center" style={{ width: '100%' }}>
                     <img style={{ width: 37, objectFit: 'contain' }} src={protocolImg} alt=''></img>
                     <div style={{ width: 155, textAlign: 'center', fontSize: 27, fontWeight: 'bold' }}>{feedName}</div>
-                    {<Button style={{ padding: 0 }}><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
+                    {<Button onClick={onHeartClick} style={{ padding: 0 }}><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
                     }
                 </div>
             </Row>

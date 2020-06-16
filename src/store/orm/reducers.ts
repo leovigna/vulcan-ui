@@ -4,6 +4,7 @@ import {
     TransactionTypes,
     BlockTypes,
     ContractTypes,
+    ContractFavoriteTypes,
 } from "../types"
 import { indexAddressEvent } from "./models/eventByContractTypeIndex"
 
@@ -29,7 +30,7 @@ export function ormReducer(state: any, action: Action) {
 
     // Session-specific Models are available
     // as properties on the Session instance.
-    const { Transaction, Block, Event, EventByContractTypeIndex, Contract } = sess;
+    const { Transaction, Block, Event, EventByContractTypeIndex, Contract, ContractFavorite } = sess;
     let transactionHash;
     let blockNumber;
     switch (action.type) {
@@ -96,7 +97,9 @@ export function ormReducer(state: any, action: Action) {
         case ContractTypes.UPDATE_CONTRACT_EVENTS:
             Contract.withId(action.payload.address).updated = true
             break;
-
+        case ContractFavoriteTypes.SET_CONTRACT_FAVORITE:
+            ContractFavorite.upsert(action.payload)
+            break;
     }
 
     return sess.state;
