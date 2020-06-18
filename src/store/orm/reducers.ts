@@ -5,9 +5,11 @@ import {
     BlockTypes,
     ContractTypes,
     ContractFavoriteTypes,
+    FeedTypes,
 } from "../types"
 import { indexAddressEvent } from "./models/eventByContractTypeIndex"
-
+import { tellorContracts } from '../../data/feeds'
+import favorites from '../../data/favorites'
 
 type Action = {
     type: string,
@@ -17,10 +19,10 @@ type Action = {
 
 const initializeState = (orm) => {
     const state = orm.getEmptyState();
-    const { ContractFavorite } = orm.mutableSession(state);
-    ContractFavorite.create({ address: '0xF79D6aFBb6dA890132F9D7c355e3015f15F3406F', networkId: '1', favorite: true }); // ETH/USD
-    ContractFavorite.create({ address: '0xF5fff180082d6017036B771bA883025c654BC935', networkId: '1', favorite: true }); // BTC/USD
-    ContractFavorite.create({ address: '0x32dbd3214aC75223e27e575C53944307914F7a90', networkId: '1', favorite: true }); // LINK/USD
+    const { ContractFavorite, Feed } = orm.mutableSession(state);
+
+    favorites.forEach((favorite: ContractFavoriteTypes.ContractFavorite) => ContractFavorite.create(favorite))
+    tellorContracts.forEach((feed: FeedTypes.Feed) => Feed.create(feed))
 
     return state;
 };

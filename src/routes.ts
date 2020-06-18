@@ -8,7 +8,7 @@ const TellorFeedView = React.lazy(() => import('./views/FeedView/TellorFeedView'
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
     { path: '/', exact: true, name: 'Home', component: WrappedHomeView },
-    { path: '/feeds/tellor/:idOrName', exact: true, name: 'Feeds', component: TellorFeedView },
+    { path: '/feeds/tellor/:tellorId', exact: true, name: 'Feeds', component: TellorFeedView },
     { path: '/feeds/:address', exact: true, name: 'Feeds', component: WrappedFeedView },
     { path: '/feeds/:category/:name', exact: true, name: 'Feeds', component: WrappedFeedView },
     { path: '/protocols/:name', exact: true, name: 'Protocols', component: WrappedProtocolView }

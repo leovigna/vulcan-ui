@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { compose, flattenProp, lifecycle, withStateHandlers } from 'recompose'
+import { connect } from 'react-redux'
+import moment from 'moment';
+
 import FeedView from './FeedView'
 import TellorClient from 'tellor-js'
 import web3 from '../../web3global'
+import { feedByFilterSelector } from '../../store/selectors'
+import { Feed } from '../../store/feed/types'
 
 const client = new TellorClient(web3)
 
-interface Props {
+interface Props extends Feed {
     tellorId: string
 }
 
-const withTellorNameToId = (Component: any) => (props: any) => {
-    const idOrName = props.idOrName
-    let tellorId = idOrName
-
-    return (<Component tellorId={tellorId} {...props} />)
-}
-
 const TellorFeedView = ({
+    address,
+    title,
+    granularity,
     tellorId }: Props) => {
     const [loading, setLoading] = useState(false)
     const [tellorData, setTellorData] = useState({})
@@ -34,21 +35,42 @@ const TellorFeedView = ({
 
     console.debug(tellorData)
     const latestAnswer = tellorData?.requestValue?.value;
-    let latestTimestamp = tellorData?.requestValue?.timestampRetrieved;
+    const latestTimestamp = tellorData?.requestValue?.timestampRetrieved;
+
+    const lastUpdate = latestTimestamp ? moment(latestTimestamp, 'X').format('LLLL') : null;
 
     const feedViewProps = {
-        title: `Tellor Oracle`,
-        address: tellorId,
-        answer: latestAnswer || 'Loading...',
-        lastUpdate: latestTimestamp || 'Loading...',
+        title: title,
+        address: `${address} - ${tellorId}`,
+        answer: loading ? 'Loading...' : '$ ' + (latestAnswer / granularity).toFixed(2),
+        lastUpdate: loading ? 'Loading...' : lastUpdate
     }
 
     return (<FeedView {...feedViewProps} />);
 }
 
+const mapStateToProps = (state: any, ownProps: any) => {
+    const feedById = feedByFilterSelector(state, { protocol: 'tellor', tellorId: ownProps.tellorId })
+    const feedByName = feedByFilterSelector(state, { protocol: 'tellor', name: ownProps.tellorId })
+
+    if (!feedById && !feedByName) {
+        return {}
+    }
+
+    if (feedById && !feedByName) {
+        ownProps.history.replace(`/feeds/tellor/${feedById.name}`)
+        return {
+            ...feedById
+        }
+    }
+
+    return {
+        ...feedByName
+    }
+}
 
 export default compose(
     flattenProp('match'),
     flattenProp('params'),
-    withTellorNameToId
+    connect(mapStateToProps)
 )(TellorFeedView);

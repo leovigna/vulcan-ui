@@ -1,8 +1,26 @@
 export interface Feed {
+    id: string,
+    networkId: string,
+    protocol: string,
+    address: string,
+    name: string,
+    title: string,
+    description?: string,
+    tellorId?: string,
+    granularity: number,
+    sampleAPI?: string,
+    ens?: string
+}
+
+export interface FeedOld {
+    tellorId?: string,
     networkId: string,
     name: string,
     address: string,
     title: string,
+    description?: string,
+    granularity: number,
+    sampleAPI?: string,
     protocol: string,
     ens?: string,
     value: string,
