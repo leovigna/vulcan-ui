@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
 import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
-
 import {
     contractStateByAddressSelector,
     graphDataSelector,

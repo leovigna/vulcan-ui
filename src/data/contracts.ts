@@ -1,5 +1,16 @@
 import { FeedTypes } from '../store/types'
 
+export const tellorContracts = [
+    {
+        "protocol": "tellor",
+        "tellorId": 1,
+        "name": "eth-usd-gdax",
+        "description": "",
+        "granularity": 1000,
+        "sampleAPI": "json(https://api.pro.coinbase.com/products/ETH-USD/ticker).price"
+    }
+]
+
 export const contracts: Array<FeedTypes.Feed> = [
         {
             name: "btc-usd",
