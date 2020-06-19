@@ -4,10 +4,12 @@ const WrappedHomeView = React.lazy(() => import('./views/HomeView/WrappedHomeVie
 const WrappedFeedView = React.lazy(() => import('./views/FeedView/WrappedFeedView'));
 const WrappedProtocolView = React.lazy(() => import('./views/ProtocolView/WrappedProtocolView'));
 const TellorFeedView = React.lazy(() => import('./views/FeedView/TellorFeedView'))
+const ChainlinkFeedView = React.lazy(() => import('./views/FeedView/ChainlinkFeedView'))
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
     { path: '/', exact: true, name: 'Home', component: WrappedHomeView },
+    { path: '/feeds/chainlink/:address', exact: true, name: 'Feeds', component: ChainlinkFeedView },
     { path: '/feeds/tellor/:tellorId', exact: true, name: 'Feeds', component: TellorFeedView },
     { path: '/feeds/:address', exact: true, name: 'Feeds', component: WrappedFeedView },
     { path: '/feeds/:category/:name', exact: true, name: 'Feeds', component: WrappedFeedView },

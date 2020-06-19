@@ -1,6 +1,54 @@
 
 import { FeedTypes } from '../store/types'
 
+export const testContracts: Array<FeedTypes.ChainlinkFeed | FeedTypes.TellorFeed> = [
+    {
+        id: "0xF5fff180082d6017036B771bA883025c654BC935-1",
+        networkId: "1",
+        protocol: "chainlink",
+        address: "0xF5fff180082d6017036B771bA883025c654BC935",
+        name: "btc-usd",
+        title: "BTC/USD",
+        answerRenderOptions: {
+            transform: {
+                multiply: 1e-8,
+                decimals: 2
+            },
+            format: "$ %(value)s"
+        },
+        latestAnswer: {
+            contractId: "0xF5fff180082d6017036B771bA883025c654BC935"
+        },
+        latestTimestamp: {
+            contractId: "0xF5fff180082d6017036B771bA883025c654BC935"
+        },
+        latestRound: {
+            contractId: "0xF5fff180082d6017036B771bA883025c654BC935"
+        }
+    },
+    {
+        "id": "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-1",
+        "networkId": "1",
+        "protocol": "tellor",
+        "address": "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58",
+        "name": "eth-usd-gdax",
+        "title": "ETH/USD-GDAX",
+        answerRenderOptions: {
+            transform: {
+                multiply: 1e-3,
+                decimals: 2
+            },
+            format: "$ %(value)s"
+        },
+        "tellorId": "1",
+        "granularity": 1000,
+        "sampleAPI": "json(https://api.pro.coinbase.com/products/ETH-USD/ticker).price",
+        getCurrentValue: {
+            contractId: "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58"
+        }
+    }
+]
+
 export const tellorContracts: Array<FeedTypes.Feed> = [
     {
         "id": "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-1",

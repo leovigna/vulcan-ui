@@ -22,11 +22,11 @@ interface Props {
 const FeedCardDetailedGrid = ({ feeds, protocols, setContractFavorite }: Props) => {
     const history = useHistory();
     return (<> {
-        feeds.map(({ title, name, value, hearted, ens, protocol, nodeCount, lastUpdate, address, networkId }, idx) => {
+        feeds.map(({ id, title, name, value, hearted, ens, protocol, nodeCount, lastUpdate, address, networkId }, idx) => {
             const url = protocol && name ? `/feeds/${protocol}/${name}` : `/feeds/${address}`
             const feedProtocol = protocols[protocol]
             return (<Col key={idx} lg="4" md="6" xs="12">
-                <FeedCardDetailed onHeartClick={() => setContractFavorite({ address, networkId, favorite: !hearted })} href={url} handleClickViewButton={() => history.push(url)} address={address} protocolImg={feedProtocol?.img} feedName={title} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
+                <FeedCardDetailed onHeartClick={() => setContractFavorite({ id, address, networkId, favorite: !hearted })} href={url} handleClickViewButton={() => history.push(url)} address={address} protocolImg={feedProtocol?.img} feedName={title} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
             </Col>)
         })
     }</>)

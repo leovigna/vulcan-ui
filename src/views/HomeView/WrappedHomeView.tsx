@@ -5,19 +5,17 @@ import HomeView from './HomeView'
 import protocols from '../../data/protocols'
 import { setContractFavorite } from '../../store/contractFavorite/actions'
 import { SetContractFavoriteActionInput } from '../../store/contractFavorite/types'
-import { contractFavoritesSelector, contractsByFilterSelector, contractStateSelector, networkIdSelector, feedsByFilterSelector } from '../../store/selectors'
+import { contractFavoritesByFilterSelector, contractsByFilterSelector, contractStateSelector, networkIdSelector, feedsByFilterSelector } from '../../store/selectors'
 
 const mapStateToProps = (state: any) => {
     const networkId = networkIdSelector(state)
-    const contractFavorites = new Set(contractFavoritesSelector(state).filter((n) => n.networkId === networkId && n.favorite).map((n) => n.address));
-    const chainlinkFeeds = contractsByFilterSelector(state, { networkId })
-    const tellorFeeds = feedsByFilterSelector(state, { networkId })
-    const feeds = [...chainlinkFeeds, ...tellorFeeds]
-
-    feeds.forEach((f) => f.hearted = false)
-    const favoriteFeeds = feeds.filter((f) => contractFavorites.has(f.address))
+    const contractFavorites = contractFavoritesByFilterSelector(state, { favorite: true })
+    console.debug(contractFavorites)
+    const feeds = feedsByFilterSelector(state, { networkId })
+    const favoriteIds = new Set(contractFavorites.map((f) => f.id))
+    const favoriteFeeds = contractFavorites.map((f) => f.feed).filter((f) => !!f)
     favoriteFeeds.forEach((f) => f.hearted = true)
-
+    feeds.forEach((f) => f.hearted = favoriteIds.has(f.id))
 
     return {
         networkId,

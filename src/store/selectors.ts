@@ -58,6 +58,24 @@ type contractFavoritesSelectorType = ((state: any) => [ContractFavorite]) |
 
 //@ts-ignore
 export const contractFavoritesSelector: contractFavoritesSelectorType = ormCreateSelector(orm.ContractFavorite)
+export const contractFavoritesByFilterSelector: (state: any, filter: any) => [ContractFavorite] = ormCreateSelector(
+    orm,
+    (_session_, filter) => filter,
+    (session, filter) => {
+        const contracts = session.ContractFavorite.filter(filter).toModelArray().map((item: ContractFavorite) => {
+            const { ref } = item;
+            return {
+                ...ref,
+                feed: item.feed?.ref
+            };
+        });
+
+        if (contracts.length == 0) return emptyArray;
+        return contracts;
+    }
+);
+
+
 export const eventsSelector: (state: any, id: string) => Event = ormCreateSelector(orm.Event)
 export const transactionsSelector: (state: any, id: string) => Transaction = ormCreateSelector(orm.Transaction)
 export const blocksSelector: (state: any, id: string) => Block = ormCreateSelector(orm.Block)

@@ -1,4 +1,5 @@
 export interface ContractFavorite {
+    id: string,
     networkId: string,
     address: string,
     favorite: boolean

@@ -1,48 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { compose, flattenProp, lifecycle, withStateHandlers } from 'recompose'
 import { connect } from 'react-redux'
 import moment from 'moment';
+import { DrizzleContext } from "@drizzle/react-plugin"
 
 import FeedView from './FeedView'
-import TellorClient from 'tellor-js'
-import web3 from '../../web3global'
 import { feedByFilterSelector } from '../../store/selectors'
-import { Feed } from '../../store/feed/types'
+import { TellorFeed, SetFeedCacheKeyActionInput } from '../../store/feed/types'
+import { setFeedCacheKey, renderAnswer } from '../../store/feed/actions'
+import { useDrizzleCache } from '../../hoc'
 
-const client = new TellorClient(web3)
-
-interface Props extends Feed {
-    tellorId: string
+interface Props extends TellorFeed {
+    setCacheKey: any
 }
 
 const TellorFeedView = ({
-    address,
+    id,
+    answerRenderOptions,
     title,
-    granularity,
-    tellorId }: Props) => {
-    const [loading, setLoading] = useState(false)
-    const [tellorData, setTellorData] = useState({})
+    address,
+    tellorId,
+    getCurrentValue,
+    setCacheKey }: Props) => {
+    const currentValue = useDrizzleCache(DrizzleContext.Context, { id, cacheName: 'getCurrentValue', cacheArgs: [tellorId] }, getCurrentValue, setCacheKey)
 
-    useEffect(() => {
-        const infoPromise = client.getInfo()
-        const requestInfoPromise = client.getRequestInfo(tellorId)
-        const requestValuePromise = client.getRequestValue(tellorId)
-        Promise.all([infoPromise, requestInfoPromise, requestValuePromise]).then(([info, requestInfo, requestValue]) => {
-            setLoading(false)
-            setTellorData({ info, requestInfo, requestValue })
-        })
-    }, [tellorId])
+    const loading = !currentValue
+    if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
-    console.debug(tellorData)
-    const latestAnswer = tellorData?.requestValue?.value;
-    const latestTimestamp = tellorData?.requestValue?.timestampRetrieved;
-
+    const latestAnswer = currentValue.value ? renderAnswer(answerRenderOptions, currentValue.value) : null;
+    const latestTimestamp = currentValue._timestampRetrieved;
     const lastUpdate = latestTimestamp ? moment(latestTimestamp, 'X').format('LLLL') : null;
 
     const feedViewProps = {
         title: title,
         address: `${address} - ${tellorId}`,
-        answer: loading ? 'Loading...' : '$ ' + (latestAnswer / granularity).toFixed(2),
+        answer: loading ? 'Loading...' : latestAnswer,
         lastUpdate: loading ? 'Loading...' : lastUpdate
     }
 
@@ -72,8 +64,14 @@ const mapStateToProps = (state: any, ownProps: any) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCacheKey: (payload: SetFeedCacheKeyActionInput) => dispatch(setFeedCacheKey(payload))
+    }
+}
+
 export default compose(
     flattenProp('match'),
     flattenProp('params'),
-    connect(mapStateToProps)
+    connect(mapStateToProps, mapDispatchToProps)
 )(TellorFeedView);

@@ -12,6 +12,36 @@ interface Props {
     networkId: string
 }
 
+export function useDrizzleCache(context: DrizzleContext.Context, { id, cacheName, cacheArgs }, { cacheKey, contractId }: FeedTypes.DrizzleCacheKey, setCacheKey: any) {
+    const drizzleContext = useContext(DrizzleContext.Context)
+    const { drizzle, drizzleState, initialized } = drizzleContext;
+
+    const [value, setCacheValue] = useState(null);
+
+    useEffect(() => {
+        if (initialized) {
+            if (!cacheKey) {
+                const contract = drizzle.contracts[contractId]
+                const cacheKey = contract.methods[cacheName].cacheCall(...(cacheArgs || []))
+                setCacheKey({ id, cacheName, contractId, cacheKey })
+            }
+        }
+        console.debug(`Fetch ${cacheName}`)
+    }, [cacheKey, initialized])
+
+    useEffect(() => {
+        if (drizzleState) {
+            const value = drizzleState.contracts[contractId][cacheName][cacheKey]?.value
+            if (value) {
+                setCacheValue(value)
+            }
+        }
+    })
+
+    return value;
+}
+
+
 export const withParsedFeeds = (Component: any) => ({ feeds, contractStates, protocols, ...props }: Props) => {
     const drizzleContext = useContext(DrizzleContext.Context)
     const { drizzle } = drizzleContext;

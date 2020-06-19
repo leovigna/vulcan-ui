@@ -8,7 +8,7 @@ import {
     FeedTypes,
 } from "../types"
 import { indexAddressEvent } from "./models/eventByContractTypeIndex"
-import { tellorContracts } from '../../data/feeds'
+import { tellorContracts, testContracts } from '../../data/feeds'
 import favorites from '../../data/favorites'
 
 type Action = {
@@ -22,7 +22,11 @@ const initializeState = (orm) => {
     const { ContractFavorite, Feed } = orm.mutableSession(state);
 
     favorites.forEach((favorite: ContractFavoriteTypes.ContractFavorite) => ContractFavorite.create(favorite))
-    tellorContracts.forEach((feed: FeedTypes.Feed) => Feed.create(feed))
+    if (process.ENV !== 'production') {
+        testContracts.forEach((feed: FeedTypes.Feed) => Feed.create(feed))
+    } else {
+        tellorContracts.forEach((feed: FeedTypes.Feed) => Feed.create(feed))
+    }
 
     return state;
 };
@@ -32,7 +36,7 @@ export function ormReducer(state: any, action: Action) {
 
     // Session-specific Models are available
     // as properties on the Session instance.
-    const { Transaction, Block, Event, EventByContractTypeIndex, Contract, ContractFavorite } = sess;
+    const { Transaction, Block, Event, EventByContractTypeIndex, Contract, ContractFavorite, Feed } = sess;
     let transactionHash;
     let blockNumber;
     switch (action.type) {
@@ -102,6 +106,8 @@ export function ormReducer(state: any, action: Action) {
         case ContractFavoriteTypes.SET_CONTRACT_FAVORITE:
             ContractFavorite.upsert(action.payload)
             break;
+        case FeedTypes.SET_FEED_CACHE_KEY:
+            Feed.withId(action.payload.id).update({ [action.payload.cacheName]: { contractId: action.payload.contractId, cacheKey: action.payload.cacheKey } })
     }
 
     return sess.state;

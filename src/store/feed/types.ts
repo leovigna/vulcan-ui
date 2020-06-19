@@ -1,3 +1,17 @@
+import { number } from "@storybook/addon-knobs"
+
+export interface DrizzleCacheKey {
+    contractId: string,
+    cacheKey?: string
+}
+
+export interface AnswerRenderOptions {
+    transform: {
+        multiply: number,
+        decimals: number
+    },
+    format: string
+}
 export interface Feed {
     id: string,
     networkId: string,
@@ -6,10 +20,34 @@ export interface Feed {
     name: string,
     title: string,
     description?: string,
+    ens?: string,
+    answerRenderOptions?: AnswerRenderOptions
+}
+
+export interface ChainlinkFeed extends Feed {
+    latestAnswer: DrizzleCacheKey,
+    latestTimestamp: DrizzleCacheKey,
+    latestRound: DrizzleCacheKey
+}
+
+export interface TellorFeed extends Feed {
     tellorId?: string,
     granularity: number,
     sampleAPI?: string,
-    ens?: string
+    getCurrentValue: DrizzleCacheKey
+}
+
+export const SET_FEED_CACHE_KEY = 'ORM/SET_FEED_CACHE_KEY'
+
+export type SetFeedCacheKeyActionInput = {
+    id: string,
+    cacheName: string,
+    cacheKey: string
+}
+
+export type SetFeedCacheKeyAction = {
+    type: typeof SET_FEED_CACHE_KEY
+    payload: SetFeedCacheKeyActionInput
 }
 
 export interface FeedOld {
@@ -46,10 +84,3 @@ export interface Response {
     gasPrice: string | number
 }
 
-export interface AnswerRenderOptions {
-    transform: {
-        multiply: number,
-        decimals: number
-    },
-    format: string
-}
