@@ -16,7 +16,7 @@ const protocols: { [key: string]: ProtocolTypes.Protocol } = {
         sponsorCount: 17,
         descriptionLong: 'The Chainlink Network provides the largest collection of secure and decentralized on-chain price reference data available. Composed of security reviewed, sybil resistant and fully independent nodes which are run by leading blockchain devops and security teams. Creating a shared global resource which is sponsored by a growing list of top DeFi Dapps.',
     },
-    'tellor.io': {
+    'tellor': {
         active: false,
         name: 'Tellor.io',
         url: 'https://tellor.io',

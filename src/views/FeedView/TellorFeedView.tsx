@@ -54,7 +54,10 @@ const mapStateToProps = (state: any, ownProps: any) => {
     const feedByName = feedByFilterSelector(state, { protocol: 'tellor', name: ownProps.tellorId })
 
     if (!feedById && !feedByName) {
-        return {}
+        return {
+            address: TellorClient.defaultUserContractAddress,
+            granularity: 1
+        }
     }
 
     if (feedById && !feedByName) {
