@@ -1,8 +1,11 @@
 import React, { useContext, useState, useEffect, Component } from 'react';
+import { connect } from "react-redux"
 import { DrizzleContext } from "@drizzle/react-plugin"
 import { FeedTypes, ProtocolTypes } from './store/types'
 import moment from 'moment'
 import { renderAnswer } from './store/feed/actions'
+import { contractFavoritesByFilterSelector, networkIdSelector, feedsByFilterSelector } from './store/selectors'
+import { protocolSelector } from './store/protocol/selectors';
 
 interface Props {
     feeds: [FeedTypes.Feed],
@@ -12,6 +15,11 @@ interface Props {
     contractStates: [any],
     networkId: string
 }
+
+export const withNetworkId = connect((state: any) => { return { networkId: networkIdSelector(state) } })
+export const withFeeds = connect((state: any, { networkId }) => { return { feeds: feedsByFilterSelector(state, { networkId }) } })
+export const withContractFavorites = connect((state: any) => { return { contractFavorites: contractFavoritesByFilterSelector(state, { favorite: true }) } })
+export const withProtocols = connect((state: any) => { return { protocols: protocolSelector(state) } })
 
 export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.Feed>, setCacheKey: any) {
     const drizzleContext = useContext(DrizzleContext.Context)
@@ -75,10 +83,9 @@ export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.F
                 } else if (f.protocol === 'chainlink') {
                     const fChainlink = f as FeedTypes.ChainlinkFeed
                     if (fChainlink.latestAnswer.cacheKey) {
-                        const contractState = drizzleState.contracts[fChainlink.latestAnswer.contractId]
-                        const latestAnswer = contractState.latestAnswer[fChainlink.latestAnswer.cacheKey]?.value
-                        const latestRound = contractState.latestAnswer[fChainlink.latestRound.cacheKey]?.value
-                        const latestTimestamp = contractState.latestAnswer[fChainlink.latestTimestamp.cacheKey]?.value
+                        const latestAnswer = drizzleState.contracts[fChainlink.latestAnswer.contractId].latestAnswer[fChainlink.latestAnswer.cacheKey]?.value
+                        const latestRound = drizzleState.contracts[fChainlink.latestRound.contractId].latestRound[fChainlink.latestRound.cacheKey]?.value
+                        const latestTimestamp = drizzleState.contracts[fChainlink.latestTimestamp.contractId].latestTimestamp[fChainlink.latestTimestamp.cacheKey]?.value
                         return ({ [f.id]: { latestAnswer, latestRound, latestTimestamp } })
                     }
                 }
@@ -105,16 +112,23 @@ export const withFeedsCache = (Component: any) => ({ feeds, setCacheKey, ...prop
 
         const latestTimestamp = protocol === 'chainlink' ? (feedValue as FeedTypes.ChainlinkFeedState)?.latestTimestamp :
             (protocol === 'tellor' ? (feedValue as FeedTypes.TellorFeedState)?.getCurrentValue?._timestampRetrieved : -1)
-        const lastUpdate = latestTimestamp ? moment(latestTimestamp, 'X').format('LLLL') : null;
+        console.debug(latestTimestamp)
+        const lastUpdate = latestTimestamp ? moment(latestTimestamp, 'X').format('MMMM D - h:mm A') : null;
 
         feedValue.timestamp = lastUpdate
         feedValue.value = latestAnswer
     })
 
-
-
     return (<Component feeds={feeds} feedValues={feedValues} setCacheKey={setCacheKey} {...props} />)
 }
+export const withProtocolMetrics = (Component: any) => ({ feeds, protocols, ...props }: Props) => {
+    Object.values(protocols).forEach((p) => {
+        p.feedCount = feeds.filter((f) => f.protocol === p.id).length
+    })
+
+    return (<Component feeds={feeds} protocols={protocols} {...props} />)
+}
+
 
 export function useDrizzleCache(context: DrizzleContext.Context, { id, cacheName, cacheArgs }, { cacheKey, contractId }: FeedTypes.DrizzleCacheKey, setCacheKey: any) {
     const drizzleContext = useContext(DrizzleContext.Context)
@@ -143,36 +157,4 @@ export function useDrizzleCache(context: DrizzleContext.Context, { id, cacheName
     })
 
     return value;
-}
-
-
-export const withParsedFeeds = (Component: any) => ({ feeds, contractStates, protocols, ...props }: Props) => {
-    const drizzleContext = useContext(DrizzleContext.Context)
-    const { drizzle } = drizzleContext;
-    const [cacheKeys, setCacheKeys] = useState({})
-    useEffect(() => {
-        console.debug(cacheKeys)
-        const cacheNewKeys = {}
-        feeds.forEach((f) => {
-            const { address } = f
-            if (!cacheKeys[address] && drizzle.contracts[address]) {
-                const roundKey = drizzle.contracts[address].methods.latestRound.cacheCall()
-                const answerKey = drizzle.contracts[address].methods.latestAnswer.cacheCall()
-                const timestampKey = drizzle.contracts[address].methods.latestTimestamp.cacheCall()
-                cacheNewKeys[address] = { roundKey, answerKey, timestampKey }
-            }
-        })
-        setCacheKeys({ ...cacheKeys, ...cacheNewKeys })
-    }, [contractStates])
-
-    const parsedFeeds = feeds.map((f) => {
-        const contractState = contractStates[f.address]
-        return {
-            ...f,
-            lastUpdate: moment.unix(contractState?.latestTimestamp['0x0']?.value).format('LLLL'),
-            value: f.answerRender(contractState?.latestAnswer['0x0']?.value)
-        }
-    })
-
-    return (<Component feeds={parsedFeeds} protocols={protocols} {...props} />)
 }

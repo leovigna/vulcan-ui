@@ -1,28 +1,30 @@
 import { connect } from "react-redux"
 import { compose } from 'recompose'
-import { withFeedsCache } from '../../hoc'
+import { withFeedsCache, withProtocolMetrics, withNetworkId, withFeeds, withFavoriteFeeds, withProtocols, withContractFavorites } from '../../hoc'
 import HomeView from './HomeView'
-import protocols from '../../data/protocols'
 import { setContractFavorite } from '../../store/contractFavorite/actions'
 import { SetContractFavoriteActionInput } from '../../store/contractFavorite/types'
-import { contractFavoritesByFilterSelector, networkIdSelector, feedsByFilterSelector } from '../../store/selectors'
 import { SetFeedCacheKeyActionInput } from "../../store/feed/types"
 import { setFeedCacheKey } from "../../store/feed/actions"
+import { Protocol } from "../../store/protocol/types"
 
-const mapStateToProps = (state: any) => {
-    const networkId = networkIdSelector(state)
-    const contractFavorites = contractFavoritesByFilterSelector(state, { favorite: true })
-    const feeds = feedsByFilterSelector(state, { networkId })
+const mapStateToProps = (state: any, { protocols, feeds, contractFavorites }) => {
+    const protocolsMap: { [key: string]: Protocol } = protocols.reduce((acc, p: Protocol) => { return { ...acc, [p.id]: p } }, {})
     const favoriteIds = new Set(contractFavorites.map((f) => f.id))
     const favoriteFeeds = contractFavorites.map((f) => f.feed).filter((f) => !!f)
-    favoriteFeeds.forEach((f) => f.hearted = true)
-    feeds.forEach((f) => f.hearted = favoriteIds.has(f.id))
+    favoriteFeeds.forEach((f) => {
+        f.hearted = true;
+        f.protocolImg = protocolsMap[f.protocol].img
+    })
+    feeds.forEach((f) => {
+        f.hearted = favoriteIds.has(f.id);
+        f.protocolImg = protocolsMap[f.protocol].img
+    })
 
     return {
-        networkId,
         feeds,
         favoriteFeeds,
-        protocols
+        protocols: protocolsMap
     }
 }
 
@@ -34,6 +36,11 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default compose(
+    withNetworkId,
+    withFeeds,
+    withContractFavorites,
+    withProtocols,
     connect(mapStateToProps, mapDispatchToProps),
-    withFeedsCache
+    withFeedsCache,
+    withProtocolMetrics
 )(HomeView);

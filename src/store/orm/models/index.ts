@@ -5,6 +5,7 @@ import EventByContractTypeIndex from './eventByContractTypeIndex'
 import Contract from './contract'
 import Feed from './feed'
 import ContractFavorite from './contractFavorite'
+import Protocol from './protocol'
 
 export {
     Transaction,
@@ -13,5 +14,6 @@ export {
     EventByContractTypeIndex,
     Contract,
     ContractFavorite,
-    Feed
+    Feed,
+    Protocol
 }

@@ -43,9 +43,9 @@ const ProtocolCard = ({ href, active, name, description, img, feedCount, nodeCou
             <Col sm="12">
                 {active ? <div className="d-flex justify-content-center">
                     <p style={{ maxWidth: 160, fontSize: 16, textAlign: 'center', color: '#000000' }}>
-                        {feedCount} Feeds<br />
-                        {nodeCount} Nodes<br />
-                        {sponsorCount} Sponsors
+                        {feedCount > 0 ? <>{feedCount} Feeds<br /></> : ''}
+                        {nodeCount > 0 ? <>{nodeCount} Nodes<br /></> : ''}
+                        {sponsorCount > 0 ? <>{sponsorCount} Sponsors</> : ''}
                     </p>
                 </div> :
                     <div className="d-flex justify-content-center">

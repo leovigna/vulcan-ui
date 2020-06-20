@@ -2,6 +2,7 @@ import { Feed } from '../feed/types';
 import { Node } from '../node/types';
 
 export interface Protocol {
+    id: string,
     active: boolean,
     name: string,
     img: string,

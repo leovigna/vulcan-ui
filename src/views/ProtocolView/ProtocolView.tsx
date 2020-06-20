@@ -5,21 +5,22 @@ import {
     CContainer as Container,
     CButton as Button
 } from '@coreui/react'
-import {
-    useHistory
-} from "react-router-dom";
 import { ProtocolTypes } from '../../store/types'
 import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
 
 interface Props extends ProtocolTypes.Protocol {
+    feeds: [FeedDetailed],
+    favoriteFeeds: [FeedDetailed],
+    feedValues: {
+        [key: string]: FeedStateDetailed
+    },
     setContractFavorite: any
 }
 
-const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, feeds, protocols, setContractFavorite }: Props) => {
+const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, feeds, feedValues, setContractFavorite }: Props) => {
     const [minimizeFeeds, setMinimizeFeeds] = useState(true);
     const toggleMinimizeFeeds = () => setMinimizeFeeds(!minimizeFeeds);
 
-    const history = useHistory();
     const displayedFeeds = minimizeFeeds ? feeds.slice(0, 9) : feeds
 
     return (
@@ -64,7 +65,7 @@ const ProtocolView = ({ name, url, img, descriptionLong, feedCount, nodeCount, f
                     {
                         displayedFeeds.length > 0 ?
                             <>
-                                <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} protocols={protocols} />
+                                <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} feedValues={feedValues} />
                                 < Col xs={12}>
                                     <div className="d-flex justify-content-center">
                                         <Button onClick={toggleMinimizeFeeds} style={{ fontSize: 20, fontWeight: 'medium', color: '#002C69' }}>{minimizeFeeds ? <>View All</> : <>Hide</>}</Button>

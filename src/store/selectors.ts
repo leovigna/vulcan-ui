@@ -75,7 +75,6 @@ export const contractFavoritesByFilterSelector: (state: any, filter: any) => [Co
     }
 );
 
-
 export const eventsSelector: (state: any, id: string) => Event = ormCreateSelector(orm.Event)
 export const transactionsSelector: (state: any, id: string) => Transaction = ormCreateSelector(orm.Transaction)
 export const blocksSelector: (state: any, id: string) => Block = ormCreateSelector(orm.Block)

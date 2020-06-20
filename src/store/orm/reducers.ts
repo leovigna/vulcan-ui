@@ -10,6 +10,7 @@ import {
 import { indexAddressEvent } from "./models/eventByContractTypeIndex"
 import { tellorContracts, testContracts } from '../../data/feeds'
 import favorites from '../../data/favorites'
+import protocols from '../../data/protocols'
 
 type Action = {
     type: string,
@@ -19,9 +20,11 @@ type Action = {
 
 const initializeState = (orm) => {
     const state = orm.getEmptyState();
-    const { ContractFavorite, Feed } = orm.mutableSession(state);
+    const { ContractFavorite, Feed, Protocol } = orm.mutableSession(state);
 
     favorites.forEach((favorite: ContractFavoriteTypes.ContractFavorite) => ContractFavorite.create(favorite))
+    protocols.forEach((protocol: any) => Protocol.create(protocol))
+
     if (process.ENV !== 'production') {
         testContracts.forEach((feed: FeedTypes.Feed) => Feed.create(feed))
     } else {

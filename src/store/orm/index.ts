@@ -1,7 +1,5 @@
 // orm.js
 import { ORM } from 'redux-orm';
-import { defaultUpdater } from 'redux-orm/lib/redux';
-
 import {
     Event,
     Transaction,
@@ -9,7 +7,8 @@ import {
     EventByContractTypeIndex,
     Contract,
     Feed,
-    ContractFavorite
+    ContractFavorite,
+    Protocol
 } from './models';
 
 interface VulcanORM extends ORM {
@@ -19,12 +18,13 @@ interface VulcanORM extends ORM {
     EventByContractTypeIndex: EventByContractTypeIndex,
     Contract: Contract,
     ContractFavorite: ContractFavorite,
-    Feed: Feed
+    Feed: Feed,
+    Protocol: Protocol
 }
 
 const orm: VulcanORM = new ORM({
     stateSelector: state => state.persisted.orm
 });
-orm.register(Event, Transaction, Block, EventByContractTypeIndex, Contract, ContractFavorite, Feed);
+orm.register(Event, Transaction, Block, EventByContractTypeIndex, Contract, ContractFavorite, Feed, Protocol);
 
 export default orm;
