@@ -8,23 +8,21 @@ import {
 
 import ProtocolCard from '../../components/ProtocolCard'
 import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
-import FeedCard from '../../components/FeedCard'
-
-import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
-import ArrowRight from '../../assets/img/icons/arrow_right.svg'
 import { ProtocolTypes, FeedTypes } from '../../store/types'
-import { setContractFavorite } from '../../store/contractFavorite/actions';
 
 interface Props {
     feeds: [FeedTypes.Feed],
     favoriteFeeds: [FeedTypes.Feed],
+    feedValues: {
+        [key: string]: FeedTypes.FeedState
+    },
     protocols: {
         [key: string]: ProtocolTypes.Protocol
     },
     setContractFavorite: any
 }
 
-const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Props) => {
+const HomeView = ({ feeds, favoriteFeeds, feedValues, protocols, setContractFavorite }: Props) => {
     const [minimizeFeeds, setMinimizeFeeds] = useState(true);
     const [minimizeFavoriteFeeds, setMinimizeFavoriteFeeds] = useState(true);
 
@@ -55,7 +53,7 @@ const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Prop
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite Feeds</h1>
                     </Col>
-                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFavoriteFeeds} protocols={protocols} />
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFavoriteFeeds} feedValues={feedValues} protocols={protocols} />
                     {favoriteFeeds.length > favoriteFeedsMinimizeCount ?
                         <Col xs={12}>
                             <div className="d-flex justify-content-center">
@@ -69,7 +67,7 @@ const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Prop
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
                     </Col>
-                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} protocols={protocols} />
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} feedValues={feedValues} protocols={protocols} />
                     {feeds.length > feedsMinimizeCount ?
                         <Col xs={12}>
                             <div className="d-flex justify-content-center">

@@ -1,5 +1,3 @@
-import { number } from "@storybook/addon-knobs"
-
 export interface DrizzleCacheKey {
     contractId: string,
     cacheKey?: string
@@ -12,7 +10,7 @@ export interface AnswerRenderOptions {
     },
     format: string
 }
-export interface Feed {
+export interface FeedBase {
     id: string,
     networkId: string,
     protocol: string,
@@ -24,18 +22,36 @@ export interface Feed {
     answerRenderOptions?: AnswerRenderOptions
 }
 
-export interface ChainlinkFeed extends Feed {
+export interface ChainlinkFeed extends FeedBase {
     latestAnswer: DrizzleCacheKey,
     latestTimestamp: DrizzleCacheKey,
     latestRound: DrizzleCacheKey
 }
 
-export interface TellorFeed extends Feed {
+
+export interface TellorFeed extends FeedBase {
     tellorId?: string,
     granularity: number,
     sampleAPI?: string,
     getCurrentValue: DrizzleCacheKey
 }
+
+export type Feed = ChainlinkFeed | TellorFeed
+
+export interface ChainlinkFeedState {
+    latestAnswer: string,
+    latestTimestamp: string,
+    latestRound: string
+}
+
+export interface TellorFeedState {
+    getCurrentValue: {
+        value: number,
+        _timestampRetrieved: string
+    }
+}
+
+export type FeedState = ChainlinkFeedState | TellorFeedState
 
 export const SET_FEED_CACHE_KEY = 'ORM/SET_FEED_CACHE_KEY'
 
