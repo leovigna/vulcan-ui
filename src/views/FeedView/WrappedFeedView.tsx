@@ -14,10 +14,6 @@ import AddressFeedView from './AddressFeedView'
 import NamedFeedView from './NamedFeedView'
 import ENSFeedView from './ENSFeedView'
 
-import {
-    contractById
-} from "../../store/selectors"
-
 interface Props {
     match: {
         params: {
@@ -71,7 +67,7 @@ const mapStateToProps = (state: any, { match }: Props) => {
     let contractENS;
 
     if (contractAddress && web3.utils.isAddress(contractAddress)) {
-        const contract = contractById(state, contractAddress)
+        const contract = {}//contractById(state, contractAddress)
         console.debug(contract)
         if (contract) {
             contractName = contract.name

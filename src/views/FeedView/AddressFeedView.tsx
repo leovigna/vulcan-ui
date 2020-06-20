@@ -5,7 +5,7 @@ import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
 import {
     contractStateByAddressSelector,
     graphDataSelector,
-    makeEventIndexedFilterSelector
+    EventSelectors
 } from "../../store/selectors"
 import { indexAddressEvent } from "../../store/orm/models/eventByContractTypeIndex"
 
@@ -97,7 +97,7 @@ const AddressFeedView = ({
     return (<FeedView {...feedViewProps} />);
 }
 
-const ResponseReceivedSelector = makeEventIndexedFilterSelector()
+const ResponseReceivedSelector = EventSelectors.makeEventIndexedFilterSelector()
 
 const mapStateToProps = (state: any, { address }: Props) => {
     const ResponseReceivedIndexData = { address: address, event: 'ResponseReceived' }

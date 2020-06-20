@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DrizzleContext } from "@drizzle/react-plugin"
 
 import FeedView from './FeedView'
-import { feedByFilterSelector } from '../../store/selectors'
+import { FeedSelectors } from '../../store/selectors'
 import { TellorFeed, SetFeedCacheKeyActionInput } from '../../store/feed/types'
 import { setFeedCacheKey, renderAnswer } from '../../store/feed/actions'
 import { useDrizzleCache } from '../../hoc'
@@ -42,8 +42,8 @@ const TellorFeedView = ({
 }
 
 const mapStateToProps = (state: any, ownProps: any) => {
-    const feedById = feedByFilterSelector(state, { protocol: 'tellor', tellorId: ownProps.tellorId })
-    const feedByName = feedByFilterSelector(state, { protocol: 'tellor', name: ownProps.tellorId })
+    const feedById = FeedSelectors.feedByFilterSelector(state, { protocol: 'tellor', tellorId: ownProps.tellorId })
+    const feedByName = FeedSelectors.feedByFilterSelector(state, { protocol: 'tellor', name: ownProps.tellorId })
 
     if (!feedById && !feedByName) {
         return {

@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DrizzleContext } from "@drizzle/react-plugin"
 
 import FeedView from './FeedView'
-import { feedByFilterSelector } from '../../store/selectors'
+import { FeedSelectors } from '../../store/selectors'
 import { SetFeedCacheKeyActionInput, ChainlinkFeed } from '../../store/feed/types'
 import { setFeedCacheKey, renderAnswer } from '../../store/feed/actions'
 import { useDrizzleCache } from '../../hoc'
@@ -44,8 +44,8 @@ const ChainlinkFeedView = ({
 }
 
 const mapStateToProps = (state: any, ownProps: any) => {
-    const feedById = feedByFilterSelector(state, { protocol: 'chainlink', address: ownProps.address })
-    const feedByName = feedByFilterSelector(state, { protocol: 'chainlink', name: ownProps.address })
+    const feedById = FeedSelectors.feedByFilterSelector(state, { protocol: 'chainlink', address: ownProps.address })
+    const feedByName = FeedSelectors.feedByFilterSelector(state, { protocol: 'chainlink', name: ownProps.address })
 
     if (!feedById && !feedByName) {
         return {

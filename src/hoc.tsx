@@ -4,8 +4,7 @@ import { DrizzleContext } from "@drizzle/react-plugin"
 import { FeedTypes, ProtocolTypes } from './store/types'
 import moment from 'moment'
 import { renderAnswer } from './store/feed/actions'
-import { contractFavoritesByFilterSelector, networkIdSelector, feedsByFilterSelector } from './store/selectors'
-import { protocolSelector } from './store/protocol/selectors';
+import { FeedSelectors, ContractFavoriteSelectors, NetworkSelectors, ProtocolSelectors } from './store/selectors'
 
 interface Props {
     feeds: [FeedTypes.Feed],
@@ -16,10 +15,10 @@ interface Props {
     networkId: string
 }
 
-export const withNetworkId = connect((state: any) => { return { networkId: networkIdSelector(state) } })
-export const withFeeds = connect((state: any, { networkId }) => { return { feeds: feedsByFilterSelector(state, { networkId }) } })
-export const withContractFavorites = connect((state: any) => { return { contractFavorites: contractFavoritesByFilterSelector(state, { favorite: true }) } })
-export const withProtocols = connect((state: any) => { return { protocols: protocolSelector(state) } })
+export const withNetworkId = connect((state: any) => { return { networkId: NetworkSelectors.networkIdSelector(state) } })
+export const withFeeds = connect((state: any, { networkId }) => { return { feeds: FeedSelectors.feedsByFilterSelector(state, { networkId }) } })
+export const withContractFavorites = connect((state: any) => { return { contractFavorites: ContractFavoriteSelectors.contractFavoritesByFilterSelector(state, { favorite: true }) } })
+export const withProtocols = connect((state: any) => { return { protocols: ProtocolSelectors.protocolSelector(state) } })
 
 export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.Feed>, setCacheKey: any) {
     const drizzleContext = useContext(DrizzleContext.Context)

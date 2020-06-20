@@ -8,7 +8,7 @@ import {
 } from '@coreui/react';
 
 import { setNetworkId } from '../../store/network/actions'
-import { networkIdSelector, networksSelector } from '../../store/selectors'
+import { NetworkSelectors } from '../../store/selectors'
 
 interface Props {
     networks: any,
@@ -40,8 +40,8 @@ NetworkPicker.defaultProps = {
 }
 
 function mapStateToProps(state: any) {
-    const networkId = networkIdSelector(state)
-    const networks = networksSelector(state)
+    const networkId = NetworkSelectors.networkIdSelector(state)
+    const networks = NetworkSelectors.networksSelector(state)
     const currentNetwork = networks.find(n => n.id === networkId)
 
     return {

@@ -1,3 +1,4 @@
+/*
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { connect } from "react-redux"
 import { DrizzleContext } from "@drizzle/react-plugin"
@@ -133,3 +134,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NamedFeedView)
+
+*/
+
+export default () => ''
