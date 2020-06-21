@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect, Component } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { connect } from "react-redux"
 import { DrizzleContext } from "@drizzle/react-plugin"
 import { FeedTypes, ProtocolTypes } from './store/types'
 import moment from 'moment'
 import { renderAnswer } from './store/feed/actions'
 import { FeedSelectors, ContractFavoriteSelectors, NetworkSelectors, ProtocolSelectors } from './store/selectors'
+import { merge } from 'lodash'
 
 interface Props {
     feeds: [FeedTypes.Feed],
@@ -21,20 +22,7 @@ export const withContractFavorites = connect((state: any, { networkId }) => { re
 export const withProtocols = connect((state: any) => { return { protocols: ProtocolSelectors.protocolSelector(state) } })
 
 export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.Feed>, setCacheKey: any) {
-    const drizzleContext = useContext(DrizzleContext.Context)
-    const { drizzle, drizzleState, initialized } = drizzleContext;
-
-    const [feedValues, setFeedValues] = useState({});
-    const feedsAll = feeds.map((f) => {
-        if (f.protocol === 'tellor') {
-            const fTellor = f as FeedTypes.TellorFeed
-            return fTellor.getCurrentValue.cacheKey
-        } else if (f.protocol === 'chainlink') {
-            const fChainlink = f as FeedTypes.ChainlinkFeed
-            return fChainlink.latestAnswer.cacheKey
-        }
-        return null
-    }).join(',')
+    const { drizzle, drizzleState, initialized } = context;
 
     useEffect(() => {
         if (initialized) {
@@ -64,10 +52,33 @@ export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.F
                         const cacheKey = contract.methods.latestTimestamp.cacheCall()
                         setCacheKey({ id: fChainlink.id, cacheName: 'latestTimestamp', contractId: fChainlink.latestTimestamp.contractId, cacheKey })
                     }
+
+                    if (fChainlink.latestRound.cacheKey) {
+                        const latestRound = drizzleState.contracts[fChainlink.latestRound.contractId].latestRound[fChainlink.latestRound.cacheKey]?.value
+                        if (latestRound) {
+                            const contract = drizzle.contracts[fChainlink.latestRound.contractId]
+                            for (let i = Number(latestRound); i > Math.max(latestRound - 50, 0); i--) {
+                                if (!fChainlink.getAnswer[i]) {
+                                    const cacheKeyAnswer = contract.methods.getAnswer.cacheCall(i)
+                                    setCacheKey({ id: fChainlink.id, cacheName: 'getAnswer', cacheArgs: i, contractId: fChainlink.latestRound.contractId, cacheKey: cacheKeyAnswer })
+                                }
+                                if (!fChainlink.getTimestamp[i]) {
+                                    const cacheKeyTimestamp = contract.methods.getTimestamp.cacheCall(i)
+                                    setCacheKey({ id: fChainlink.id, cacheName: 'getTimestamp', cacheArgs: i, contractId: fChainlink.latestRound.contractId, cacheKey: cacheKeyTimestamp })
+                                }
+                            }
+                        }
+                    }
+
                 }
             })
         }
-    }, [feedsAll, initialized])
+    }, [feeds, initialized])
+}
+
+export const useFeedsCacheState = (context: Drizzle.Context, feeds: Array<FeedTypes.Feed>) => {
+    const { drizzle, drizzleState, initialized } = context;
+    const [feedValues, setFeedValues] = useState({});
 
     useEffect(() => {
         if (drizzleState) {
@@ -94,13 +105,73 @@ export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.F
             const feedValues = feedValuesList.filter((f) => !!f).reduce((acc, f) => { return { ...acc, ...f } }, {})
             setFeedValues(feedValues)
         }
-    }, [feeds])
+    }, [feeds, initialized])
 
     return feedValues;
+
+}
+
+export const useChainlinkFeedsGetAnswer = (context: Drizzle.Context, feeds: Array<FeedTypes.Feed>) => {
+    const { drizzleState, initialized } = context;
+    const [values, setValues] = useState({});
+
+    useEffect(() => {
+        if (drizzleState) {
+            const feedValuesEntries = feeds.filter((f) => f.protocol === 'chainlink').map((f) => {
+                const fChainlink = f as FeedTypes.ChainlinkFeed
+                const getAnswerValues = Object.fromEntries(Object.values(fChainlink.getAnswer).map((cache) => {
+                    if (!!cache.cacheKey && !!cache.cacheArgs) {
+                        const value = drizzleState.contracts[cache.contractId].getAnswer[cache.cacheKey]?.value
+                        return [cache.cacheArgs!, value]
+                    }
+                }) as Iterable<[string, any]>)
+
+                return [f.id, { getAnswer: getAnswerValues }]
+            }) as Iterable<[string, any]>
+
+            const feedValues = Object.fromEntries(feedValuesEntries)
+            setValues(feedValues)
+        }
+    }, [feeds, initialized])
+
+    return values;
+}
+
+export const useChainlinkFeedsGetTimestamp = (context: Drizzle.Context, feeds: Array<FeedTypes.Feed>) => {
+    const { drizzleState, initialized } = context;
+    const [values, setValues] = useState({});
+
+    useEffect(() => {
+        if (drizzleState) {
+            const feedValuesEntries = feeds.filter((f) => f.protocol === 'chainlink').map((f) => {
+                const fChainlink = f as FeedTypes.ChainlinkFeed
+                const getTimestampValues = Object.fromEntries(Object.values(fChainlink.getTimestamp).map((cache) => {
+                    if (!!cache.cacheKey && !!cache.cacheArgs) {
+                        const value = drizzleState.contracts[cache.contractId].getTimestamp[cache.cacheKey]?.value
+                        return [cache.cacheArgs!, value]
+                    }
+                }) as Iterable<[string, any]>)
+
+                return [f.id, { getTimestamp: getTimestampValues }]
+            }) as Iterable<[string, any]>
+
+            const feedValues = Object.fromEntries(feedValuesEntries)
+            setValues(feedValues)
+        }
+    }, [feeds, initialized])
+
+    return values;
 }
 
 export const withFeedsCache = (Component: any) => ({ feeds, setCacheKey, ...props }: Props) => {
-    const feedValues = useFeedsCache(DrizzleContext.Context, feeds, setCacheKey)
+    const drizzleContext = useContext(DrizzleContext.Context)
+
+    useFeedsCache(drizzleContext, feeds, setCacheKey)
+    const cacheState = useFeedsCacheState(drizzleContext, feeds)
+    const chainlinkFeedsGetAnswer = useChainlinkFeedsGetAnswer(drizzleContext, feeds)
+    const chainlinkFeedsGetTimestamp = useChainlinkFeedsGetTimestamp(drizzleContext, feeds)
+    const feedValues = merge(cacheState, chainlinkFeedsGetAnswer, chainlinkFeedsGetTimestamp)
+
     feeds.forEach((f) => {
         const feedValue = feedValues[f.id]
         const { protocol, answerRenderOptions } = f
@@ -120,6 +191,7 @@ export const withFeedsCache = (Component: any) => ({ feeds, setCacheKey, ...prop
 
     return (<Component feeds={feeds} feedValues={feedValues} setCacheKey={setCacheKey} {...props} />)
 }
+
 export const withProtocolMetrics = (Component: any) => ({ feeds, protocols, ...props }: Props) => {
     Object.values(protocols).forEach((p) => {
         p.feedCount = feeds.filter((f) => f.protocol === p.id).length

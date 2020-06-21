@@ -19,6 +19,7 @@
         "@drizzle/react-plugin": "^1.5.1",
         "@drizzle/store": "^1.5.1",
         "@popperjs/core": "^2.0.6",
+        "@types/lodash": "^4.14.155",
         "@types/recompose": "^0.30.7",
         "@welldone-software/why-did-you-render": "^4.0.5",
         "apollo-cache-inmemory": "^1.6.5",

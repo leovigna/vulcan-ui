@@ -8,7 +8,7 @@ import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
 import { SetFeedCacheKeyActionInput, ChainlinkFeed } from '../../store/feed/types'
 import { setFeedCacheKey, renderAnswer } from '../../store/feed/actions'
-import { useDrizzleCache } from '../../hoc'
+import { useDrizzleCache, useChainlinkFeedsGetAnswer, useChainlinkFeedsGetTimestamp } from '../../hoc'
 
 interface Props extends ChainlinkFeed {
     setCacheKey: any

@@ -24,7 +24,9 @@ export const testContracts: Array<FeedTypes.ChainlinkFeed | FeedTypes.TellorFeed
         },
         latestRound: {
             contractId: "0xF5fff180082d6017036B771bA883025c654BC935"
-        }
+        },
+        getAnswer: {},
+        getTimestamp: {}
     },
     {
         "id": "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-1",

@@ -1,6 +1,7 @@
 export interface DrizzleCacheKey {
     contractId: string,
-    cacheKey?: string
+    cacheKey?: string,
+    cacheArgs?: string
 }
 
 export interface AnswerRenderOptions {
@@ -25,7 +26,9 @@ export interface FeedBase {
 export interface ChainlinkFeed extends FeedBase {
     latestAnswer: DrizzleCacheKey,
     latestTimestamp: DrizzleCacheKey,
-    latestRound: DrizzleCacheKey
+    latestRound: DrizzleCacheKey,
+    getAnswer: { [key: string]: DrizzleCacheKey },
+    getTimestamp: { [key: string]: DrizzleCacheKey }
 }
 
 
@@ -58,7 +61,8 @@ export const SET_FEED_CACHE_KEY = 'ORM/SET_FEED_CACHE_KEY'
 export type SetFeedCacheKeyActionInput = {
     id: string,
     cacheName: string,
-    cacheKey: string
+    cacheKey: string,
+    cacheArgs?: string
 }
 
 export type SetFeedCacheKeyAction = {
