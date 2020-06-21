@@ -2,6 +2,8 @@ import { createSelector } from 'redux-orm'
 import orm from '../orm'
 import { Event } from './types'
 
+const emptyArray = []
+
 export const eventsSelector: (state: any, id: string) => Event = createSelector(orm.Event)
 export const eventByContractTypeIndexSelector = createSelector(
     orm,

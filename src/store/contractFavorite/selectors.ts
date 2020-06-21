@@ -2,6 +2,8 @@ import { createSelector } from 'redux-orm'
 import orm from '../orm'
 import { ContractFavorite } from './types'
 
+const emptyArray = []
+
 type contractFavoritesSelectorType = ((state: any) => [ContractFavorite]) |
     ((state: any, id: string) => ContractFavorite) |
     ((state: any, ids: [string]) => [ContractFavorite])

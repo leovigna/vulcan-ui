@@ -17,7 +17,7 @@ interface Props {
 
 export const withNetworkId = connect((state: any) => { return { networkId: NetworkSelectors.networkIdSelector(state) } })
 export const withFeeds = connect((state: any, { networkId }) => { return { feeds: FeedSelectors.feedsByFilterSelector(state, { networkId }) } })
-export const withContractFavorites = connect((state: any) => { return { contractFavorites: ContractFavoriteSelectors.contractFavoritesByFilterSelector(state, { favorite: true }) } })
+export const withContractFavorites = connect((state: any, { networkId }) => { return { contractFavorites: ContractFavoriteSelectors.contractFavoritesByFilterSelector(state, { favorite: true, networkId }) } })
 export const withProtocols = connect((state: any) => { return { protocols: ProtocolSelectors.protocolSelector(state) } })
 
 export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.Feed>, setCacheKey: any) {

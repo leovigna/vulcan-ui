@@ -2,6 +2,8 @@ import { createSelector } from 'redux-orm'
 import orm from '../orm'
 import { Feed } from './types'
 
+const emptyArray = []
+
 export const feedsSelector: (state: any, id: string) => Feed = createSelector(orm.Feed)
 export const feedsByFilterSelector: (state: any, filter: any) => [FeedTypes.Feed] = createSelector(
     orm,
