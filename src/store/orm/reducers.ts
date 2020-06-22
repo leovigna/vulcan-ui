@@ -26,9 +26,9 @@ const initializeState = (orm) => {
     protocols.forEach((protocol: any) => Protocol.create(protocol))
 
     if (process.ENV !== 'production') {
-        testContracts.forEach((feed: FeedTypes.Feed) => Feed.create(feed))
+        testContracts.forEach((feed: FeedTypes.Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
     } else {
-        tellorContracts.forEach((feed: FeedTypes.Feed) => Feed.create(feed))
+        tellorContracts.forEach((feed: FeedTypes.Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
     }
 
     return state;

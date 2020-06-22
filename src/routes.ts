@@ -12,8 +12,7 @@ const routes = [
     { path: '/feeds/chainlink/:address', exact: true, name: 'Feeds', component: ChainlinkFeedView },
     { path: '/feeds/tellor/:tellorId', exact: true, name: 'Feeds', component: TellorFeedView },
     { path: '/feeds/:address', exact: true, name: 'Feeds', component: WrappedFeedView },
-    { path: '/feeds/:category/:name', exact: true, name: 'Feeds', component: WrappedFeedView },
-    { path: '/protocols/:name', exact: true, name: 'Protocols', component: WrappedProtocolView }
+    { path: '/protocols/:id', exact: true, name: 'Protocols', component: WrappedProtocolView }
 ];
 
 export default routes;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { compose, flattenProp } from 'recompose'
 import { connect } from 'react-redux'
 import moment from 'moment';
@@ -8,7 +8,7 @@ import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
 import { SetFeedCacheKeyActionInput, ChainlinkFeed } from '../../store/feed/types'
 import { setFeedCacheKey, renderAnswer } from '../../store/feed/actions'
-import { useDrizzleCache, useChainlinkFeedsGetAnswer, useChainlinkFeedsGetTimestamp } from '../../hoc'
+import { useDrizzleCache } from '../../hoc'
 
 interface Props extends ChainlinkFeed {
     setCacheKey: any
@@ -23,9 +23,11 @@ const ChainlinkFeedView = ({
     latestTimestamp,
     latestRound,
     setCacheKey }: Props) => {
-    const latestAnswerValue = useDrizzleCache(DrizzleContext.Context, { id, cacheName: 'latestAnswer' }, latestAnswer, setCacheKey)
-    const latestTimestampValue = useDrizzleCache(DrizzleContext.Context, { id, cacheName: 'latestTimestamp' }, latestTimestamp, setCacheKey)
-    const latestRoundValue = useDrizzleCache(DrizzleContext.Context, { id, cacheName: 'latestRound' }, latestRound, setCacheKey)
+
+    const context = useContext(DrizzleContext.Context)
+    const latestAnswerValue = useDrizzleCache(context, { id, cacheName: 'latestAnswer' }, latestAnswer, setCacheKey)
+    const latestTimestampValue = useDrizzleCache(context, { id, cacheName: 'latestTimestamp' }, latestTimestamp, setCacheKey)
+    const latestRoundValue = useDrizzleCache(context, { id, cacheName: 'latestRound' }, latestRound, setCacheKey)
 
     const loading = !latestAnswerValue || !latestTimestampValue || !latestRoundValue
     if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
@@ -46,6 +48,7 @@ const ChainlinkFeedView = ({
 const mapStateToProps = (state: any, ownProps: any) => {
     const feedById = FeedSelectors.feedByFilterSelector(state, { protocol: 'chainlink', address: ownProps.address })
     const feedByName = FeedSelectors.feedByFilterSelector(state, { protocol: 'chainlink', name: ownProps.address })
+    let feedState;
 
     if (!feedById && !feedByName) {
         return {
@@ -54,12 +57,16 @@ const mapStateToProps = (state: any, ownProps: any) => {
 
     if (feedById && !feedByName) {
         ownProps.history.replace(`/feeds/chainlink/${feedById.name}`)
+        feedState = FeedSelectors.feedStateSelector(state, feedById)
         return {
+            feedState,
             ...feedById
         }
     }
 
+    feedState = FeedSelectors.feedStateSelector(state, feedByName)
     return {
+        feedState,
         ...feedByName
     }
 }

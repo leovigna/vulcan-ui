@@ -6,37 +6,26 @@ import * as ContractFavoriteSelectors from './contractFavorite/selectors';
 import * as NetworkSelectors from './network/selectors';
 import * as ProtocolSelectors from './protocol/selectors';
 import * as EventSelectors from './event/selectors';
+import * as DrizzleSelectors from './drizzle/selectors';
 
 import { Point } from '../store/types'
+import { ChainlinkFeed, Feed, TellorFeed } from './feed/types';
+import { chain } from 'lodash';
 
 export {
     FeedSelectors,
     ContractFavoriteSelectors,
     NetworkSelectors,
     ProtocolSelectors,
-    EventSelectors
+    EventSelectors,
+    DrizzleSelectors
 }
 
-interface State {
-    contracts: {
-        [key: string]: any
-    }
-}
-export const emptyArray = []
-export const emptyObj = {}
+const emptyArray = []
 
-// Drizzle State Selectors
-export const contractStateSelector = (state: State) => state.contracts;
-export const contractStateByAddressSelector: (state: State, address: string) => any = createCachedSelector(
-    contractStateSelector,
-    (_state_: State, address: string) => address,
-    (contracts, address) => contracts[address],
-)(
-    (_state_, address) => address
-);
 
 //ORM Selectors
-export const graphDataSelector: (state: State) => [Point<moment.Moment, number>] = createCachedSelector(
+export const graphDataSelector: (state: any) => [Point<moment.Moment, number>] = createCachedSelector(
     EventSelectors.makeEventIndexedFilterSelector(),
     (events, _indexId_: string) => {
         if (events.length == 0) return emptyArray;

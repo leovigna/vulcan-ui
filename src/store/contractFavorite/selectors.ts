@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
 import { ContractFavorite } from './types'
+import { feedResolve } from '../feed/selectors'
 
 const emptyArray = []
 
@@ -18,7 +19,7 @@ export const contractFavoritesByFilterSelector: (state: any, filter: any) => [Co
             const { ref } = item;
             return {
                 ...ref,
-                feed: item.feed?.ref
+                feed: item.feed ? feedResolve(item.feed) : null
             };
         });
 

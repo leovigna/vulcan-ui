@@ -7,18 +7,16 @@ import {
 } from '@coreui/react'
 
 import ProtocolCard from '../../components/ProtocolCard'
-import FeedCardDetailedGrid, { FeedDetailed, FeedStateDetailed } from '../../components/FeedCardDetailed/FeedCardDetailedGrid'
-import { ProtocolTypes } from '../../store/types'
+import FeedCardDetailedGrid from '../../components/FeedCardDetailed/FeedCardDetailedGrid'
+import { ProtocolTypes, FeedTypes } from '../../store/types'
 
 interface Props {
-    feeds: [FeedDetailed],
-    favoriteFeeds: [FeedDetailed],
+    feeds: FeedTypes.FeedBase[],
+    favoriteFeeds: FeedTypes.FeedBase[],
     feedValues: {
-        [key: string]: FeedStateDetailed
+        [key: string]: FeedTypes.FeedState
     },
-    protocols: {
-        [key: string]: ProtocolTypes.Protocol
-    },
+    protocols: ProtocolTypes.Protocol[]
     setContractFavorite: any
 }
 
@@ -43,9 +41,9 @@ const HomeView = ({ feeds, favoriteFeeds, feedValues, protocols, setContractFavo
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939', height: 95 }}>Protocols</h1>
                     </Col>
                     {
-                        Object.values(protocols).map(({ description, active, id, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
+                        protocols.map(({ description, active, id, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
                             <Col key={idx} lg="3" md="6" xs="12">
-                                <ProtocolCard href={`#/protocols/${id}`} hearted={false} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
+                                <ProtocolCard href={`#/protocols/${id}`} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
                             </Col>)
                     }
                 </Row>
@@ -84,7 +82,7 @@ const HomeView = ({ feeds, favoriteFeeds, feedValues, protocols, setContractFavo
 HomeView.defaultProps = {
     feeds: [],
     favoriteFeeds: [],
-    protocols: {}
+    protocols: []
 }
 
 export default HomeView;

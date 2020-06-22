@@ -1,3 +1,6 @@
+import { ContractFavorite } from "../contractFavorite/types"
+import { Protocol } from "../protocol/types"
+
 export interface DrizzleCacheKey {
     contractId: string,
     cacheKey?: string,
@@ -20,7 +23,10 @@ export interface FeedBase {
     title: string,
     description?: string,
     ens?: string,
-    answerRenderOptions?: AnswerRenderOptions
+    answerRenderOptions?: AnswerRenderOptions,
+    favoriteId: string,
+    favorite?: ContractFavorite
+    protocolInfo?: Protocol
 }
 
 export interface ChainlinkFeed extends FeedBase {
@@ -54,7 +60,17 @@ export interface TellorFeedState {
     }
 }
 
-export type FeedState = ChainlinkFeedState | TellorFeedState
+export interface FeedState {
+    value: number
+    timestamp: string,
+    latestAnswer?: string,
+    latestTimestamp?: string,
+    latestRound?: string,
+    getCurrentValue?: {
+        value: number,
+        _timestampRetrieved: string
+    }
+}
 
 export const SET_FEED_CACHE_KEY = 'ORM/SET_FEED_CACHE_KEY'
 

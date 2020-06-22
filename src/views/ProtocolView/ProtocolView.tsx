@@ -5,14 +5,12 @@ import {
     CContainer as Container,
     CButton as Button
 } from '@coreui/react'
-import { ProtocolTypes } from '../../store/types'
+import { ProtocolTypes, FeedTypes } from '../../store/types'
 import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
 
 interface Props extends ProtocolTypes.Protocol {
-    feeds: [FeedDetailed],
-    favoriteFeeds: [FeedDetailed],
     feedValues: {
-        [key: string]: FeedStateDetailed
+        [key: string]: FeedTypes.FeedState
     },
     setContractFavorite: any
 }
@@ -88,7 +86,8 @@ ProtocolView.defaultProps = {
     feedCount: 0,
     nodeCount: 0,
     feeds: [],
-    nodes: []
+    nodes: [],
+    feedValues: {}
 }
 
 export default ProtocolView;
