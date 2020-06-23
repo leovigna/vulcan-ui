@@ -16,12 +16,11 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
     flattenProp('match'),
     flattenProp('params'),
+    withSetContractFavorite,
+    withSetCacheKey,
     withNetworkId,
     withProtocol,
     flattenProp('protocol'),
-    withSetContractFavorite,
-    withSetCacheKey,
-    withDrizzleContext,
-    withFeedsCache,
+    connect(mapStateToProps, mapDispatchToProps)
     //connect(mapStateToProps, mapDispatchToProps),
 )(ProtocolView);

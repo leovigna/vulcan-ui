@@ -3,6 +3,9 @@ import createCachedSelector from 're-reselect';
 interface DrizzleState {
     contracts: {
         [key: string]: any
+    },
+    currentBlock: {
+        hash: string
     }
 }
 
@@ -14,9 +17,13 @@ export const drizzleStateSelector = (state: DrizzleState) => state.contracts;
 export const drizzleStateByIdSelector: (state: DrizzleState, id: string) => any = createCachedSelector(
     drizzleStateSelector,
     (_state_: DrizzleState, id: string) => id,
-    (contracts, id) => contracts[id],
+    (contracts, id) => contracts?.[id],
 )(
-    (_state_, id) => id
+    (state, id) => {
+        const cacheKeyFull = [state.currentBlock?.hash, id].join('-')
+        console.debug(cacheKeyFull)
+        return cacheKeyFull
+    }
 );
 
 export const drizzleStateValueSelector: (state: DrizzleState, id: string, cacheName: string, cacheKey: string) => any = createCachedSelector(
@@ -30,5 +37,9 @@ export const drizzleStateValueSelector: (state: DrizzleState, id: string, cacheN
         return contractState[cacheName][cacheKey]?.value
     }
 )(
-    (_state_, id, cacheName, cacheKey) => { return [id, cacheName, cacheKey].join('-') }
+    (state, id, cacheName, cacheKey) => {
+        const cacheKeyFull = [state.currentBlock?.hash, id, cacheName, cacheKey].join('-')
+        console.debug(cacheKeyFull)
+        return cacheKeyFull
+    }
 );

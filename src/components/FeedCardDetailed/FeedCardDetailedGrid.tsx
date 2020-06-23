@@ -8,28 +8,26 @@ import {
 
 import FeedCardDetailed from './FeedCardDetailed'
 import { FeedTypes } from '../../store/types'
+import { renderAnswer } from '../../store/feed/actions';
+import moment from 'moment';
 
 interface Props {
-    feeds: FeedTypes.FeedBase[],
-    feedValues: {
-        [key: string]: FeedTypes.FeedState
-    },
+    feeds: FeedTypes.Feed[],
     setContractFavorite: any
 }
 
-const FeedCardDetailedGrid = ({ feeds, feedValues, setContractFavorite }: Props) => {
+const FeedCardDetailedGrid = ({ feeds, setContractFavorite }: Props) => {
     const history = useHistory();
     return (<> {
-        feeds.map(({ id, title, name, ens, protocol, protocolInfo, address, networkId, favorite }, idx) => {
-            const feedValue = feedValues[id]
-            const value = feedValue?.value || ''
-            const lastUpdate = feedValue?.timestamp
+        feeds.map(({ id, title, name, ens, protocol, protocolInfo, address, networkId, favorite, state, answerRenderOptions }, idx) => {
             const url = `/feeds/${protocol}/${name}`
             const hearted = favorite?.favorite || false
             const protocolImg = protocolInfo?.img || ''
+            const valueRender = state?.value ? renderAnswer(answerRenderOptions!, state!.value) : ''
+            const timestampRender = state?.timestamp ? moment(state!.timestamp, 'X').format('MMMM D - h:mm A') : '';
 
             return (<Col key={idx} lg="4" md="6" xs="12">
-                <FeedCardDetailed onHeartClick={() => setContractFavorite({ id, address, networkId, favorite: !hearted })} href={url} handleClickViewButton={() => history.push(url)} address={address} protocolImg={protocolImg} feedName={title} value={value} hearted={hearted} feedENS={ens} nodeCount={0} lastUpdate={lastUpdate} />
+                <FeedCardDetailed onHeartClick={() => setContractFavorite({ id, address, networkId, favorite: !hearted })} href={url} handleClickViewButton={() => history.push(url)} address={address} protocolImg={protocolImg} feedName={title} value={valueRender} hearted={hearted} feedENS={ens} nodeCount={0} lastUpdate={timestampRender} />
             </Col>)
         })
     }</>)

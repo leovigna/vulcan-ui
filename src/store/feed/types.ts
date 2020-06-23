@@ -1,5 +1,6 @@
 import { ContractFavorite } from "../contractFavorite/types"
 import { Protocol } from "../protocol/types"
+import { StoreReader } from "apollo-cache-inmemory"
 
 export interface DrizzleCacheKey {
     contractId: string,
@@ -26,9 +27,9 @@ export interface FeedBase {
     answerRenderOptions?: AnswerRenderOptions,
     favoriteId: string,
     favorite?: ContractFavorite
-    protocolInfo?: Protocol
+    protocolInfo?: Protocol,
+    state?: FeedState
 }
-
 export interface ChainlinkFeed extends FeedBase {
     latestAnswer: DrizzleCacheKey,
     latestTimestamp: DrizzleCacheKey,
@@ -50,7 +51,9 @@ export type Feed = ChainlinkFeed | TellorFeed
 export interface ChainlinkFeedState {
     latestAnswer: string,
     latestTimestamp: string,
-    latestRound: string
+    latestRound: string,
+    getAnswer: { [key: string]: string },
+    getTimestamp: { [key: string]: string }
 }
 
 export interface TellorFeedState {
@@ -66,6 +69,8 @@ export interface FeedState {
     latestAnswer?: string,
     latestTimestamp?: string,
     latestRound?: string,
+    getAnswer?: { [key: string]: string },
+    getTimestamp?: { [key: string]: string }
     getCurrentValue?: {
         value: number,
         _timestampRetrieved: string

@@ -3,56 +3,59 @@ import orm from '../orm'
 import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState } from './types'
 import { DrizzleSelectors } from '../selectors'
 import { FeedTypes } from '../types'
-import { Contract } from '../orm/models'
 
 const emptyArray: FeedTypes.Feed[] = []
 
-export const feedResolve = (feed: FeedTypes.Feed) => {
-    return {
+export const feedResolve = (state: any, feed: FeedTypes.Feed) => {
+    const feedState = feed.ref ? feedStateSelector(state, feed.ref) : null
+    const feedInfo = {
         ...feed.ref,
         protocolInfo: feed.protocolInfo?.ref,
-        favorite: feed.favorite?.ref
+        favorite: feed.favorite?.ref,
+        state: feedState
     }
+
+    return feedInfo
 };
 
 export const feedsSelector: (state: any, id: string) => Feed = createSelector(orm.Feed)
-export const feedsByFilterSelector: (state: any, filter: any) => FeedTypes.Feed[] = createSelector(
+export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => FeedTypes.Feed[] = createSelector(
     orm,
     (_session_, filter) => filter,
-    (session, filter) => {
-
-        const contracts = session.Feed.filter(filter).toModelArray().map((item: FeedTypes.Feed) => {
-            return feedResolve(item)
+    (_session_, _filter_, state) => state,
+    (session, filter, state) => {
+        const feeds = session.Feed.filter(filter).toModelArray().map((item: FeedTypes.Feed) => {
+            return feedResolve(state, item)
         });
 
-        if (contracts.length == 0) return emptyArray;
-        return contracts;
+        if (feeds.length == 0) return emptyArray;
+        return feeds;
     }
 );
 
 export const feedByFilterSelector: (state: any, filter: any) => FeedTypes.Feed = createSelector(
     orm,
     (_session_, filter) => filter,
-    (session, filter) => {
+    (session, filter, state) => {
         const item = session.Feed.filter(filter).first()
         if (!item) return null;
-        return feedResolve(item)
+        return feedResolve(item, session.state)
     }
 );
 
 //Feed Cache
 const setChainlinkFeedStateCache = (drizzle: any, feed: ChainlinkFeed, setCacheKey: any) => {
-    if (!feed.latestAnswer.cacheKey) {
+    if (!feed.latestAnswer?.cacheKey) {
         const contract = drizzle.contracts[feed.latestAnswer.contractId]
         const cacheKey = contract.methods.latestAnswer.cacheCall()
         setCacheKey({ id: feed.id, cacheName: 'latestAnswer', contractId: feed.latestAnswer.contractId, cacheKey })
     }
-    if (!feed.latestRound.cacheKey) {
+    if (!feed.latestRound?.cacheKey) {
         const contract = drizzle.contracts[feed.latestRound.contractId]
         const cacheKey = contract.methods.latestRound.cacheCall()
         setCacheKey({ id: feed.id, cacheName: 'latestRound', contractId: feed.latestRound.contractId, cacheKey })
     }
-    if (!feed.latestTimestamp.cacheKey) {
+    if (!feed.latestTimestamp?.cacheKey) {
         const contract = drizzle.contracts[feed.latestTimestamp.contractId]
         const cacheKey = contract.methods.latestTimestamp.cacheCall()
         setCacheKey({ id: feed.id, cacheName: 'latestTimestamp', contractId: feed.latestTimestamp.contractId, cacheKey })
@@ -74,7 +77,7 @@ const setChainlinkFeedRoundStateCache = (drizzle: any, feed: ChainlinkFeed, setC
 }
 
 const setTellorFeedStateCache = (drizzle: any, feed: TellorFeed, setCacheKey: any) => {
-    if (!feed.getCurrentValue.cacheKey) {
+    if (!feed.getCurrentValue?.cacheKey) {
         const contract = drizzle.contracts[feed.getCurrentValue.contractId]
         const cacheKey = contract.methods.getCurrentValue.cacheCall(feed.tellorId)
         setCacheKey({ id: feed.id, cacheName: 'getCurrentValue', contractId: feed.getCurrentValue.contractId, cacheKey })
@@ -82,6 +85,9 @@ const setTellorFeedStateCache = (drizzle: any, feed: TellorFeed, setCacheKey: an
 }
 
 export const setFeedStateCache = (drizzle: any, feed: Feed, setCacheKey: any) => {
+    if (!drizzle.contracts) return;
+    console.debug(feed)
+
     if (feed.protocol === 'tellor') {
         setTellorFeedStateCache(drizzle, feed as FeedTypes.TellorFeed, setCacheKey)
     } else if (feed.protocol === 'chainlink') {
@@ -136,6 +142,8 @@ const tellorFeedStateSelector: (state: any, feed: TellorFeed) => TellorFeedState
     if (feed.getCurrentValue.cacheKey) {
         getCurrentValue = DrizzleSelectors.drizzleStateValueSelector(state, feed.getCurrentValue.contractId, 'getCurrentValue', feed.getCurrentValue.cacheKey)
     }
+    console.debug(feed)
+    console.debug(getCurrentValue)
     return { getCurrentValue }
 }
 

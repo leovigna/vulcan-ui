@@ -3,7 +3,7 @@ import orm from '../orm'
 import { ContractFavorite } from './types'
 import { feedResolve } from '../feed/selectors'
 
-const emptyArray = []
+const emptyArray: ContractFavorite[] = []
 
 type contractFavoritesSelectorType = ((state: any) => [ContractFavorite]) |
     ((state: any, id: string) => ContractFavorite) |
@@ -11,15 +11,16 @@ type contractFavoritesSelectorType = ((state: any) => [ContractFavorite]) |
 
 //@ts-ignore
 export const contractFavoritesSelector: contractFavoritesSelectorType = createSelector(orm.ContractFavorite)
-export const contractFavoritesByFilterSelector: (state: any, filter: any) => [ContractFavorite] = createSelector(
+export const contractFavoritesByFilterSelector: (ormState: any, filter: any, state: any) => ContractFavorite[] = createSelector(
     orm,
     (_session_, filter) => filter,
-    (session, filter) => {
+    (_session_, filter, state) => state,
+    (session, filter, state) => {
         const contracts = session.ContractFavorite.filter(filter).toModelArray().map((item: ContractFavorite) => {
             const { ref } = item;
             return {
                 ...ref,
-                feed: item.feed ? feedResolve(item.feed) : null
+                feed: item.feed ? feedResolve(state, item.feed) : null
             };
         });
 

@@ -11,16 +11,13 @@ import FeedCardDetailedGrid from '../../components/FeedCardDetailed/FeedCardDeta
 import { ProtocolTypes, FeedTypes } from '../../store/types'
 
 interface Props {
-    feeds: FeedTypes.FeedBase[],
-    favoriteFeeds: FeedTypes.FeedBase[],
-    feedValues: {
-        [key: string]: FeedTypes.FeedState
-    },
+    feeds: FeedTypes.FeedBaseWithState[],
+    favoriteFeeds: FeedTypes.FeedBaseWithState[]
     protocols: ProtocolTypes.Protocol[]
     setContractFavorite: any
 }
 
-const HomeView = ({ feeds, favoriteFeeds, feedValues, protocols, setContractFavorite }: Props) => {
+const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Props) => {
     const [minimizeFeeds, setMinimizeFeeds] = useState(true);
     const [minimizeFavoriteFeeds, setMinimizeFavoriteFeeds] = useState(true);
 
@@ -51,7 +48,7 @@ const HomeView = ({ feeds, favoriteFeeds, feedValues, protocols, setContractFavo
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite Feeds</h1>
                     </Col>
-                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFavoriteFeeds} feedValues={feedValues} />
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFavoriteFeeds} />
                     {favoriteFeeds.length > favoriteFeedsMinimizeCount ?
                         <Col xs={12}>
                             <div className="d-flex justify-content-center">
@@ -65,7 +62,7 @@ const HomeView = ({ feeds, favoriteFeeds, feedValues, protocols, setContractFavo
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
                     </Col>
-                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} feedValues={feedValues} />
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} />
                     {feeds.length > feedsMinimizeCount ?
                         <Col xs={12}>
                             <div className="d-flex justify-content-center">
