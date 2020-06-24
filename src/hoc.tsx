@@ -5,7 +5,7 @@ import { FeedTypes, ProtocolTypes } from './store/types'
 import moment from 'moment'
 import { renderAnswer, setFeedCacheKey } from './store/feed/actions'
 import { FeedSelectors, ContractFavoriteSelectors, NetworkSelectors, ProtocolSelectors } from './store/selectors'
-import { setFeedStateCache } from './store/feed/selectors';
+import { setFeedStateCache, setFeedStateFullCache } from './store/feed/selectors';
 import { SetFeedCacheKeyActionInput } from './store/feed/types';
 import { SetContractFavoriteActionInput } from './store/contractFavorite/types';
 import { setContractFavorite } from './store/contractFavorite/actions';
@@ -67,6 +67,16 @@ export const withFeedCache = (Component: any) => (props: any) => {
     useEffect(() => {
         if (initialized && !!props.feed) {
             setFeedStateCache(drizzle, props.feed, props.setCacheKey)
+        }
+    }, [props.feed, initialized])
+    return (<Component {...props} />)
+}
+
+export const withFeedHistoryCache = (Component: any) => (props: any) => {
+    const { drizzle, drizzleState, initialized } = props.drizzleContext;
+    useEffect(() => {
+        if (initialized && !!props.feed) {
+            setFeedStateFullCache(drizzle, props.feed, props.setCacheKey, drizzleState)
         }
     }, [props.feed, initialized])
     return (<Component {...props} />)

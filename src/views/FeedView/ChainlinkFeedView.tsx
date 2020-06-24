@@ -8,7 +8,7 @@ import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
 import { SetFeedCacheKeyActionInput, ChainlinkFeed } from '../../store/feed/types'
 import { setFeedCacheKey, renderAnswer } from '../../store/feed/actions'
-import { useDrizzleCache, withFeed, withDrizzleContext, withFeedCache, withSetContractFavorite, withSetCacheKey } from '../../hoc'
+import { useDrizzleCache, withFeed, withDrizzleContext, withFeedCache, withSetContractFavorite, withSetCacheKey, withFeedHistoryCache } from '../../hoc'
 
 interface Props {
     protocol: string,
@@ -38,7 +38,8 @@ const ChainlinkFeedView = ({
         title: title,
         address,
         answer: loading ? 'Loading...' : latestAnswerFormatted,
-        lastUpdate: loading ? 'Loading...' : lastUpdate
+        lastUpdate: loading ? 'Loading...' : lastUpdate,
+        chartData: feed?.state?.history?.map((d) => { return { x: d.timestamp, y: d.value } })
     }
 
     return (<FeedView {...feedViewProps} />);
@@ -85,4 +86,5 @@ export default compose(
     withFeed,
     withDrizzleContext,
     withFeedCache,
+    withFeedHistoryCache,
 )(ChainlinkFeedView);

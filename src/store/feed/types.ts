@@ -1,6 +1,5 @@
 import { ContractFavorite } from "../contractFavorite/types"
 import { Protocol } from "../protocol/types"
-import { StoreReader } from "apollo-cache-inmemory"
 
 export interface DrizzleCacheKey {
     contractId: string,
@@ -63,9 +62,15 @@ export interface TellorFeedState {
     }
 }
 
+interface HistoryPoint {
+    timestamp: string,
+    value: number
+}
+
 export interface FeedState {
     value: number
     timestamp: string,
+    history?: HistoryPoint[]
     latestAnswer?: string,
     latestTimestamp?: string,
     latestRound?: string,

@@ -3,6 +3,8 @@ import orm from '../orm'
 import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState } from './types'
 import { DrizzleSelectors } from '../selectors'
 import { FeedTypes } from '../types'
+import { transformAnswer } from './actions'
+import moment from 'moment'
 
 const emptyArray: FeedTypes.Feed[] = []
 
@@ -107,6 +109,22 @@ export const setFeedStateCache = (drizzle: any, feed: Feed, setCacheKey: any) =>
     }
 }
 
+export const setFeedStateFullCache = (drizzle: any, feed: Feed, setCacheKey: any, state: any) => {
+    if (!drizzle.contracts) return;
+    console.debug(feed)
+
+    if (feed.protocol === 'tellor') {
+        //setTellorFeedStateCache(drizzle, feed as FeedTypes.TellorFeed, setCacheKey)
+    } else if (feed.protocol === 'chainlink') {
+        // setChainlinkFeedStateCache(drizzle, feed as FeedTypes.ChainlinkFeed, setCacheKey)
+        const feedCL = feed as FeedTypes.ChainlinkFeed
+        if (!!feedCL.latestRound.contractId && !!feedCL.latestRound.cacheKey) {
+            const latestRound = DrizzleSelectors.drizzleStateValueSelector(state, feedCL.latestRound.contractId, 'latestRound', feedCL.latestRound.cacheKey)
+            setChainlinkFeedRoundStateCache(drizzle, feed as FeedTypes.ChainlinkFeed, setCacheKey, latestRound)
+        }
+    }
+}
+
 //Feed State
 const chainlinkFeedStateSelector: (state: any, feed: ChainlinkFeed) => ChainlinkFeedState = (state, feed) => {
     let latestAnswer;
@@ -162,10 +180,17 @@ const tellorFeedStateSelector: (state: any, feed: TellorFeed) => TellorFeedState
 export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, feed) => {
     if (feed.protocol === 'chainlink') {
         const feedState = chainlinkFeedStateSelector(state, feed as ChainlinkFeed)
+        const history = Object.keys(feedState.getTimestamp).map((k) => {
+            return {
+                timestamp: feedState.getTimestamp[k] ? new Date(Number(feedState.getTimestamp[k]) * 1000) : 0,
+                value: feedState.getAnswer[k] ? transformAnswer(feed.answerRenderOptions!, feedState.getAnswer[k]) : 0
+            }
+        }).filter((d) => !!d.timestamp && !!d.value)
         if (feedState) {
             return {
                 timestamp: feedState.latestTimestamp,
                 value: feedState.latestAnswer,
+                history,
                 ...feedState
             }
         }

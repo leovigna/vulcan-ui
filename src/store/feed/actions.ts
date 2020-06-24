@@ -14,8 +14,14 @@ export function setFeedCacheKey(data: SetFeedCacheKeyActionInput): SetFeedCacheK
     }
 }
 
-export function renderAnswer(answerRenderOptions: AnswerRenderOptions, answer: number | string): string {
+export function renderAnswer(answerRenderOptions: AnswerRenderOptions, answer: string): string {
     const answerNumber = Number(answer)
 
     return sprintf(answerRenderOptions.format, { value: (answerRenderOptions.transform.multiply * answerNumber).toFixed(answerRenderOptions.transform.decimals) })
+}
+
+export function transformAnswer(answerRenderOptions: AnswerRenderOptions, answer: string): number {
+    const answerNumber = Number(answer)
+
+    return Number((answerRenderOptions.transform.multiply * answerNumber).toFixed(answerRenderOptions.transform.decimals))
 }
