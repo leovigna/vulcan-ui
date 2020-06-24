@@ -18,7 +18,18 @@ export const feedResolve = (state: any, feed: FeedTypes.Feed) => {
     return feedInfo
 };
 
-export const feedsSelector: (state: any, id: string) => Feed = createSelector(orm.Feed)
+export const feedByIdSelector: (ormState: any, id: string, state: any) => FeedTypes.Feed = createSelector(
+    orm,
+    (_session_, id) => id,
+    (_session_, _id_, state) => state,
+    (session, id, state) => {
+        const feed = session.Feed.withId(id)
+        if (!feed) return null;
+        console.debug(state)
+        return feedResolve(state, feed)
+    }
+);
+
 export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => FeedTypes.Feed[] = createSelector(
     orm,
     (_session_, filter) => filter,
@@ -33,13 +44,14 @@ export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => 
     }
 );
 
-export const feedByFilterSelector: (state: any, filter: any) => FeedTypes.Feed = createSelector(
+export const feedByFilterSelector: (ormState: any, filter: any, state: any) => FeedTypes.Feed = createSelector(
     orm,
     (_session_, filter) => filter,
+    (_session_, _filter_, state) => state,
     (session, filter, state) => {
         const item = session.Feed.filter(filter).first()
         if (!item) return null;
-        return feedResolve(item, session.state)
+        return feedResolve(state, item)
     }
 );
 

@@ -20,7 +20,7 @@ export const drizzleStateByIdSelector: (state: DrizzleState, id: string) => any 
     (contracts, id) => contracts?.[id],
 )(
     (state, id) => {
-        const cacheKeyFull = [state.currentBlock?.hash, id].join('-')
+        const cacheKeyFull = [state?.currentBlock?.hash, id].join('-')
         console.debug(cacheKeyFull)
         return cacheKeyFull
     }
@@ -38,7 +38,7 @@ export const drizzleStateValueSelector: (state: DrizzleState, id: string, cacheN
     }
 )(
     (state, id, cacheName, cacheKey) => {
-        const cacheKeyFull = [state.currentBlock?.hash, id, cacheName, cacheKey].join('-')
+        const cacheKeyFull = [state?.currentBlock?.hash, id, cacheName, cacheKey].join('-')
         console.debug(cacheKeyFull)
         return cacheKeyFull
     }

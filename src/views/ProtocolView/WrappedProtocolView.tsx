@@ -21,6 +21,7 @@ export default compose(
     withNetworkId,
     withProtocol,
     flattenProp('protocol'),
+    withDrizzleContext,
+    withFeedsCache,
     connect(mapStateToProps, mapDispatchToProps)
-    //connect(mapStateToProps, mapDispatchToProps),
 )(ProtocolView);

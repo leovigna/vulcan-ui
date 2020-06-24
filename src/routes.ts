@@ -9,8 +9,8 @@ const ChainlinkFeedView = React.lazy(() => import('./views/FeedView/ChainlinkFee
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
     { path: '/', exact: true, name: 'Home', component: WrappedHomeView },
-    { path: '/feeds/chainlink/:address', exact: true, name: 'Feeds', component: ChainlinkFeedView },
-    { path: '/feeds/tellor/:tellorId', exact: true, name: 'Feeds', component: TellorFeedView },
+    { path: '/feeds/chainlink/:id', exact: true, name: 'Feeds', component: ChainlinkFeedView },
+    { path: '/feeds/tellor/:id', exact: true, name: 'Feeds', component: TellorFeedView },
     { path: '/feeds/:address', exact: true, name: 'Feeds', component: WrappedFeedView },
     { path: '/protocols/:id', exact: true, name: 'Protocols', component: WrappedProtocolView }
 ];

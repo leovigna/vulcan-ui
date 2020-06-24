@@ -24,6 +24,7 @@ export const withDrizzleContext = (Component: any) => (props: any) => {
     return (<Component drizzleContext={drizzleContext} {...props} />)
 }
 export const withNetworkId = connect((state: any) => { return { networkId: NetworkSelectors.networkIdSelector(state) } })
+
 export const withFeeds = connect((state: any, { networkId }: Props) => {
     return { feeds: FeedSelectors.feedsByFilterSelector(state, { networkId }, state) }
 })
@@ -33,8 +34,12 @@ export const withFavoriteFeeds = connect((state: any, { networkId }: Props) => {
 
     return { favoriteFeeds }
 })
+export const withFeed = connect((state: any, { id }: Props) => {
+    return { feed: FeedSelectors.feedByIdSelector(state, id, state) }
+})
+
 export const withProtocols = connect((state: any) => { return { protocols: ProtocolSelectors.protocolsByFilterSelector(state, {}, state) } })
-export const withProtocol = connect((state: any, { id }: any) => { return { protocol: ProtocolSelectors.protocolByIdSelector(state, id) } })
+export const withProtocol = connect((state: any, { id }: any) => { return { protocol: ProtocolSelectors.protocolByIdSelector(state, id, state) } })
 export const withSetContractFavorite = connect(null, (dispatch) => {
     return { setContractFavorite: (payload: SetContractFavoriteActionInput) => dispatch(setContractFavorite(payload)) }
 })
@@ -53,13 +58,17 @@ export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.F
         }
     }, [feeds, initialized])
 }
-
-/**
- * value.value = value.value ? renderAnswer(f.answerRenderOptions, value.value) : ''
-                value.timestamp = value.timestamp ? moment(value.timestamp, 'X').format('MMMM D - h:mm A') : '';
- */
 export const withFeedsCache = (Component: any) => (props: any) => {
     useFeedsCache(props.drizzleContext, props.feeds, props.setCacheKey)
+    return (<Component {...props} />)
+}
+export const withFeedCache = (Component: any) => (props: any) => {
+    const { drizzle, initialized } = props.drizzleContext;
+    useEffect(() => {
+        if (initialized && !!props.feed) {
+            setFeedStateCache(drizzle, props.feed, props.setCacheKey)
+        }
+    }, [props.feed, initialized])
     return (<Component {...props} />)
 }
 
