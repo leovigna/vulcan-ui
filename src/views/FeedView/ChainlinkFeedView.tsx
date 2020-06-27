@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { compose, flattenProp, withProps } from 'recompose'
 import { connect } from 'react-redux'
 import moment from 'moment';
-import { DrizzleContext } from "@drizzle/react-plugin"
+
 
 import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
-import { SetFeedCacheKeyActionInput, ChainlinkFeed } from '../../store/feed/types'
-import { setFeedCacheKey, renderAnswer } from '../../store/feed/actions'
-import { useDrizzleCache, withFeed, withDrizzleContext, withFeedCache, withSetContractFavorite, withSetCacheKey, withFeedHistoryCache } from '../../hoc'
+import { ChainlinkFeed } from '../../store/feed/types'
+import { renderAnswer } from '../../store/feed/actions'
+import { withFeed, withDrizzleContext, withFeedCache, withSetContractFavorite, withSetCacheKey, withFeedHistoryCache } from '../../hoc'
 
 interface Props {
     protocol: string,

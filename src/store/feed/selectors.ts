@@ -5,6 +5,7 @@ import { DrizzleSelectors } from '../selectors'
 import { FeedTypes } from '../types'
 import { transformAnswer } from './actions'
 import moment from 'moment'
+import { set } from 'lodash'
 
 const emptyArray: FeedTypes.Feed[] = []
 
@@ -96,6 +97,33 @@ const setTellorFeedStateCache = (drizzle: any, feed: TellorFeed, setCacheKey: an
         const cacheKey = contract.methods.getCurrentValue.cacheCall(feed.tellorId)
         setCacheKey({ id: feed.id, cacheName: 'getCurrentValue', contractId: feed.getCurrentValue.contractId, cacheKey })
     }
+    if (!feed.getNewValueCountbyRequestId?.cacheKey) {
+        const contract = drizzle.contracts[feed.getNewValueCountbyRequestId.contractId]
+        const cacheKey = contract.methods.getNewValueCountbyRequestId.cacheCall(feed.tellorId)
+        setCacheKey({ id: feed.id, cacheName: 'getNewValueCountbyRequestId', contractId: feed.getNewValueCountbyRequestId.contractId, cacheKey })
+    }
+}
+
+const setTellorFeedHistoryCache = (drizzle: any, feed: TellorFeed, setCacheKey: any) => {
+    const valueCount = feed.state?.getNewValueCountbyRequestId
+    const timestamps = feed.state?.getTimestampbyRequestIDandIndex || {}
+    const contract = drizzle.contracts[feed.getNewValueCountbyRequestId.contractId]
+    if (valueCount) {
+        for (let i = Number(valueCount - 1); i > Math.max(valueCount - 50, 0); i--) {
+            if (!feed.getTimestampbyRequestIDandIndex[i]) {
+                const cacheKey = contract.methods.getTimestampbyRequestIDandIndex.cacheCall(feed.tellorId, i)
+                setCacheKey({ id: feed.id, cacheName: 'getTimestampbyRequestIDandIndex', cacheArgs: i, contractId: feed.getNewValueCountbyRequestId.contractId, cacheKey })
+            }
+
+        }
+
+        Object.values(timestamps).forEach((t) => {
+            if (!!t && !feed.retrieveData[t]) {
+                const cacheKey = contract.methods.retrieveData.cacheCall(feed.tellorId, t)
+                setCacheKey({ id: feed.id, cacheName: 'retrieveData', cacheArgs: t, contractId: feed.getNewValueCountbyRequestId.contractId, cacheKey })
+            }
+        })
+    }
 }
 
 export const setFeedStateCache = (drizzle: any, feed: Feed, setCacheKey: any) => {
@@ -115,6 +143,7 @@ export const setFeedStateFullCache = (drizzle: any, feed: Feed, setCacheKey: any
 
     if (feed.protocol === 'tellor') {
         //setTellorFeedStateCache(drizzle, feed as FeedTypes.TellorFeed, setCacheKey)
+        setTellorFeedHistoryCache(drizzle, feed as FeedTypes.TellorFeed, setCacheKey)
     } else if (feed.protocol === 'chainlink') {
         // setChainlinkFeedStateCache(drizzle, feed as FeedTypes.ChainlinkFeed, setCacheKey)
         const feedCL = feed as FeedTypes.ChainlinkFeed
@@ -169,12 +198,33 @@ const chainlinkFeedStateSelector: (state: any, feed: ChainlinkFeed) => Chainlink
 
 const tellorFeedStateSelector: (state: any, feed: TellorFeed) => TellorFeedState = (state, feed) => {
     let getCurrentValue;
+    let getNewValueCountbyRequestId;
+    let getTimestampbyRequestIDandIndex;
+    let retrieveData;
     if (feed.getCurrentValue.cacheKey) {
         getCurrentValue = DrizzleSelectors.drizzleStateValueSelector(state, feed.getCurrentValue.contractId, 'getCurrentValue', feed.getCurrentValue.cacheKey)
     }
-    console.debug(feed)
-    console.debug(getCurrentValue)
-    return { getCurrentValue }
+    if (feed.getNewValueCountbyRequestId.cacheKey) {
+        getNewValueCountbyRequestId = DrizzleSelectors.drizzleStateValueSelector(state, feed.getNewValueCountbyRequestId.contractId, 'getNewValueCountbyRequestId', feed.getNewValueCountbyRequestId.cacheKey)
+    }
+    if (feed.getTimestampbyRequestIDandIndex) {
+        getTimestampbyRequestIDandIndex = Object.fromEntries(Object.values(feed.getTimestampbyRequestIDandIndex).map((cache) => {
+            if (!!cache.cacheKey && !!cache.cacheArgs) {
+                const value = DrizzleSelectors.drizzleStateValueSelector(state, feed.getNewValueCountbyRequestId.contractId, 'getTimestampbyRequestIDandIndex', cache.cacheKey)
+                return [cache.cacheArgs!, value]
+            }
+        }) as Iterable<[string, any]>)
+    }
+    if (feed.retrieveData) {
+        retrieveData = Object.fromEntries(Object.values(feed.retrieveData).map((cache) => {
+            if (!!cache.cacheKey && !!cache.cacheArgs) {
+                const value = DrizzleSelectors.drizzleStateValueSelector(state, feed.getNewValueCountbyRequestId.contractId, 'retrieveData', cache.cacheKey)
+                return [cache.cacheArgs!, value]
+            }
+        }) as Iterable<[string, any]>)
+    }
+
+    return { getCurrentValue, getNewValueCountbyRequestId, getTimestampbyRequestIDandIndex, retrieveData }
 }
 
 export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, feed) => {
@@ -197,10 +247,17 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
     }
     if (feed.protocol === 'tellor') {
         const feedState = tellorFeedStateSelector(state, feed as TellorFeed)
+        const history = Object.keys(feedState.retrieveData).map((k) => {
+            return {
+                timestamp: new Date(Number(k) * 1000),
+                value: feedState.retrieveData[k] ? transformAnswer(feed.answerRenderOptions!, feedState.retrieveData[k]) : 0
+            }
+        }).filter((d) => !!d.timestamp && !!d.value)
         if (feedState) {
             return {
                 timestamp: feedState.getCurrentValue?._timestampRetrieved,
                 value: feedState.getCurrentValue?.value,
+                history,
                 ...feedState
             }
         }

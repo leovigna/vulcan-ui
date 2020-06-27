@@ -47,7 +47,12 @@ export const testContracts: Array<FeedTypes.ChainlinkFeed | FeedTypes.TellorFeed
         "sampleAPI": "json(https://api.pro.coinbase.com/products/ETH-USD/ticker).price",
         getCurrentValue: {
             contractId: "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58"
-        }
+        },
+        getNewValueCountbyRequestId: {
+            contractId: "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5"
+        },
+        getTimestampbyRequestIDandIndex: {},
+        retrieveData: {}
     }
 ]
 

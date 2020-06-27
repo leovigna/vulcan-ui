@@ -20,7 +20,7 @@ export function renderAnswer(answerRenderOptions: AnswerRenderOptions, answer: s
     return sprintf(answerRenderOptions.format, { value: (answerRenderOptions.transform.multiply * answerNumber).toFixed(answerRenderOptions.transform.decimals) })
 }
 
-export function transformAnswer(answerRenderOptions: AnswerRenderOptions, answer: string): number {
+export function transformAnswer(answerRenderOptions: AnswerRenderOptions, answer: string | number): number {
     const answerNumber = Number(answer)
 
     return Number((answerRenderOptions.transform.multiply * answerNumber).toFixed(answerRenderOptions.transform.decimals))

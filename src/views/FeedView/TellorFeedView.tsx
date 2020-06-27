@@ -2,13 +2,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import { compose, flattenProp, lifecycle, withStateHandlers, withProps } from 'recompose'
 import { connect } from 'react-redux'
 import moment from 'moment';
-import { DrizzleContext } from "@drizzle/react-plugin"
 
 import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
-import { TellorFeed, SetFeedCacheKeyActionInput } from '../../store/feed/types'
-import { setFeedCacheKey, renderAnswer } from '../../store/feed/actions'
-import { useDrizzleCache, withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext, withFeedCache } from '../../hoc'
+import { TellorFeed } from '../../store/feed/types'
+import { renderAnswer } from '../../store/feed/actions'
+import { withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext, withFeedCache, withFeedHistoryCache } from '../../hoc'
 
 interface Props {
     setCacheKey: any,
@@ -16,8 +15,7 @@ interface Props {
 }
 
 const TellorFeedView = ({
-    feed,
-    setCacheKey }: Props) => {
+    feed }: Props) => {
     const {
         id,
         answerRenderOptions,
@@ -40,7 +38,8 @@ const TellorFeedView = ({
         title: title,
         address,
         answer: loading ? 'Loading...' : latestAnswerFormatted,
-        lastUpdate: loading ? 'Loading...' : lastUpdate
+        lastUpdate: loading ? 'Loading...' : lastUpdate,
+        chartData: feed?.state?.history?.map((d) => { return { x: d.timestamp, y: d.value } })
     }
 
     return (<FeedView {...feedViewProps} />);
@@ -79,4 +78,5 @@ export default compose(
     withFeed,
     withDrizzleContext,
     withFeedCache,
+    withFeedHistoryCache
 )(TellorFeedView);

@@ -42,7 +42,10 @@ export interface TellorFeed extends FeedBase {
     tellorId?: string,
     granularity: number,
     sampleAPI?: string,
-    getCurrentValue: DrizzleCacheKey
+    getCurrentValue: DrizzleCacheKey,
+    getNewValueCountbyRequestId: DrizzleCacheKey,
+    getTimestampbyRequestIDandIndex: { [key: string]: DrizzleCacheKey },
+    retrieveData: { [key: string]: DrizzleCacheKey }
 }
 
 export type Feed = ChainlinkFeed | TellorFeed
@@ -59,7 +62,10 @@ export interface TellorFeedState {
     getCurrentValue: {
         value: number,
         _timestampRetrieved: string
-    }
+    },
+    getNewValueCountbyRequestId: number,
+    getTimestampbyRequestIDandIndex: { [key: string]: number },
+    retrieveData: { [key: string]: number }
 }
 
 interface HistoryPoint {
@@ -68,18 +74,24 @@ interface HistoryPoint {
 }
 
 export interface FeedState {
+    //Shared
     value: number
     timestamp: string,
     history?: HistoryPoint[]
+    //Chainlink
     latestAnswer?: string,
     latestTimestamp?: string,
     latestRound?: string,
     getAnswer?: { [key: string]: string },
-    getTimestamp?: { [key: string]: string }
+    getTimestamp?: { [key: string]: string },
+    //Tellor
     getCurrentValue?: {
         value: number,
         _timestampRetrieved: string
-    }
+    },
+    getNewValueCountbyRequestId: number,
+    getTimestampbyRequestIDandIndex: { [key: string]: number },
+    retrieveData: { [key: string]: number }
 }
 
 export const SET_FEED_CACHE_KEY = 'ORM/SET_FEED_CACHE_KEY'
