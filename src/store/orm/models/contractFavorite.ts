@@ -1,17 +1,17 @@
-import { attr } from 'redux-orm';
+import { attr, oneToOne } from 'redux-orm';
 import { Model } from 'redux-orm';
 
 class ContractFavorite extends Model {
-    // Declare any static or instance methods you need.
-    static options = {
-        idAttribute: 'address',
-    };
 }
 
 ContractFavorite.modelName = 'ContractFavorite';
 
 // Declare your related fields.
 ContractFavorite.fields = {
+    id: oneToOne({
+        to: 'Feed',
+        as: 'feed'
+    }),
     address: attr(),
     networkId: attr(),
     favorite: attr(),

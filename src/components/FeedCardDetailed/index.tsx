@@ -3,5 +3,5 @@ import FeedCardDetailedGrid from './FeedCardDetailedGrid'
 
 export default FeedCardDetailed;
 export {
-    FeedCardDetailedGrid
+    FeedCardDetailedGrid,
 }

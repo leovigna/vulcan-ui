@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { DrizzleContext } from "@drizzle/react-plugin"
 import { connect } from "react-redux"
 import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
-
 import {
-    contractStateByAddressSelector,
+    DrizzleSelectors,
     graphDataSelector,
-    makeEventIndexedFilterSelector
+    EventSelectors
 } from "../../store/selectors"
 import { indexAddressEvent } from "../../store/orm/models/eventByContractTypeIndex"
 
@@ -98,7 +97,7 @@ const AddressFeedView = ({
     return (<FeedView {...feedViewProps} />);
 }
 
-const ResponseReceivedSelector = makeEventIndexedFilterSelector()
+const ResponseReceivedSelector = EventSelectors.makeEventIndexedFilterSelector()
 
 const mapStateToProps = (state: any, { address }: Props) => {
     const ResponseReceivedIndexData = { address: address, event: 'ResponseReceived' }
@@ -107,7 +106,7 @@ const mapStateToProps = (state: any, { address }: Props) => {
     const AnswerUpdatedIndexId = indexAddressEvent(AnswerUpdatedIndexData)
 
     return {
-        contractState: contractStateByAddressSelector(state, address),
+        contractState: DrizzleSelectors.drizzleStateByIdSelector(state, address),
         responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
         chartData: graphDataSelector(state, AnswerUpdatedIndexId)
     }

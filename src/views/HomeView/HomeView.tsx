@@ -7,20 +7,13 @@ import {
 } from '@coreui/react'
 
 import ProtocolCard from '../../components/ProtocolCard'
-import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
-import FeedCard from '../../components/FeedCard'
-
-import ArrowLeft from '../../assets/img/icons/arrow_left.svg'
-import ArrowRight from '../../assets/img/icons/arrow_right.svg'
+import FeedCardDetailedGrid from '../../components/FeedCardDetailed/FeedCardDetailedGrid'
 import { ProtocolTypes, FeedTypes } from '../../store/types'
-import { setContractFavorite } from '../../store/contractFavorite/actions';
 
 interface Props {
-    feeds: [FeedTypes.Feed],
-    favoriteFeeds: [FeedTypes.Feed],
-    protocols: {
-        [key: string]: ProtocolTypes.Protocol
-    },
+    feeds: FeedTypes.FeedBaseWithState[],
+    favoriteFeeds: FeedTypes.FeedBaseWithState[]
+    protocols: ProtocolTypes.Protocol[]
     setContractFavorite: any
 }
 
@@ -45,9 +38,9 @@ const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Prop
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939', height: 95 }}>Protocols</h1>
                     </Col>
                     {
-                        Object.values(protocols).map(({ description, active, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
+                        protocols.map(({ description, active, id, name, img, feedCount, nodeCount, sponsorCount }, idx) =>
                             <Col key={idx} lg="3" md="6" xs="12">
-                                <ProtocolCard href={`#/protocols/${name.toLowerCase()}`} hearted={false} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
+                                <ProtocolCard href={`#/protocols/${id}`} active={active} name={name} description={description} img={img} feedCount={feedCount} nodeCount={nodeCount} sponsorCount={sponsorCount} />
                             </Col>)
                     }
                 </Row>
@@ -55,7 +48,7 @@ const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Prop
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Favorite Feeds</h1>
                     </Col>
-                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFavoriteFeeds} protocols={protocols} />
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFavoriteFeeds} />
                     {favoriteFeeds.length > favoriteFeedsMinimizeCount ?
                         <Col xs={12}>
                             <div className="d-flex justify-content-center">
@@ -69,7 +62,7 @@ const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Prop
                     <Col xs={12}>
                         <h1 style={{ fontSize: 40, fontWeight: 'bold', color: '#393939' }}>Feeds</h1>
                     </Col>
-                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} protocols={protocols} />
+                    <FeedCardDetailedGrid setContractFavorite={setContractFavorite} feeds={displayedFeeds} />
                     {feeds.length > feedsMinimizeCount ?
                         <Col xs={12}>
                             <div className="d-flex justify-content-center">
@@ -86,7 +79,7 @@ const HomeView = ({ feeds, favoriteFeeds, protocols, setContractFavorite }: Prop
 HomeView.defaultProps = {
     feeds: [],
     favoriteFeeds: [],
-    protocols: {}
+    protocols: []
 }
 
 export default HomeView;

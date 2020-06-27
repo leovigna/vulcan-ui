@@ -35,8 +35,8 @@ const appMiddlewares = [actionDebugger, eventAddNotifier, contractAddNotifier]
 const config = {
     drizzleOptions,
     appReducers,
-    appSagas,
-    appMiddlewares,
+    //appSagas,
+    //appMiddlewares,
     disableReduxDevTools: false // enable ReduxDevTools!
 }
 

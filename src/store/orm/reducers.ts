@@ -5,9 +5,12 @@ import {
     BlockTypes,
     ContractTypes,
     ContractFavoriteTypes,
+    FeedTypes,
 } from "../types"
 import { indexAddressEvent } from "./models/eventByContractTypeIndex"
-
+import { tellorContracts, testContracts } from '../../data/feeds'
+import favorites from '../../data/favorites'
+import protocols from '../../data/protocols'
 
 type Action = {
     type: string,
@@ -17,10 +20,16 @@ type Action = {
 
 const initializeState = (orm) => {
     const state = orm.getEmptyState();
-    const { ContractFavorite } = orm.mutableSession(state);
-    ContractFavorite.create({ address: '0xF79D6aFBb6dA890132F9D7c355e3015f15F3406F', networkId: '1', favorite: true }); // ETH/USD
-    ContractFavorite.create({ address: '0xF5fff180082d6017036B771bA883025c654BC935', networkId: '1', favorite: true }); // BTC/USD
-    ContractFavorite.create({ address: '0x32dbd3214aC75223e27e575C53944307914F7a90', networkId: '1', favorite: true }); // LINK/USD
+    const { ContractFavorite, Feed, Protocol } = orm.mutableSession(state);
+
+    favorites.forEach((favorite: ContractFavoriteTypes.ContractFavorite) => ContractFavorite.create(favorite))
+    protocols.forEach((protocol: any) => Protocol.create(protocol))
+
+    if (process.ENV !== 'production') {
+        testContracts.forEach((feed: FeedTypes.Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
+    } else {
+        tellorContracts.forEach((feed: FeedTypes.Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
+    }
 
     return state;
 };
@@ -30,7 +39,7 @@ export function ormReducer(state: any, action: Action) {
 
     // Session-specific Models are available
     // as properties on the Session instance.
-    const { Transaction, Block, Event, EventByContractTypeIndex, Contract, ContractFavorite } = sess;
+    const { Transaction, Block, Event, EventByContractTypeIndex, Contract, ContractFavorite, Feed } = sess;
     let transactionHash;
     let blockNumber;
     switch (action.type) {
@@ -100,6 +109,14 @@ export function ormReducer(state: any, action: Action) {
         case ContractFavoriteTypes.SET_CONTRACT_FAVORITE:
             ContractFavorite.upsert(action.payload)
             break;
+        case FeedTypes.SET_FEED_CACHE_KEY:
+            const feed = Feed.withId(action.payload.id)
+            if (action.payload.cacheArgs) {
+                const update = { contractId: action.payload.contractId, cacheKey: action.payload.cacheKey, cacheArgs: action.payload.cacheArgs }
+                feed.update({ [action.payload.cacheName]: { ...feed[action.payload.cacheName], [action.payload.cacheArgs]: update } })
+            } else {
+                feed.update({ [action.payload.cacheName]: { contractId: action.payload.contractId, cacheKey: action.payload.cacheKey } })
+            }
     }
 
     return sess.state;

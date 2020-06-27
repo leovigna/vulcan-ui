@@ -31,30 +31,45 @@ const FeedView = ({ title, address, answer, responses, chartData, minResponses, 
                                 <h4 style={{ fontSize: 20, fontWeight: 300, color: '#000000' }}>Latest trusted answer</h4>
                                 <h1 style={{ fontSize: 30, fontWeight: 'bold', color: '#000000' }}>{answer}</h1>
                             </div>
-                            <h4 style={{ fontSize: 20, fontWeight: 300, color: '#000000' }}>Primary Aggregation Parameter</h4>
-                            <h1 style={{ fontSize: 30, fontWeight: 'bold', color: '#000000', height: 95 }}>Deviation Threshold: {deviationThreshold}%</h1>
+                            {deviationThreshold > 0 ? <>
+                                <h4 style={{ fontSize: 20, fontWeight: 300, color: '#000000' }}>Primary Aggregation Parameter</h4>
+                                <h1 style={{ fontSize: 30, fontWeight: 'bold', color: '#000000', height: 95 }}>Deviation Threshold: {deviationThreshold}%</h1>
+                            </>
+                                : ''}
                         </Col>
                         <Col xs={6}>
-                            <div className='py-4'>
-                                <h4 style={{ fontSize: 20, fontWeight: 300, color: '#000000' }}>Oracle responses {minResponses >= 0 ? <>(minimum {minResponses})</> : ''}</h4>
-                                <h1 style={{ fontSize: 30, fontWeight: 'bold', color: '#000000' }}>{responses.length}{minResponses >= 0 ? <>/{maxResponses}</> : ''}</h1 >
-                            </div>
+                            {
+                                responses.length > 0 ?
+                                    <div className='py-4'>
+                                        <h4 style={{ fontSize: 20, fontWeight: 300, color: '#000000' }}>Oracle responses {minResponses >= 0 ? <>(minimum {minResponses})</> : ''}</h4>
+                                        <h1 style={{ fontSize: 30, fontWeight: 'bold', color: '#000000' }}>{responses.length}{minResponses >= 0 ? <>/{maxResponses}</> : ''}</h1 >
+                                    </div>
+                                    : ''
+                            }
                             <h4 style={{ fontSize: 20, fontWeight: 300, color: '#000000' }}>Last Update</h4>
                             <h1 style={{ fontSize: 30, fontWeight: 'bold', color: '#000000', height: 95 }}>{lastUpdate}</h1>
                         </Col>
                     </Row >
-                    <Row className='py-5'>
-                        <FeedChart data={chartData} />
-                    </Row>
+                    {
+                        chartData.length > 0 ?
+                            <Row className='py-5'>
+                                <FeedChart data={chartData} />
+                            </Row> :
+                            ''
+                    }
                 </Container >
             </div>
-            <div style={{ backgroundColor: '#FFF', paddingTop: 50, paddingBottom: 100, marginRight: -15, marginLeft: -15 }}>
-                <Container>
-                    <Row>
-                        <FeedTable responses={responses} />
-                    </Row>
-                </Container >
-            </div>
+            {
+                responses.length > 0 ?
+                    <div style={{ backgroundColor: '#FFF', paddingTop: 50, paddingBottom: 100, marginRight: -15, marginLeft: -15 }}>
+                        <Container>
+                            <Row>
+                                <FeedTable responses={responses} />
+                            </Row>
+                        </Container >
+                    </div>
+                    : <div style={{ backgroundColor: '#F2F2F2', paddingTop: 50, paddingBottom: 100, marginRight: -15, marginLeft: -15 }} />
+            }
         </>
     )
 }
@@ -65,7 +80,7 @@ FeedView.defaultProps = {
     responses: [],
     chartData: [],
     lastUpdate: '',
-    deviationThreshold: 0
+    deviationThreshold: -1
 }
 
 export default FeedView;

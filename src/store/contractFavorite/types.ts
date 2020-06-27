@@ -1,7 +1,11 @@
+import { Feed } from "../feed/types"
+
 export interface ContractFavorite {
+    id: string,
     networkId: string,
     address: string,
-    favorite: boolean
+    favorite: boolean,
+    feed?: Feed
 }
 
 export const SET_CONTRACT_FAVORITE = 'ORM/SET_CONTRACT_FAVORITE'

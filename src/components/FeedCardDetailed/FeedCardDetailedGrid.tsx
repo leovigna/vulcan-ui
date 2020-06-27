@@ -7,26 +7,27 @@ import {
 } from "react-router-dom"
 
 import FeedCardDetailed from './FeedCardDetailed'
-import { FeedTypes, ProtocolTypes } from '../../store/types'
+import { FeedTypes } from '../../store/types'
+import { renderAnswer } from '../../store/feed/actions';
+import moment from 'moment';
 
 interface Props {
-    feeds: [FeedTypes.Feed],
-    protocols: {
-        [key: string]: ProtocolTypes.Protocol
-    },
-    contractStates: [any],
-    networkId: string,
+    feeds: FeedTypes.Feed[],
     setContractFavorite: any
 }
 
-const FeedCardDetailedGrid = ({ feeds, protocols, setContractFavorite }: Props) => {
+const FeedCardDetailedGrid = ({ feeds, setContractFavorite }: Props) => {
     const history = useHistory();
     return (<> {
-        feeds.map(({ title, name, value, hearted, ens, protocol, nodeCount, lastUpdate, address, networkId }, idx) => {
-            const url = protocol && name ? `/feeds/${protocol}/${name}` : `/feeds/${address}`
-            const feedProtocol = protocols[protocol]
+        feeds.map(({ id, title, name, ens, protocol, protocolInfo, address, networkId, favorite, state, answerRenderOptions }, idx) => {
+            const url = `/feeds/${protocol}/${name}`
+            const hearted = favorite?.favorite || false
+            const protocolImg = protocolInfo?.img || ''
+            const valueRender = state?.value ? renderAnswer(answerRenderOptions!, state!.value) : ''
+            const timestampRender = state?.timestamp ? moment(state!.timestamp, 'X').format('MMMM D - h:mm A') : '';
+
             return (<Col key={idx} lg="4" md="6" xs="12">
-                <FeedCardDetailed onHeartClick={() => setContractFavorite({ address, networkId, favorite: !hearted })} href={url} handleClickViewButton={() => history.push(url)} address={address} protocolImg={feedProtocol?.img} feedName={title} value={value} hearted={hearted} feedENS={ens} nodeCount={nodeCount} lastUpdate={lastUpdate} />
+                <FeedCardDetailed onHeartClick={() => setContractFavorite({ id, address, networkId, favorite: !hearted })} href={url} handleClickViewButton={() => history.push(url)} address={address} protocolImg={protocolImg} feedName={title} value={valueRender} hearted={hearted} feedENS={ens} nodeCount={0} lastUpdate={timestampRender} />
             </Col>)
         })
     }</>)
