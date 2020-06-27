@@ -48,7 +48,11 @@ export interface TellorFeed extends FeedBase {
     retrieveData: { [key: string]: DrizzleCacheKey }
 }
 
-export type Feed = ChainlinkFeed | TellorFeed
+export interface CoinbaseFeed extends FeedBase { }
+
+export interface MKRDaoFeed extends FeedBase { }
+
+export type Feed = ChainlinkFeed | TellorFeed | CoinbaseFeed | MKRDaoFeed
 
 export interface ChainlinkFeedState {
     latestAnswer: string,
