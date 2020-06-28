@@ -8,7 +8,7 @@ import * as ProtocolTypes from './protocol/types';
 import * as FeedTypes from './feed/types';
 import * as NodeTypes from './node/types';
 import * as NetworkTypes from './network/types';
-
+import * as CoinbaseTypes from './coinbase/types';
 export interface Point<X, Y> {
     x: X,
     y: Y
@@ -24,5 +24,6 @@ export {
     ContractFavoriteTypes,
     EventTypes,
     TransactionTypes,
-    DrizzleTypes
+    DrizzleTypes,
+    CoinbaseTypes
 }

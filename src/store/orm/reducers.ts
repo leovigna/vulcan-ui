@@ -6,6 +6,7 @@ import {
     ContractTypes,
     ContractFavoriteTypes,
     FeedTypes,
+    CoinbaseTypes
 } from "../types"
 import { indexAddressEvent } from "./models/eventByContractTypeIndex"
 import { tellorContracts, testContracts } from '../../data/feeds'
@@ -39,7 +40,7 @@ export function ormReducer(state: any, action: Action) {
 
     // Session-specific Models are available
     // as properties on the Session instance.
-    const { Transaction, Block, Event, EventByContractTypeIndex, Contract, ContractFavorite, Feed } = sess;
+    const { Transaction, Block, Event, EventByContractTypeIndex, Contract, ContractFavorite, Feed, CoinbaseOracleResponse } = sess;
     let transactionHash;
     let blockNumber;
     switch (action.type) {
@@ -108,6 +109,9 @@ export function ormReducer(state: any, action: Action) {
             break;
         case ContractFavoriteTypes.SET_CONTRACT_FAVORITE:
             ContractFavorite.upsert(action.payload)
+            break;
+        case CoinbaseTypes.CREATE_COINBASE_ORACLE_RESPONSE:
+            CoinbaseOracleResponse.upsert(action.payload)
             break;
         case FeedTypes.SET_FEED_CACHE_KEY:
             const feed = Feed.withId(action.payload.id)

@@ -1,14 +1,17 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { connect } from "react-redux"
+import { Provider, connect } from "react-redux"
 import { DrizzleContext } from "@drizzle/react-plugin"
+import { PersistGate } from 'redux-persist/integration/react'
+import { ApolloProvider } from '@apollo/react-hooks';
+
 import { FeedTypes, ProtocolTypes } from './store/types'
-import moment from 'moment'
-import { renderAnswer, setFeedCacheKey } from './store/feed/actions'
+import { setFeedCacheKey } from './store/feed/actions'
 import { FeedSelectors, ContractFavoriteSelectors, NetworkSelectors, ProtocolSelectors } from './store/selectors'
 import { setFeedStateCache, setFeedStateFullCache } from './store/feed/selectors';
 import { SetFeedCacheKeyActionInput } from './store/feed/types';
 import { SetContractFavoriteActionInput } from './store/contractFavorite/types';
 import { setContractFavorite } from './store/contractFavorite/actions';
+import { START_POLL_COINBASE_ORACLE } from './store/coinbase/types';
 
 interface Props {
     feeds: [FeedTypes.Feed],
@@ -46,12 +49,38 @@ export const withSetContractFavorite = connect(null, (dispatch) => {
 export const withSetCacheKey = connect(null, (dispatch) => {
     return { setCacheKey: (payload: SetFeedCacheKeyActionInput) => dispatch(setFeedCacheKey(payload)) }
 })
+export const withStartPollingCoinbase = connect(null, (dispatch) => {
+    return { startPollingCoinbase: () => dispatch({ type: START_POLL_COINBASE_ORACLE }) }
+})
+export const withReduxStoreProvider = (store: any) => (Component: any) => (props: any) => {
+    return (
+        <Provider store={store}>
+            <Component {...props} />
+        </Provider>)
+}
+export const withPersistStore = (persistor: any) => (Component: any) => (props: any) => {
+    return (
+        <PersistGate loading={null} persistor={persistor}>
+            <Component {...props} />
+        </PersistGate>)
+}
+export const withApolloProvider = (client: any) => (Component: any) => (props: any) => {
+    return (
+        <ApolloProvider client={client}>
+            <Component {...props} />
+        </ApolloProvider>)
+}
+export const withDrizzleContextProvider = (drizzle: any) => (Component: any) => (props: any) => {
+    return (
+        <DrizzleContext.Provider drizzle={drizzle}>
+            <Component {...props} />
+        </DrizzleContext.Provider>)
+}
 
 export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.Feed>, setCacheKey: any) {
     const { drizzle, initialized } = context;
     useEffect(() => {
         if (initialized) {
-            console.debug('useFeedsCache')
             feeds.forEach((f) => {
                 setFeedStateCache(drizzle, f, setCacheKey)
             })

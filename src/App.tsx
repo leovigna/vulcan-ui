@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
 
 import { Drizzle, IDrizzleOptions } from "@drizzle/store"
-import { DrizzleContext } from "@drizzle/react-plugin"
-import { ApolloProvider } from '@apollo/react-hooks';
 import client from './client'
 import routes from './routes'
 
@@ -14,6 +10,8 @@ import './App.scss';
 
 import drizzleOptions from "./drizzleOptions"
 import store, { persistor } from "./store"
+import { compose } from 'recompose';
+import { withReduxStoreProvider, withPersistStore, withApolloProvider, withDrizzleContextProvider, withStartPollingCoinbase } from './hoc';
 
 const drizzle = new Drizzle(drizzleOptions as IDrizzleOptions, store)
 
@@ -36,64 +34,14 @@ class App extends Component {
     }
 
     componentDidMount() {
+        this.props.startPollingCoinbase()
     }
 }
 
-//Environment variable optional use GraphQL API
-export const connectStore = (Component: React.Component) => (props) =>
-    (<Provider store={store} >
-        <Component {...props} />
-    </Provider>)
-
-export const connectDrizzle = (Component: React.Component) => (props: any) => {
-    return (<DrizzleContext.Provider drizzle={drizzle}>
-        <DrizzleContext.Consumer>
-            {drizzleContext => {
-                const { drizzle, drizzleState, initialized } = drizzleContext;
-
-                if (!initialized) {
-                    return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
-                }
-
-                return (<Component {...props} />)
-            }}
-        </DrizzleContext.Consumer>
-    </DrizzleContext.Provider>)
-}
-
-
-export const connectApp = (App: React.Component) => (props: any) => (
-    <Provider store={store} >
-        <PersistGate loading={null} persistor={persistor}>
-            {process.env.REACT_APP_GRAPHQL_API ?
-                <ApolloProvider client={client}>
-                    <DrizzleContext.Provider drizzle={drizzle}>
-                        <App {...props} />
-                    </DrizzleContext.Provider>
-                </ApolloProvider> :
-                <DrizzleContext.Provider drizzle={drizzle}>
-                    <App {...props} />
-                </DrizzleContext.Provider>
-            }
-        </PersistGate>
-    </Provider >
-)
-
-const WrappedApp = (props) => (
-    <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-            {process.env.REACT_APP_GRAPHQL_API ?
-                <ApolloProvider client={client}>
-                    <DrizzleContext.Provider drizzle={drizzle}>
-                        <App {...props} />
-                    </DrizzleContext.Provider>
-                </ApolloProvider> :
-                <DrizzleContext.Provider drizzle={drizzle}>
-                    <App {...props} />
-                </DrizzleContext.Provider>
-            }
-        </PersistGate>
-    </Provider >
-)
-
-export default WrappedApp;
+export default compose(
+    withReduxStoreProvider(store),
+    withPersistStore(persistor),
+    withDrizzleContextProvider(drizzle),
+    withStartPollingCoinbase
+    // withApolloProvider(client)
+)(App);

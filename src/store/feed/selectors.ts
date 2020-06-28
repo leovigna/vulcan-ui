@@ -128,7 +128,7 @@ const setTellorFeedHistoryCache = (drizzle: any, feed: TellorFeed, setCacheKey: 
 
 export const setFeedStateCache = (drizzle: any, feed: Feed, setCacheKey: any) => {
     if (!drizzle.contracts) return;
-    console.debug(feed)
+    // console.debug(feed)
 
     if (feed.protocol === 'tellor') {
         setTellorFeedStateCache(drizzle, feed as FeedTypes.TellorFeed, setCacheKey)
