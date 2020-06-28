@@ -63,11 +63,13 @@ export const testContracts: Array<FeedTypes.ChainlinkFeed | FeedTypes.TellorFeed
         title: "BTC/USD",
         answerRenderOptions: {
             transform: {
-                multiply: 1e-3,
-                decimals: 2
+                multiply: 1,
+                decimals: 3
             },
             format: "$ %(value)s"
-        }
+        },
+        symbol: 'BTC',
+        index: 0
     },
     {
         id: "0x81FE72B5A8d1A857d176C3E7d5Bd2679A9B85763",

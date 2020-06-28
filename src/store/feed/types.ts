@@ -49,7 +49,10 @@ export interface TellorFeed extends FeedBase {
     retrieveData: { [key: string]: DrizzleCacheKey }
 }
 
-export interface CoinbaseFeed extends FeedBase { }
+export interface CoinbaseFeed extends FeedBase {
+    index: number,
+    symbol: string
+}
 
 export interface MKRDaoFeed extends FeedBase { }
 
@@ -76,6 +79,8 @@ export interface TellorFeedState {
 export interface CoinbaseFeedState extends CoinbaseOracle {
     resultByTimestamp: { [key: string]: CoinbaseOracle }
 }
+
+export interface MKRDaoFeedState { }
 
 interface HistoryPoint {
     timestamp: string,
