@@ -12,7 +12,7 @@ import { indexAddressEvent } from "../../store/orm/models/eventByContractTypeInd
 import FeedView from './FeedView'
 import { ContractActions } from "../../store/actions"
 import { ContractTypes, FeedTypes } from "../../store/types"
-import Event from "../../store/orm/models/event"
+import Event from "../../store/event/model"
 
 
 interface Props {

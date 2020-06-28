@@ -2,12 +2,21 @@ import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
 import web3 from './web3global'
 import TellorGetters from './contracts/TellorGetters.json'
 import UserContract from './contracts/UserContract.json'
+import MKRDaoDSValue from './contracts/MKRDaoDSValue.json'
+
 import { testContracts } from './data/feeds'
 
 const chainlinkContracts = testContracts.filter((f) => f.protocol === 'chainlink').map((f) => {
     return ({
         contractName: f.address,
         web3Contract: new web3.eth.Contract(AggregatorABI.compilerOutput.abi, f.address)
+    })
+})
+
+const mkrdaoContracts = testContracts.filter((f) => f.protocol === 'mkrdao').map((f) => {
+    return ({
+        contractName: f.address,
+        web3Contract: new web3.eth.Contract(MKRDaoDSValue.abi, f.address)
     })
 })
 
@@ -29,7 +38,8 @@ const options = {
             contractName: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58',
             web3Contract: new web3.eth.Contract(UserContract.abi, '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58')
         },
-        ...chainlinkContracts
+        ...chainlinkContracts,
+        ...mkrdaoContracts
     ],
     events: {
     },

@@ -54,7 +54,9 @@ export interface CoinbaseFeed extends FeedBase {
     symbol: string
 }
 
-export interface MKRDaoFeed extends FeedBase { }
+export interface MKRDaoFeed extends FeedBase {
+    read: DrizzleCacheKey
+}
 
 export type Feed = ChainlinkFeed | TellorFeed | CoinbaseFeed | MKRDaoFeed
 
@@ -80,7 +82,9 @@ export interface CoinbaseFeedState extends CoinbaseOracle {
     resultByTimestamp: { [key: string]: CoinbaseOracle }
 }
 
-export interface MKRDaoFeedState { }
+export interface MKRDaoFeedState {
+    read: string
+}
 
 interface HistoryPoint {
     timestamp: string,
