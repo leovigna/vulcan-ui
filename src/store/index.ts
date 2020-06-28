@@ -9,6 +9,7 @@ import { actionDebugger, eventAddNotifier, contractAddNotifier } from "./middlew
 import { transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga } from "./sagas";
 import { ormReducer, networkIdReducer } from './reducers';
 import { networksReducer } from './network/reducers'
+import { coinbaseRootSaga } from './coinbase/sagas'
 
 const persistedWhitelist = []
 /*
@@ -30,12 +31,12 @@ const appReducers = {
     networkId: networkIdReducer
 }
 
-const appSagas = [transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga]
+const appSagas = [/* transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga,*/ coinbaseRootSaga]
 const appMiddlewares = [actionDebugger, eventAddNotifier, contractAddNotifier]
 const config = {
     drizzleOptions,
     appReducers,
-    //appSagas,
+    appSagas,
     //appMiddlewares,
     disableReduxDevTools: false // enable ReduxDevTools!
 }

@@ -1,5 +1,6 @@
 import { ContractFavorite } from "../contractFavorite/types"
 import { Protocol } from "../protocol/types"
+import { CoinbaseOracleResponse, CoinbaseOracle } from "../coinbase/types"
 
 export interface DrizzleCacheKey {
     contractId: string,
@@ -48,7 +49,14 @@ export interface TellorFeed extends FeedBase {
     retrieveData: { [key: string]: DrizzleCacheKey }
 }
 
-export type Feed = ChainlinkFeed | TellorFeed
+export interface CoinbaseFeed extends FeedBase {
+    index: number,
+    symbol: string
+}
+
+export interface MKRDaoFeed extends FeedBase { }
+
+export type Feed = ChainlinkFeed | TellorFeed | CoinbaseFeed | MKRDaoFeed
 
 export interface ChainlinkFeedState {
     latestAnswer: string,
@@ -67,6 +75,12 @@ export interface TellorFeedState {
     getTimestampbyRequestIDandIndex: { [key: string]: number },
     retrieveData: { [key: string]: number }
 }
+
+export interface CoinbaseFeedState extends CoinbaseOracle {
+    resultByTimestamp: { [key: string]: CoinbaseOracle }
+}
+
+export interface MKRDaoFeedState { }
 
 interface HistoryPoint {
     timestamp: string,
@@ -89,9 +103,14 @@ export interface FeedState {
         value: number,
         _timestampRetrieved: string
     },
-    getNewValueCountbyRequestId: number,
-    getTimestampbyRequestIDandIndex: { [key: string]: number },
-    retrieveData: { [key: string]: number }
+    getNewValueCountbyRequestId?: number,
+    getTimestampbyRequestIDandIndex?: { [key: string]: number },
+    retrieveData?: { [key: string]: number },
+    //Coinbase
+    message?: string,
+    signature?: string,
+    price?: string
+    resultByTimestamp?: { [key: string]: CoinbaseOracle }
 }
 
 export const SET_FEED_CACHE_KEY = 'ORM/SET_FEED_CACHE_KEY'
@@ -108,6 +127,8 @@ export type SetFeedCacheKeyAction = {
     payload: SetFeedCacheKeyActionInput
 }
 
+
+//
 export interface FeedOld {
     tellorId?: string,
     networkId: string,

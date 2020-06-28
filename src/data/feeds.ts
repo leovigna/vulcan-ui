@@ -53,6 +53,38 @@ export const testContracts: Array<FeedTypes.ChainlinkFeed | FeedTypes.TellorFeed
         },
         getTimestampbyRequestIDandIndex: {},
         retrieveData: {}
+    },
+    {
+        id: "0xfCEAdAFab14d46e20144F48824d0C09B1a03F2BC-btc",
+        networkId: "1",
+        protocol: "coinbase",
+        address: "0xfCEAdAFab14d46e20144F48824d0C09B1a03F2BC",
+        name: "btc-usd",
+        title: "BTC/USD",
+        answerRenderOptions: {
+            transform: {
+                multiply: 1,
+                decimals: 3
+            },
+            format: "$ %(value)s"
+        },
+        symbol: 'BTC',
+        index: 0
+    },
+    {
+        id: "0x81FE72B5A8d1A857d176C3E7d5Bd2679A9B85763",
+        networkId: "1",
+        protocol: "mkrdao",
+        address: "0x81FE72B5A8d1A857d176C3E7d5Bd2679A9B85763",
+        name: "eth-usd",
+        title: "ETH/USD",
+        answerRenderOptions: {
+            transform: {
+                multiply: 1e-3,
+                decimals: 2
+            },
+            format: "$ %(value)s"
+        }
     }
 ]
 

@@ -26,25 +26,21 @@ const protocols: [ProtocolTypes.Protocol] = [
     },
     {
         id: 'coinbase',
-        active: false,
+        active: true,
         name: 'Coinbase',
         url: 'https://docs.pro.coinbase.com/#oracle',
         img: CoinbaseBadge,
         description: 'On-chain market data signed by Coinbase.',
-        nodeCount: 0,
-        sponsorCount: 0,
         descriptionLong: 'On-chain market data signed by Coinbase.',
 
     },
     {
         id: 'mkrdao',
-        active: false,
+        active: true,
         name: 'MKRDao',
         url: 'https://developer.makerdao.com/feeds/',
         img: MKRBadge,
         description: 'Anonymous data feeds backing the DAI stablecoin.',
-        nodeCount: 0,
-        sponsorCount: 0,
         descriptionLong: 'Anonymous data feeds backing the DAI stablecoin.',
     }
 ]

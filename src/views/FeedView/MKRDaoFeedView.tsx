@@ -5,24 +5,22 @@ import moment from 'moment';
 
 import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
-import { TellorFeed } from '../../store/feed/types'
+import { MKRDaoFeed } from '../../store/feed/types'
 import { renderAnswer } from '../../store/feed/actions'
 import { withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext, withFeedCache, withFeedHistoryCache } from '../../hoc'
 
 interface Props {
     setCacheKey: any,
-    feed: TellorFeed
+    feed: MKRDaoFeed
 }
 
-const TellorFeedView = ({
+const MKRDaoFeedView = ({
     feed }: Props) => {
     const {
         id,
         answerRenderOptions,
         title,
-        address,
-        tellorId,
-        getCurrentValue
+        address
     } = feed || {}
 
     const latestAnswerValue = feed?.state?.value
@@ -46,16 +44,16 @@ const TellorFeedView = ({
 }
 
 const mapStateToProps = (state: any, ownProps: any) => {
-    const feedByTellorId = FeedSelectors.feedByFilterSelector(state, { protocol: ownProps.protocol, tellorId: ownProps.id }, state)
+    const feedByMKRDaoId = FeedSelectors.feedByFilterSelector(state, { protocol: ownProps.protocol, tellorId: ownProps.id }, state)
     const feedByName = FeedSelectors.feedByFilterSelector(state, { protocol: ownProps.protocol, name: ownProps.id }, state)
-    if (!feedByTellorId && !feedByName) {
+    if (!feedByMKRDaoId && !feedByName) {
         return {}
     }
 
-    if (feedByTellorId && !feedByName) {
-        ownProps.history.replace(`/feeds/${ownProps.protocol}/${feedByTellorId.name}`)
+    if (feedByMKRDaoId && !feedByName) {
+        ownProps.history.replace(`/feeds/${ownProps.protocol}/${feedByMKRDaoId.name}`)
         return {
-            id: feedByTellorId.id
+            id: feedByMKRDaoId.id
         }
     }
 
@@ -64,7 +62,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     }
 }
 
-TellorFeedView.defaultProps = {
+MKRDaoFeedView.defaultProps = {
     feed: {}
 }
 
@@ -73,10 +71,10 @@ export default compose(
     withSetCacheKey,
     flattenProp('match'),
     flattenProp('params'),
-    withProps({ protocol: 'tellor' }),
+    withProps({ protocol: 'mkrdao' }),
     connect(mapStateToProps),
     withFeed,
     withDrizzleContext,
     withFeedCache,
     withFeedHistoryCache
-)(TellorFeedView);
+)(MKRDaoFeedView);

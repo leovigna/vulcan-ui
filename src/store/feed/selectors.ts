@@ -1,11 +1,10 @@
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
-import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState } from './types'
+import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState, CoinbaseFeed, CoinbaseFeedState, MKRDaoFeed, MKRDaoFeedState } from './types'
 import { DrizzleSelectors } from '../selectors'
 import { FeedTypes } from '../types'
 import { transformAnswer } from './actions'
-import moment from 'moment'
-import { set } from 'lodash'
+import { coinbaseOracleResponsesSelector } from '../coinbase/selectors'
 
 const emptyArray: FeedTypes.Feed[] = []
 
@@ -128,7 +127,7 @@ const setTellorFeedHistoryCache = (drizzle: any, feed: TellorFeed, setCacheKey: 
 
 export const setFeedStateCache = (drizzle: any, feed: Feed, setCacheKey: any) => {
     if (!drizzle.contracts) return;
-    console.debug(feed)
+    // console.debug(feed)
 
     if (feed.protocol === 'tellor') {
         setTellorFeedStateCache(drizzle, feed as FeedTypes.TellorFeed, setCacheKey)
@@ -227,6 +226,30 @@ const tellorFeedStateSelector: (state: any, feed: TellorFeed) => TellorFeedState
     return { getCurrentValue, getNewValueCountbyRequestId, getTimestampbyRequestIDandIndex, retrieveData }
 }
 
+const coinbaseFeedStateSelector: (state: any, feed: CoinbaseFeed) => CoinbaseFeedState = (state, feed) => {
+    const coinbaseOracleResponses = coinbaseOracleResponsesSelector(state)
+    const latestResponse = coinbaseOracleResponses[coinbaseOracleResponses.length - 1]
+    if (!latestResponse) return {}
+
+    console.debug(latestResponse)
+    const timestamp = latestResponse.timestamp;
+    const message = latestResponse.messages[feed.index];
+    const signature = latestResponse.signatures[feed.index];
+    const price = latestResponse.prices[feed.symbol];
+
+    return {
+        timestamp,
+        message,
+        signature,
+        price
+    }
+}
+
+const mkrdaoFeedStateSelector: (state: any, feed: MKRDaoFeed) => MKRDaoFeedState = (state, feed) => {
+    return {}
+}
+
+
 export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, feed) => {
     if (feed.protocol === 'chainlink') {
         const feedState = chainlinkFeedStateSelector(state, feed as ChainlinkFeed)
@@ -245,7 +268,7 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
             }
         }
     }
-    if (feed.protocol === 'tellor') {
+    else if (feed.protocol === 'tellor') {
         const feedState = tellorFeedStateSelector(state, feed as TellorFeed)
         const history = Object.keys(feedState.retrieveData).map((k) => {
             return {
@@ -260,6 +283,17 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
                 history,
                 ...feedState
             }
+        }
+    } else if (feed.protocol === 'coinbase') {
+        const feedState = coinbaseFeedStateSelector(state, feed as CoinbaseFeed)
+        return {
+            value: feedState.price,
+            ...feedState
+        }
+    } else if (feed.protocol === 'mkrdao') {
+        const feedState = mkrdaoFeedStateSelector(state, feed as MKRDaoFeed)
+        return {
+            ...feedState
         }
     }
     return null;

@@ -5,24 +5,22 @@ import moment from 'moment';
 
 import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
-import { TellorFeed } from '../../store/feed/types'
+import { CoinbaseFeed } from '../../store/feed/types'
 import { renderAnswer } from '../../store/feed/actions'
 import { withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext, withFeedCache, withFeedHistoryCache } from '../../hoc'
 
 interface Props {
     setCacheKey: any,
-    feed: TellorFeed
+    feed: CoinbaseFeed
 }
 
-const TellorFeedView = ({
+const CoinbaseFeedView = ({
     feed }: Props) => {
     const {
         id,
         answerRenderOptions,
         title,
-        address,
-        tellorId,
-        getCurrentValue
+        address
     } = feed || {}
 
     const latestAnswerValue = feed?.state?.value
@@ -46,16 +44,16 @@ const TellorFeedView = ({
 }
 
 const mapStateToProps = (state: any, ownProps: any) => {
-    const feedByTellorId = FeedSelectors.feedByFilterSelector(state, { protocol: ownProps.protocol, tellorId: ownProps.id }, state)
+    const feedByCoinbaseId = FeedSelectors.feedByFilterSelector(state, { protocol: ownProps.protocol, tellorId: ownProps.id }, state)
     const feedByName = FeedSelectors.feedByFilterSelector(state, { protocol: ownProps.protocol, name: ownProps.id }, state)
-    if (!feedByTellorId && !feedByName) {
+    if (!feedByCoinbaseId && !feedByName) {
         return {}
     }
 
-    if (feedByTellorId && !feedByName) {
-        ownProps.history.replace(`/feeds/${ownProps.protocol}/${feedByTellorId.name}`)
+    if (feedByCoinbaseId && !feedByName) {
+        ownProps.history.replace(`/feeds/${ownProps.protocol}/${feedByCoinbaseId.name}`)
         return {
-            id: feedByTellorId.id
+            id: feedByCoinbaseId.id
         }
     }
 
@@ -64,7 +62,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     }
 }
 
-TellorFeedView.defaultProps = {
+CoinbaseFeedView.defaultProps = {
     feed: {}
 }
 
@@ -73,10 +71,10 @@ export default compose(
     withSetCacheKey,
     flattenProp('match'),
     flattenProp('params'),
-    withProps({ protocol: 'tellor' }),
+    withProps({ protocol: 'coinbase' }),
     connect(mapStateToProps),
     withFeed,
     withDrizzleContext,
     withFeedCache,
     withFeedHistoryCache
-)(TellorFeedView);
+)(CoinbaseFeedView);

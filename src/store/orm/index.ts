@@ -10,6 +10,7 @@ import {
     ContractFavorite,
     Protocol
 } from './models';
+import CoinbaseOracleResponse from '../coinbase/model';
 
 interface VulcanORM extends ORM {
     Event: Event,
@@ -19,12 +20,13 @@ interface VulcanORM extends ORM {
     Contract: Contract,
     ContractFavorite: ContractFavorite,
     Feed: Feed,
-    Protocol: Protocol
+    Protocol: Protocol,
+    CoinbaseOracleResponse: CoinbaseOracleResponse
 }
 
 const orm: VulcanORM = new ORM({
     stateSelector: state => state.persisted.orm
 });
-orm.register(Event, Transaction, Block, EventByContractTypeIndex, Contract, ContractFavorite, Feed, Protocol);
+orm.register(Event, Transaction, Block, EventByContractTypeIndex, Contract, ContractFavorite, Feed, Protocol, CoinbaseOracleResponse);
 
 export default orm;
