@@ -1,3 +1,8 @@
+export interface Block {
+    blockHash: string,
+    blockNumber: number
+}
+
 export const CREATE_BLOCK = 'ORM/BLOCK/CREATE'
 export const UPDATE_BLOCK = 'ORM/BLOCK/UPDATE'
 export const REMOVE_BLOCK = 'ORM/BLOCK/REMOVE'
@@ -35,3 +40,5 @@ export interface FetchBlockAction {
     type: typeof FETCH_BLOCK
     payload: FetchBlockActionInput
 }
+
+export type BlockAction = FetchBlockAction | CreateBlockAction | UpdateBlockAction | RemoveBlockAction

@@ -16,6 +16,8 @@ import { feedReducer } from '../feed/reducers';
 import { FeedAction } from '../feed/types';
 import { transactionReducer } from '../transaction/reducers';
 import { TransactionAction } from '../transaction/types';
+import { blockReducer } from '../block/reducers';
+import { BlockAction } from '../block/types';
 
 type Action = {
     type: string,
@@ -44,9 +46,7 @@ export function ormReducer(state: any, action: Action) {
 
     // Session-specific Models are available
     // as properties on the Session instance.
-    const { Transaction, Block, Event, EventByContractTypeIndex, Contract, ContractFavorite, Feed, CoinbaseOracleResponse } = sess;
-    let transactionHash;
-    let blockNumber;
+    const { Event, EventByContractTypeIndex, Contract, ContractFavorite, Feed, CoinbaseOracleResponse } = sess;
     switch (action.type) {
         case EventTypes.CREATE_EVENT:
             if (!Event.idExists(action.payload.id)) {
@@ -67,18 +67,9 @@ export function ormReducer(state: any, action: Action) {
             transactionReducer(sess, action as TransactionAction)
             break;
         case BlockTypes.CREATE_BLOCK:
-            blockNumber = (action.payload.blockNumber || action.payload.number)
-            if (!Block.idExists(blockNumber)) {
-                Block.create({ ...action.payload, blockNumber });
-            }
-            break;
         case BlockTypes.UPDATE_BLOCK:
-            blockNumber = (action.payload.blockNumber || action.payload.number)
-            Block.withId(blockNumber).update({ ...action.payload, blockNumber });
-            break;
         case BlockTypes.REMOVE_BLOCK:
-            blockNumber = (action.payload.blockNumber || action.payload.number)
-            Block.withId(blockNumber).delete();
+            blockReducer(sess, action as BlockAction)
             break;
         case EventTypes.CREATE_EVENT_CT_INDEX:
             const contractTypeIndexId = indexAddressEvent(action.payload)
