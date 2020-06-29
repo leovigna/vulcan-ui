@@ -1,21 +1,7 @@
 import { attr, fk } from 'redux-orm';
 import { Model } from 'redux-orm';
 
-interface Event {
-    id: string,
-    address: string,
-    event: string,
-    blockHash: string,
-    blockNumber: number,
-    transactionHash: string,
-    returnValues: any,
-    contractTypeIndexId: string
-}
-
 class Event extends Model {
-    toString() {
-        return `Event: ${this.id}`;
-    }
     // Declare any static or instance methods you need.
 }
 Event.modelName = 'Event';

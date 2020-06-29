@@ -7,7 +7,7 @@ import {
     graphDataSelector,
     EventSelectors
 } from "../../store/selectors"
-import { indexAddressEvent } from "../../store/orm/models/eventByContractTypeIndex"
+import { indexAddressEvent } from "../../store/event/eventByContractTypeIndex"
 
 import FeedView from './FeedView'
 import { ContractActions } from "../../store/actions"

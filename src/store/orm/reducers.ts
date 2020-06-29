@@ -8,7 +8,7 @@ import {
     FeedTypes,
     CoinbaseTypes
 } from "../types"
-import { indexAddressEvent } from "./models/eventByContractTypeIndex"
+import { indexAddressEvent } from "../event/eventByContractTypeIndex"
 import { tellorContracts, testContracts } from '../../data/feeds'
 import favorites from '../../data/favorites'
 import protocols from '../../data/protocols'
@@ -18,6 +18,8 @@ import { transactionReducer } from '../transaction/reducers';
 import { TransactionAction } from '../transaction/types';
 import { blockReducer } from '../block/reducers';
 import { BlockAction } from '../block/types';
+import { eventReducer } from '../event/reducers';
+import { EventAction } from '../event/types';
 
 type Action = {
     type: string,
@@ -46,20 +48,15 @@ export function ormReducer(state: any, action: Action) {
 
     // Session-specific Models are available
     // as properties on the Session instance.
-    const { Event, EventByContractTypeIndex, Contract, ContractFavorite, Feed, CoinbaseOracleResponse } = sess;
+    const { Contract, ContractFavorite, CoinbaseOracleResponse } = sess;
     switch (action.type) {
         case EventTypes.CREATE_EVENT:
-            if (!Event.idExists(action.payload.id)) {
-                const indexData = { address: action.payload.address, event: action.payload.event }
-                const contractTypeIndexId = indexAddressEvent(indexData)
-                Event.create({ ...action.payload, contractTypeIndexId });
-            }
-            break;
         case EventTypes.UPDATE_EVENT:
-            Event.withId(action.payload.id).update(action.payload);
-            break;
         case EventTypes.REMOVE_EVENT:
-            Event.withId(action.payload.id).delete();
+        case EventTypes.CREATE_EVENT_CT_INDEX:
+        case EventTypes.UPDATE_EVENT_CT_INDEX:
+        case EventTypes.REMOVE_EVENT_CT_INDEX:
+            eventReducer(sess, action as EventAction)
             break;
         case TransactionTypes.CREATE_TRANSACTION:
         case TransactionTypes.UPDATE_TRANSACTION:
@@ -70,16 +67,6 @@ export function ormReducer(state: any, action: Action) {
         case BlockTypes.UPDATE_BLOCK:
         case BlockTypes.REMOVE_BLOCK:
             blockReducer(sess, action as BlockAction)
-            break;
-        case EventTypes.CREATE_EVENT_CT_INDEX:
-            const contractTypeIndexId = indexAddressEvent(action.payload)
-            EventByContractTypeIndex.create({ ...action.payload, contractTypeIndexId });
-            break;
-        case EventTypes.UPDATE_EVENT_CT_INDEX:
-            EventByContractTypeIndex.withId(action.payload.contractTypeIndexId).update(action.payload);
-            break;
-        case EventTypes.REMOVE_EVENT_CT_INDEX:
-            EventByContractTypeIndex.withId(action.payload.contractTypeIndexId).delete();
             break;
         case ContractTypes.CREATE_CONTRACT:
             Contract.create(action.payload);
