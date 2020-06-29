@@ -1,7 +1,7 @@
-export const CREATE_BLOCK = 'ORM/CREATE_BLOCK'
-export const UPDATE_BLOCK = 'ORM/UPDATE_BLOCK'
-export const REMOVE_BLOCK = 'ORM/REMOVE_BLOCK'
-export const FETCH_BLOCK = 'ORM/FETCH_BLOCK'
+export const CREATE_BLOCK = 'ORM/BLOCK/CREATE'
+export const UPDATE_BLOCK = 'ORM/BLOCK/UPDATE'
+export const REMOVE_BLOCK = 'ORM/BLOCK/REMOVE'
+export const FETCH_BLOCK = 'ORM/BLOCK/FETCH'
 
 export type CreateBlockActionInput = {
     blockNumber: number

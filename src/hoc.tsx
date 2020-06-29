@@ -8,10 +8,11 @@ import { FeedTypes, ProtocolTypes } from './store/types'
 import { setFeedCacheKey } from './store/feed/actions'
 import { FeedSelectors, ContractFavoriteSelectors, NetworkSelectors, ProtocolSelectors } from './store/selectors'
 import { setFeedStateCache, setFeedStateFullCache } from './store/feed/selectors';
-import { SetFeedCacheKeyActionInput } from './store/feed/types';
+import { SetFeedCacheKeyActionInput, REFRESH_FEED_LIST, Feed, RefreshFeedListActionInput } from './store/feed/types';
 import { SetContractFavoriteActionInput } from './store/contractFavorite/types';
 import { setContractFavorite } from './store/contractFavorite/actions';
 import { START_POLL_COINBASE_ORACLE } from './store/coinbase/types';
+import { compose } from 'recompose';
 
 interface Props {
     feeds: [FeedTypes.Feed],
@@ -52,6 +53,8 @@ export const withSetCacheKey = connect(null, (dispatch) => {
 export const withStartPollingCoinbase = connect(null, (dispatch) => {
     return { startPollingCoinbase: () => dispatch({ type: START_POLL_COINBASE_ORACLE }) }
 })
+
+
 export const withReduxStoreProvider = (store: any) => (Component: any) => (props: any) => {
     return (
         <Provider store={store}>
@@ -75,6 +78,18 @@ export const withDrizzleContextProvider = (drizzle: any) => (Component: any) => 
         <DrizzleContext.Provider drizzle={drizzle}>
             <Component {...props} />
         </DrizzleContext.Provider>)
+}
+
+export const withRefreshFeeds = connect(null, (dispatch) => { return { refreshFeeds: (payload: RefreshFeedListActionInput) => dispatch({ type: REFRESH_FEED_LIST, payload }) } })
+export const refreshOnUpdate = (Component: any) => (props: any) => {
+    const { drizzle, initialized } = props.drizzleContext;
+    useEffect(() => {
+        if (initialized) {
+            props.refreshFeeds({ feeds: props.feeds, drizzle })
+        }
+    }, [props.feeds, initialized])
+
+    return (<Component {...props} />)
 }
 
 export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.Feed>, setCacheKey: any) {

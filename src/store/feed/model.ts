@@ -17,6 +17,7 @@ Feed.fields = {
     granularity: attr(),
     sampleAPI: attr(),
     ens: attr(),
+    refreshed: attr(),
     protocol: fk({
         to: 'Protocol',
         as: 'protocolInfo',

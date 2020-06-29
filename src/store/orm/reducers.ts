@@ -12,6 +12,8 @@ import { indexAddressEvent } from "./models/eventByContractTypeIndex"
 import { tellorContracts, testContracts } from '../../data/feeds'
 import favorites from '../../data/favorites'
 import protocols from '../../data/protocols'
+import { feedReducer } from '../feed/reducers';
+import { FeedAction } from '../feed/types';
 
 type Action = {
     type: string,
@@ -19,7 +21,7 @@ type Action = {
     [key: string]: any
 }
 
-const initializeState = (orm) => {
+export const initializeState = (orm) => {
     const state = orm.getEmptyState();
     const { ContractFavorite, Feed, Protocol } = orm.mutableSession(state);
 
@@ -113,14 +115,11 @@ export function ormReducer(state: any, action: Action) {
         case CoinbaseTypes.CREATE_COINBASE_ORACLE_RESPONSE:
             CoinbaseOracleResponse.upsert(action.payload)
             break;
+        case FeedTypes.REFRESH_FEED:
+        case FeedTypes.UPDATE_FEED:
         case FeedTypes.SET_FEED_CACHE_KEY:
-            const feed = Feed.withId(action.payload.id)
-            if (action.payload.cacheArgs) {
-                const update = { contractId: action.payload.contractId, cacheKey: action.payload.cacheKey, cacheArgs: action.payload.cacheArgs }
-                feed.update({ [action.payload.cacheName]: { ...feed[action.payload.cacheName], [action.payload.cacheArgs]: update } })
-            } else {
-                feed.update({ [action.payload.cacheName]: { contractId: action.payload.contractId, cacheKey: action.payload.cacheKey } })
-            }
+            feedReducer(sess, action as FeedAction)
+            break;
     }
 
     return sess.state;

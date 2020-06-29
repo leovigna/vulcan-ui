@@ -16,7 +16,8 @@ const chainlinkContracts = testContracts.filter((f) => f.protocol === 'chainlink
 const mkrdaoContracts = testContracts.filter((f) => f.protocol === 'mkrdao').map((f) => {
     return ({
         contractName: f.address,
-        web3Contract: new web3.eth.Contract(MKRDaoDSValue.abi, f.address)
+        web3Contract: new web3.eth.Contract(MKRDaoDSValue.abi, f.address),
+        events: ['LogValue']
     })
 })
 

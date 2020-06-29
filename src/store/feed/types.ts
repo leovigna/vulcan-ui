@@ -18,10 +18,11 @@ export interface AnswerRenderOptions {
 export interface FeedBase {
     id: string,
     networkId: string,
-    protocol: string,
+    protocol: 'chainlink' | 'tellor' | 'mkrdao',
     address: string,
     name: string,
     title: string,
+    refreshed: boolean,
     description?: string,
     ens?: string,
     answerRenderOptions?: AnswerRenderOptions,
@@ -167,3 +168,47 @@ export interface Response {
     gasPrice: string | number
 }
 
+//Actions
+export const REFRESH_CHAINLINK_FEED = 'ORM/FEED/REFRESH_CHAINLINK_FEED'
+export interface RefreshChainlinkFeedActionInput {
+    feed: ChainlinkFeed,
+    drizzle: any
+}
+export interface RefreshChainlinkFeedAction {
+    type: typeof REFRESH_CHAINLINK_FEED
+    payload: RefreshChainlinkFeedActionInput
+}
+
+export const REFRESH_MKRDAO_FEED = 'ORM/FEED/REFRESH_MKRDAO_FEED'
+export interface RefreshMKRDaoFeedActionInput {
+    feed: MKRDaoFeed,
+    drizzle: any
+}
+export interface RefreshMKRDaoFeedAction {
+    type: typeof REFRESH_MKRDAO_FEED
+    payload: RefreshMKRDaoFeedActionInput
+}
+
+export const REFRESH_FEED = 'ORM/FEED/REFRESH'
+export type RefreshFeedAction = {
+    type: typeof REFRESH_FEED
+    payload: RefreshMKRDaoFeedActionInput | RefreshChainlinkFeedActionInput
+}
+
+export const UPDATE_FEED = 'ORM/FEED/UPDATE'
+export type UpdateFeedAction = {
+    type: typeof UPDATE_FEED
+    payload: Feed
+}
+
+export const REFRESH_FEED_LIST = 'ORM/FEED/REFRESH_FEED_LIST'
+export interface RefreshFeedListActionInput {
+    feeds: Feed[],
+    drizzle: any
+}
+export interface RefreshFeedListAction {
+    type: typeof REFRESH_FEED_LIST
+    payload: RefreshFeedListActionInput
+}
+
+export type FeedAction = RefreshFeedAction | UpdateFeedAction | RefreshFeedListAction | SetFeedCacheKeyAction

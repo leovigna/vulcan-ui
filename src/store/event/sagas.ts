@@ -41,10 +41,9 @@ function web3EventChannel(web3Contract: any, eventName: string, options: object,
 
 // fetch data from service using sagas
 export function* fetchEvent(action: EventTypes.FetchEventAction) {
-    const { event, options } = action.payload
-    const web3Contract = action.web3Contract
-    const max = action.payload.max || 100
+    const { event, options, web3Contract, max } = action.payload
     const chan = yield call(web3EventChannel, web3Contract, event, options, max)
+    console.debug(web3Contract)
     try {
         while (true) {
             //take('END')// will cause the saga to terminate by jumping to the finally block
@@ -52,8 +51,8 @@ export function* fetchEvent(action: EventTypes.FetchEventAction) {
             const { message, event, error } = e
             if (message === 'data') {
                 //yield put({ type: EventActions.EVENT_FIRED, name, event, error })
-
-                yield put(EventActions.createEvent({ ...event, networkId: action.payload.networkId }))
+                console.debug(message)
+                yield put(EventActions.createEvent({ ...event, networkId: web3Contract.web3._provider.networkVersion }))
 
             } else if (message === 'error') {
                 yield put({ type: DrizzleEventActions.EVENT_ERROR, name: web3Contract.address, event, error })
@@ -64,7 +63,7 @@ export function* fetchEvent(action: EventTypes.FetchEventAction) {
     } catch (error) {
         console.error(error)
     } finally {
-        //console.debug('Event subscriber terminated')
+        console.debug('Event subscriber terminated')
     }
 }
 

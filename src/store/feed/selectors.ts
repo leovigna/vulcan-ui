@@ -135,7 +135,6 @@ const setMKRDaoFeedStateCache = (drizzle: any, feed: MKRDaoFeed, setCacheKey: an
 
 export const setFeedStateCache = (drizzle: any, feed: Feed, setCacheKey: any) => {
     if (!drizzle.contracts) return;
-    // console.debug(feed)
 
     if (feed.protocol === 'tellor') {
         setTellorFeedStateCache(drizzle, feed as TellorFeed, setCacheKey)
@@ -259,10 +258,8 @@ const mkrdaoFeedStateSelector: (state: any, feed: MKRDaoFeed) => MKRDaoFeedState
     let read;
     if (feed.read.cacheKey) {
         read = DrizzleSelectors.drizzleStateValueSelector(state, feed.read.contractId, 'read', feed.read.cacheKey)
-        console.debug(read)
         if (read) {
             const readBytes = Web3.utils.hexToNumberString(read)
-            console.debug(readBytes)
         }
 
     }
