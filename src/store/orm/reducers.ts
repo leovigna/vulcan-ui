@@ -14,6 +14,8 @@ import favorites from '../../data/favorites'
 import protocols from '../../data/protocols'
 import { feedReducer } from '../feed/reducers';
 import { FeedAction } from '../feed/types';
+import { transactionReducer } from '../transaction/reducers';
+import { TransactionAction } from '../transaction/types';
 
 type Action = {
     type: string,
@@ -60,18 +62,9 @@ export function ormReducer(state: any, action: Action) {
             Event.withId(action.payload.id).delete();
             break;
         case TransactionTypes.CREATE_TRANSACTION:
-            transactionHash = (action.payload.transactionHash || action.payload.hash)
-            if (!Transaction.idExists(transactionHash)) {
-                Transaction.create({ ...action.payload, transactionHash });
-            }
-            break;
         case TransactionTypes.UPDATE_TRANSACTION:
-            transactionHash = (action.payload.transactionHash || action.payload.hash)
-            Transaction.withId(transactionHash).update({ ...action.payload, transactionHash });
-            break;
         case TransactionTypes.REMOVE_TRANSACTION:
-            transactionHash = (action.payload.transactionHash || action.payload.hash)
-            Transaction.withId(transactionHash).delete();
+            transactionReducer(sess, action as TransactionAction)
             break;
         case BlockTypes.CREATE_BLOCK:
             blockNumber = (action.payload.blockNumber || action.payload.number)
