@@ -22,6 +22,8 @@ import { eventReducer } from '../event/reducers';
 import { EventAction } from '../event/types';
 import { coinbaseReducer } from '../coinbase/reducers';
 import { CoinbaseAction } from '../coinbase/types';
+import { contractReducer } from '../contract/reducers';
+import { ContractAction } from '../contract/types';
 
 type Action = {
     type: string,
@@ -50,7 +52,7 @@ export function ormReducer(state: any, action: Action) {
 
     // Session-specific Models are available
     // as properties on the Session instance.
-    const { Contract, ContractFavorite, CoinbaseOracleResponse } = sess;
+    const { ContractFavorite } = sess;
     switch (action.type) {
         case EventTypes.CREATE_EVENT:
         case EventTypes.UPDATE_EVENT:
@@ -71,16 +73,10 @@ export function ormReducer(state: any, action: Action) {
             blockReducer(sess, action as BlockAction)
             break;
         case ContractTypes.CREATE_CONTRACT:
-            Contract.create(action.payload);
-            break;
         case ContractTypes.UPDATE_CONTRACT:
-            Contract.withId(action.payload.address).update(action.payload);
-            break;
         case ContractTypes.REMOVE_CONTRACT:
-            Contract.withId(action.payload.address).delete();
-            break;
         case ContractTypes.UPDATE_CONTRACT_EVENTS:
-            Contract.withId(action.payload.address).updated = true
+            contractReducer(sess, action as ContractAction)
             break;
         case ContractFavoriteTypes.SET_CONTRACT_FAVORITE:
             ContractFavorite.upsert(action.payload)

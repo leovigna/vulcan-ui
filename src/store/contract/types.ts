@@ -78,3 +78,5 @@ export interface UpdateContractEventsAction {
     type: typeof UPDATE_CONTRACT_EVENTS
     payload: UpdateContractEventsActionInput
 }
+
+export type ContractAction = CreateContractAction | UpdateContractAction | RemoveContractAction | UpdateContractEventsAction
