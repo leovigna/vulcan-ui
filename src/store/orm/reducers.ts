@@ -20,6 +20,8 @@ import { blockReducer } from '../block/reducers';
 import { BlockAction } from '../block/types';
 import { eventReducer } from '../event/reducers';
 import { EventAction } from '../event/types';
+import { coinbaseReducer } from '../coinbase/reducers';
+import { CoinbaseAction } from '../coinbase/types';
 
 type Action = {
     type: string,
@@ -84,7 +86,7 @@ export function ormReducer(state: any, action: Action) {
             ContractFavorite.upsert(action.payload)
             break;
         case CoinbaseTypes.CREATE_COINBASE_ORACLE_RESPONSE:
-            CoinbaseOracleResponse.upsert(action.payload)
+            coinbaseReducer(sess, action as CoinbaseAction)
             break;
         case FeedTypes.REFRESH_FEED:
         case FeedTypes.UPDATE_FEED:

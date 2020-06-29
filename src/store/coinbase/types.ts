@@ -31,3 +31,5 @@ export interface CreateCoinbaseOracleResponseAction {
     type: typeof CREATE_COINBASE_ORACLE_RESPONSE
     payload: CreateCoinbaseOracleResponseActionInput
 }
+
+export type CoinbaseAction = CreateCoinbaseOracleResponseAction
