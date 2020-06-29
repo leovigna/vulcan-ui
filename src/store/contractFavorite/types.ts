@@ -14,3 +14,5 @@ export interface SetContractFavoriteAction {
     type: typeof SET_CONTRACT_FAVORITE
     payload: SetContractFavoriteActionInput
 }
+
+export type ContractFavoriteAction = SetContractFavoriteAction
