@@ -60,13 +60,15 @@ function* refreshTellorFeed(action: RefreshTellorFeedAction) {
 function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
     const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
     const currentBlock = action.payload.currentBlock
-    if (action.payload.feed.refreshed) {
-        if (action.payload.feed.state?.latestLogValue) {
-            // console.debug(action.payload.feed.state?.latestLogValue)
-            yield put(fetchBlock({ number: action.payload.feed.state?.latestLogValue.blockNumber, networkId: action.payload.feed.networkId }))
-        }
-        return
-    };
+    if (action.payload.feed.refreshed) return;
+    /*
+    if (action.payload.feed.state?.latestLogValue) {
+        // console.debug(action.payload.feed.state?.latestLogValue)
+        yield put(fetchBlock({ number: action.payload.feed.state?.latestLogValue.blockNumber, networkId: action.payload.feed.networkId }))
+    }
+    return
+    */
+
 
     if (!currentBlock.number) {
         yield put(fetchBlock({ hash: 'latest', networkId: action.payload.feed.networkId }))
@@ -85,7 +87,7 @@ function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
             event: 'LogValue',
             options: { fromBlock: currentBlock.number - lastBlocks, toBlock: 'latest' },
             max: 25, web3Contract,
-            fetchTransaction: false, fetchBlock: false
+            fetchTransaction: false, fetchBlock: true
         }))
     }
 }

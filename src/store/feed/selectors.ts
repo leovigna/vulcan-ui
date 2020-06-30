@@ -302,7 +302,7 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
                 ...feedState,
                 timestamp: feedState.latestTimestamp,
                 value: feedState.latestAnswer,
-                history,
+                history
             }
         }
     }
@@ -341,10 +341,20 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
             console.error(error)
         }
 
+        const history = feedState.LogValue.map((e) => {
+            const value = Web3.utils.toBN(e.returnValues.val).div(Web3.utils.toBN('1000000000')).toNumber()
+            const timestamp = e.block?.timestamp
+            return {
+                value: transformAnswer(feed.answerRenderOptions!, value),
+                timestamp: timestamp ? new Date(Number(timestamp) * 1000) : 0,
+            }
+        }).filter((d) => !!d.timestamp && !!d.value)
+
         return {
             ...feedState,
             value,
-            timestamp
+            timestamp,
+            history
         }
     }
     return null;
