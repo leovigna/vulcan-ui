@@ -50,7 +50,7 @@ export function* fetchEvent(action: FetchEventAction) {
                 fetchCount += 1
                 //yield put({ type: EventActions.EVENT_FIRED, name, event, error })
 
-                yield put(createEvent({ ...event, networkId: web3Contract.web3._provider.networkVersion }))
+                yield spawn(yield put, createEvent({ ...event, networkId: web3Contract.web3._provider.networkVersion }))
 
                 if (action.payload.fetchTransaction) {
                     console.debug(`fetchTransactions ${event.transactionHash}`)
@@ -82,9 +82,9 @@ export function* fetchEventWithTimeout(action: FetchEventAction) {
         timeout: call(delay, 10000)
     })
 
-    console.debug(response)
-    if (failed) console.error(failed)
-    if (timeout) console.debug(timeout)
+    if (failed) console.error(`[FAILED] fetchEventWithTimeout ${failed}`)
+    if (timeout) console.debug(`[TIMEOUT] fetchEventWithTimeout ${timeout}`)
+    if (response) console.debug(`[RESPONSE] fetchEventWithTimeout ${response}`)
 }
 
 // app root saga

@@ -12,6 +12,7 @@ import { networksReducer } from './network/reducers'
 import { coinbaseRootSaga } from './coinbase/sagas'
 import { feedsRootSaga } from './feed/sagas'
 import { feedReducer } from './feed/reducers'
+import { latestBlockReducer } from './block/reducers'
 
 const persistedWhitelist = []
 /*
@@ -30,7 +31,8 @@ const appReducers = {
         orm: ormReducer
     })),
     networks: networksReducer,
-    networkId: networkIdReducer
+    networkId: networkIdReducer,
+    latestBlock: latestBlockReducer
 }
 
 const appSagas = [/* , , contractRootSaga,*/ coinbaseRootSaga, feedsRootSaga, eventsRootSaga, transactionRootSaga, blocksRootSaga]

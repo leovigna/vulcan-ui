@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { web3ForNetworkId } from "../../web3global"
-import { FetchBlockAction, FetchBlockWithHashActionInput, FetchBlockWithNumberActionInput, CREATE_BLOCK, FETCH_BLOCK } from './types'
+import { FetchBlockAction, FetchBlockWithHashActionInput, FetchBlockWithNumberActionInput, CREATE_BLOCK, FETCH_BLOCK, LATEST_BLOCK } from './types'
 
 // fetch data from service using sagas
 export function* fetchBlock(action: FetchBlockAction) {
@@ -9,6 +9,11 @@ export function* fetchBlock(action: FetchBlockAction) {
 
     const block = yield call(web3.eth.getBlock, blockHashOrBlockNumber)
     yield put({ type: CREATE_BLOCK, payload: { ...block, networkId: action.payload.networkId }, })
+
+    if (blockHashOrBlockNumber === 'latest') {
+        console.debug(block)
+        yield put({ type: LATEST_BLOCK, payload: { ...block, networkId: action.payload.networkId } })
+    }
 }
 
 // Combine all your redux concerns

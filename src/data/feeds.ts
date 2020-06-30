@@ -80,8 +80,8 @@ export const testContracts: Array<Feed> = [
         title: "ETH/USD",
         answerRenderOptions: {
             transform: {
-                multiply: 1e-3,
-                decimals: 2
+                multiply: 1e-9,
+                decimals: 3
             },
             format: "$ %(value)s"
         },

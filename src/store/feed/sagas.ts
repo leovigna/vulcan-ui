@@ -2,6 +2,7 @@ import { RefreshMKRDaoFeedAction, REFRESH_MKRDAO_FEED, REFRESH_FEED, RefreshChai
 import { FETCH_EVENT, FetchEventAction } from "../event/types"
 import { put, takeEvery, all, fork, spawn } from "redux-saga/effects"
 import { fetchEvent } from "../event/actions"
+import { fetchBlock } from "../block/actions"
 
 function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
     yield put({
@@ -16,24 +17,26 @@ function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
 function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
     const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
     const currentBlock = action.payload.currentBlock
-    if (!currentBlock.number) return;
+    if (!currentBlock.number) {
+        yield put(fetchBlock({ hash: 'latest', networkId: action.payload.feed.networkId }))
+    } else {
+        yield put({
+            type: UPDATE_FEED,
+            payload: {
+                id: action.payload.feed.id,
+                refreshed: true
+            }
+        })
 
-    yield put({
-        type: UPDATE_FEED,
-        payload: {
-            id: action.payload.feed.id,
-            refreshed: true
-        }
-    })
-
-    //6*60*48
-    const lastBlocks = 17280
-    yield spawn(yield put, fetchEvent({
-        event: 'LogValue',
-        options: { fromBlock: currentBlock.number - lastBlocks, toBlock: 'latest' },
-        max: lastBlocks, web3Contract,
-        fetchTransaction: true, fetchBlock: false
-    }))
+        //6*60*48
+        const lastBlocks = 6 * 60 * 24
+        yield spawn(yield put, fetchEvent({
+            event: 'LogValue',
+            options: { fromBlock: currentBlock.number - lastBlocks, toBlock: 'latest' },
+            max: 25, web3Contract,
+            fetchTransaction: false, fetchBlock: false
+        }))
+    }
 }
 
 function* refreshFeed(action: RefreshFeedAction) {

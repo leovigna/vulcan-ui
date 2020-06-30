@@ -2,6 +2,7 @@ import { ContractFavorite } from "../contractFavorite/types"
 import { Protocol } from "../protocol/types"
 import { CoinbaseOracle } from "../coinbase/types"
 import { Block } from "../block/types"
+import { Event } from "../event/types"
 
 export interface DrizzleCacheKey {
     contractId: string,
@@ -87,6 +88,7 @@ export interface CoinbaseFeedState extends CoinbaseOracle {
 export interface MKRDaoFeedState {
     read: string,
     LogValue: Event[]
+    latestLogValue: Event
 }
 
 interface HistoryPoint {

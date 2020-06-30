@@ -26,9 +26,7 @@ export interface Block {
 }
 
 export const CREATE_BLOCK = 'ORM/BLOCK/CREATE'
-export const UPDATE_BLOCK = 'ORM/BLOCK/UPDATE'
 export const REMOVE_BLOCK = 'ORM/BLOCK/REMOVE'
-export const FETCH_BLOCK = 'ORM/BLOCK/FETCH'
 
 export type CreateBlockActionInput = Block
 export interface CreateBlockAction {
@@ -36,6 +34,7 @@ export interface CreateBlockAction {
     payload: CreateBlockActionInput
 }
 
+export const UPDATE_BLOCK = 'ORM/BLOCK/UPDATE'
 export type UpdateBlockActionInput = Block
 export interface UpdateBlockAction {
     type: typeof UPDATE_BLOCK
@@ -43,13 +42,14 @@ export interface UpdateBlockAction {
 }
 
 export type RemoveBlockActionInput = {
-    blockNumber: number
+    number: Block['number']
 }
 export interface RemoveBlockAction {
     type: typeof REMOVE_BLOCK
     payload: RemoveBlockActionInput
 }
 
+export const FETCH_BLOCK = 'ORM/BLOCK/FETCH'
 export interface FetchBlockWithNumberActionInput {
     number: Block['number']
     networkId: Block['networkId']
@@ -59,10 +59,16 @@ export interface FetchBlockWithHashActionInput {
     networkId: Block['networkId']
 }
 export type FetchBlockActionInput = FetchBlockWithNumberActionInput | FetchBlockWithHashActionInput
-
 export interface FetchBlockAction {
     type: typeof FETCH_BLOCK
     payload: FetchBlockActionInput
 }
 
-export type BlockAction = FetchBlockAction | CreateBlockAction | UpdateBlockAction | RemoveBlockAction
+export const LATEST_BLOCK = 'ORM/BLOCK/SET_LATEST'
+export type LatestBlockActionInput = Block
+export interface LatestBlockAction {
+    type: typeof LATEST_BLOCK
+    payload: LatestBlockActionInput
+}
+
+export type BlockAction = FetchBlockAction | CreateBlockAction | UpdateBlockAction | RemoveBlockAction | LatestBlockAction

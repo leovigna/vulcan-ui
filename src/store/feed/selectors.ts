@@ -265,9 +265,14 @@ const mkrdaoFeedStateSelector: (state: any, feed: MKRDaoFeed) => MKRDaoFeedState
         }
     }
 
+    let latestLogValue;
     const LogValue = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'LogValue' }))
+    if (LogValue) {
+        LogValue.events.sort((a, b) => b.blockNumber - a.blockNumber)
+        latestLogValue = LogValue.events[0]
+    }
 
-    return { read, LogValue }
+    return { read, LogValue, latestLogValue }
 }
 
 
@@ -313,8 +318,17 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
         }
     } else if (feed.protocol === 'mkrdao') {
         const feedState = mkrdaoFeedStateSelector(state, feed as MKRDaoFeed)
+        let value;
+        try {
+            //Short-term hack, slice bytes to 32-bit
+            const rawHex = feedState.latestLogValue?.returnValues.val
+            if (rawHex) value = Web3.utils.toBN(rawHex).div(Web3.utils.toBN('1000000000')).toNumber()
+        } catch (error) {
+            console.error(error)
+        }
+
         return {
-            value: feedState.read,
+            value,
             ...feedState
         }
     }
