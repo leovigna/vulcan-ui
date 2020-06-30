@@ -1,12 +1,13 @@
 import { createSelector } from 'redux-orm'
 import Web3 from 'web3'
 import orm from '../orm'
-import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState, CoinbaseFeed, CoinbaseFeedState, MKRDaoFeed, MKRDaoFeedState } from './types'
+import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState, CoinbaseFeed, CoinbaseFeedState, MKRDaoFeed, MKRDaoFeedState, LogValue, AnswerUpdated, ResponseReceived, NewValue, DataRequested } from './types'
 import { DrizzleSelectors } from '../selectors'
 import { transformAnswer } from './actions'
 import { coinbaseOracleResponsesSelector } from '../coinbase/selectors'
 import { eventByContractTypeIndexByIdSelector } from '../event/selectors'
 import { indexAddressEvent } from '../event/eventByContractTypeIndex'
+import { CoinbaseOracleResponse, CoinbaseOracle, CoinbaseTicker } from '../coinbase/types'
 
 const emptyArray: Feed[] = []
 
@@ -169,8 +170,8 @@ const chainlinkFeedStateSelector: (state: any, feed: ChainlinkFeed) => Chainlink
     let latestAnswer;
     let latestRound;
     let latestTimestamp;
-    let getAnswer;
-    let getTimestamp;
+    let getAnswer = {};
+    let getTimestamp = {};
     if (feed.latestAnswer.cacheKey) {
         latestAnswer = DrizzleSelectors.drizzleStateValueSelector(state, feed.latestAnswer.contractId, 'latestAnswer', feed.latestAnswer.cacheKey)
     }
@@ -197,20 +198,25 @@ const chainlinkFeedStateSelector: (state: any, feed: ChainlinkFeed) => Chainlink
         }) as Iterable<[string, any]>)
     }
 
+    const AnswerUpdatedIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'AnswerUpdated' }))
+    const ResponseReceivedIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'ResponseReceived' }))
+
     return {
         latestAnswer,
         latestRound,
         latestTimestamp,
         getAnswer,
-        getTimestamp
+        getTimestamp,
+        AnswerUpdated: AnswerUpdatedIndex?.events as AnswerUpdated[] || [],
+        ResponseReceived: ResponseReceivedIndex?.events as ResponseReceived[] || []
     }
 }
 
 const tellorFeedStateSelector: (state: any, feed: TellorFeed) => TellorFeedState = (state, feed) => {
     let getCurrentValue;
     let getNewValueCountbyRequestId;
-    let getTimestampbyRequestIDandIndex;
-    let retrieveData;
+    let getTimestampbyRequestIDandIndex = {};
+    let retrieveData = {};
     if (feed.getCurrentValue.cacheKey) {
         getCurrentValue = DrizzleSelectors.drizzleStateValueSelector(state, feed.getCurrentValue.contractId, 'getCurrentValue', feed.getCurrentValue.cacheKey)
     }
@@ -234,19 +240,28 @@ const tellorFeedStateSelector: (state: any, feed: TellorFeed) => TellorFeedState
         }) as Iterable<[string, any]>)
     }
 
-    return { getCurrentValue, getNewValueCountbyRequestId, getTimestampbyRequestIDandIndex, retrieveData }
+    const NewValueIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'NewValue' }))
+    const DataRequestedIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'DataRequested' }))
+
+    return {
+        getCurrentValue,
+        getNewValueCountbyRequestId,
+        getTimestampbyRequestIDandIndex,
+        retrieveData,
+        NewValue: NewValueIndex?.events as NewValue[] || [],
+        DataRequested: DataRequestedIndex?.events as DataRequested[] || []
+    }
 }
 
-const coinbaseFeedStateSelector: (state: any, feed: CoinbaseFeed) => CoinbaseFeedState = (state, feed) => {
-    const coinbaseOracleResponses = coinbaseOracleResponsesSelector(state)
-    const latestResponse = coinbaseOracleResponses[coinbaseOracleResponses.length - 1]
-    if (!latestResponse) return {}
+const coinbaseFeedStateSelector: (state: any, feed: CoinbaseFeed) => CoinbaseOracle | null = (state, feed) => {
+    const coinbaseOracleResponses: CoinbaseOracleResponse[] = coinbaseOracleResponsesSelector(state)
+    const latestResponse = coinbaseOracleResponses[coinbaseOracleResponses.length - 1] as CoinbaseOracleResponse
+    if (!latestResponse) return null;
 
-    console.debug(latestResponse)
     const timestamp = latestResponse.timestamp;
-    const message = latestResponse.messages[feed.index];
-    const signature = latestResponse.signatures[feed.index];
-    const price = latestResponse.prices[feed.symbol];
+    const message = latestResponse.messages[feed.index]!;
+    const signature = latestResponse.signatures[feed.index]!;
+    const price = latestResponse.prices[feed.symbol as CoinbaseTicker];
 
     return {
         timestamp,
@@ -260,19 +275,16 @@ const mkrdaoFeedStateSelector: (state: any, feed: MKRDaoFeed) => MKRDaoFeedState
     let read;
     if (feed.read.cacheKey) {
         read = DrizzleSelectors.drizzleStateValueSelector(state, feed.read.contractId, 'read', feed.read.cacheKey)
-        if (read) {
-            const readBytes = Web3.utils.hexToNumberString(read)
-        }
     }
 
     let latestLogValue;
-    const LogValue = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'LogValue' }))
-    if (LogValue) {
-        LogValue.events.sort((a, b) => b.blockNumber - a.blockNumber)
-        latestLogValue = LogValue.events[0]
+    const LogValueIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'LogValue' }))
+    if (LogValueIndex) {
+        LogValueIndex.events.sort((a, b) => b.blockNumber - a.blockNumber)
+        latestLogValue = LogValueIndex.events[0]!
     }
 
-    return { read, LogValue, latestLogValue }
+    return { read, LogValue: LogValueIndex?.events as LogValue[] || [], latestLogValue: latestLogValue as LogValue }
 }
 
 
@@ -314,7 +326,7 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
         const feedState = coinbaseFeedStateSelector(state, feed as CoinbaseFeed)
         return {
             ...feedState,
-            value: feedState.price
+            value: feedState?.price
         }
     } else if (feed.protocol === 'mkrdao') {
         const feedState = mkrdaoFeedStateSelector(state, feed as MKRDaoFeed)

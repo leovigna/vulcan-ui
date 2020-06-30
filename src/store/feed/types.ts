@@ -2,7 +2,8 @@ import { ContractFavorite } from "../contractFavorite/types"
 import { Protocol } from "../protocol/types"
 import { CoinbaseOracle } from "../coinbase/types"
 import { Block } from "../block/types"
-import { Event } from "../event/types"
+import { Event, EventByContractTypeIndex } from "../event/types"
+import { Transaction } from "../transaction/types"
 
 export interface DrizzleCacheKey {
     contractId: string,
@@ -68,33 +69,78 @@ export interface MKRDaoFeed extends FeedBase {
 export type Feed = ChainlinkFeed | TellorFeed | CoinbaseFeed | MKRDaoFeed
 
 interface FeedStateBase {
-    value: number
-    timestamp: string,
+    value?: number
+    timestamp?: string,
     history?: HistoryPoint[]
+}
+
+export interface AnswerUpdated extends Event {
+    returnValues: {
+        roundId: string,
+        timestamp: string
+    }
+}
+export interface ResponseReceived extends Event {
+    returnValues: {
+        response: string,
+        answerId: string,
+        sender: string
+    }
 }
 export interface ChainlinkFeedState extends FeedStateBase {
     latestAnswer: string,
     latestTimestamp: string,
     latestRound: string,
     getAnswer: { [key: string]: string },
-    getTimestamp: { [key: string]: string }
+    getTimestamp: { [key: string]: string },
+    AnswerUpdated: AnswerUpdated[],
+    ResponseReceived: ResponseReceived[]
+}
+export interface ChainlinkAnswer {
+    transactionHash: Transaction['hash'],
+    address: ResponseReceived['returnValues']['sender'],
+    value: ResponseReceived['returnValues']['response'],
+    timestamp: Block['timestamp'],
+    gasPrice: Transaction['gasPrice']
 }
 
+
+export interface DataRequested extends Event {
+    returnValues: {
+        _sender: string,
+        _query: string,
+        _querySymbol: string,
+        _granularity: string,
+        _requestId: string,
+        _totalTips: string
+    }
+}
+export interface NewValue extends Event {
+    returnValues: {
+        _requestId: string,
+        _time: string,
+        _value: string,
+        _totalTips: string,
+        _currentChallenge: string
+    }
+}
 export interface TellorFeedState extends FeedStateBase {
-    getCurrentValue: {
+    getCurrentValue?: {
         value: number,
         _timestampRetrieved: string
     },
-    getNewValueCountbyRequestId: number,
+    getNewValueCountbyRequestId?: number,
     getTimestampbyRequestIDandIndex: { [key: string]: number },
-    retrieveData: { [key: string]: number }
+    retrieveData: { [key: string]: number },
+    NewValue: NewValue[],
+    DataRequested: DataRequested[]
 }
 
 export interface CoinbaseFeedState extends FeedStateBase, CoinbaseOracle {
     resultByTimestamp: { [key: string]: CoinbaseOracle }
 }
 
-interface LogValue extends Event {
+export interface LogValue extends Event {
     returnValues: {
         val: string
     }
@@ -126,46 +172,11 @@ export type SetFeedCacheKeyAction = {
     payload: SetFeedCacheKeyActionInput
 }
 
-
-//
-export interface FeedOld {
-    tellorId?: string,
-    networkId: string,
-    name: string,
-    address: string,
-    title: string,
-    description?: string,
-    granularity: number,
-    sampleAPI?: string,
-    protocol: string,
-    ens?: string,
-    value: string,
-    hearted: boolean,
-    nodeCount: number,
-    lastUpdate: string,
-    latestRound?: number,
-    latestAnswer?: number,
-    latestTimestamp?: number,
-    responses: [Response],
-    answer: string,
-    minResponses: number,
-    maxResponses: number,
-    deviationThreshold: number,
-    answerRenderOptions?: AnswerRenderOptions
-}
-
-export interface Response {
-    transactionHash: string,
-    address: string,
-    answer: string | number,
-    timestamp: number,
-    gasPrice: string | number
-}
-
 //Actions
 export const REFRESH_CHAINLINK_FEED = 'ORM/FEED/REFRESH_CHAINLINK_FEED'
 export interface RefreshChainlinkFeedActionInput {
     feed: ChainlinkFeed,
+    currentBlock: Block,
     drizzle: any
 }
 export interface RefreshChainlinkFeedAction {
@@ -184,10 +195,21 @@ export interface RefreshMKRDaoFeedAction {
     payload: RefreshMKRDaoFeedActionInput
 }
 
+export const REFRESH_TELLOR_FEED = 'ORM/FEED/REFRESH_TELLOR_FEED'
+export interface RefreshTellorFeedActionInput {
+    feed: TellorFeed,
+    currentBlock: Block,
+    drizzle: any
+}
+export interface RefreshTellorFeedAction {
+    type: typeof REFRESH_TELLOR_FEED
+    payload: RefreshTellorFeedActionInput
+}
+
 export const REFRESH_FEED = 'ORM/FEED/REFRESH'
 export type RefreshFeedAction = {
     type: typeof REFRESH_FEED
-    payload: RefreshMKRDaoFeedActionInput | RefreshChainlinkFeedActionInput
+    payload: RefreshMKRDaoFeedActionInput | RefreshChainlinkFeedActionInput | RefreshTellorFeedActionInput
 }
 
 export const UPDATE_FEED = 'ORM/FEED/UPDATE'

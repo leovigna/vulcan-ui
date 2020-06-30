@@ -1,17 +1,20 @@
+export type CoinbaseTicker =
+    'BTC'
+    | 'ETH'
+    | 'XTZ'
+    | 'DAI'
+    | 'REP'
+    | 'ZRX'
+    | 'BAT'
+    | 'KNC'
+    | 'LINK'
+
 export interface CoinbaseOracleResponse {
     timestamp: string,
     messages: string[9],
     signatures: string[9],
     prices: {
-        BTC: string,
-        ETH: string,
-        XTZ: string,
-        DAI: string,
-        REP: string,
-        ZRX: string,
-        BAT: string,
-        KNC: string,
-        LINK: string
+        [ticker in CoinbaseTicker]: string
     }
 }
 

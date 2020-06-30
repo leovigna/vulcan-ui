@@ -1,11 +1,38 @@
-import { RefreshMKRDaoFeedAction, REFRESH_MKRDAO_FEED, REFRESH_FEED, RefreshChainlinkFeedAction, RefreshFeedAction, REFRESH_CHAINLINK_FEED, REFRESH_FEED_LIST, RefreshFeedListAction, UPDATE_FEED } from "./types"
-import { FETCH_EVENT, FetchEventAction } from "../event/types"
+import { RefreshMKRDaoFeedAction, REFRESH_MKRDAO_FEED, REFRESH_FEED, RefreshChainlinkFeedAction, RefreshFeedAction, REFRESH_CHAINLINK_FEED, REFRESH_FEED_LIST, RefreshFeedListAction, UPDATE_FEED, RefreshTellorFeedAction, REFRESH_TELLOR_FEED } from "./types"
 import { put, takeEvery, all, fork, spawn } from "redux-saga/effects"
 import { fetchEvent } from "../event/actions"
 import { fetchBlock } from "../block/actions"
 import { delay } from "redux-saga"
 
 function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
+    const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
+    if (action.payload.feed.refreshed) return;
+
+    if (action.payload.feed.state?.latestRound) {
+        yield put({
+            type: UPDATE_FEED,
+            payload: {
+                id: action.payload.feed.id,
+                refreshed: true
+            }
+        })
+
+        yield spawn(yield put, fetchEvent({
+            event: 'ResponseReceived',
+            options: {
+                fromBlock: 0,
+                toBlock: 'latest',
+                filter: { answerId: action.payload.feed.state?.latestRound }
+            },
+            max: 25, web3Contract,
+            fetchTransaction: true, fetchBlock: true
+        }))
+    }
+}
+
+function* refreshTellorFeed(action: RefreshTellorFeedAction) {
+    const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
+
     if (action.payload.feed.refreshed) return;
     yield put({
         type: UPDATE_FEED,
@@ -14,6 +41,20 @@ function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
             refreshed: true
         }
     })
+
+    /*
+    yield spawn(yield put, fetchEvent({
+        event: 'NewValue',
+        options: {
+            fromBlock: 0,
+            toBlock: 'latest',
+            filter: { _requestId: action.payload.feed.tellorId }
+        },
+        max: 25, web3Contract,
+        fetchTransaction: false, fetchBlock: false
+    }))
+    */
+
 }
 
 function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
@@ -39,7 +80,7 @@ function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
         })
 
         //6*60*48
-        const lastBlocks = 6 * 60 * 24
+        const lastBlocks = 6 * 60 * 12 //Last 12 hours
         yield spawn(yield put, fetchEvent({
             event: 'LogValue',
             options: { fromBlock: currentBlock.number - lastBlocks, toBlock: 'latest' },
@@ -50,8 +91,6 @@ function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
 }
 
 function* refreshFeed(action: RefreshFeedAction) {
-
-
     switch (action.payload.feed.protocol) {
         case 'chainlink':
             yield put({
@@ -66,13 +105,9 @@ function* refreshFeed(action: RefreshFeedAction) {
             })
             break
         case 'tellor':
-            if (action.payload.feed.refreshed) return;
             yield put({
-                type: UPDATE_FEED,
-                payload: {
-                    id: action.payload.feed.id,
-                    refreshed: true
-                }
+                type: REFRESH_TELLOR_FEED,
+                payload: action.payload
             })
             break
     }
@@ -99,4 +134,5 @@ export function* feedsRootSaga() {
     yield takeEvery(REFRESH_FEED, refreshFeed)
     yield takeEvery(REFRESH_CHAINLINK_FEED, refreshChainlinkFeed)
     yield takeEvery(REFRESH_MKRDAO_FEED, refreshMKRDaoFeed)
+    yield takeEvery(REFRESH_TELLOR_FEED, refreshTellorFeed)
 }

@@ -7,11 +7,16 @@ import {
 
 import FeedTable from '../../components/FeedTable'
 import FeedChart, { Point } from '../../components/FeedChart'
-import { FeedTypes } from '../../store/types'
-interface Props extends FeedTypes.Feed {
+import { FeedBase, ChainlinkAnswer } from '../../store/feed/types';
+interface Props extends FeedBase {
     address: string,
     answer: string,
-    chartData: [Point]
+    chartData: Point[],
+    responses: ChainlinkAnswer[]
+    minResponses: number,
+    maxResponses: number,
+    lastUpdate: Date,
+    deviationThreshold: number
 }
 
 const FeedView = ({ title, address, answer, responses, chartData, minResponses, maxResponses, lastUpdate, deviationThreshold }: Props) => {

@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
-import { ChainlinkFeed } from '../../store/feed/types'
+import { ChainlinkFeed, ChainlinkAnswer } from '../../store/feed/types'
 import { renderAnswer } from '../../store/feed/actions'
 import { withFeed, withDrizzleContext, withFeedCache, withSetContractFavorite, withSetCacheKey, withFeedHistoryCache } from '../../hoc'
 
@@ -22,7 +22,7 @@ const ChainlinkFeedView = ({
         id,
         answerRenderOptions,
         address,
-        title,
+        title
     } = feed || {}
     const latestAnswerValue = feed?.state?.value
     const latestTimestampValue = feed?.state?.timestamp
@@ -33,13 +33,23 @@ const ChainlinkFeedView = ({
 
     const latestAnswerFormatted = latestAnswerValue ? renderAnswer(answerRenderOptions, latestAnswerValue) : null;
     const lastUpdate = latestTimestampValue ? moment(latestTimestampValue, 'X').format('LLLL') : null;
+    const responses: ChainlinkAnswer[] = feed?.state ? feed?.state?.ResponseReceived.map((e) => {
+        return {
+            address: e.returnValues.sender,
+            value: e.returnValues.response,
+            transactionHash: e.transactionHash,
+            gasPrice: e.transaction?.gasPrice || '',
+            timestamp: e.block?.timestamp || 0
+        }
+    }) : []
 
     const feedViewProps = {
         title: title,
         address,
         answer: loading ? 'Loading...' : latestAnswerFormatted,
         lastUpdate: loading ? 'Loading...' : lastUpdate,
-        chartData: feed?.state?.history?.map((d) => { return { x: d.timestamp, y: d.value } })
+        chartData: feed?.state?.history?.map((d) => { return { x: d.timestamp, y: d.value } }),
+        responses
     }
 
     return (<FeedView {...feedViewProps} />);

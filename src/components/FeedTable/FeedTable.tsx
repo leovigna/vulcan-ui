@@ -1,10 +1,10 @@
 import React from 'react';
 import Moment from 'react-moment';
 import EtherScan from "../Etherscan/EtherScan"
-import { FeedTypes } from "../../store/types"
+import { ChainlinkAnswer } from '../../store/feed/types';
 
 interface Props {
-    responses: [FeedTypes.Response]
+    responses: ChainlinkAnswer[]
 }
 
 const FeedTable = ({ responses }: Props) =>
@@ -20,10 +20,10 @@ const FeedTable = ({ responses }: Props) =>
         </thead>
         <tbody>
             {
-                responses.map(({ transactionHash, address, answer, timestamp, gasPrice }) => {
+                responses.map(({ transactionHash, address, value, timestamp, gasPrice }) => {
                     return (<tr key={transactionHash}>
                         <td className='px-1 py-3'><EtherScan style={{ fontSize: 15, fontWeight: 300, color: '#000000' }} address={address} /></td>
-                        <td className='px-1 py-3' style={{ fontSize: 15, fontWeight: 300, color: '#000000' }}>{answer}</td>
+                        <td className='px-1 py-3' style={{ fontSize: 15, fontWeight: 300, color: '#000000' }}>{value}</td>
                         <td className='px-1 py-3' style={{ fontSize: 15, fontWeight: 300, color: '#000000' }}>{gasPrice}</td>
                         <td className='px-1 py-3'><EtherScan style={{ fontSize: 15, fontWeight: 300, color: '#000000' }} tx={transactionHash} /></td>
                         <td className='px-1 py-3' style={{ fontSize: 15, fontWeight: 300, color: '#000000' }}>
