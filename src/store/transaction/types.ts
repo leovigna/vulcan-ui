@@ -1,6 +1,19 @@
 export type Transaction = {
-    transactionHash: string,
+    blockHash: string
     blockNumber: number
+    from: string
+    gas: number
+    gasPrice: string
+    hash: string
+    input: string
+    nonce: number
+    r: string
+    s: string
+    to: string
+    transactionIndex: number
+    v: string
+    value: string
+    networkId: string
 }
 
 export const CREATE_TRANSACTION = 'ORM/TRANSACTION/CREATE'
@@ -12,8 +25,8 @@ export interface CreateTransactionAction {
 
 export const FETCH_TRANSACTION = 'ORM/TRANSACTION/FETCH'
 export type FetchTransactionActionInput = {
-    transactionHash: string,
-    networkId: string | number
+    hash: Transaction['hash'],
+    networkId: Transaction['networkId']
 }
 export interface FetchTransactionAction {
     type: typeof FETCH_TRANSACTION
@@ -29,7 +42,7 @@ export interface UpdateTransactionAction {
 
 export const REMOVE_TRANSACTION = 'ORM/TRANSACTION/REMOVE'
 export type RemoveTransactionActionInput = {
-    transactionHash: Transaction['transactionHash']
+    hash: Transaction['hash']
 }
 export interface RemoveTransactionAction {
     type: typeof REMOVE_TRANSACTION

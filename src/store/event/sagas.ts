@@ -2,13 +2,10 @@ import { call, put, takeEvery, take } from 'redux-saga/effects'
 import { eventChannel, END } from 'redux-saga'
 import { EventActions as DrizzleEventActions } from "@drizzle/store"
 
-import {
-    EventTypes
-} from "../types"
-
-import {
-    EventActions
-} from "../actions"
+import { FetchEventAction } from './types';
+import { createEvent } from './actions';
+import { EventTypes } from '../types';
+import { fetchTransaction } from '../transaction/actions'
 
 // actions
 function web3EventChannel(web3Contract: any, eventName: string, options: object, max: number) {
@@ -40,7 +37,7 @@ function web3EventChannel(web3Contract: any, eventName: string, options: object,
 }
 
 // fetch data from service using sagas
-export function* fetchEvent(action: EventTypes.FetchEventAction) {
+export function* fetchEvent(action: FetchEventAction) {
     const { event, options, web3Contract, max } = action.payload
     const chan = yield call(web3EventChannel, web3Contract, event, options, max)
     console.debug(web3Contract)
@@ -51,8 +48,8 @@ export function* fetchEvent(action: EventTypes.FetchEventAction) {
             const { message, event, error } = e
             if (message === 'data') {
                 //yield put({ type: EventActions.EVENT_FIRED, name, event, error })
-                console.debug(message)
-                yield put(EventActions.createEvent({ ...event, networkId: web3Contract.web3._provider.networkVersion }))
+                yield put(createEvent({ ...event, networkId: web3Contract.web3._provider.networkVersion }))
+                yield put(fetchTransaction({ hash: event.transactionHash, networkId: web3Contract.web3._provider.networkVersion }))
 
             } else if (message === 'error') {
                 yield put({ type: DrizzleEventActions.EVENT_ERROR, name: web3Contract.address, event, error })

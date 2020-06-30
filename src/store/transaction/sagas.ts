@@ -1,29 +1,26 @@
 import { call, put, takeEvery } from "redux-saga/effects"
-import { TransactionActions } from "../actions"
-import { TransactionTypes } from "../types"
-
 import { web3ForNetworkId } from "../../web3global"
+import { FetchTransactionAction, FETCH_TRANSACTION } from "./types"
+import { createTransaction } from "./actions"
 
 // fetch data from service using sagas
-export function* fetchTransaction(action: TransactionTypes.FetchTransactionAction) {
+export function* fetchTransaction(action: FetchTransactionAction) {
     const web3 = web3ForNetworkId(action.payload.networkId)
-    const transactionHash = (action.payload.transactionHash || action.payload.hash)
-
-    const transaction = yield call(web3.eth.getTransaction, transactionHash)
-    yield put(TransactionActions.createTransaction({ ...transaction, networkId: action.payload.networkId }))
+    const transaction = yield call(web3.eth.getTransaction, action.payload.hash)
+    yield put(createTransaction({ ...transaction, networkId: action.payload.networkId }))
 }
 
 // Combine all your redux concerns
 
 // app root saga
 export function* transactionRootSaga() {
-    const cache = {}
-    const pattern = (action) => {
-        if (action.type != TransactionTypes.FETCH_TRANSACTION) return false;
-        if (!action.payload.transactionHash) return false;
-        if (cache[action.payload.transactionHash]) return false;
+    const cache: { [key: string]: boolean } = {}
+    const pattern = (action: FetchTransactionAction) => {
+        if (action.type != FETCH_TRANSACTION) return false;
+        if (!action.payload.hash) return false;
+        if (cache[action.payload.hash]) return false;
 
-        cache[action.payload.transactionHash] = true;
+        cache[action.payload.hash] = true;
         return true;
     }
 
