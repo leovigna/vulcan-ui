@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
 import {
     DrizzleSelectors,
-    graphDataSelector,
     EventSelectors
 } from "../../store/selectors"
 import { indexAddressEvent } from "../../store/event/eventByContractTypeIndex"
@@ -108,7 +107,7 @@ const mapStateToProps = (state: any, { address }: Props) => {
     return {
         contractState: DrizzleSelectors.drizzleStateByIdSelector(state, address),
         responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
-        chartData: graphDataSelector(state, AnswerUpdatedIndexId)
+        chartData: [] //graphDataSelector(state, AnswerUpdatedIndexId)
     }
 }
 

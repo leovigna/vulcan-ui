@@ -5,6 +5,8 @@ import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, F
 import { DrizzleSelectors } from '../selectors'
 import { transformAnswer } from './actions'
 import { coinbaseOracleResponsesSelector } from '../coinbase/selectors'
+import { eventByContractTypeIndexByIdSelector } from '../event/selectors'
+import { indexAddressEvent } from '../event/eventByContractTypeIndex'
 
 const emptyArray: Feed[] = []
 
@@ -261,9 +263,11 @@ const mkrdaoFeedStateSelector: (state: any, feed: MKRDaoFeed) => MKRDaoFeedState
         if (read) {
             const readBytes = Web3.utils.hexToNumberString(read)
         }
-
     }
-    return { read }
+
+    const LogValue = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'LogValue' }))
+
+    return { read, LogValue }
 }
 
 

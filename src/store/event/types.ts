@@ -1,7 +1,4 @@
-import { eventIndexedFilterSelector } from "./selectors";
-import { number } from "@storybook/addon-knobs";
-
-interface Event {
+export interface Event {
     id: string,
     address: string,
     event: string,
@@ -18,10 +15,11 @@ export const eventId = ({ transactionHash, logIndex }: { transactionHash: Event[
     return `${transactionHash}-${logIndex}`
 }
 
-interface EventByContractTypeIndex {
-    contractTypeIndexId: string,
+export interface EventByContractTypeIndex {
+    id: string,
     address: string,
     event: string,
+    events: Event[]
 }
 
 export const CREATE_EVENT = 'ORM/EVENT/CREATE'
@@ -82,7 +80,7 @@ export interface UpdateEventByContractTypeIndexAction {
 
 export const REMOVE_EVENT_CT_INDEX = 'ORM/EVENT_CT_INDEX/REMOVE'
 export type RemoveEventByContractTypeIndexActionInput = {
-    contractTypeIndexId: EventByContractTypeIndex['contractTypeIndexId']
+    contractTypeIndexId: EventByContractTypeIndex['id']
 }
 export interface RemoveEventByContractTypeIndexAction {
     type: typeof REMOVE_EVENT_CT_INDEX

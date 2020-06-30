@@ -9,6 +9,7 @@ export function eventReducer(sess: any, action: EventAction) {
         case CREATE_EVENT:
             id = eventId(action.payload);
             contractTypeIndexId = indexAddressEvent(action.payload)
+            EventByContractTypeIndex.upsert({ address: action.payload.address, event: action.payload.event, id: contractTypeIndexId })
             Event.upsert({ ...action.payload, id, contractTypeIndexId });
             break;
         case UPDATE_EVENT:
@@ -24,7 +25,7 @@ export function eventReducer(sess: any, action: EventAction) {
             EventByContractTypeIndex.create({ ...action.payload, contractTypeIndexId });
             break;
         case UPDATE_EVENT_CT_INDEX:
-            EventByContractTypeIndex.withId(action.payload.contractTypeIndexId).update(action.payload);
+            EventByContractTypeIndex.withId(action.payload.id).update(action.payload);
             break;
         case REMOVE_EVENT_CT_INDEX:
             EventByContractTypeIndex.withId(action.payload.contractTypeIndexId).delete();

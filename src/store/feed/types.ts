@@ -84,7 +84,8 @@ export interface CoinbaseFeedState extends CoinbaseOracle {
 }
 
 export interface MKRDaoFeedState {
-    read: string
+    read: string,
+    LogValue: Event[]
 }
 
 interface HistoryPoint {

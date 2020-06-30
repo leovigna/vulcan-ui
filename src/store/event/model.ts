@@ -11,6 +11,7 @@ Event.fields = {
     id: attr(), // non-relational field for any value; optional but highly recommended
     address: attr(),
     event: attr(),
+    logIndex: attr(),
     blockHash: attr(),
     blockNumber: fk({
         to: 'Block',
