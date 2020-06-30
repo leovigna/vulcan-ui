@@ -1,6 +1,6 @@
 {
-    "short_name": "Vulcan-Aggregator",
-    "name": "Vulcan-Aggregator",
+    "short_name": "feeds.crypto",
+    "name": "feeds.crypto",
     "icons": [
         {
             "src": "./assets/img/favicon.png",
