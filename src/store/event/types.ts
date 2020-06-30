@@ -1,13 +1,23 @@
+import { eventIndexedFilterSelector } from "./selectors";
+import { number } from "@storybook/addon-knobs";
+
 interface Event {
     id: string,
     address: string,
     event: string,
+    logIndex: number,
     blockHash: string,
     blockNumber: number,
     transactionHash: string,
+    transactionIndex: number,
     returnValues: any,
     contractTypeIndexId: string
 }
+
+export const eventId = ({ transactionHash, logIndex }: { transactionHash: Event['transactionHash'], logIndex: Event['logIndex'] }) => {
+    return `${transactionHash}-${logIndex}`
+}
+
 interface EventByContractTypeIndex {
     contractTypeIndexId: string,
     address: string,
