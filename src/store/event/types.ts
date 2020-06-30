@@ -50,6 +50,10 @@ export type FetchEventActionInput = {
     fetchBlock?: boolean
 };
 
+export const FETCH_EVENT_ERROR = 'ORM/EVENT/FETCH_ERROR'
+export const FETCH_EVENT_DONE = 'ORM/EVENT/FETCH_DONE'
+
+
 export const UPDATE_EVENT = 'ORM/EVENT/UPDATE'
 export type UpdateEventActionInput = Event;
 export interface UpdateEventAction {
@@ -93,6 +97,7 @@ export interface RemoveEventByContractTypeIndexAction {
     type: typeof REMOVE_EVENT_CT_INDEX
     payload: RemoveEventByContractTypeIndexActionInput
 }
+
 
 
 export type EventAction = FetchEventAction | CreateEventAction | UpdateEventAction | RemoveEventAction | CreateEventByContractTypeIndexAction | UpdateEventByContractTypeIndexAction | RemoveEventByContractTypeIndexAction

@@ -18,11 +18,10 @@ export function createEvent(data: CreateEventActionInput): CreateEventAction {
     }
 }
 
-export function fetchEvent(data: FetchEventActionInput, web3Contract: any): FetchEventAction {
+export function fetchEvent(data: FetchEventActionInput): FetchEventAction {
     return {
         type: FETCH_EVENT,
         payload: data,
-        web3Contract: web3Contract
     }
 }
 

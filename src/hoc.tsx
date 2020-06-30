@@ -6,13 +6,12 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import { FeedTypes, ProtocolTypes } from './store/types'
 import { setFeedCacheKey } from './store/feed/actions'
-import { FeedSelectors, ContractFavoriteSelectors, NetworkSelectors, ProtocolSelectors } from './store/selectors'
+import { FeedSelectors, ContractFavoriteSelectors, NetworkSelectors, ProtocolSelectors, BlockSelectors } from './store/selectors'
 import { setFeedStateCache, setFeedStateFullCache } from './store/feed/selectors';
 import { SetFeedCacheKeyActionInput, REFRESH_FEED_LIST, Feed, RefreshFeedListActionInput } from './store/feed/types';
 import { SetContractFavoriteActionInput } from './store/contractFavorite/types';
 import { setContractFavorite } from './store/contractFavorite/actions';
 import { START_POLL_COINBASE_ORACLE } from './store/coinbase/types';
-import { compose } from 'recompose';
 
 interface Props {
     feeds: [FeedTypes.Feed],
@@ -28,6 +27,7 @@ export const withDrizzleContext = (Component: any) => (props: any) => {
     return (<Component drizzleContext={drizzleContext} {...props} />)
 }
 export const withNetworkId = connect((state: any) => { return { networkId: NetworkSelectors.networkIdSelector(state) } })
+export const withCurrentBlock = connect((state: any) => { return { currentBlock: BlockSelectors.currentBlockSelector(state) } })
 
 export const withFeeds = connect((state: any, { networkId }: Props) => {
     return { feeds: FeedSelectors.feedsByFilterSelector(state, { networkId }, state) }
@@ -85,7 +85,7 @@ export const refreshOnUpdate = (Component: any) => (props: any) => {
     const { drizzle, initialized } = props.drizzleContext;
     useEffect(() => {
         if (initialized) {
-            props.refreshFeeds({ feeds: props.feeds, drizzle })
+            props.refreshFeeds({ feeds: props.feeds, currentBlock: props.currentBlock, drizzle })
         }
     }, [props.feeds, initialized])
 

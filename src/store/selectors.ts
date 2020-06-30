@@ -7,6 +7,7 @@ import * as NetworkSelectors from './network/selectors';
 import * as ProtocolSelectors from './protocol/selectors';
 import * as EventSelectors from './event/selectors';
 import * as DrizzleSelectors from './drizzle/selectors';
+import * as BlockSelectors from './block/selectors';
 
 import { Point } from '../store/types'
 
@@ -16,7 +17,8 @@ export {
     NetworkSelectors,
     ProtocolSelectors,
     EventSelectors,
-    DrizzleSelectors
+    DrizzleSelectors,
+    BlockSelectors
 }
 
 const emptyArray = []

@@ -1,6 +1,6 @@
 import { connect } from "react-redux"
 import { compose, flattenProp } from 'recompose'
-import { withFeedsCache, withNetworkId, withFeeds, withProtocols, withDrizzleContext, withFavoriteFeeds, withSetContractFavorite, withSetCacheKey, withFeedsWithState, withFeedsRefresh, withRefreshFeeds, refreshOnUpdate } from '../../hoc'
+import { withFeedsCache, withNetworkId, withFeeds, withProtocols, withDrizzleContext, withFavoriteFeeds, withSetContractFavorite, withSetCacheKey, withFeedsWithState, withFeedsRefresh, withRefreshFeeds, refreshOnUpdate, withCurrentBlock } from '../../hoc'
 import HomeView from './HomeView'
 
 const mapStateToProps = (state: any) => {
@@ -16,6 +16,7 @@ export default compose(
     withSetContractFavorite,
     withSetCacheKey,
     withNetworkId,
+    withCurrentBlock,
     withProtocols,
     withFeeds,
     withFavoriteFeeds,

@@ -1,6 +1,7 @@
 import { ContractFavorite } from "../contractFavorite/types"
 import { Protocol } from "../protocol/types"
-import { CoinbaseOracleResponse, CoinbaseOracle } from "../coinbase/types"
+import { CoinbaseOracle } from "../coinbase/types"
+import { Block } from "../block/types"
 
 export interface DrizzleCacheKey {
     contractId: string,
@@ -183,6 +184,7 @@ export interface RefreshChainlinkFeedAction {
 export const REFRESH_MKRDAO_FEED = 'ORM/FEED/REFRESH_MKRDAO_FEED'
 export interface RefreshMKRDaoFeedActionInput {
     feed: MKRDaoFeed,
+    currentBlock: Block,
     drizzle: any
 }
 export interface RefreshMKRDaoFeedAction {
@@ -205,6 +207,7 @@ export type UpdateFeedAction = {
 export const REFRESH_FEED_LIST = 'ORM/FEED/REFRESH_FEED_LIST'
 export interface RefreshFeedListActionInput {
     feeds: Feed[],
+    currentBlock: Block,
     drizzle: any
 }
 export interface RefreshFeedListAction {
