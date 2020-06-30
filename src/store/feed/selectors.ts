@@ -287,10 +287,10 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
         }).filter((d) => !!d.timestamp && !!d.value)
         if (feedState) {
             return {
+                ...feedState,
                 timestamp: feedState.latestTimestamp,
                 value: feedState.latestAnswer,
                 history,
-                ...feedState
             }
         }
     }
@@ -304,32 +304,35 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
         }).filter((d) => !!d.timestamp && !!d.value)
         if (feedState) {
             return {
+                ...feedState,
                 timestamp: feedState.getCurrentValue?._timestampRetrieved,
                 value: feedState.getCurrentValue?.value,
-                history,
-                ...feedState
+                history
             }
         }
     } else if (feed.protocol === 'coinbase') {
         const feedState = coinbaseFeedStateSelector(state, feed as CoinbaseFeed)
         return {
-            value: feedState.price,
-            ...feedState
+            ...feedState,
+            value: feedState.price
         }
     } else if (feed.protocol === 'mkrdao') {
         const feedState = mkrdaoFeedStateSelector(state, feed as MKRDaoFeed)
         let value;
+        let timestamp;
         try {
             //Short-term hack, slice bytes to 32-bit
             const rawHex = feedState.latestLogValue?.returnValues.val
             if (rawHex) value = Web3.utils.toBN(rawHex).div(Web3.utils.toBN('1000000000')).toNumber()
+            timestamp = feedState.latestLogValue?.block?.timestamp
         } catch (error) {
             console.error(error)
         }
 
         return {
+            ...feedState,
             value,
-            ...feedState
+            timestamp
         }
     }
     return null;

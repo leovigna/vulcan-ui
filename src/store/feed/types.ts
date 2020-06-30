@@ -20,7 +20,7 @@ export interface AnswerRenderOptions {
 export interface FeedBase {
     id: string,
     networkId: string,
-    protocol: 'chainlink' | 'tellor' | 'mkrdao',
+    protocol: 'chainlink' | 'tellor' | 'coinbase' | 'mkrdao',
     address: string,
     name: string,
     title: string,
@@ -38,7 +38,8 @@ export interface ChainlinkFeed extends FeedBase {
     latestTimestamp: DrizzleCacheKey,
     latestRound: DrizzleCacheKey,
     getAnswer: { [key: string]: DrizzleCacheKey },
-    getTimestamp: { [key: string]: DrizzleCacheKey }
+    getTimestamp: { [key: string]: DrizzleCacheKey },
+    state?: ChainlinkFeedState
 }
 
 
@@ -49,21 +50,29 @@ export interface TellorFeed extends FeedBase {
     getCurrentValue: DrizzleCacheKey,
     getNewValueCountbyRequestId: DrizzleCacheKey,
     getTimestampbyRequestIDandIndex: { [key: string]: DrizzleCacheKey },
-    retrieveData: { [key: string]: DrizzleCacheKey }
+    retrieveData: { [key: string]: DrizzleCacheKey },
+    state?: TellorFeedState
 }
 
 export interface CoinbaseFeed extends FeedBase {
     index: number,
-    symbol: string
+    symbol: string,
+    state?: CoinbaseFeedState
 }
 
 export interface MKRDaoFeed extends FeedBase {
-    read: DrizzleCacheKey
+    read: DrizzleCacheKey,
+    state?: MKRDaoFeedState
 }
 
 export type Feed = ChainlinkFeed | TellorFeed | CoinbaseFeed | MKRDaoFeed
 
-export interface ChainlinkFeedState {
+interface FeedStateBase {
+    value: number
+    timestamp: string,
+    history?: HistoryPoint[]
+}
+export interface ChainlinkFeedState extends FeedStateBase {
     latestAnswer: string,
     latestTimestamp: string,
     latestRound: string,
@@ -71,7 +80,7 @@ export interface ChainlinkFeedState {
     getTimestamp: { [key: string]: string }
 }
 
-export interface TellorFeedState {
+export interface TellorFeedState extends FeedStateBase {
     getCurrentValue: {
         value: number,
         _timestampRetrieved: string
@@ -81,14 +90,19 @@ export interface TellorFeedState {
     retrieveData: { [key: string]: number }
 }
 
-export interface CoinbaseFeedState extends CoinbaseOracle {
+export interface CoinbaseFeedState extends FeedStateBase, CoinbaseOracle {
     resultByTimestamp: { [key: string]: CoinbaseOracle }
 }
 
-export interface MKRDaoFeedState {
+interface LogValue extends Event {
+    returnValues: {
+        val: string
+    }
+}
+export interface MKRDaoFeedState extends FeedStateBase {
     read: string,
-    LogValue: Event[]
-    latestLogValue: Event
+    LogValue: LogValue[]
+    latestLogValue: LogValue
 }
 
 interface HistoryPoint {
@@ -96,31 +110,7 @@ interface HistoryPoint {
     value: number
 }
 
-export interface FeedState {
-    //Shared
-    value: number
-    timestamp: string,
-    history?: HistoryPoint[]
-    //Chainlink
-    latestAnswer?: string,
-    latestTimestamp?: string,
-    latestRound?: string,
-    getAnswer?: { [key: string]: string },
-    getTimestamp?: { [key: string]: string },
-    //Tellor
-    getCurrentValue?: {
-        value: number,
-        _timestampRetrieved: string
-    },
-    getNewValueCountbyRequestId?: number,
-    getTimestampbyRequestIDandIndex?: { [key: string]: number },
-    retrieveData?: { [key: string]: number },
-    //Coinbase
-    message?: string,
-    signature?: string,
-    price?: string
-    resultByTimestamp?: { [key: string]: CoinbaseOracle }
-}
+export type FeedState = ChainlinkFeedState | TellorFeedState | CoinbaseFeedState | MKRDaoFeedState
 
 export const SET_FEED_CACHE_KEY = 'ORM/SET_FEED_CACHE_KEY'
 

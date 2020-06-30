@@ -3,8 +3,10 @@ import { FETCH_EVENT, FetchEventAction } from "../event/types"
 import { put, takeEvery, all, fork, spawn } from "redux-saga/effects"
 import { fetchEvent } from "../event/actions"
 import { fetchBlock } from "../block/actions"
+import { delay } from "redux-saga"
 
 function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
+    if (action.payload.feed.refreshed) return;
     yield put({
         type: UPDATE_FEED,
         payload: {
@@ -17,6 +19,14 @@ function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
 function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
     const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
     const currentBlock = action.payload.currentBlock
+    if (action.payload.feed.refreshed) {
+        if (action.payload.feed.state?.latestLogValue) {
+            // console.debug(action.payload.feed.state?.latestLogValue)
+            yield put(fetchBlock({ number: action.payload.feed.state?.latestLogValue.blockNumber, networkId: action.payload.feed.networkId }))
+        }
+        return
+    };
+
     if (!currentBlock.number) {
         yield put(fetchBlock({ hash: 'latest', networkId: action.payload.feed.networkId }))
     } else {
@@ -40,7 +50,7 @@ function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
 }
 
 function* refreshFeed(action: RefreshFeedAction) {
-    if (action.payload.feed.refreshed) return;
+
 
     switch (action.payload.feed.protocol) {
         case 'chainlink':
@@ -56,6 +66,7 @@ function* refreshFeed(action: RefreshFeedAction) {
             })
             break
         case 'tellor':
+            if (action.payload.feed.refreshed) return;
             yield put({
                 type: UPDATE_FEED,
                 payload: {

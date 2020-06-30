@@ -10,7 +10,7 @@ export interface Event {
     blockNumber: number,
     transactionHash: string,
     transactionIndex: number,
-    returnValues: any,
+    returnValues: { [key: string]: any },
     contractTypeIndexId: string,
     transaction?: Transaction,
     block?: Block
