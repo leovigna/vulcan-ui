@@ -10,6 +10,9 @@ import { transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga }
 import { ormReducer, networkIdReducer } from './reducers';
 import { networksReducer } from './network/reducers'
 import { coinbaseRootSaga } from './coinbase/sagas'
+import { feedsRootSaga } from './feed/sagas'
+import { feedReducer } from './feed/reducers'
+import { latestBlockReducer } from './block/reducers'
 
 const persistedWhitelist = []
 /*
@@ -28,10 +31,11 @@ const appReducers = {
         orm: ormReducer
     })),
     networks: networksReducer,
-    networkId: networkIdReducer
+    networkId: networkIdReducer,
+    latestBlock: latestBlockReducer
 }
 
-const appSagas = [/* transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga,*/ coinbaseRootSaga]
+const appSagas = [/* , , contractRootSaga,*/ coinbaseRootSaga, feedsRootSaga, eventsRootSaga, transactionRootSaga, blocksRootSaga]
 const appMiddlewares = [actionDebugger, eventAddNotifier, contractAddNotifier]
 const config = {
     drizzleOptions,

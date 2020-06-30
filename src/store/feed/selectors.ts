@@ -1,14 +1,17 @@
 import { createSelector } from 'redux-orm'
+import Web3 from 'web3'
 import orm from '../orm'
-import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState, CoinbaseFeed, CoinbaseFeedState, MKRDaoFeed, MKRDaoFeedState } from './types'
+import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState, CoinbaseFeed, CoinbaseFeedState, MKRDaoFeed, MKRDaoFeedState, LogValue, AnswerUpdated, ResponseReceived, NewValue, DataRequested } from './types'
 import { DrizzleSelectors } from '../selectors'
-import { FeedTypes } from '../types'
 import { transformAnswer } from './actions'
 import { coinbaseOracleResponsesSelector } from '../coinbase/selectors'
+import { eventByContractTypeIndexByIdSelector } from '../event/selectors'
+import { indexAddressEvent } from '../event/eventByContractTypeIndex'
+import { CoinbaseOracleResponse, CoinbaseOracle, CoinbaseTicker } from '../coinbase/types'
 
-const emptyArray: FeedTypes.Feed[] = []
+const emptyArray: Feed[] = []
 
-export const feedResolve = (state: any, feed: FeedTypes.Feed) => {
+export const feedResolve = (state: any, feed: Feed) => {
     const feedState = feed.ref ? feedStateSelector(state, feed.ref) : null
     const feedInfo = {
         ...feed.ref,
@@ -20,7 +23,7 @@ export const feedResolve = (state: any, feed: FeedTypes.Feed) => {
     return feedInfo
 };
 
-export const feedByIdSelector: (ormState: any, id: string, state: any) => FeedTypes.Feed = createSelector(
+export const feedByIdSelector: (ormState: any, id: string, state: any) => Feed = createSelector(
     orm,
     (_session_, id) => id,
     (_session_, _id_, state) => state,
@@ -32,12 +35,12 @@ export const feedByIdSelector: (ormState: any, id: string, state: any) => FeedTy
     }
 );
 
-export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => FeedTypes.Feed[] = createSelector(
+export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => Feed[] = createSelector(
     orm,
     (_session_, filter) => filter,
     (_session_, _filter_, state) => state,
     (session, filter, state) => {
-        const feeds = session.Feed.filter(filter).toModelArray().map((item: FeedTypes.Feed) => {
+        const feeds = session.Feed.filter(filter).toModelArray().map((item: Feed) => {
             return feedResolve(state, item)
         });
 
@@ -46,7 +49,7 @@ export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => 
     }
 );
 
-export const feedByFilterSelector: (ormState: any, filter: any, state: any) => FeedTypes.Feed = createSelector(
+export const feedByFilterSelector: (ormState: any, filter: any, state: any) => Feed = createSelector(
     orm,
     (_session_, filter) => filter,
     (_session_, _filter_, state) => state,
@@ -125,14 +128,23 @@ const setTellorFeedHistoryCache = (drizzle: any, feed: TellorFeed, setCacheKey: 
     }
 }
 
+const setMKRDaoFeedStateCache = (drizzle: any, feed: MKRDaoFeed, setCacheKey: any) => {
+    if (!feed.read?.cacheKey) {
+        const contract = drizzle.contracts[feed.read.contractId]
+        const cacheKey = contract.methods.read.cacheCall()
+        setCacheKey({ id: feed.id, cacheName: 'read', contractId: feed.read.contractId, cacheKey })
+    }
+}
+
 export const setFeedStateCache = (drizzle: any, feed: Feed, setCacheKey: any) => {
     if (!drizzle.contracts) return;
-    // console.debug(feed)
 
     if (feed.protocol === 'tellor') {
-        setTellorFeedStateCache(drizzle, feed as FeedTypes.TellorFeed, setCacheKey)
+        setTellorFeedStateCache(drizzle, feed as TellorFeed, setCacheKey)
     } else if (feed.protocol === 'chainlink') {
-        setChainlinkFeedStateCache(drizzle, feed as FeedTypes.ChainlinkFeed, setCacheKey)
+        setChainlinkFeedStateCache(drizzle, feed as ChainlinkFeed, setCacheKey)
+    } else if (feed.protocol === 'mkrdao') {
+        setMKRDaoFeedStateCache(drizzle, feed as MKRDaoFeed, setCacheKey)
     }
 }
 
@@ -141,14 +153,14 @@ export const setFeedStateFullCache = (drizzle: any, feed: Feed, setCacheKey: any
     console.debug(feed)
 
     if (feed.protocol === 'tellor') {
-        //setTellorFeedStateCache(drizzle, feed as FeedTypes.TellorFeed, setCacheKey)
-        setTellorFeedHistoryCache(drizzle, feed as FeedTypes.TellorFeed, setCacheKey)
+        //setTellorFeedStateCache(drizzle, feed as TellorFeed, setCacheKey)
+        setTellorFeedHistoryCache(drizzle, feed as TellorFeed, setCacheKey)
     } else if (feed.protocol === 'chainlink') {
-        // setChainlinkFeedStateCache(drizzle, feed as FeedTypes.ChainlinkFeed, setCacheKey)
-        const feedCL = feed as FeedTypes.ChainlinkFeed
+        // setChainlinkFeedStateCache(drizzle, feed as ChainlinkFeed, setCacheKey)
+        const feedCL = feed as ChainlinkFeed
         if (!!feedCL.latestRound.contractId && !!feedCL.latestRound.cacheKey) {
             const latestRound = DrizzleSelectors.drizzleStateValueSelector(state, feedCL.latestRound.contractId, 'latestRound', feedCL.latestRound.cacheKey)
-            setChainlinkFeedRoundStateCache(drizzle, feed as FeedTypes.ChainlinkFeed, setCacheKey, latestRound)
+            setChainlinkFeedRoundStateCache(drizzle, feed as ChainlinkFeed, setCacheKey, latestRound)
         }
     }
 }
@@ -158,8 +170,8 @@ const chainlinkFeedStateSelector: (state: any, feed: ChainlinkFeed) => Chainlink
     let latestAnswer;
     let latestRound;
     let latestTimestamp;
-    let getAnswer;
-    let getTimestamp;
+    let getAnswer = {};
+    let getTimestamp = {};
     if (feed.latestAnswer.cacheKey) {
         latestAnswer = DrizzleSelectors.drizzleStateValueSelector(state, feed.latestAnswer.contractId, 'latestAnswer', feed.latestAnswer.cacheKey)
     }
@@ -186,20 +198,25 @@ const chainlinkFeedStateSelector: (state: any, feed: ChainlinkFeed) => Chainlink
         }) as Iterable<[string, any]>)
     }
 
+    const AnswerUpdatedIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'AnswerUpdated' }))
+    const ResponseReceivedIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'ResponseReceived' }))
+
     return {
         latestAnswer,
         latestRound,
         latestTimestamp,
         getAnswer,
-        getTimestamp
+        getTimestamp,
+        AnswerUpdated: AnswerUpdatedIndex?.events as AnswerUpdated[] || [],
+        ResponseReceived: ResponseReceivedIndex?.events as ResponseReceived[] || []
     }
 }
 
 const tellorFeedStateSelector: (state: any, feed: TellorFeed) => TellorFeedState = (state, feed) => {
     let getCurrentValue;
     let getNewValueCountbyRequestId;
-    let getTimestampbyRequestIDandIndex;
-    let retrieveData;
+    let getTimestampbyRequestIDandIndex = {};
+    let retrieveData = {};
     if (feed.getCurrentValue.cacheKey) {
         getCurrentValue = DrizzleSelectors.drizzleStateValueSelector(state, feed.getCurrentValue.contractId, 'getCurrentValue', feed.getCurrentValue.cacheKey)
     }
@@ -223,19 +240,28 @@ const tellorFeedStateSelector: (state: any, feed: TellorFeed) => TellorFeedState
         }) as Iterable<[string, any]>)
     }
 
-    return { getCurrentValue, getNewValueCountbyRequestId, getTimestampbyRequestIDandIndex, retrieveData }
+    const NewValueIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'NewValue' }))
+    const DataRequestedIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'DataRequested' }))
+
+    return {
+        getCurrentValue,
+        getNewValueCountbyRequestId,
+        getTimestampbyRequestIDandIndex,
+        retrieveData,
+        NewValue: NewValueIndex?.events as NewValue[] || [],
+        DataRequested: DataRequestedIndex?.events as DataRequested[] || []
+    }
 }
 
-const coinbaseFeedStateSelector: (state: any, feed: CoinbaseFeed) => CoinbaseFeedState = (state, feed) => {
-    const coinbaseOracleResponses = coinbaseOracleResponsesSelector(state)
-    const latestResponse = coinbaseOracleResponses[coinbaseOracleResponses.length - 1]
-    if (!latestResponse) return {}
+const coinbaseFeedStateSelector: (state: any, feed: CoinbaseFeed) => CoinbaseOracle | null = (state, feed) => {
+    const coinbaseOracleResponses: CoinbaseOracleResponse[] = coinbaseOracleResponsesSelector(state)
+    const latestResponse = coinbaseOracleResponses[coinbaseOracleResponses.length - 1] as CoinbaseOracleResponse
+    if (!latestResponse) return null;
 
-    console.debug(latestResponse)
     const timestamp = latestResponse.timestamp;
-    const message = latestResponse.messages[feed.index];
-    const signature = latestResponse.signatures[feed.index];
-    const price = latestResponse.prices[feed.symbol];
+    const message = latestResponse.messages[feed.index]!;
+    const signature = latestResponse.signatures[feed.index]!;
+    const price = latestResponse.prices[feed.symbol as CoinbaseTicker];
 
     return {
         timestamp,
@@ -246,7 +272,19 @@ const coinbaseFeedStateSelector: (state: any, feed: CoinbaseFeed) => CoinbaseFee
 }
 
 const mkrdaoFeedStateSelector: (state: any, feed: MKRDaoFeed) => MKRDaoFeedState = (state, feed) => {
-    return {}
+    let read;
+    if (feed.read.cacheKey) {
+        read = DrizzleSelectors.drizzleStateValueSelector(state, feed.read.contractId, 'read', feed.read.cacheKey)
+    }
+
+    let latestLogValue;
+    const LogValueIndex = eventByContractTypeIndexByIdSelector(state, indexAddressEvent({ address: feed.address, event: 'LogValue' }))
+    if (LogValueIndex) {
+        LogValueIndex.events.sort((a, b) => b.blockNumber - a.blockNumber)
+        latestLogValue = LogValueIndex.events[0]!
+    }
+
+    return { read, LogValue: LogValueIndex?.events as LogValue[] || [], latestLogValue: latestLogValue as LogValue }
 }
 
 
@@ -261,10 +299,10 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
         }).filter((d) => !!d.timestamp && !!d.value)
         if (feedState) {
             return {
+                ...feedState,
                 timestamp: feedState.latestTimestamp,
                 value: feedState.latestAnswer,
-                history,
-                ...feedState
+                history
             }
         }
     }
@@ -278,22 +316,45 @@ export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, 
         }).filter((d) => !!d.timestamp && !!d.value)
         if (feedState) {
             return {
+                ...feedState,
                 timestamp: feedState.getCurrentValue?._timestampRetrieved,
                 value: feedState.getCurrentValue?.value,
-                history,
-                ...feedState
+                history
             }
         }
     } else if (feed.protocol === 'coinbase') {
         const feedState = coinbaseFeedStateSelector(state, feed as CoinbaseFeed)
         return {
-            value: feedState.price,
-            ...feedState
+            ...feedState,
+            value: feedState?.price
         }
     } else if (feed.protocol === 'mkrdao') {
         const feedState = mkrdaoFeedStateSelector(state, feed as MKRDaoFeed)
+        let value;
+        let timestamp;
+        try {
+            //Short-term hack, slice bytes to 32-bit
+            const rawHex = feedState.latestLogValue?.returnValues.val
+            if (rawHex) value = Web3.utils.toBN(rawHex).div(Web3.utils.toBN('1000000000')).toNumber()
+            timestamp = feedState.latestLogValue?.block?.timestamp
+        } catch (error) {
+            console.error(error)
+        }
+
+        const history = feedState.LogValue.map((e) => {
+            const value = Web3.utils.toBN(e.returnValues.val).div(Web3.utils.toBN('1000000000')).toNumber()
+            const timestamp = e.block?.timestamp
+            return {
+                value: transformAnswer(feed.answerRenderOptions!, value),
+                timestamp: timestamp ? new Date(Number(timestamp) * 1000) : 0,
+            }
+        }).filter((d) => !!d.timestamp && !!d.value)
+
         return {
-            ...feedState
+            ...feedState,
+            value,
+            timestamp,
+            history
         }
     }
     return null;

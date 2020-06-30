@@ -1,21 +1,7 @@
 import { attr, fk } from 'redux-orm';
 import { Model } from 'redux-orm';
 
-interface Event {
-    id: string,
-    address: string,
-    event: string,
-    blockHash: string,
-    blockNumber: number,
-    transactionHash: string,
-    returnValues: any,
-    contractTypeIndexId: string
-}
-
 class Event extends Model {
-    toString() {
-        return `Event: ${this.id}`;
-    }
     // Declare any static or instance methods you need.
 }
 Event.modelName = 'Event';
@@ -25,6 +11,7 @@ Event.fields = {
     id: attr(), // non-relational field for any value; optional but highly recommended
     address: attr(),
     event: attr(),
+    logIndex: attr(),
     blockHash: attr(),
     blockNumber: fk({
         to: 'Block',

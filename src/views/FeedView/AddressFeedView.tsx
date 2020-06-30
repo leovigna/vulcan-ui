@@ -4,15 +4,14 @@ import { connect } from "react-redux"
 import AggregatorABI from '@chainlink/contracts/abi/v0.4/Aggregator.json'
 import {
     DrizzleSelectors,
-    graphDataSelector,
     EventSelectors
 } from "../../store/selectors"
-import { indexAddressEvent } from "../../store/orm/models/eventByContractTypeIndex"
+import { indexAddressEvent } from "../../store/event/eventByContractTypeIndex"
 
 import FeedView from './FeedView'
 import { ContractActions } from "../../store/actions"
 import { ContractTypes, FeedTypes } from "../../store/types"
-import Event from "../../store/orm/models/event"
+import Event from "../../store/event/model"
 
 
 interface Props {
@@ -108,7 +107,7 @@ const mapStateToProps = (state: any, { address }: Props) => {
     return {
         contractState: DrizzleSelectors.drizzleStateByIdSelector(state, address),
         responses: ResponseReceivedSelector(state, ResponseReceivedIndexId),
-        chartData: graphDataSelector(state, AnswerUpdatedIndexId)
+        chartData: [] //graphDataSelector(state, AnswerUpdatedIndexId)
     }
 }
 

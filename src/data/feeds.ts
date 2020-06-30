@@ -1,7 +1,7 @@
 
-import { FeedTypes } from '../store/types'
+import { Feed } from '../store/feed/types'
 
-export const testContracts: Array<FeedTypes.ChainlinkFeed | FeedTypes.TellorFeed> = [
+export const testContracts: Array<Feed> = [
     {
         id: "0xF5fff180082d6017036B771bA883025c654BC935-1",
         networkId: "1",
@@ -80,10 +80,13 @@ export const testContracts: Array<FeedTypes.ChainlinkFeed | FeedTypes.TellorFeed
         title: "ETH/USD",
         answerRenderOptions: {
             transform: {
-                multiply: 1e-3,
-                decimals: 2
+                multiply: 1e-9,
+                decimals: 3
             },
             format: "$ %(value)s"
+        },
+        read: {
+            contractId: "0x81FE72B5A8d1A857d176C3E7d5Bd2679A9B85763"
         }
     }
 ]

@@ -3,5 +3,6 @@
 // - Use meta.maxId for latest timestamp
 import { createSelector } from 'redux-orm'
 import orm from '../orm'
+import { CoinbaseOracleResponse } from './types'
 
-export const coinbaseOracleResponsesSelector = createSelector(orm.CoinbaseOracleResponse)
+export const coinbaseOracleResponsesSelector: (state: any) => CoinbaseOracleResponse[] = createSelector(orm.CoinbaseOracleResponse)

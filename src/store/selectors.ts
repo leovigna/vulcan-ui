@@ -7,10 +7,9 @@ import * as NetworkSelectors from './network/selectors';
 import * as ProtocolSelectors from './protocol/selectors';
 import * as EventSelectors from './event/selectors';
 import * as DrizzleSelectors from './drizzle/selectors';
+import * as BlockSelectors from './block/selectors';
 
 import { Point } from '../store/types'
-import { ChainlinkFeed, Feed, TellorFeed } from './feed/types';
-import { chain } from 'lodash';
 
 export {
     FeedSelectors,
@@ -18,13 +17,15 @@ export {
     NetworkSelectors,
     ProtocolSelectors,
     EventSelectors,
-    DrizzleSelectors
+    DrizzleSelectors,
+    BlockSelectors
 }
 
 const emptyArray = []
 
 
 //ORM Selectors
+/*
 export const graphDataSelector: (state: any) => [Point<moment.Moment, number>] = createCachedSelector(
     EventSelectors.makeEventIndexedFilterSelector(),
     (events, _indexId_: string) => {
@@ -44,3 +45,5 @@ export const graphDataSelector: (state: any) => [Point<moment.Moment, number>] =
         })
 
     })((_state_, indexId) => indexId)
+
+*/
