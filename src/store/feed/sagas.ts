@@ -10,7 +10,7 @@ function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
 
     yield put({
         type: FETCH_EVENT,
-        payload: { event: 'LogValue', options: { fromBlock: 0, toBlock: 'latest' }, max: 25, web3Contract }
+        payload: { event: 'LogValue', options: { fromBlock: 0, toBlock: 'latest' }, max: 25, web3Contract, fetchTransaction: true, fetchBlock: true }
     } as FetchEventAction)
 }
 

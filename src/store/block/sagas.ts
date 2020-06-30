@@ -1,31 +1,27 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import {
-    BlockTypes
-} from "../types"
 import { web3ForNetworkId } from "../../web3global"
-// reducers
-
+import { FetchBlockAction, FetchBlockWithHashActionInput, FetchBlockWithNumberActionInput, CREATE_BLOCK, FETCH_BLOCK } from './types'
 
 // fetch data from service using sagas
-export function* fetchBlock(action: BlockTypes.FetchBlockAction) {
+export function* fetchBlock(action: FetchBlockAction) {
     const web3 = web3ForNetworkId(action.payload.networkId)
-    const blockNumber = (action.payload.blockNumber || action.payload.number)
+    const blockHashOrBlockNumber = (action.payload as FetchBlockWithHashActionInput).hash || (action.payload as FetchBlockWithNumberActionInput).number
 
-    const block = yield call(web3.eth.getBlock, blockNumber)
-    yield put({ type: BlockTypes.CREATE_BLOCK, payload: { ...block, networkId: action.payload.networkId }, })
+    const block = yield call(web3.eth.getBlock, blockHashOrBlockNumber)
+    yield put({ type: CREATE_BLOCK, payload: { ...block, networkId: action.payload.networkId }, })
 }
 
 // Combine all your redux concerns
 
 // app root saga
 export function* blocksRootSaga() {
-    const cache = {}
-    const pattern = (action: BlockTypes.FetchBlockAction) => {
-        if (action.type != BlockTypes.FETCH_BLOCK) return false;
-        if (!action.payload.blockNumber) return false;
-        if (cache[action.payload.blockNumber]) return false;
+    const cache: { [key: string]: boolean } = {}
+    const pattern = (action: FetchBlockAction) => {
+        if (action.type != FETCH_BLOCK) return false;
+        const blockHashOrBlockNumber = (action.payload as FetchBlockWithHashActionInput).hash || (action.payload as FetchBlockWithNumberActionInput).number
+        if (cache[blockHashOrBlockNumber]) return false;
 
-        cache[action.payload.blockNumber] = true;
+        cache[blockHashOrBlockNumber] = true;
         return true;
     }
 

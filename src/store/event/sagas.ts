@@ -6,6 +6,7 @@ import { FetchEventAction } from './types';
 import { createEvent } from './actions';
 import { EventTypes } from '../types';
 import { fetchTransaction } from '../transaction/actions'
+import { fetchBlock } from '../block/actions';
 
 // actions
 function web3EventChannel(web3Contract: any, eventName: string, options: object, max: number) {
@@ -40,7 +41,6 @@ function web3EventChannel(web3Contract: any, eventName: string, options: object,
 export function* fetchEvent(action: FetchEventAction) {
     const { event, options, web3Contract, max } = action.payload
     const chan = yield call(web3EventChannel, web3Contract, event, options, max)
-    console.debug(web3Contract)
     try {
         while (true) {
             //take('END')// will cause the saga to terminate by jumping to the finally block
@@ -49,7 +49,14 @@ export function* fetchEvent(action: FetchEventAction) {
             if (message === 'data') {
                 //yield put({ type: EventActions.EVENT_FIRED, name, event, error })
                 yield put(createEvent({ ...event, networkId: web3Contract.web3._provider.networkVersion }))
-                yield put(fetchTransaction({ hash: event.transactionHash, networkId: web3Contract.web3._provider.networkVersion }))
+
+                if (action.payload.fetchTransaction) {
+                    yield put(fetchTransaction({ hash: event.transactionHash, networkId: web3Contract.web3._provider.networkVersion }))
+                }
+
+                if (action.payload.fetchBlock) {
+                    yield put(fetchBlock({ number: event.blockNumber, networkId: web3Contract.web3._provider.networkVersion }))
+                }
 
             } else if (message === 'error') {
                 yield put({ type: DrizzleEventActions.EVENT_ERROR, name: web3Contract.address, event, error })

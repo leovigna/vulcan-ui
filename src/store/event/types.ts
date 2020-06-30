@@ -1,3 +1,6 @@
+import { Transaction } from "../transaction/types";
+import { Block } from "../block/types";
+
 export interface Event {
     id: string,
     address: string,
@@ -8,7 +11,9 @@ export interface Event {
     transactionHash: string,
     transactionIndex: number,
     returnValues: any,
-    contractTypeIndexId: string
+    contractTypeIndexId: string,
+    transaction?: Transaction,
+    block?: Block
 }
 
 export const eventId = ({ transactionHash, logIndex }: { transactionHash: Event['transactionHash'], logIndex: Event['logIndex'] }) => {
@@ -40,7 +45,9 @@ export type FetchEventActionInput = {
         filter?: any
     },
     max: number,
-    web3Contract: any
+    web3Contract: any,
+    fetchTransaction?: boolean,
+    fetchBlock?: boolean
 };
 
 export const UPDATE_EVENT = 'ORM/EVENT/UPDATE'

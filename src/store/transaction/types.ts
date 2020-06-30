@@ -1,3 +1,5 @@
+import { Block } from "../block/types"
+
 export type Transaction = {
     blockHash: string
     blockNumber: number
@@ -13,7 +15,8 @@ export type Transaction = {
     transactionIndex: number
     v: string
     value: string
-    networkId: string
+    networkId: string,
+    block?: Block
 }
 
 export const CREATE_TRANSACTION = 'ORM/TRANSACTION/CREATE'

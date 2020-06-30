@@ -16,7 +16,7 @@ Transaction.fields = {
     blockNumber: fk({
         to: 'Block',
         as: 'block',
-        relatedName: 'transactions',
+        relatedName: 'transactionsWithData',
     }),
     from: attr(),
     gas: attr(),
