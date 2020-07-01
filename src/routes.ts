@@ -15,7 +15,7 @@ const routes = [
     { path: '/feeds/tellor/:id', exact: true, name: 'Feeds', component: TellorFeedView },
     { path: '/feeds/coinbase/:id', exact: true, name: 'Feeds', component: CoinbaseFeedView },
     { path: '/feeds/mkrdao/:id', exact: true, name: 'Feeds', component: MKRDaoFeedView },
-    { path: '/feeds/:address', exact: true, name: 'Feeds', component: WrappedFeedView },
+    //{ path: '/feeds/:address', exact: true, name: 'Feeds', component: WrappedFeedView },
     { path: '/protocols/:id', exact: true, name: 'Protocols', component: WrappedProtocolView }
 ];
 

@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0 */
 
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import NetworkPicker from '../../components/NetworkPicker'
 import vulcan from "../../assets/img/brand/vulcanwhite.png"
