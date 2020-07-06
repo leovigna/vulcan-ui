@@ -44,7 +44,6 @@ web3Contracts.push(...tellorContracts)
 testWeb3Contracts.push(...tellorContracts)
 
 const drizzleContracts = process.env.NODE_ENV === 'development' ? testWeb3Contracts : web3Contracts
-
 const options = {
     web3: {
         block: false,

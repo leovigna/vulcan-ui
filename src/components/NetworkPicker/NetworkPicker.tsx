@@ -29,7 +29,7 @@ const NetworkPicker = ({ networks, currentNetwork, setNetworkId }: Props) => {
             <DropdownMenu>
                 <DropdownItem header>Networks</DropdownItem>
                 <DropdownItem divider />
-                {networks.map(({ name, id }) => <DropdownItem onClick={() => setNetworkId(id)} id={id}>{name}</DropdownItem>)}
+                {networks.map(({ name, id }) => <DropdownItem key={id} onClick={() => setNetworkId(id)} id={id}>{name}</DropdownItem>)}
             </DropdownMenu>
         </Dropdown>
     );

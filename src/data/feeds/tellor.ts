@@ -1,5 +1,32 @@
 import { TellorFeed } from "../../store/feed/types";
 
+export const testcontracts: TellorFeed[] = [
+    {
+        id: "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-1",
+        networkId: "1",
+        protocol: "tellor",
+        address: "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58",
+        name: "eth-usd-gdax",
+        title: "ETH/USD-GDAX",
+        tellorId: "1",
+        granularity: 1000,
+        sampleAPI: "json(https://api.pro.coinbase.com/products/ETH-USD/ticker).price",
+        answerRenderOptions: {
+            transform: {
+                multiply: 1e-6,
+                decimals: 2
+            },
+            format: "$ %(value)s"
+        },
+        getCurrentValue: { contractId: "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58" },
+        getNewValueCountbyRequestId: { contractId: "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5" },
+        getTimestampbyRequestIDandIndex: {},
+        retrieveData: {},
+        refreshed: false,
+        favoriteId: "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-1",
+    }
+]
+
 const contracts: TellorFeed[] = [
     {
         id: "0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-1",

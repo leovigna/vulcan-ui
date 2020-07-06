@@ -68,7 +68,7 @@ class DefaultFooter extends Component {
                                             className="validate" target="_blank" noValidate>
                                             <div id="mc_embed_signup_scroll">
                                                 <div className="mc-field-group">
-                                                    <input type="email" placeholder="Enter Email Address" value="" name="EMAIL"
+                                                    <input type="email" placeholder="Enter Email Address" defaultValue="" name="EMAIL"
                                                         className="required email" id="mce-EMAIL" />
                                                 </div>
                                                 <div id="mce-responses" className="clear">
@@ -77,7 +77,7 @@ class DefaultFooter extends Component {
                                                 </div>
                                                 <div style={{ position: "absolute", left: "-5000px" }} aria-hidden="true"><input
                                                     type="text" name="b_66e21f9472d7271632b2dc06a_87420076fe" tabIndex="-1"
-                                                    value="" /></div>
+                                                    defaultValue="" /></div>
                                             </div>
                                             <div className="main-link">
                                                 <div className="link-to-go">

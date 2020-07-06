@@ -30,7 +30,7 @@ export const initializeState = (orm) => {
     favorites.forEach((favorite: ContractFavorite) => ContractFavorite.create(favorite))
     protocols.forEach((protocol: any) => Protocol.create(protocol))
 
-    if (process.ENV === 'development') {
+    if (process.env.NODE_ENV === 'development') {
         testContracts.forEach((feed: Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
     } else {
         contracts.forEach((feed: Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
