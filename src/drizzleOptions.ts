@@ -3,24 +3,31 @@ import web3 from './web3global'
 import TellorGetters from './contracts/TellorGetters.json'
 import UserContract from './contracts/UserContract.json'
 import MKRDaoDSValue from './contracts/MKRDaoDSValue.json'
+import contracts, { testContracts } from './data/feeds'
 
-import { testContracts } from './data/feeds'
+const feedToWeb3Contract = (feed: Feed) => {
+    switch (feed.protocol) {
+        case 'chainlink':
+            return ({
+                contractName: feed.address,
+                web3Contract: new web3.eth.Contract(AggregatorABI.compilerOutput.abi, feed.address),
+                events: ['AnswerUpdated', 'ResponseReceived']
+            })
+        case 'tellor':
+            break
+        case 'mkrdao':
+            return ({
+                contractName: feed.address,
+                web3Contract: new web3.eth.Contract(MKRDaoDSValue.abi, feed.address),
+                events: ['LogValue']
+            })
+        case 'coinbase':
+            break
+    }
+}
 
-const chainlinkContracts = testContracts.filter((f) => f.protocol === 'chainlink').map((f) => {
-    return ({
-        contractName: f.address,
-        web3Contract: new web3.eth.Contract(AggregatorABI.compilerOutput.abi, f.address),
-        events: ['AnswerUpdated', 'ResponseReceived']
-    })
-})
-
-const mkrdaoContracts = testContracts.filter((f) => f.protocol === 'mkrdao').map((f) => {
-    return ({
-        contractName: f.address,
-        web3Contract: new web3.eth.Contract(MKRDaoDSValue.abi, f.address),
-        events: ['LogValue']
-    })
-})
+const web3Contracts = contracts.map(feedToWeb3Contract).filter((i) => !!i)
+const testWeb3Contracts = testContracts.map(feedToWeb3Contract).filter((i) => !!i)
 
 const tellorContracts = [
     {
@@ -33,6 +40,10 @@ const tellorContracts = [
         web3Contract: new web3.eth.Contract(UserContract.abi, '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58')
     }
 ]
+web3Contracts.push(...tellorContracts)
+testWeb3Contracts.push(...tellorContracts)
+
+const drizzleContracts = process.env.NODE_ENV === 'development' ? testWeb3Contracts : web3Contracts
 
 const options = {
     web3: {
@@ -44,9 +55,7 @@ const options = {
         }
     },
     contracts: [
-        ...tellorContracts,
-        ...chainlinkContracts,
-        ...mkrdaoContracts
+        ...drizzleContracts
     ],
     events: {
     },
