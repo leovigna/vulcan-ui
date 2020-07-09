@@ -23,6 +23,6 @@ export default compose(
     withDrizzleContext,
     withFeedsCache,
     withRefreshFeeds,
-    refreshOnUpdate,
+    //refreshOnUpdate,
     connect(mapStateToProps, mapDispatchToProps)
 )(HomeView);

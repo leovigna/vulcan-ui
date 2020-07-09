@@ -8,12 +8,13 @@ import {
 
 import ProtocolCard from '../../components/ProtocolCard'
 import FeedCardDetailedGrid from '../../components/FeedCardDetailed/FeedCardDetailedGrid'
-import { ProtocolTypes, FeedTypes } from '../../store/types'
+import { Feed, FeedState } from '../../store/feed/types';
+import { Protocol } from '../../store/protocol/types';
 
 interface Props {
-    feeds: FeedTypes.FeedBaseWithState[],
-    favoriteFeeds: FeedTypes.FeedBaseWithState[]
-    protocols: ProtocolTypes.Protocol[]
+    feeds: Feed[],
+    favoriteFeeds: FeedState[]
+    protocols: Protocol[]
     setContractFavorite: any
 }
 
