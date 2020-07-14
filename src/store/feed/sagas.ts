@@ -1,8 +1,7 @@
 import { RefreshMKRDaoFeedAction, REFRESH_MKRDAO_FEED, REFRESH_FEED, RefreshChainlinkFeedAction, RefreshFeedAction, REFRESH_CHAINLINK_FEED, REFRESH_FEED_LIST, RefreshFeedListAction, UPDATE_FEED, RefreshTellorFeedAction, REFRESH_TELLOR_FEED } from "./types"
-import { put, takeEvery, all, fork, spawn } from "redux-saga/effects"
+import { put, takeEvery, all, spawn } from "redux-saga/effects"
 import { fetchEvent } from "../event/actions"
 import { fetchBlock } from "../block/actions"
-import { delay } from "redux-saga"
 
 function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
     const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
@@ -31,7 +30,7 @@ function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
 }
 
 function* refreshTellorFeed(action: RefreshTellorFeedAction) {
-    const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
+    //const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
 
     if (action.payload.feed.refreshed) return;
     yield put({

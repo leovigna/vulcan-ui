@@ -7,7 +7,7 @@ const emptyArray2: Event[] = []
 
 export const eventByContractTypeIndexSelector: (state: any, id: string) => EventByContractTypeIndex[] = createSelector(
     orm,
-    (session) => {
+    (session: any) => {
         const indexes = session.EventByContractTypeIndex.all().toModelArray().map((item: any) => {
             const { ref } = item;
             const events = item.events.toModelArray().map((item: any) => {
@@ -32,8 +32,9 @@ export const eventByContractTypeIndexSelector: (state: any, id: string) => Event
 
 export const eventByContractTypeIndexByIdSelector: (state: any, id: string) => EventByContractTypeIndex = createSelector(
     orm,
-    (session, id) => id,
-    (session, id) => {
+    //@ts-ignore
+    (_session_: any, id: string) => id,
+    (session: any, id: string) => {
         const item = session.EventByContractTypeIndex.withId(id)
         if (!item) return null;
 
@@ -56,7 +57,7 @@ export const eventByContractTypeIndexByIdSelector: (state: any, id: string) => E
 
 export const eventsSelector: (state: any) => Event[] = createSelector(
     orm,
-    (session) => {
+    (session: any) => {
         const events = session.Event.all().toModelArray().map((item: any) => {
             const { ref } = item;
             return {

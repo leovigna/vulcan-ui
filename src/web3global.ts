@@ -1,6 +1,8 @@
+// @ts-nocheck
+
 import Web3 from 'web3'
 
-let web3;
+let web3: any;
 // Modern DApp Browsers
 export const mainnetWeb3 = new Web3(process.env.REACT_APP_INFURA_MAINNET_WSS)
 export const ropstenWeb3 = new Web3(process.env.REACT_APP_INFURA_ROPSTEN_WSS)

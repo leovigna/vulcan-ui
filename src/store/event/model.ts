@@ -1,13 +1,13 @@
 import { attr, fk } from 'redux-orm';
 import { Model } from 'redux-orm';
 
-class Event extends Model {
+class EventModel extends Model {
     // Declare any static or instance methods you need.
 }
-Event.modelName = 'Event';
+EventModel.modelName = 'Event';
 
 // Declare your related fields.
-Event.fields = {
+EventModel.fields = {
     id: attr(), // non-relational field for any value; optional but highly recommended
     address: attr(),
     event: attr(),
@@ -32,4 +32,4 @@ Event.fields = {
     }),
 };
 
-export default Event;
+export default EventModel;

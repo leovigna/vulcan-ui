@@ -2,16 +2,16 @@
 import { attr, fk } from 'redux-orm';
 import { Model } from 'redux-orm';
 
-class Transaction extends Model {
+class TransactionModel extends Model {
     // Declare any static or instance methods you need.
     static options = {
         idAttribute: 'hash',
     };
 }
-Transaction.modelName = 'Transaction';
+TransactionModel.modelName = 'Transaction';
 
 // Declare your related fields.
-Transaction.fields = {
+TransactionModel.fields = {
     blockHash: attr(),
     blockNumber: fk({
         to: 'Block',
@@ -33,4 +33,4 @@ Transaction.fields = {
     networkId: attr()
 };
 
-export default Transaction;
+export default TransactionModel;

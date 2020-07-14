@@ -4,7 +4,7 @@ import { FetchBlockAction, FetchBlockWithHashActionInput, FetchBlockWithNumberAc
 
 // fetch data from service using sagas
 export function* fetchBlock(action: FetchBlockAction) {
-    const web3 = web3ForNetworkId(action.payload.networkId)
+    const web3 = web3ForNetworkId(action.payload.networkId) as any
     const blockHashOrBlockNumber = (action.payload as FetchBlockWithHashActionInput).hash || (action.payload as FetchBlockWithNumberActionInput).number
 
     const block = yield call(web3.eth.getBlock, blockHashOrBlockNumber)
@@ -22,7 +22,7 @@ export function* fetchBlock(action: FetchBlockAction) {
 export function* blocksRootSaga() {
     const cache: { [key: string]: boolean } = {}
     const pattern = (action: FetchBlockAction) => {
-        if (action.type != FETCH_BLOCK) return false;
+        if (action.type !== FETCH_BLOCK) return false;
         const blockHashOrBlockNumber = (action.payload as FetchBlockWithHashActionInput).hash || (action.payload as FetchBlockWithNumberActionInput).number
         if (cache[blockHashOrBlockNumber]) return false;
 
@@ -30,5 +30,6 @@ export function* blocksRootSaga() {
         return true;
     }
 
+    //@ts-ignore
     yield takeEvery(pattern, fetchBlock)
 }

@@ -27,7 +27,7 @@ const FeedCardDetailedGrid = ({ feeds, setContractFavorite }: Props) => {
             const timestampRender = state?.timestamp ? moment(state!.timestamp, 'X').format('MMMM D - h:mm A') : '';
 
             return (<Col key={idx} lg="4" md="6" xs="12">
-                <FeedCardDetailed onHeartClick={() => setContractFavorite({ id, address, networkId, favorite: !hearted })} href={url} handleClickViewButton={() => history.push(url)} address={address} protocolImg={protocolImg} feedName={title} value={valueRender} hearted={hearted} feedENS={ens} nodeCount={0} lastUpdate={timestampRender} />
+                <FeedCardDetailed onHeartClick={() => setContractFavorite({ id, address, networkId, favorite: !hearted })} handleClickViewButton={() => history.push(url)} address={address} protocolImg={protocolImg} feedName={title} value={valueRender} hearted={hearted} feedENS={ens} nodeCount={0} lastUpdate={timestampRender} />
             </Col>)
         })
     }</>)

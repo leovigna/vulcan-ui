@@ -9,9 +9,6 @@ interface DrizzleState {
     }
 }
 
-const emptyArray = []
-const emptyObj = {}
-
 // Drizzle State Selectors
 export const drizzleStateSelector = (state: DrizzleState) => state.contracts;
 export const drizzleStateByIdSelector: (state: DrizzleState, id: string) => any = createCachedSelector(

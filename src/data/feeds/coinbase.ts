@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { CoinbaseFeed } from "../../store/feed/types";
 
 export const testcontracts: CoinbaseFeed[] = [

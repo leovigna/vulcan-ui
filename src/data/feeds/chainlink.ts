@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { ChainlinkFeed } from "../../store/feed/types";
 
 export const testcontracts: ChainlinkFeed[] = [

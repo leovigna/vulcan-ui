@@ -17,12 +17,9 @@ interface Props {
 const TellorFeedView = ({
     feed }: Props) => {
     const {
-        id,
         answerRenderOptions,
         title,
         address,
-        tellorId,
-        getCurrentValue
     } = feed || {}
 
     const latestAnswerValue = feed?.state?.value
@@ -31,7 +28,9 @@ const TellorFeedView = ({
     const loading = !latestAnswerValue || !latestTimestampValue
     if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
-    const latestAnswerFormatted = latestAnswerValue ? renderAnswer(answerRenderOptions, latestAnswerValue) : null;
+    let latestAnswerFormatted;
+    if (!!latestAnswerValue && !!answerRenderOptions) latestAnswerFormatted = renderAnswer(answerRenderOptions, latestAnswerValue);
+    else if (!!latestAnswerValue) latestAnswerFormatted = `${latestAnswerValue}`
     const lastUpdate = latestTimestampValue ? moment(latestTimestampValue, 'X').format('LLLL') : null;
 
     const feedViewProps = {
@@ -42,6 +41,7 @@ const TellorFeedView = ({
         chartData: feed?.state?.history?.map((d) => { return { x: d.timestamp, y: d.value } })
     }
 
+    //@ts-ignore
     return (<FeedView {...feedViewProps} />);
 }
 
@@ -79,4 +79,5 @@ export default compose(
     withDrizzleContext,
     withFeedCache,
     withFeedHistoryCache
+    //@ts-ignore
 )(TellorFeedView);

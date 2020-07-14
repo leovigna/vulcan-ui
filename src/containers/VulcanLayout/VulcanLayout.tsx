@@ -11,8 +11,16 @@ import {
 import VulcanFooter from './VulcanFooter'
 import VulcanHeader from './VulcanHeader'
 
-class VulcanLayout extends Component {
-    constructor(props) {
+interface route {
+    path: string,
+    exact: boolean,
+    component: any
+}
+interface Props {
+    routes: route[]
+}
+class VulcanLayout extends Component<Props> {
+    constructor(props: Props) {
         super(props);
     }
 

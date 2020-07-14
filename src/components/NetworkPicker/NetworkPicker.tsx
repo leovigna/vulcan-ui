@@ -9,10 +9,11 @@ import {
 
 import { setNetworkId } from '../../store/network/actions'
 import { NetworkSelectors } from '../../store/selectors'
+import { Network } from '../../store/network/types';
 
 interface Props {
-    networks: any,
-    currentNetwork: any,
+    networks: Network[],
+    currentNetwork: Network,
     setNetworkId: any
 }
 
@@ -56,4 +57,6 @@ function mapDispatchToProps(dispatch: any) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NetworkPicker);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    //@ts-ignore
+    NetworkPicker);

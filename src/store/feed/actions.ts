@@ -14,7 +14,7 @@ export function setFeedCacheKey(data: SetFeedCacheKeyActionInput): SetFeedCacheK
     }
 }
 
-export function renderAnswer(answerRenderOptions: AnswerRenderOptions, answer: string): string {
+export function renderAnswer(answerRenderOptions: AnswerRenderOptions, answer: string | number): string {
     const answerNumber = Number(answer)
 
     return sprintf(answerRenderOptions.format, { value: (answerRenderOptions.transform.multiply * answerNumber).toFixed(answerRenderOptions.transform.decimals) })

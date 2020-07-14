@@ -4,6 +4,7 @@ import TellorGetters from './contracts/TellorGetters.json'
 import UserContract from './contracts/UserContract.json'
 import MKRDaoDSValue from './contracts/MKRDaoDSValue.json'
 import contracts, { testContracts } from './data/feeds'
+import { Feed } from './store/feed/types'
 
 const feedToWeb3Contract = (feed: Feed) => {
     switch (feed.protocol) {
@@ -40,14 +41,17 @@ const tellorContracts = [
         web3Contract: new web3.eth.Contract(UserContract.abi, '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58')
     }
 ]
+
+//@ts-ignore
 web3Contracts.push(...tellorContracts)
+//@ts-ignore
 testWeb3Contracts.push(...tellorContracts)
 
 const drizzleContracts = process.env.NODE_ENV === 'development' ? testWeb3Contracts : web3Contracts
 const options = {
     web3: {
         block: false,
-        customProvider: web3,
+        customProvider: web3 as any,
         fallback: {
             type: "ws",
             url: process.env.REACT_APP_INFURA_MAINNET_WSS

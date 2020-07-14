@@ -8,10 +8,12 @@ import { FeedTypes, ProtocolTypes } from './store/types'
 import { setFeedCacheKey } from './store/feed/actions'
 import { FeedSelectors, ContractFavoriteSelectors, NetworkSelectors, ProtocolSelectors, BlockSelectors } from './store/selectors'
 import { setFeedStateCache, setFeedStateFullCache } from './store/feed/selectors';
-import { SetFeedCacheKeyActionInput, REFRESH_FEED_LIST, Feed, RefreshFeedListActionInput } from './store/feed/types';
+import { SetFeedCacheKeyActionInput, REFRESH_FEED_LIST, RefreshFeedListActionInput } from './store/feed/types';
 import { SetContractFavoriteActionInput } from './store/contractFavorite/types';
 import { setContractFavorite } from './store/contractFavorite/actions';
 import { START_POLL_COINBASE_ORACLE } from './store/coinbase/types';
+//@ts-ignore
+import { Drizzle } from '@drizzle/store';
 
 interface Props {
     feeds: [FeedTypes.Feed],
@@ -38,7 +40,7 @@ export const withFavoriteFeeds = connect((state: any, { networkId }: Props) => {
 
     return { favoriteFeeds }
 })
-export const withFeed = connect((state: any, { id }: Props) => {
+export const withFeed = connect((state: any, { id }: any) => {
     return { feed: FeedSelectors.feedByIdSelector(state, id, state) }
 })
 
@@ -92,6 +94,7 @@ export const refreshOnUpdate = (Component: any) => (props: any) => {
     return (<Component {...props} />)
 }
 
+//@ts-ignore
 export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.Feed>, setCacheKey: any) {
     const { drizzle, initialized } = context;
     useEffect(() => {
@@ -126,6 +129,7 @@ export const withFeedHistoryCache = (Component: any) => (props: any) => {
     return (<Component {...props} />)
 }
 
+//@ts-ignore
 export function useDrizzleCache(context: DrizzleContext.Context, { id, cacheName, cacheArgs }: any, { cacheKey, contractId }: FeedTypes.DrizzleCacheKey, setCacheKey: any) {
     const { drizzle, drizzleState, initialized } = context;
 

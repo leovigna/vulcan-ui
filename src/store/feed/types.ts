@@ -2,7 +2,7 @@ import { ContractFavorite } from "../contractFavorite/types"
 import { Protocol } from "../protocol/types"
 import { CoinbaseOracle } from "../coinbase/types"
 import { Block } from "../block/types"
-import { Event, EventByContractTypeIndex } from "../event/types"
+import { Event } from "../event/types"
 import { Transaction } from "../transaction/types"
 
 export interface DrizzleCacheKey {
@@ -136,7 +136,11 @@ export interface TellorFeedState extends FeedStateBase {
     DataRequested: DataRequested[]
 }
 
-export interface CoinbaseFeedState extends FeedStateBase, CoinbaseOracle {
+export interface CoinbaseFeedState extends FeedStateBase {
+    timestamp: string,
+    message: string,
+    signature: string,
+    price: string
     resultByTimestamp: { [key: string]: CoinbaseOracle }
 }
 
@@ -162,6 +166,7 @@ export const SET_FEED_CACHE_KEY = 'ORM/SET_FEED_CACHE_KEY'
 
 export type SetFeedCacheKeyActionInput = {
     id: string,
+    contractId: string,
     cacheName: string,
     cacheKey: string,
     cacheArgs?: string

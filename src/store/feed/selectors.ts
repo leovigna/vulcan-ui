@@ -1,18 +1,20 @@
 import { createSelector } from 'redux-orm'
 import Web3 from 'web3'
 import orm from '../orm'
-import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState, CoinbaseFeed, CoinbaseFeedState, MKRDaoFeed, MKRDaoFeedState, LogValue, AnswerUpdated, ResponseReceived, NewValue, DataRequested } from './types'
+import { Feed, ChainlinkFeed, ChainlinkFeedState, TellorFeed, TellorFeedState, FeedState, CoinbaseFeed, MKRDaoFeed, MKRDaoFeedState, LogValue, AnswerUpdated, ResponseReceived, NewValue, DataRequested } from './types'
 import { DrizzleSelectors } from '../selectors'
 import { transformAnswer } from './actions'
 import { coinbaseOracleResponsesSelector } from '../coinbase/selectors'
 import { eventByContractTypeIndexByIdSelector } from '../event/selectors'
 import { indexAddressEvent } from '../event/eventByContractTypeIndex'
 import { CoinbaseOracleResponse, CoinbaseOracle, CoinbaseTicker } from '../coinbase/types'
+import { FeedRef } from '../ref/types'
 
 const emptyArray: Feed[] = []
 
-export const feedResolve = (state: any, feed: Feed) => {
-    const feedState = feed.ref ? feedStateSelector(state, feed.ref) : null
+//@ts-ignore
+export const feedResolve: (state: any, feed: FeedRef) => Feed = (state, feed) => {
+    const feedState = feedStateSelector(state, feed.ref)
     const feedInfo = {
         ...feed.ref,
         protocolInfo: feed.protocolInfo?.ref,
@@ -25,9 +27,10 @@ export const feedResolve = (state: any, feed: Feed) => {
 
 export const feedByIdSelector: (ormState: any, id: string, state: any) => Feed = createSelector(
     orm,
-    (_session_, id) => id,
-    (_session_, _id_, state) => state,
-    (session, id, state) => {
+    //@ts-ignore
+    (_session_: any, id: string) => id,
+    (_session_: any, _id_: string, state: any) => state,
+    (session: any, id: string, state: any) => {
         const feed = session.Feed.withId(id)
         if (!feed) return null;
         console.debug(state)
@@ -37,10 +40,11 @@ export const feedByIdSelector: (ormState: any, id: string, state: any) => Feed =
 
 export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => Feed[] = createSelector(
     orm,
-    (_session_, filter) => filter,
-    (_session_, _filter_, state) => state,
-    (session, filter, state) => {
-        const feeds = session.Feed.filter(filter).toModelArray().map((item: Feed) => {
+    //@ts-ignore
+    (_session_: any, filter: any) => filter,
+    (_session_: any, _filter_: any, state: any) => state,
+    (session: any, filter: any, state: any) => {
+        const feeds = session.Feed.filter(filter).toModelArray().map((item: FeedRef) => {
             return feedResolve(state, item)
         });
 
@@ -51,9 +55,10 @@ export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => 
 
 export const feedByFilterSelector: (ormState: any, filter: any, state: any) => Feed = createSelector(
     orm,
-    (_session_, filter) => filter,
-    (_session_, _filter_, state) => state,
-    (session, filter, state) => {
+    //@ts-ignore
+    (_session_: any, filter: any) => filter,
+    (_session_: any, _filter_: any, state: any) => state,
+    (session: any, filter: any, state: any) => {
         const item = session.Feed.filter(filter).first()
         if (!item) return null;
         return feedResolve(state, item)
@@ -288,6 +293,7 @@ const mkrdaoFeedStateSelector: (state: any, feed: MKRDaoFeed) => MKRDaoFeedState
 }
 
 
+//@ts-ignore
 export const feedStateSelector: (state: any, feed: Feed) => FeedState = (state, feed) => {
     if (feed.protocol === 'chainlink') {
         const feedState = chainlinkFeedStateSelector(state, feed as ChainlinkFeed)

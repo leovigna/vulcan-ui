@@ -4,6 +4,4 @@ export default {
     title: 'Base/Jumbotron',
 };
 
-export const Default = () => <div>
-    TBD
-</div>
+export const Default = () => <div>TBD</div>;

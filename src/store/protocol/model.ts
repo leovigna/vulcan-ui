@@ -1,13 +1,13 @@
 import { attr } from 'redux-orm';
 import { Model } from 'redux-orm';
 
-class Protocol extends Model {
+class ProtocolModel extends Model {
 
 }
-Protocol.modelName = 'Protocol';
+ProtocolModel.modelName = 'Protocol';
 
 // Declare your related fields.
-Protocol.fields = {
+ProtocolModel.fields = {
     id: attr(),
     active: attr(),
     name: attr(),
@@ -17,4 +17,4 @@ Protocol.fields = {
     description: attr()
 };
 
-export default Protocol;
+export default ProtocolModel;

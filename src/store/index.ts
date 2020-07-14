@@ -5,16 +5,14 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 
 import drizzleOptions from "../drizzleOptions"
 //import { loadLocalStorage, saveLocalStorage } from "./localstorage"
-import { actionDebugger, eventAddNotifier, contractAddNotifier } from "./middleware"
-import { transactionRootSaga, blocksRootSaga, eventsRootSaga, contractRootSaga } from "./sagas";
+import { transactionRootSaga, blocksRootSaga, eventsRootSaga } from "./sagas";
 import { ormReducer, networkIdReducer } from './reducers';
 import { networksReducer } from './network/reducers'
 import { coinbaseRootSaga } from './coinbase/sagas'
 import { feedsRootSaga } from './feed/sagas'
-import { feedReducer } from './feed/reducers'
 import { latestBlockReducer } from './block/reducers'
 
-const persistedWhitelist = []
+const persistedWhitelist: string[] = []
 /*
 if (process.env.NODE_ENV === 'production') {
     persistedWhitelist.push('orm')
@@ -36,7 +34,7 @@ const appReducers = {
 }
 
 const appSagas = [/* , , contractRootSaga,*/ coinbaseRootSaga, feedsRootSaga, eventsRootSaga, transactionRootSaga, blocksRootSaga]
-const appMiddlewares = [actionDebugger, eventAddNotifier, contractAddNotifier]
+//const appMiddlewares = [actionDebugger, eventAddNotifier, contractAddNotifier]
 const config = {
     drizzleOptions,
     appReducers,
@@ -45,6 +43,7 @@ const config = {
     disableReduxDevTools: false // enable ReduxDevTools!
 }
 
+//@ts-ignore
 const store = generateStore(config)
 
 export const persistor = persistStore(store);

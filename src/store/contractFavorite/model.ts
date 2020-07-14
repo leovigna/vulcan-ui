@@ -1,13 +1,13 @@
 import { attr, oneToOne } from 'redux-orm';
 import { Model } from 'redux-orm';
 
-class ContractFavorite extends Model {
+class ContractFavoriteModel extends Model {
 }
 
-ContractFavorite.modelName = 'ContractFavorite';
+ContractFavoriteModel.modelName = 'ContractFavorite';
 
 // Declare your related fields.
-ContractFavorite.fields = {
+ContractFavoriteModel.fields = {
     id: oneToOne({
         to: 'Feed',
         as: 'feed'
@@ -19,4 +19,4 @@ ContractFavorite.fields = {
 
 
 
-export default ContractFavorite;
+export default ContractFavoriteModel;

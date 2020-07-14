@@ -5,11 +5,12 @@ import {
     CContainer as Container,
     CButton as Button
 } from '@coreui/react'
-import { ProtocolTypes, FeedTypes } from '../../store/types'
 import { FeedCardDetailedGrid } from '../../components/FeedCardDetailed'
+import { Protocol } from '../../store/protocol/types';
+import { Feed } from '../../store/feed/types';
 
-interface Props extends ProtocolTypes.Protocol {
-    feeds: FeedTypes.FeedBaseWithState[],
+interface Props extends Protocol {
+    feeds: Feed[],
     setContractFavorite: any
 }
 

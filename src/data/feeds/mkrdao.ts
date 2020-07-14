@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { MKRDaoFeed } from "../../store/feed/types";
 
 export const testcontracts: MKRDaoFeed[] = [

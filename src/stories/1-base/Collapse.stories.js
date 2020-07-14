@@ -4,6 +4,4 @@ export default {
     title: 'Base/Collapse',
 };
 
-export const Default = () => <div>
-    TBD
-</div>
+export const Default = () => <div>TBD</div>;

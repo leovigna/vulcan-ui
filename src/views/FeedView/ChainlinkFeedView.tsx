@@ -19,7 +19,6 @@ const ChainlinkFeedView = ({
     feed
 }: Props) => {
     const {
-        id,
         answerRenderOptions,
         address,
         title
@@ -31,7 +30,10 @@ const ChainlinkFeedView = ({
     const loading = !latestAnswerValue || !latestTimestampValue || !latestRoundValue
     if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
-    const latestAnswerFormatted = latestAnswerValue ? renderAnswer(answerRenderOptions, latestAnswerValue) : null;
+    let latestAnswerFormatted;
+    if (!!latestAnswerValue && !!answerRenderOptions) latestAnswerFormatted = renderAnswer(answerRenderOptions, latestAnswerValue);
+    else if (!!latestAnswerValue) latestAnswerFormatted = `${latestAnswerValue}`
+
     const lastUpdate = latestTimestampValue ? moment(latestTimestampValue, 'X').format('LLLL') : null;
     const responses: ChainlinkAnswer[] = feed?.state ? feed?.state?.ResponseReceived.map((e) => {
         return {
@@ -52,6 +54,7 @@ const ChainlinkFeedView = ({
         responses
     }
 
+    //@ts-ignore
     return (<FeedView {...feedViewProps} />);
 }
 
@@ -76,15 +79,9 @@ const mapStateToProps = (state: any, ownProps: any) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
-}
-
 ChainlinkFeedView.defaultProps = {
     feed: {}
 }
-
 
 export default compose(
     withSetContractFavorite,
@@ -92,9 +89,10 @@ export default compose(
     flattenProp('match'),
     flattenProp('params'),
     withProps({ protocol: 'chainlink' }),
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps),
     withFeed,
     withDrizzleContext,
     withFeedCache,
     withFeedHistoryCache,
+    //@ts-ignore
 )(ChainlinkFeedView);

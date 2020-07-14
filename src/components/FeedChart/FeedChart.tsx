@@ -1,4 +1,5 @@
 import React from 'react';
+//@ts-ignore
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { Line } from 'react-chartjs-2';
 import { Point } from '../../store/types'
@@ -11,6 +12,7 @@ const mainChartOpts = {
         mode: 'index',
         position: 'average',
         callbacks: {
+            //@ts-ignore
             labelColor: function (tooltipItem, chart) {
                 return { backgroundColor: '#FA4706' }
             }
@@ -72,7 +74,7 @@ const mainChartOpts = {
 
 
 interface Props {
-    data: [Point<number, number>]
+    data: Point<number, number>[]
 }
 
 const FeedChart = ({ data }: Props) => {

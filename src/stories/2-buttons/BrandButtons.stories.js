@@ -4,6 +4,4 @@ export default {
     title: 'Buttons/Brands',
 };
 
-export const Default = () => <div>
-    TBD
-</div>
+export const Default = () => <div>TBD</div>;

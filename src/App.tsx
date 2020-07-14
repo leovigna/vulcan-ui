@@ -13,6 +13,7 @@ import drizzleOptions from "./drizzleOptions"
 import store, { persistor } from "./store"
 import { withReduxStoreProvider, withPersistStore, withDrizzleContextProvider, withStartPollingCoinbase /*, withApolloProvider */ } from './hoc';
 
+//@ts-ignore
 const drizzle = new Drizzle(drizzleOptions as IDrizzleOptions, store)
 
 // Containers
@@ -21,13 +22,14 @@ class App extends Component {
         return (
             <HashRouter>
                 <Switch>
-                    <Route path='/' name={process.env.REACT_APP_DOMAIN} render={props => <VulcanLayout routes={routes} {...props} />} />
+                    <Route path='/' render={props => <VulcanLayout routes={routes} {...props} />} />
                 </Switch>
             </HashRouter>
         );
     }
 
     componentDidMount() {
+        //@ts-ignore
         this.props.startPollingCoinbase()
     }
 }
@@ -38,4 +40,5 @@ export default compose(
     withDrizzleContextProvider(drizzle),
     withStartPollingCoinbase
     // withApolloProvider(client)
+    //@ts-ignore
 )(App);

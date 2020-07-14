@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FeedTypes } from '../store/types'
 
 export const contracts: Array<FeedTypes.Feed> = [

@@ -6,10 +6,10 @@ export function transactionReducer(sess: any, action: TransactionAction) {
             Transaction.upsert({ ...action.payload });
             break;
         case UPDATE_TRANSACTION:
-            Transaction.withId(action.payload.transactionHash).update({ ...action.payload });
+            Transaction.withId(action.payload.hash).update({ ...action.payload });
             break;
         case REMOVE_TRANSACTION:
-            Transaction.withId(action.payload.transactionHash).delete();
+            Transaction.withId(action.payload.hash).delete();
             break;
         case FETCH_TRANSACTION:
             break;
