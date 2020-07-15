@@ -12,7 +12,7 @@ export const testcontracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -37,7 +37,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -59,7 +59,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -81,7 +81,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -103,7 +103,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -125,7 +125,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: '₿ %(value)s',
         },
@@ -147,7 +147,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: '₿ %(value)s',
         },
@@ -169,7 +169,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: 'Ξ %(value)s',
         },
@@ -191,7 +191,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -213,7 +213,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: '$ %(value)s',
         },
@@ -235,7 +235,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -257,7 +257,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: 'Ξ %(value)s',
         },
@@ -279,7 +279,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: 'Ξ %(value)s',
         },
@@ -301,7 +301,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -323,7 +323,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: 'Ξ %(value)s',
         },
@@ -345,7 +345,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -367,7 +367,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -389,7 +389,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: '₿ %(value)s',
         },
@@ -411,7 +411,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: '₿ %(value)s',
         },
@@ -433,7 +433,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: 'Ξ %(value)s',
         },
@@ -455,7 +455,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -477,7 +477,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -500,7 +500,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -522,7 +522,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: 'PAX %(value)s',
         },
@@ -544,7 +544,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: '$ %(value)s',
         },
@@ -566,7 +566,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: 'USDT %(value)s',
         },
@@ -588,7 +588,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 6,
             },
             format: '$ %(value)s',
         },
@@ -610,7 +610,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -632,7 +632,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: 'BNB %(value)s',
         },
@@ -654,7 +654,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: '$ %(value)s',
         },
@@ -676,7 +676,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -698,7 +698,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -720,7 +720,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -742,7 +742,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -764,7 +764,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -786,7 +786,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -808,7 +808,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -830,7 +830,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -852,7 +852,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -874,7 +874,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -896,7 +896,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 8,
             },
             format: '$ %(value)s',
         },
@@ -918,7 +918,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '%(value)s',
         },
@@ -940,7 +940,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -962,7 +962,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: 'Ξ %(value)s',
         },
@@ -984,7 +984,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -1006,7 +1006,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -1028,7 +1028,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -1050,7 +1050,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -1073,7 +1073,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -1095,7 +1095,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -1117,7 +1117,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
@@ -1139,7 +1139,7 @@ const contracts: TellorFeed[] = [
         answerRenderOptions: {
             transform: {
                 multiply: 1e-6,
-                decimals: 2,
+                decimals: 4,
             },
             format: '$ %(value)s',
         },
