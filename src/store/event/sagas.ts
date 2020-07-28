@@ -1,4 +1,4 @@
-import { call, put, takeEvery, take, all, fork, race, spawn } from 'redux-saga/effects'
+import { call, put, takeEvery, take, race, spawn } from 'redux-saga/effects'
 import { eventChannel, END, delay } from 'redux-saga'
 
 import { FetchEventAction, FETCH_EVENT, FETCH_EVENT_ERROR, FETCH_EVENT_DONE } from './types';

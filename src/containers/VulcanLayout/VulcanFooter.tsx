@@ -1,7 +1,6 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0 */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import triangleup from "../../assets/img/triangleup.svg"
 import vulcan from "../../assets/img/brand/vulcanwhite.svg"
 import telegram from "../../assets/img/icons/telegram.png"
@@ -14,21 +13,13 @@ import {
     CContainer as Container
 } from '@coreui/react';
 
-const propTypes = {
-    children: PropTypes.node,
-};
-
-const defaultProps = {};
 
 class DefaultFooter extends Component {
     render() {
-        // eslint-disable-next-line
-        const { children, ...attributes } = this.props;
-
         return (
             <>
                 <div style={{ height: 0, position: 'relative', zIndex: 1, top: -200, backgroundColor: '#002C69' }} >
-                    <img style={{ width: '100%', height: 200 }} src={triangleup}></img>
+                    <img style={{ width: '100%', height: 200 }} alt="" src={triangleup}></img>
                 </div>
                 <div style={{ color: '#FFFFFF', backgroundColor: '#002C69' }} >
                     <Container>
@@ -39,9 +30,9 @@ class DefaultFooter extends Component {
                                     <p>EU-based Experienced Chainlink Node Provider.<br /></p>
                                     <h6>Follow Us</h6>
                                     <br />
-                                    <span className="link-footer"><a href={process.env.REACT_APP_TELEGRAM_URL} target="_blank"><img
+                                    <span className="link-footer"><a href={process.env.REACT_APP_TELEGRAM_URL} target="_blank" rel="noopener noreferrer"><img
                                         src={telegram} className="img-fluid" alt="" /></a>
-                                        <a href={process.env.REACT_APP_DISCORD_URL} target="_blank"><img src={discord}
+                                        <a href={process.env.REACT_APP_DISCORD_URL} target="_blank" rel="noopener noreferrer"><img src={discord}
                                             className="img-fluid" alt="" /></a></span>
                                 </div>
                             </Col>
@@ -49,11 +40,11 @@ class DefaultFooter extends Component {
                                 <div className="Useful-link">
                                     <h6>Useful links</h6>
                                     <ul>
-                                        <li><a href={process.env.REACT_APP_CONTACT_URL} target="_blank">Contact Us</a></li>
-                                        <li><a href={`${process.env.REACT_APP_HOMEPAGE_URL}/#why-choose-us`} target="_blank">About Us</a></li>
-                                        <li><a href={`${process.env.REACT_APP_HOMEPAGE_URL}/#services-home`} target="_blank">Services</a></li>
-                                        <li><a href={process.env.REACT_APP_HOMEPAGE_URL} target="_blank">Vulcan.Link</a></li>
-                                        <li><a href={process.env.REACT_APP_FORM_URL} target="_blank">Request a Chainlink</a></li>
+                                        <li><a href={process.env.REACT_APP_CONTACT_URL} target="_blank" rel="noopener noreferrer">Contact Us</a></li>
+                                        <li><a href={`${process.env.REACT_APP_HOMEPAGE_URL}/#why-choose-us`} target="_blank" rel="noopener noreferrer">About Us</a></li>
+                                        <li><a href={`${process.env.REACT_APP_HOMEPAGE_URL}/#services-home`} target="_blank" rel="noopener noreferrer">Services</a></li>
+                                        <li><a href={process.env.REACT_APP_HOMEPAGE_URL} target="_blank" rel="noopener noreferrer">Vulcan.Link</a></li>
+                                        <li><a href={process.env.REACT_APP_FORM_URL} target="_blank" rel="noopener noreferrer">Request a Chainlink</a></li>
                                     </ul>
                                 </div>
                             </Col>
@@ -68,7 +59,7 @@ class DefaultFooter extends Component {
                                             className="validate" target="_blank" noValidate>
                                             <div id="mc_embed_signup_scroll">
                                                 <div className="mc-field-group">
-                                                    <input type="email" placeholder="Enter Email Address" value="" name="EMAIL"
+                                                    <input type="email" placeholder="Enter Email Address" defaultValue="" name="EMAIL"
                                                         className="required email" id="mce-EMAIL" />
                                                 </div>
                                                 <div id="mce-responses" className="clear">
@@ -76,13 +67,14 @@ class DefaultFooter extends Component {
                                                     <div className="response" id="mce-success-response" style={{ display: "none" }}></div>
                                                 </div>
                                                 <div style={{ position: "absolute", left: "-5000px" }} aria-hidden="true"><input
-                                                    type="text" name="b_66e21f9472d7271632b2dc06a_87420076fe" tabIndex="-1"
-                                                    value="" /></div>
+                                                    type="text" name="b_66e21f9472d7271632b2dc06a_87420076fe" tabIndex={-1}
+                                                    defaultValue="" /></div>
                                             </div>
                                             <div className="main-link">
                                                 <div className="link-to-go">
                                                 </div>
                                                 <a href="#"
+                                                    //@ts-ignore
                                                     onClick={() => { document.getElementById('mc-embedded-subscribe-form').submit(); }}>Subscribe
                                         <span><img src={arrow} className="img-fluid" alt="" /></span></a>
                                             </div>
@@ -101,8 +93,5 @@ class DefaultFooter extends Component {
         );
     }
 }
-
-DefaultFooter.propTypes = propTypes;
-DefaultFooter.defaultProps = defaultProps;
 
 export default DefaultFooter;

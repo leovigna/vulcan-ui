@@ -1,6 +1,4 @@
 // selectors.js
-import createCachedSelector from 're-reselect';
-import moment from 'moment';
 import * as FeedSelectors from './feed/selectors';
 import * as ContractFavoriteSelectors from './contractFavorite/selectors';
 import * as NetworkSelectors from './network/selectors';
@@ -8,8 +6,6 @@ import * as ProtocolSelectors from './protocol/selectors';
 import * as EventSelectors from './event/selectors';
 import * as DrizzleSelectors from './drizzle/selectors';
 import * as BlockSelectors from './block/selectors';
-
-import { Point } from '../store/types'
 
 export {
     FeedSelectors,
@@ -21,7 +17,7 @@ export {
     BlockSelectors
 }
 
-const emptyArray = []
+//const emptyArray = []
 
 
 //ORM Selectors

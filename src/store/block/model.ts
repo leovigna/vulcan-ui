@@ -1,18 +1,18 @@
-import { attr, Attribute } from 'redux-orm';
+import { attr } from 'redux-orm';
 import { Model } from 'redux-orm';
 
 
-class Block extends Model {
+class BlockModel extends Model {
     // Declare any static or instance methods you need.
     static options = {
         idAttribute: 'number',
     };
 }
 
-Block.modelName = 'Block';
+BlockModel.modelName = 'Block';
 
 // Declare your related fields.
-Block.fields = {
+BlockModel.fields = {
     networkId: attr(),
     difficulty: attr(),
     extraData: attr(),
@@ -36,4 +36,4 @@ Block.fields = {
     uncles: attr()
 };
 
-export default Block;
+export default BlockModel;

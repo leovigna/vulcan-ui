@@ -1,12 +1,12 @@
 import { attr, fk } from 'redux-orm';
 import { Model } from 'redux-orm';
 
-class Feed extends Model {
+class FeedModel extends Model {
 }
-Feed.modelName = 'Feed';
+FeedModel.modelName = 'Feed';
 
 // Declare your related fields.
-Feed.fields = {
+FeedModel.fields = {
     id: attr(),
     networkId: attr(),
     address: attr(),
@@ -29,4 +29,4 @@ Feed.fields = {
     }),
 };
 
-export default Feed;
+export default FeedModel;

@@ -1,32 +1,20 @@
 // orm.js
 import { ORM } from 'redux-orm';
 import {
-    Event,
-    Transaction,
-    Block,
-    EventByContractTypeIndex,
-    Contract,
-    Feed,
-    ContractFavorite,
-    Protocol
+    EventModel,
+    TransactionModel,
+    BlockModel,
+    EventByContractTypeIndexModel,
+    FeedModel,
+    ContractFavoriteModel,
+    ProtocolModel
 } from './models';
-import CoinbaseOracleResponse from '../coinbase/model';
+import CoinbaseOracleResponseModel from '../coinbase/model';
 
-interface VulcanORM extends ORM {
-    Event: Event,
-    Transaction: Transaction,
-    Block: Block,
-    EventByContractTypeIndex: EventByContractTypeIndex,
-    Contract: Contract,
-    ContractFavorite: ContractFavorite,
-    Feed: Feed,
-    Protocol: Protocol,
-    CoinbaseOracleResponse: CoinbaseOracleResponse
-}
-
-const orm: VulcanORM = new ORM({
+const orm: any = new ORM({
+    //@ts-ignore
     stateSelector: state => state.persisted.orm
 });
-orm.register(Event, Transaction, Block, EventByContractTypeIndex, Contract, ContractFavorite, Feed, Protocol, CoinbaseOracleResponse);
+orm.register(EventModel, TransactionModel, BlockModel, EventByContractTypeIndexModel, ContractFavoriteModel, FeedModel, ProtocolModel, CoinbaseOracleResponseModel);
 
 export default orm;

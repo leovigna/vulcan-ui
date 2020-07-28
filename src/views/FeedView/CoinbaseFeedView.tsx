@@ -7,7 +7,7 @@ import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
 import { CoinbaseFeed } from '../../store/feed/types'
 import { renderAnswer } from '../../store/feed/actions'
-import { withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext, withFeedCache, withFeedHistoryCache } from '../../hoc'
+import { withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext } from '../../hoc'
 
 interface Props {
     setCacheKey: any,
@@ -17,7 +17,6 @@ interface Props {
 const CoinbaseFeedView = ({
     feed }: Props) => {
     const {
-        id,
         answerRenderOptions,
         title,
         address
@@ -29,7 +28,9 @@ const CoinbaseFeedView = ({
     const loading = !latestAnswerValue || !latestTimestampValue
     if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
-    const latestAnswerFormatted = latestAnswerValue ? renderAnswer(answerRenderOptions, latestAnswerValue) : null;
+    let latestAnswerFormatted;
+    if (!!latestAnswerValue && !!answerRenderOptions) latestAnswerFormatted = renderAnswer(answerRenderOptions, latestAnswerValue);
+    else if (!!latestAnswerValue) latestAnswerFormatted = `${latestAnswerValue}`
     const lastUpdate = latestTimestampValue ? moment(latestTimestampValue, 'X').format('LLLL') : null;
 
     const feedViewProps = {
@@ -40,6 +41,7 @@ const CoinbaseFeedView = ({
         chartData: feed?.state?.history?.map((d) => { return { x: d.timestamp, y: d.value } })
     }
 
+    //@ts-ignore
     return (<FeedView {...feedViewProps} />);
 }
 
@@ -75,6 +77,5 @@ export default compose(
     connect(mapStateToProps),
     withFeed,
     withDrizzleContext,
-    withFeedCache,
-    withFeedHistoryCache
+    //@ts-ignore
 )(CoinbaseFeedView);

@@ -1,4 +1,5 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0 */
+//@ts-nocheck
 
 /*
  * required polyfills
@@ -31,7 +32,8 @@ import 'core-js/features/set/map';
 // import 'core-js/es7/reflect'
 
 // CustomEvent() constructor functionality in IE9, IE10, IE11
-(function() {
+
+(function () {
     if (typeof window.CustomEvent === 'function') return false;
 
     function CustomEvent(event, params) {

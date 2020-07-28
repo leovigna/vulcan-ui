@@ -7,7 +7,7 @@ type Action = {
     [key: string]: any
 }
 
-export function networksReducer(state = networks, action: Action) {
+export function networksReducer(state = networks /*, action: Action*/) {
     return state;
 }
 

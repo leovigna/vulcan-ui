@@ -35,9 +35,10 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
             <Row>
                 <div className="d-flex justify-content-center" style={{ width: '100%' }}>
                     <img style={{ width: 37, objectFit: 'contain' }} src={protocolImg} alt=''></img>
-                    <div style={{ width: 155, textAlign: 'center', lineHeight: '37px', fontSize: 18, fontWeight: 'bold' }}>{feedName}</div>
-                    {<Button onClick={onHeartClick} style={{ padding: 0 }}><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
-                    }
+                    <div className="d-flex justify-content-center flex-column">
+                        <span style={{ width: 155, textAlign: 'center', lineHeight: '18px', fontSize: 16, fontWeight: 'bold' }}>{feedName}</span>
+                    </div>
+                    <Button onClick={onHeartClick} style={{ padding: 0 }}><img style={{ width: 31, objectFit: 'contain' }} src={hearted ? HeartFilled : HeartEmpty} alt=''></img></Button>
                 </div>
             </Row>
             <Row>
@@ -45,7 +46,7 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
             </Row>
             <Row>
                 <Col sm="12">
-                    <p style={{ fontSize: 23, fontStyle: 'italic', fontWeight: 'bold', color: '#4F4F4F', textAlign: 'center' }}>{value}</p>
+                    <p style={{ fontSize: 23, fontStyle: 'italic', fontWeight: 'bold', color: '#4F4F4F', textAlign: 'center' }}>{value || "loading..."}</p>
                 </Col>
                 <Col sm="12">
                     <p style={{ color: '#002C69', fontSize: 16, textAlign: 'center' }}>{lastUpdate}</p>

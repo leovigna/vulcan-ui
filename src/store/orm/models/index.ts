@@ -1,19 +1,17 @@
-import Transaction from '../../transaction/model'
-import Block from '../../block/model'
-import Event from '../../event/model'
-import EventByContractTypeIndex from '../../event/eventByContractTypeIndex'
-import Contract from '../../contract/model'
-import Feed from '../../feed/model'
-import ContractFavorite from '../../contractFavorite/model'
-import Protocol from '../../protocol/model'
+import TransactionModel from '../../transaction/model'
+import BlockModel from '../../block/model'
+import EventModel from '../../event/model'
+import EventByContractTypeIndexModel from '../../event/eventByContractTypeIndex'
+import FeedModel from '../../feed/model'
+import ContractFavoriteModel from '../../contractFavorite/model'
+import ProtocolModel from '../../protocol/model'
 
 export {
-    Transaction,
-    Block,
-    Event,
-    EventByContractTypeIndex,
-    Contract,
-    ContractFavorite,
-    Feed,
-    Protocol
+    TransactionModel,
+    BlockModel,
+    EventModel,
+    EventByContractTypeIndexModel,
+    ContractFavoriteModel,
+    FeedModel,
+    ProtocolModel
 }

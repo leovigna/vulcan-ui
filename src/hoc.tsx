@@ -5,13 +5,14 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import { FeedTypes, ProtocolTypes } from './store/types'
-import { setFeedCacheKey } from './store/feed/actions'
+import { setFeedCacheKey, refreshFeedList, refreshFeed } from './store/feed/actions'
 import { FeedSelectors, ContractFavoriteSelectors, NetworkSelectors, ProtocolSelectors, BlockSelectors } from './store/selectors'
-import { setFeedStateCache, setFeedStateFullCache } from './store/feed/selectors';
-import { SetFeedCacheKeyActionInput, REFRESH_FEED_LIST, Feed, RefreshFeedListActionInput } from './store/feed/types';
+import { SetFeedCacheKeyActionInput, RefreshFeedListActionInput, RefreshFeedActionInput } from './store/feed/types';
 import { SetContractFavoriteActionInput } from './store/contractFavorite/types';
 import { setContractFavorite } from './store/contractFavorite/actions';
 import { START_POLL_COINBASE_ORACLE } from './store/coinbase/types';
+//@ts-ignore
+import { Drizzle } from '@drizzle/store';
 
 interface Props {
     feeds: [FeedTypes.Feed],
@@ -38,7 +39,7 @@ export const withFavoriteFeeds = connect((state: any, { networkId }: Props) => {
 
     return { favoriteFeeds }
 })
-export const withFeed = connect((state: any, { id }: Props) => {
+export const withFeed = connect((state: any, { id }: any) => {
     return { feed: FeedSelectors.feedByIdSelector(state, id, state) }
 })
 
@@ -53,7 +54,8 @@ export const withSetCacheKey = connect(null, (dispatch) => {
 export const withStartPollingCoinbase = connect(null, (dispatch) => {
     return { startPollingCoinbase: () => dispatch({ type: START_POLL_COINBASE_ORACLE }) }
 })
-
+export const withRefreshFeedList = connect(null, (dispatch) => { return { refreshFeedList: (payload: RefreshFeedListActionInput) => dispatch(refreshFeedList(payload)) } })
+export const withRefreshFeed = connect(null, (dispatch) => { return { refreshFeed: (payload: RefreshFeedActionInput) => dispatch(refreshFeed(payload)) } })
 
 export const withReduxStoreProvider = (store: any) => (Component: any) => (props: any) => {
     return (
@@ -80,52 +82,7 @@ export const withDrizzleContextProvider = (drizzle: any) => (Component: any) => 
         </DrizzleContext.Provider>)
 }
 
-export const withRefreshFeeds = connect(null, (dispatch) => { return { refreshFeeds: (payload: RefreshFeedListActionInput) => dispatch({ type: REFRESH_FEED_LIST, payload }) } })
-export const refreshOnUpdate = (Component: any) => (props: any) => {
-    const { drizzle, initialized } = props.drizzleContext;
-    useEffect(() => {
-        if (initialized) {
-            props.refreshFeeds({ feeds: props.feeds, currentBlock: props.currentBlock, drizzle })
-        }
-    }, [props.feeds, initialized])
-
-    return (<Component {...props} />)
-}
-
-export function useFeedsCache(context: Drizzle.Context, feeds: Array<FeedTypes.Feed>, setCacheKey: any) {
-    const { drizzle, initialized } = context;
-    useEffect(() => {
-        if (initialized) {
-            feeds.forEach((f) => {
-                setFeedStateCache(drizzle, f, setCacheKey)
-            })
-        }
-    }, [feeds, initialized])
-}
-export const withFeedsCache = (Component: any) => (props: any) => {
-    useFeedsCache(props.drizzleContext, props.feeds, props.setCacheKey)
-    return (<Component {...props} />)
-}
-export const withFeedCache = (Component: any) => (props: any) => {
-    const { drizzle, initialized } = props.drizzleContext;
-    useEffect(() => {
-        if (initialized && !!props.feed) {
-            setFeedStateCache(drizzle, props.feed, props.setCacheKey)
-        }
-    }, [props.feed, initialized])
-    return (<Component {...props} />)
-}
-
-export const withFeedHistoryCache = (Component: any) => (props: any) => {
-    const { drizzle, drizzleState, initialized } = props.drizzleContext;
-    useEffect(() => {
-        if (initialized && !!props.feed) {
-            setFeedStateFullCache(drizzle, props.feed, props.setCacheKey, drizzleState)
-        }
-    }, [props.feed, initialized])
-    return (<Component {...props} />)
-}
-
+//@ts-ignore
 export function useDrizzleCache(context: DrizzleContext.Context, { id, cacheName, cacheArgs }: any, { cacheKey, contractId }: FeedTypes.DrizzleCacheKey, setCacheKey: any) {
     const { drizzle, drizzleState, initialized } = context;
 

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import ChainlinkBadge from '../assets/img/protocols/ChainlinkBadge.svg'
 import TellorBadge from '../assets/img/protocols/TellorBadge.svg'
 import CoinbaseBadge from '../assets/img/protocols/CoinbaseBadge.png'

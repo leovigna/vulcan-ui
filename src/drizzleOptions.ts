@@ -3,25 +3,32 @@ import web3 from './web3global'
 import TellorGetters from './contracts/TellorGetters.json'
 import UserContract from './contracts/UserContract.json'
 import MKRDaoDSValue from './contracts/MKRDaoDSValue.json'
+import { getFeeds } from './data/feeds'
+import { Feed } from './store/feed/types'
 
-import { testContracts } from './data/feeds'
+const feedToWeb3Contract = (feed: Feed) => {
+    switch (feed.protocol) {
+        case 'chainlink':
+            return ({
+                contractName: feed.address,
+                web3Contract: new web3.eth.Contract(AggregatorABI.compilerOutput.abi, feed.address),
+                events: ['AnswerUpdated', 'ResponseReceived']
+            })
+        case 'tellor':
+            break
+        case 'mkrdao':
+            return ({
+                contractName: feed.address,
+                web3Contract: new web3.eth.Contract(MKRDaoDSValue.abi, feed.address),
+                events: ['LogValue']
+            })
+        case 'coinbase':
+            break
+    }
+}
 
-const chainlinkContracts = testContracts.filter((f) => f.protocol === 'chainlink').map((f) => {
-    return ({
-        contractName: f.address,
-        web3Contract: new web3.eth.Contract(AggregatorABI.compilerOutput.abi, f.address),
-        events: ['AnswerUpdated', 'ResponseReceived']
-    })
-})
-
-const mkrdaoContracts = testContracts.filter((f) => f.protocol === 'mkrdao').map((f) => {
-    return ({
-        contractName: f.address,
-        web3Contract: new web3.eth.Contract(MKRDaoDSValue.abi, f.address),
-        events: ['LogValue']
-    })
-})
-
+const contracts = getFeeds()
+const web3Contracts = contracts.map(feedToWeb3Contract).filter((i) => !!i)
 const tellorContracts = [
     {
         contractName: '0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5',
@@ -34,19 +41,21 @@ const tellorContracts = [
     }
 ]
 
+//@ts-ignore
+web3Contracts.push(...tellorContracts)
+
+const drizzleContracts = web3Contracts
 const options = {
     web3: {
         block: false,
-        customProvider: web3,
+        customProvider: web3 as any,
         fallback: {
             type: "ws",
             url: process.env.REACT_APP_INFURA_MAINNET_WSS
         }
     },
     contracts: [
-        ...tellorContracts,
-        ...chainlinkContracts,
-        ...mkrdaoContracts
+        ...drizzleContracts
     ],
     events: {
     },

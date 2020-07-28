@@ -12,11 +12,15 @@ import {
 } from '@coreui/react';
 //USe Redux Data
 import { connect } from "react-redux"
-import { contractsSelector } from '../../store/selectors'
+import { Protocol } from '../../store/protocol/types';
+import { protocolsByFilterSelector } from '../../store/protocol/selectors';
 
+interface Props {
+    protocols: Protocol[]
+}
 
-class Protocols extends Component {
-    constructor(props) {
+class Protocols extends Component<Props> {
+    constructor(props: Props) {
         super(props);
     }
 
@@ -32,9 +36,9 @@ class Protocols extends Component {
                         return (
                             <Col xs="12" sm="6" md="4">
                                 <Card>
-                                    <CardHeader>{c.title}</CardHeader>
+                                    <CardHeader>{c.name}</CardHeader>
                                     <CardBody>
-                                        <Button block href={`${c.path}`} color="secondary">View</Button>
+                                        <Button block href={`/protocols/${c.id}`} color="secondary">View</Button>
                                     </CardBody>
                                 </Card>
                             </Col>
@@ -46,9 +50,9 @@ class Protocols extends Component {
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
     return {
-        protocols: []
+        protocols: protocolsByFilterSelector(state, {}, state)
     }
 }
 

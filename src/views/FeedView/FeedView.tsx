@@ -6,12 +6,14 @@ import {
 } from '@coreui/react'
 
 import FeedTable from '../../components/FeedTable'
-import FeedChart, { Point } from '../../components/FeedChart'
+import FeedChart from '../../components/FeedChart'
 import { FeedBase, ChainlinkAnswer } from '../../store/feed/types';
+import { Point } from '../../store/types';
+
 interface Props extends FeedBase {
     address: string,
     answer: string,
-    chartData: Point[],
+    chartData: Point<number, number>[],
     responses: ChainlinkAnswer[]
     minResponses: number,
     maxResponses: number,
@@ -73,7 +75,7 @@ const FeedView = ({ title, address, answer, responses, chartData, minResponses, 
                             </Row>
                         </Container >
                     </div>
-                    : <div style={{ backgroundColor: '#F2F2F2', paddingTop: 50, paddingBottom: 100, marginRight: -15, marginLeft: -15 }} />
+                    : <div style={{ backgroundColor: '#F2F2F2', marginBottom: -200, paddingTop: 50, paddingBottom: 100, marginRight: -15, marginLeft: -15 }} />
             }
         </>
     )

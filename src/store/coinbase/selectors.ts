@@ -5,4 +5,5 @@ import { createSelector } from 'redux-orm'
 import orm from '../orm'
 import { CoinbaseOracleResponse } from './types'
 
+//@ts-ignore
 export const coinbaseOracleResponsesSelector: (state: any) => CoinbaseOracleResponse[] = createSelector(orm.CoinbaseOracleResponse)

@@ -1,5 +1,5 @@
 import orm from './index';
-import { tellorContracts, testContracts } from '../../data/feeds'
+import { getFeeds } from '../../data/feeds'
 import favorites from '../../data/favorites'
 import protocols from '../../data/protocols'
 import { feedReducer } from '../feed/reducers';
@@ -12,8 +12,6 @@ import { eventReducer } from '../event/reducers';
 import { EventAction, CREATE_EVENT, UPDATE_EVENT, REMOVE_EVENT, CREATE_EVENT_CT_INDEX, UPDATE_EVENT_CT_INDEX, REMOVE_EVENT_CT_INDEX } from '../event/types';
 import { coinbaseReducer } from '../coinbase/reducers';
 import { CoinbaseAction, CREATE_COINBASE_ORACLE_RESPONSE } from '../coinbase/types';
-import { contractReducer } from '../contract/reducers';
-import { ContractAction, CREATE_CONTRACT, UPDATE_CONTRACT, REMOVE_CONTRACT, UPDATE_CONTRACT_EVENTS } from '../contract/types';
 import { contractFavoriteReducer } from '../contractFavorite/reducers';
 import { ContractFavoriteAction, ContractFavorite, SET_CONTRACT_FAVORITE } from '../contractFavorite/types';
 
@@ -23,18 +21,16 @@ type Action = {
     [key: string]: any
 }
 
-export const initializeState = (orm) => {
+export const initializeState = (orm: any) => {
     const state = orm.getEmptyState();
     const { ContractFavorite, Feed, Protocol } = orm.mutableSession(state);
 
     favorites.forEach((favorite: ContractFavorite) => ContractFavorite.create(favorite))
     protocols.forEach((protocol: any) => Protocol.create(protocol))
 
-    if (process.ENV !== 'production') {
-        testContracts.forEach((feed: Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
-    } else {
-        tellorContracts.forEach((feed: Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
-    }
+    const contracts = getFeeds()
+    contracts.forEach((feed: Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
+
 
     return state;
 };
@@ -62,12 +58,6 @@ export function ormReducer(state: any, action: Action) {
         case UPDATE_BLOCK:
         case REMOVE_BLOCK:
             blockReducer(sess, action as BlockAction)
-            break;
-        case CREATE_CONTRACT:
-        case UPDATE_CONTRACT:
-        case REMOVE_CONTRACT:
-        case UPDATE_CONTRACT_EVENTS:
-            contractReducer(sess, action as ContractAction)
             break;
         case SET_CONTRACT_FAVORITE:
             contractFavoriteReducer(sess, action as ContractFavoriteAction)

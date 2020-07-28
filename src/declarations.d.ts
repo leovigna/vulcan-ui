@@ -8,3 +8,4 @@ declare module "reselect"
 declare module "@drizzle/react-plugin"
 declare module "*.json"
 declare module "@coreui/react"
+declare module 'sprintf-js';

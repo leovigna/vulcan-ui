@@ -8,6 +8,6 @@ const styles = {
 };
 const Center = ({ children }) => <div style={styles}>{children}</div>;
 
-export const withCenter = storyFn => <Center>{storyFn()}</Center>
+export const withCenter = storyFn => <Center>{storyFn()}</Center>;
 
 export default Center;

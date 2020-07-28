@@ -4,7 +4,6 @@ import {
     CCardBody as CardBody,
     CRow as Row,
     CCol as Col,
-    CButton as Button
 } from '@coreui/react'
 
 interface Props {

@@ -1,7 +1,6 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0 */
 
-import React, { Component, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import NetworkPicker from '../../components/NetworkPicker'
 import vulcan from "../../assets/img/brand/vulcanwhite.png"
 import triangledown from "../../assets/img/triangledown.svg"
@@ -14,17 +13,9 @@ import {
     CContainer as Container
 } from '@coreui/react';
 
-const propTypes = {
-    children: PropTypes.node,
-};
-
-const defaultProps = {};
 
 class DefaultHeader extends Component {
     render() {
-        // eslint-disable-next-line
-        const { children, ...attributes } = this.props;
-
         return (
             <>
                 <div style={{ color: '#FFFFFF', backgroundColor: '#002C69' }} >
@@ -81,8 +72,5 @@ class DefaultHeader extends Component {
         );
     }
 }
-
-DefaultHeader.propTypes = propTypes;
-DefaultHeader.defaultProps = defaultProps;
 
 export default DefaultHeader;

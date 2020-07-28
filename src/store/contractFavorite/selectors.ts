@@ -2,21 +2,18 @@ import { createSelector } from 'redux-orm'
 import orm from '../orm'
 import { ContractFavorite } from './types'
 import { feedResolve } from '../feed/selectors'
+import { ContractFavoriteRef } from '../ref/types'
 
 const emptyArray: ContractFavorite[] = []
 
-type contractFavoritesSelectorType = ((state: any) => [ContractFavorite]) |
-    ((state: any, id: string) => ContractFavorite) |
-    ((state: any, ids: [string]) => [ContractFavorite])
-
-//@ts-ignore
-export const contractFavoritesSelector: contractFavoritesSelectorType = createSelector(orm.ContractFavorite)
 export const contractFavoritesByFilterSelector: (ormState: any, filter: any, state: any) => ContractFavorite[] = createSelector(
     orm,
-    (_session_, filter) => filter,
-    (_session_, filter, state) => state,
-    (session, filter, state) => {
-        const contracts = session.ContractFavorite.filter(filter).toModelArray().map((item: ContractFavorite) => {
+    //@ts-ignore
+    (_session_: any, filter: any) => filter,
+    (_session_: any, _filter_: any, state: any) => state,
+    (session: any, filter: any, state: any) => {
+        const contracts = session.ContractFavorite.filter(filter).toModelArray().map((item: ContractFavoriteRef) => {
+            //@ts-ignore
             const { ref } = item;
             return {
                 ...ref,
@@ -24,7 +21,7 @@ export const contractFavoritesByFilterSelector: (ormState: any, filter: any, sta
             };
         });
 
-        if (contracts.length == 0) return emptyArray;
+        if (contracts.length === 0) return emptyArray;
         return contracts;
     }
 );

@@ -12,6 +12,7 @@ function* pollCoinbaseOracle() {
     while (true) {
         try {
             // Fetching posts at regular interval 4 seconds.
+            //@ts-ignore
             const response = yield call(axios.get, process.env.REACT_APP_COINBASE_ORACLE_API);
             console.debug(response.data)
             yield put(createCoinbaseOracleResponse(response.data));
@@ -31,6 +32,7 @@ function* pollCoinbaseOracle() {
 export function* coinbaseRootSaga() {
     while (true) {
         yield take(START_POLL_COINBASE_ORACLE)
+        //@ts-ignore
         yield race([call(pollCoinbaseOracle), take(STOP_POLL_COINBASE_ORACLE)])
     }
 }
