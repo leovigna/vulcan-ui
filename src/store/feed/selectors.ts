@@ -48,7 +48,7 @@ export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => 
             return feedResolve(state, item)
         });
 
-        if (feeds.length == 0) return emptyArray;
+        if (feeds.length === 0) return emptyArray;
         return feeds;
     }
 );
@@ -87,6 +87,7 @@ const chainlinkFeedStateSelector: (state: any, feed: ChainlinkFeed) => Chainlink
                 const value = DrizzleSelectors.drizzleStateValueSelector(state, cache.contractId, 'getAnswer', cache.cacheKey)
                 return [cache.cacheArgs!, value]
             }
+            return null;
         }) as Iterable<[string, any]>)
     }
     if (feed.getTimestamp) {
@@ -95,6 +96,7 @@ const chainlinkFeedStateSelector: (state: any, feed: ChainlinkFeed) => Chainlink
                 const value = DrizzleSelectors.drizzleStateValueSelector(state, cache.contractId, 'getTimestamp', cache.cacheKey)
                 return [cache.cacheArgs!, value]
             }
+            return null;
         }) as Iterable<[string, any]>)
     }
 
@@ -129,6 +131,7 @@ const tellorFeedStateSelector: (state: any, feed: TellorFeed) => TellorFeedState
                 const value = DrizzleSelectors.drizzleStateValueSelector(state, feed.getNewValueCountbyRequestId.contractId, 'getTimestampbyRequestIDandIndex', cache.cacheKey)
                 return [cache.cacheArgs!, value]
             }
+            return null;
         }) as Iterable<[string, any]>)
     }
     if (feed.retrieveData) {

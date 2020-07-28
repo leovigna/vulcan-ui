@@ -99,7 +99,7 @@ const FeedCardDetailedTable = ({ feeds, setContractFavorite }: Props) => {
                                         style={{ color: '#828282', fontStyle: 'italic' }}
                                         href={`https://etherscan.com/address/${address}`}
                                         target="_blank"
-                                        rel="noreferrer"
+                                        rel="noopener noreferrer"
                                     >
                                         {address}
                                     </a>

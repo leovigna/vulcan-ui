@@ -1,4 +1,4 @@
-import { RefreshMKRDaoFeedAction, REFRESH_MKRDAO_FEED, REFRESH_FEED, RefreshChainlinkFeedAction, RefreshFeedAction, REFRESH_CHAINLINK_FEED, REFRESH_FEED_LIST, RefreshFeedListAction, UPDATE_FEED, RefreshTellorFeedAction, REFRESH_TELLOR_FEED, SET_FEED_CACHE_KEY } from "./types"
+import { RefreshMKRDaoFeedAction, REFRESH_MKRDAO_FEED, REFRESH_FEED, RefreshChainlinkFeedAction, RefreshFeedAction, REFRESH_CHAINLINK_FEED, REFRESH_FEED_LIST, RefreshFeedListAction, UPDATE_FEED, RefreshTellorFeedAction, REFRESH_TELLOR_FEED } from "./types"
 import { put, takeEvery, all, spawn } from "redux-saga/effects"
 import { fetchEvent } from "../event/actions"
 import { fetchBlock } from "../block/actions"

@@ -7,7 +7,7 @@ import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
 import { MKRDaoFeed, RefreshFeedActionInput, RefreshFeedAction } from '../../store/feed/types'
 import { renderAnswer } from '../../store/feed/actions'
-import { withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext, withFeedHistoryCache, withRefreshFeed, withNetworkId, withCurrentBlock } from '../../hoc'
+import { withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext, withRefreshFeed, withNetworkId, withCurrentBlock } from '../../hoc'
 import { Block } from '../../store/block/types';
 import { SetContractFavoriteActionInput, SetContractFavoriteAction } from '../../store/contractFavorite/types';
 

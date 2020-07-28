@@ -57,8 +57,6 @@ export const withStartPollingCoinbase = connect(null, (dispatch) => {
 export const withRefreshFeedList = connect(null, (dispatch) => { return { refreshFeedList: (payload: RefreshFeedListActionInput) => dispatch(refreshFeedList(payload)) } })
 export const withRefreshFeed = connect(null, (dispatch) => { return { refreshFeed: (payload: RefreshFeedActionInput) => dispatch(refreshFeed(payload)) } })
 
-
-
 export const withReduxStoreProvider = (store: any) => (Component: any) => (props: any) => {
     return (
         <Provider store={store}>
@@ -82,30 +80,6 @@ export const withDrizzleContextProvider = (drizzle: any) => (Component: any) => 
         <DrizzleContext.Provider drizzle={drizzle}>
             <Component {...props} />
         </DrizzleContext.Provider>)
-}
-
-export const withUpdatedFeedList = (Component: any) => (props: any) => {
-    useFeedsCache(props.drizzleContext, props.feeds, props.setCacheKey)
-    return (<Component {...props} />)
-}
-export const withUpdatedFeed = (Component: any) => (props: any) => {
-    const { drizzle, initialized } = props.drizzleContext;
-    useEffect(() => {
-        if (initialized && !!props.feed) {
-            props.refreshFeed()(drizzle, props.feed, props.setCacheKey)
-        }
-    }, [props.feed, initialized])
-    return (<Component {...props} />)
-}
-
-export const withFeedHistoryCache = (Component: any) => (props: any) => {
-    const { drizzle, drizzleState, initialized } = props.drizzleContext;
-    useEffect(() => {
-        if (initialized && !!props.feed) {
-            setFeedStateFullCache(drizzle, props.feed, props.setCacheKey, drizzleState)
-        }
-    }, [props.feed, initialized])
-    return (<Component {...props} />)
 }
 
 //@ts-ignore

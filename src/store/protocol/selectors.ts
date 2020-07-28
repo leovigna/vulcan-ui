@@ -41,7 +41,7 @@ export const protocolsByFilterSelector: (ormState: any, filter: any, state: any)
             return protocolResolve(state, item)
         });
 
-        if (contracts.length == 0) return emptyArray;
+        if (contracts.length === 0) return emptyArray;
         return contracts;
     }
 );

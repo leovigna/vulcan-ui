@@ -25,7 +25,7 @@ export const eventByContractTypeIndexSelector: (state: any, id: string) => Event
             };
         });
 
-        if (indexes.length == 0) return emptyArray;
+        if (indexes.length === 0) return emptyArray;
         return indexes;
     }
 );
@@ -67,7 +67,7 @@ export const eventsSelector: (state: any) => Event[] = createSelector(
             };
         });
 
-        if (events.length == 0) return emptyArray2;
+        if (events.length === 0) return emptyArray2;
         return events;
     }
 );
