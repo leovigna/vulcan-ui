@@ -1,21 +1,27 @@
-import { RefreshMKRDaoFeedAction, REFRESH_MKRDAO_FEED, REFRESH_FEED, RefreshChainlinkFeedAction, RefreshFeedAction, REFRESH_CHAINLINK_FEED, REFRESH_FEED_LIST, RefreshFeedListAction, UPDATE_FEED, RefreshTellorFeedAction, REFRESH_TELLOR_FEED } from "./types"
+import { RefreshMKRDaoFeedAction, REFRESH_MKRDAO_FEED, REFRESH_FEED, RefreshChainlinkFeedAction, RefreshFeedAction, REFRESH_CHAINLINK_FEED, REFRESH_FEED_LIST, RefreshFeedListAction, UPDATE_FEED, RefreshTellorFeedAction, REFRESH_TELLOR_FEED, SET_FEED_CACHE_KEY } from "./types"
 import { put, takeEvery, all, spawn } from "redux-saga/effects"
 import { fetchEvent } from "../event/actions"
 import { fetchBlock } from "../block/actions"
+import { setFeedCacheKey } from "./actions"
 
 function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
-    const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
-    if (action.payload.feed.refreshed) return;
+    const { drizzle, feed } = action.payload
 
-    if (action.payload.feed.state?.latestRound) {
-        yield put({
-            type: UPDATE_FEED,
-            payload: {
-                id: action.payload.feed.id,
-                refreshed: true
+    if (action.payload.refreshHistory && feed.state?.latestRound) {
+        const latestRound = Number(feed.state.latestRound)
+        const contract = drizzle.contracts[feed.latestRound.contractId]
+        for (let i = latestRound; i > Math.max(latestRound - 50, 0); i--) {
+            if (!feed.getAnswer[i]) {
+                const cacheKeyAnswer = contract.methods.getAnswer.cacheCall(i)
+                yield put(setFeedCacheKey({ id: feed.id, cacheName: 'getAnswer', cacheArgs: i, contractId: feed.latestRound.contractId, cacheKey: cacheKeyAnswer }))
             }
-        })
+            if (!feed.getTimestamp[i]) {
+                const cacheKeyTimestamp = contract.methods.getTimestamp.cacheCall(i)
+                yield put(setFeedCacheKey({ id: feed.id, cacheName: 'getTimestamp', cacheArgs: i, contractId: feed.latestRound.contractId, cacheKey: cacheKeyTimestamp }))
+            }
+        }
 
+        const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
         yield spawn(yield put, fetchEvent({
             event: 'ResponseReceived',
             options: {
@@ -27,10 +33,60 @@ function* refreshChainlinkFeed(action: RefreshChainlinkFeedAction) {
             fetchTransaction: true, fetchBlock: true
         }))
     }
+
+    if (action.payload.feed.refreshed) return;
+
+    if (action.payload.feed.state?.latestRound) {
+        yield put({
+            type: UPDATE_FEED,
+            payload: {
+                id: action.payload.feed.id,
+                refreshed: true
+            }
+        })
+    }
+
+    if (!feed.latestAnswer?.cacheKey) {
+        const contract = drizzle.contracts[feed.latestAnswer.contractId]
+        const cacheKey = contract.methods.latestAnswer.cacheCall()
+        yield put(setFeedCacheKey({ id: feed.id, cacheName: 'latestAnswer', contractId: feed.latestAnswer.contractId, cacheKey }))
+    }
+    if (!feed.latestRound?.cacheKey) {
+        const contract = drizzle.contracts[feed.latestRound.contractId]
+        const cacheKey = contract.methods.latestRound.cacheCall()
+        yield put(setFeedCacheKey({ id: feed.id, cacheName: 'latestRound', contractId: feed.latestRound.contractId, cacheKey }))
+    }
+    if (!feed.latestTimestamp?.cacheKey) {
+        const contract = drizzle.contracts[feed.latestTimestamp.contractId]
+        const cacheKey = contract.methods.latestTimestamp.cacheCall()
+        yield put(setFeedCacheKey({ id: feed.id, cacheName: 'latestTimestamp', contractId: feed.latestTimestamp.contractId, cacheKey }))
+    }
 }
 
 function* refreshTellorFeed(action: RefreshTellorFeedAction) {
-    //const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
+    const { drizzle, feed } = action.payload
+    if (action.payload.refreshHistory) {
+        const valueCount = feed.state?.getNewValueCountbyRequestId
+        const timestamps = feed.state?.getTimestampbyRequestIDandIndex || {}
+        const contract = drizzle.contracts[feed.getNewValueCountbyRequestId.contractId]
+        if (valueCount) {
+            for (let i = Number(valueCount - 1); i > Math.max(valueCount - 50, 0); i--) {
+                if (!feed.getTimestampbyRequestIDandIndex[i]) {
+                    const cacheKey = contract.methods.getTimestampbyRequestIDandIndex.cacheCall(feed.tellorId, i)
+                    yield put(setFeedCacheKey({ id: feed.id, cacheName: 'getTimestampbyRequestIDandIndex', cacheArgs: i, contractId: feed.getNewValueCountbyRequestId.contractId, cacheKey }))
+                }
+            }
+
+            yield all(Object.values(timestamps).map((t) => {
+                if (!!t && !feed.retrieveData[t]) {
+                    const cacheKey = contract.methods.retrieveData.cacheCall(feed.tellorId, t)
+                    return put(setFeedCacheKey({ id: feed.id, cacheName: 'retrieveData', cacheArgs: t, contractId: feed.getNewValueCountbyRequestId.contractId, cacheKey }))
+                }
+            }))
+        }
+
+
+    }
 
     if (action.payload.feed.refreshed) return;
     yield put({
@@ -41,33 +97,27 @@ function* refreshTellorFeed(action: RefreshTellorFeedAction) {
         }
     })
 
-    /*
-    yield spawn(yield put, fetchEvent({
-        event: 'NewValue',
-        options: {
-            fromBlock: 0,
-            toBlock: 'latest',
-            filter: { _requestId: action.payload.feed.tellorId }
-        },
-        max: 25, web3Contract,
-        fetchTransaction: false, fetchBlock: false
-    }))
-    */
-
+    if (!feed.getCurrentValue?.cacheKey) {
+        const contract = drizzle.contracts[feed.getCurrentValue.contractId]
+        const cacheKey = contract.methods.getCurrentValue.cacheCall(feed.tellorId)
+        yield put(setFeedCacheKey({ id: feed.id, cacheName: 'getCurrentValue', contractId: feed.getCurrentValue.contractId, cacheKey }))
+    }
+    if (!feed.getNewValueCountbyRequestId?.cacheKey) {
+        const contract = drizzle.contracts[feed.getNewValueCountbyRequestId.contractId]
+        const cacheKey = contract.methods.getNewValueCountbyRequestId.cacheCall(feed.tellorId)
+        yield put(setFeedCacheKey({ id: feed.id, cacheName: 'getNewValueCountbyRequestId', contractId: feed.getNewValueCountbyRequestId.contractId, cacheKey }))
+    }
 }
 
 function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
+    const { drizzle, feed } = action.payload
+
     const web3Contract = action.payload.drizzle.contracts[action.payload.feed.address]
     const currentBlock = action.payload.currentBlock
     if (action.payload.feed.refreshed) return;
-    /*
-    if (action.payload.feed.state?.latestLogValue) {
-        // console.debug(action.payload.feed.state?.latestLogValue)
-        yield put(fetchBlock({ number: action.payload.feed.state?.latestLogValue.blockNumber, networkId: action.payload.feed.networkId }))
-    }
-    return
-    */
 
+    console.debug("MKRDAO")
+    console.debug(currentBlock)
 
     if (!currentBlock.number) {
         yield put(fetchBlock({ hash: 'latest', networkId: action.payload.feed.networkId }))
@@ -80,7 +130,14 @@ function* refreshMKRDaoFeed(action: RefreshMKRDaoFeedAction) {
             }
         })
 
+        if (!feed.read?.cacheKey) {
+            const contract = drizzle.contracts[feed.read.contractId]
+            const cacheKey = contract.methods.read.cacheCall()
+            yield put(setFeedCacheKey({ id: feed.id, cacheName: 'read', contractId: feed.read.contractId, cacheKey }))
+        }
+
         //6*60*48
+
         const lastBlocks = 6 * 60 * 12 //Last 12 hours
         yield spawn(yield put, fetchEvent({
             event: 'LogValue',

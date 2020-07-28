@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { compose, flattenProp, withProps } from 'recompose'
 import { connect } from 'react-redux'
 import moment from 'moment';
@@ -6,29 +6,53 @@ import moment from 'moment';
 
 import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
-import { ChainlinkFeed, ChainlinkAnswer } from '../../store/feed/types'
+import { ChainlinkFeed, ChainlinkAnswer, RefreshFeedActionInput, RefreshFeedAction } from '../../store/feed/types'
 import { renderAnswer } from '../../store/feed/actions'
-import { withFeed, withDrizzleContext, withFeedCache, withSetContractFavorite, withSetCacheKey, withFeedHistoryCache } from '../../hoc'
+import { withFeed, withDrizzleContext, withSetContractFavorite, withSetCacheKey, withRefreshFeed, withNetworkId, withCurrentBlock } from '../../hoc'
+import { Block } from '../../store/block/types';
+import { SetContractFavoriteActionInput, SetContractFavoriteAction } from '../../store/contractFavorite/types';
 
 interface Props {
-    protocol: string,
     feed: ChainlinkFeed
+    currentBlock: Block;
+    setContractFavorite: (payload: SetContractFavoriteActionInput) => SetContractFavoriteAction;
+    refreshFeed: (payload: RefreshFeedActionInput) => RefreshFeedAction,
+    drizzleContext: any
 }
 
 const ChainlinkFeedView = ({
-    feed
+    feed,
+    currentBlock,
+    drizzleContext,
+    refreshFeed
 }: Props) => {
     const {
         answerRenderOptions,
         address,
         title
     } = feed || {}
+    const { drizzle } = drizzleContext;
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            refreshFeed({
+                feed,
+                drizzle,
+                currentBlock,
+                refreshHistory: true
+            })
+        }, 100);
+        return () => clearTimeout(timer);
+    })
+
     const latestAnswerValue = feed?.state?.value
     const latestTimestampValue = feed?.state?.timestamp
     const latestRoundValue = feed?.state?.latestRound
 
     const loading = !latestAnswerValue || !latestTimestampValue || !latestRoundValue
     if (loading) return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+
+
+
 
     let latestAnswerFormatted;
     if (!!latestAnswerValue && !!answerRenderOptions) latestAnswerFormatted = renderAnswer(answerRenderOptions, latestAnswerValue);
@@ -86,13 +110,14 @@ ChainlinkFeedView.defaultProps = {
 export default compose(
     withSetContractFavorite,
     withSetCacheKey,
+    withRefreshFeed,
+    withNetworkId,
+    withCurrentBlock,
     flattenProp('match'),
     flattenProp('params'),
     withProps({ protocol: 'chainlink' }),
     connect(mapStateToProps),
     withFeed,
     withDrizzleContext,
-    withFeedCache,
-    withFeedHistoryCache,
     //@ts-ignore
 )(ChainlinkFeedView);

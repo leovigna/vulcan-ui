@@ -1,5 +1,5 @@
 import { compose, flattenProp } from 'recompose'
-import { withFeedsCache, withNetworkId, withProtocol, withDrizzleContext, withSetContractFavorite, withSetCacheKey } from '../../hoc'
+import { withNetworkId, withProtocol, withDrizzleContext, withSetContractFavorite, withSetCacheKey } from '../../hoc'
 import ProtocolView from './ProtocolView'
 
 
@@ -12,6 +12,5 @@ export default compose(
     withProtocol,
     flattenProp('protocol'),
     withDrizzleContext,
-    withFeedsCache
     //@ts-ignore
 )(ProtocolView);

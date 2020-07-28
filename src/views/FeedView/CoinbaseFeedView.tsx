@@ -7,7 +7,7 @@ import FeedView from './FeedView'
 import { FeedSelectors } from '../../store/selectors'
 import { CoinbaseFeed } from '../../store/feed/types'
 import { renderAnswer } from '../../store/feed/actions'
-import { withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext, withFeedCache, withFeedHistoryCache } from '../../hoc'
+import { withSetContractFavorite, withSetCacheKey, withFeed, withDrizzleContext, withFeedHistoryCache } from '../../hoc'
 
 interface Props {
     setCacheKey: any,
@@ -77,7 +77,6 @@ export default compose(
     connect(mapStateToProps),
     withFeed,
     withDrizzleContext,
-    withFeedCache,
     withFeedHistoryCache
     //@ts-ignore
 )(CoinbaseFeedView);

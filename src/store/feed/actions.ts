@@ -4,13 +4,33 @@ import {
     SetFeedCacheKeyAction,
     SetFeedCacheKeyActionInput,
     SET_FEED_CACHE_KEY,
-    AnswerRenderOptions
+    AnswerRenderOptions,
+    RefreshFeedAction,
+    RefreshFeedActionInput,
+    REFRESH_FEED,
+    REFRESH_FEED_LIST,
+    RefreshFeedListAction,
+    RefreshFeedListActionInput
 } from './types'
 
-export function setFeedCacheKey(data: SetFeedCacheKeyActionInput): SetFeedCacheKeyAction {
+export function refreshFeed(payload: RefreshFeedActionInput): RefreshFeedAction {
+    return {
+        type: REFRESH_FEED,
+        payload
+    }
+}
+
+export function refreshFeedList(payload: RefreshFeedListActionInput): RefreshFeedListAction {
+    return {
+        type: REFRESH_FEED_LIST,
+        payload
+    }
+}
+
+export function setFeedCacheKey(payload: SetFeedCacheKeyActionInput): SetFeedCacheKeyAction {
     return {
         type: SET_FEED_CACHE_KEY,
-        payload: data
+        payload
     }
 }
 

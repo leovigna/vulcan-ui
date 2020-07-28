@@ -5,10 +5,11 @@ import { renderAnswer } from '../../store/feed/actions';
 import moment from 'moment';
 import HeartFilled from '../../assets/img/icons/heart_filled.svg';
 import HeartEmpty from '../../assets/img/icons/heart_empty.svg';
+import { SetContractFavoriteActionInput, SetContractFavoriteAction } from '../../store/contractFavorite/types';
 
 interface Props {
     feeds: FeedTypes.Feed[];
-    setContractFavorite: any;
+    setContractFavorite: (payload: SetContractFavoriteActionInput) => SetContractFavoriteAction;
 }
 
 const FeedCardDetailedTable = ({ feeds, setContractFavorite }: Props) => {
@@ -104,10 +105,10 @@ const FeedCardDetailedTable = ({ feeds, setContractFavorite }: Props) => {
                                     </a>
                                 </td>
                                 <td className="px-1 py-3" style={{ fontSize: 15, fontWeight: 300, color: '#000000' }}>
-                                    {valueRender}
+                                    {valueRender || 'loading...'}
                                 </td>
                                 <td className="px-1 py-3" style={{ fontSize: 15, fontWeight: 300, color: '#000000' }}>
-                                    {timestampRender}
+                                    {timestampRender || 'loading...'}
                                 </td>
                                 <td className="px-1 py-3">
                                     <Button

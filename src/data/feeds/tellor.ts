@@ -546,7 +546,7 @@ const contracts: TellorFeed[] = [
                 multiply: 1e-6,
                 decimals: 8,
             },
-            format: '$ %(value)s',
+            format: '₿ %(value)s',
         },
         getCurrentValue: { contractId: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58' },
         getNewValueCountbyRequestId: { contractId: '0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5' },
@@ -1129,7 +1129,7 @@ const contracts: TellorFeed[] = [
         favoriteId: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-50',
     },
     {
-        id: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-50',
+        id: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-51',
         networkId: '1',
         protocol: 'tellor',
         address: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58',

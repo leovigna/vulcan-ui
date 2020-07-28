@@ -10,10 +10,11 @@ import FeedCardDetailed from './FeedCardDetailed'
 import { FeedTypes } from '../../store/types'
 import { renderAnswer } from '../../store/feed/actions';
 import moment from 'moment';
+import { SetContractFavoriteActionInput, SetContractFavoriteAction } from '../../store/contractFavorite/types';
 
 interface Props {
     feeds: FeedTypes.Feed[],
-    setContractFavorite: any
+    setContractFavorite: (payload: SetContractFavoriteActionInput) => SetContractFavoriteAction;
 }
 
 const FeedCardDetailedGrid = ({ feeds, setContractFavorite }: Props) => {

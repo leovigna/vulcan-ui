@@ -75,7 +75,7 @@ const FeedView = ({ title, address, answer, responses, chartData, minResponses, 
                             </Row>
                         </Container >
                     </div>
-                    : <div style={{ backgroundColor: '#F2F2F2', paddingTop: 50, paddingBottom: 100, marginRight: -15, marginLeft: -15 }} />
+                    : <div style={{ backgroundColor: '#F2F2F2', marginBottom: -200, paddingTop: 50, paddingBottom: 100, marginRight: -15, marginLeft: -15 }} />
             }
         </>
     )

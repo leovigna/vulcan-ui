@@ -46,7 +46,7 @@ const FeedCardDetailed = ({ handleClickViewButton, protocolImg, feedName, hearte
             </Row>
             <Row>
                 <Col sm="12">
-                    <p style={{ fontSize: 23, fontStyle: 'italic', fontWeight: 'bold', color: '#4F4F4F', textAlign: 'center' }}>{value}</p>
+                    <p style={{ fontSize: 23, fontStyle: 'italic', fontWeight: 'bold', color: '#4F4F4F', textAlign: 'center' }}>{value || "loading..."}</p>
                 </Col>
                 <Col sm="12">
                     <p style={{ color: '#002C69', fontSize: 16, textAlign: 'center' }}>{lastUpdate}</p>

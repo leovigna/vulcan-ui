@@ -3,7 +3,7 @@ import web3 from './web3global'
 import TellorGetters from './contracts/TellorGetters.json'
 import UserContract from './contracts/UserContract.json'
 import MKRDaoDSValue from './contracts/MKRDaoDSValue.json'
-import contracts, { testContracts } from './data/feeds'
+import { getFeeds } from './data/feeds'
 import { Feed } from './store/feed/types'
 
 const feedToWeb3Contract = (feed: Feed) => {
@@ -27,9 +27,8 @@ const feedToWeb3Contract = (feed: Feed) => {
     }
 }
 
+const contracts = getFeeds()
 const web3Contracts = contracts.map(feedToWeb3Contract).filter((i) => !!i)
-const testWeb3Contracts = testContracts.map(feedToWeb3Contract).filter((i) => !!i)
-
 const tellorContracts = [
     {
         contractName: '0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5',
@@ -44,10 +43,8 @@ const tellorContracts = [
 
 //@ts-ignore
 web3Contracts.push(...tellorContracts)
-//@ts-ignore
-testWeb3Contracts.push(...tellorContracts)
 
-const drizzleContracts = process.env.NODE_ENV === 'development' ? testWeb3Contracts : web3Contracts
+const drizzleContracts = web3Contracts
 const options = {
     web3: {
         block: false,

@@ -1,5 +1,5 @@
 import orm from './index';
-import contracts, { testContracts } from '../../data/feeds'
+import { getFeeds } from '../../data/feeds'
 import favorites from '../../data/favorites'
 import protocols from '../../data/protocols'
 import { feedReducer } from '../feed/reducers';
@@ -28,11 +28,9 @@ export const initializeState = (orm: any) => {
     favorites.forEach((favorite: ContractFavorite) => ContractFavorite.create(favorite))
     protocols.forEach((protocol: any) => Protocol.create(protocol))
 
-    if (process.env.NODE_ENV === 'development') {
-        testContracts.forEach((feed: Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
-    } else {
-        contracts.forEach((feed: Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
-    }
+    const contracts = getFeeds()
+    contracts.forEach((feed: Feed) => Feed.create({ ...feed, favoriteId: feed.id }))
+
 
     return state;
 };

@@ -167,7 +167,7 @@ export type SetFeedCacheKeyActionInput = {
     contractId: string;
     cacheName: string;
     cacheKey: string;
-    cacheArgs?: string;
+    cacheArgs?: string | number;
 };
 
 export type SetFeedCacheKeyAction = {
@@ -181,6 +181,7 @@ export interface RefreshChainlinkFeedActionInput {
     feed: ChainlinkFeed;
     currentBlock: Block;
     drizzle: any;
+    refreshHistory?: boolean
 }
 export interface RefreshChainlinkFeedAction {
     type: typeof REFRESH_CHAINLINK_FEED;
@@ -192,6 +193,7 @@ export interface RefreshMKRDaoFeedActionInput {
     feed: MKRDaoFeed;
     currentBlock: Block;
     drizzle: any;
+    refreshHistory?: boolean
 }
 export interface RefreshMKRDaoFeedAction {
     type: typeof REFRESH_MKRDAO_FEED;
@@ -203,6 +205,7 @@ export interface RefreshTellorFeedActionInput {
     feed: TellorFeed;
     currentBlock: Block;
     drizzle: any;
+    refreshHistory?: boolean
 }
 export interface RefreshTellorFeedAction {
     type: typeof REFRESH_TELLOR_FEED;
@@ -210,9 +213,10 @@ export interface RefreshTellorFeedAction {
 }
 
 export const REFRESH_FEED = 'ORM/FEED/REFRESH';
+export type RefreshFeedActionInput = RefreshMKRDaoFeedActionInput | RefreshChainlinkFeedActionInput | RefreshTellorFeedActionInput;
 export type RefreshFeedAction = {
     type: typeof REFRESH_FEED;
-    payload: RefreshMKRDaoFeedActionInput | RefreshChainlinkFeedActionInput | RefreshTellorFeedActionInput;
+    payload: RefreshFeedActionInput
 };
 
 export const UPDATE_FEED = 'ORM/FEED/UPDATE';
