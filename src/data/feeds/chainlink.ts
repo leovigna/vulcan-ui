@@ -26,7 +26,8 @@ export const testcontracts: ChainlinkFeed[] = [
             contractId: "0xF5fff180082d6017036B771bA883025c654BC935"
         },
         getAnswer: {},
-        getTimestamp: {}
+        getTimestamp: {},
+        rank: 0
     },
 ]
 
@@ -55,7 +56,7 @@ const contracts: ChainlinkFeed[] = [
             "contractId": "0x0133Aa47B6197D0BA090Bf2CD96626Eb71fFd13c"
         },
         "getAnswer": {},
-        "getTimestamp": {}
+        "getTimestamp": {},
     },
     {
         "id": "0x02D5c618DBC591544b19d0bf13543c0728A3c4Ec-1",
@@ -653,7 +654,8 @@ const contracts: ChainlinkFeed[] = [
             "contractId": "0x46FdE690205e09d3c10015A1Ef0281dD699423d0"
         },
         "getAnswer": {},
-        "getTimestamp": {}
+        "getTimestamp": {},
+        rank: 17
     },
     {
         "id": "0x54c01Fe3eb5F1Ac6fab776766FF925ADd6608809-1",
@@ -757,7 +759,8 @@ const contracts: ChainlinkFeed[] = [
             "contractId": "0x613a38AC1659769640aaE063C651F48E0250454C"
         },
         "getAnswer": {},
-        "getTimestamp": {}
+        "getTimestamp": {},
+        rank: 21
     },
     {
         "id": "0x628Ac7C9742a52931486b9af6e54db4511FeFE42-1",
@@ -1225,7 +1228,8 @@ const contracts: ChainlinkFeed[] = [
             "contractId": "0xA45Cb1BBb00cd9c28435c58df11c6A3f08f36302"
         },
         "getAnswer": {},
-        "getTimestamp": {}
+        "getTimestamp": {},
+        rank: 5
     },
     {
         "id": "0xB51DD92a2eE1cE46dF8e7661737a5Cdd47Fb9F24-1",
@@ -1511,7 +1515,8 @@ const contracts: ChainlinkFeed[] = [
             "contractId": "0xF79D6aFBb6dA890132F9D7c355e3015f15F3406F"
         },
         "getAnswer": {},
-        "getTimestamp": {}
+        "getTimestamp": {},
+        rank: 1
     },
     {
         "id": "0xF9F430025A70Da7ED2614F30aF33b942211EA40c-1",

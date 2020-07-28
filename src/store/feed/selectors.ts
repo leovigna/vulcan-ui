@@ -44,9 +44,11 @@ export const feedsByFilterSelector: (ormState: any, filter: any, state: any) => 
     (_session_: any, filter: any) => filter,
     (_session_: any, _filter_: any, state: any) => state,
     (session: any, filter: any, state: any) => {
-        const feeds = session.Feed.filter(filter).toModelArray().map((item: FeedRef) => {
+        const feeds: Feed[] = session.Feed.filter(filter).toModelArray().map((item: FeedRef) => {
             return feedResolve(state, item)
         });
+        feeds.sort((a: Feed, b: Feed) => { return (a.rank || 1000) - (b.rank || 1000) })
+
 
         if (feeds.length === 0) return emptyArray;
         return feeds;

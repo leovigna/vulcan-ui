@@ -63,6 +63,7 @@ const FeedCardDetailedTable = ({ feeds, setContractFavorite }: Props) => {
                     ({
                         id,
                         name,
+                        title,
                         protocol,
                         protocolInfo,
                         address,
@@ -92,7 +93,7 @@ const FeedCardDetailedTable = ({ feeds, setContractFavorite }: Props) => {
                                     </a>
                                 </td>
                                 <td className="px-1 py-3">
-                                    <a href={url}>{name}</a>
+                                    <a href={url}>{title}</a>
                                 </td>
                                 <td className="px-1 py-3" style={{ fontSize: 15, fontWeight: 300, color: '#000000' }}>
                                     <a

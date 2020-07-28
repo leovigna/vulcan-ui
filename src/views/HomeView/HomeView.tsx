@@ -25,6 +25,7 @@ const HomeView = ({ feeds, favoriteFeeds, protocols, currentBlock, setContractFa
     const [minimizeFavoriteFeeds, setMinimizeFavoriteFeeds] = useState(true);
     const toggleMinimizeFavoriteFeeds = () => setMinimizeFavoriteFeeds(!minimizeFavoriteFeeds);
 
+
     const { drizzle, initialized } = drizzleContext;
     useEffect(() => {
         const timer = setTimeout(() => {

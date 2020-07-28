@@ -22,6 +22,7 @@ export const testcontracts: TellorFeed[] = [
         retrieveData: {},
         refreshed: false,
         favoriteId: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-1',
+        rank: 1
     },
 ];
 
@@ -47,6 +48,7 @@ const contracts: TellorFeed[] = [
         retrieveData: {},
         refreshed: false,
         favoriteId: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-1',
+        rank: 2
     },
     {
         id: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-2',
@@ -69,6 +71,7 @@ const contracts: TellorFeed[] = [
         retrieveData: {},
         refreshed: false,
         favoriteId: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-2',
+        rank: 6
     },
     {
         id: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-3',
@@ -620,6 +623,7 @@ const contracts: TellorFeed[] = [
         retrieveData: {},
         refreshed: false,
         favoriteId: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-27',
+        rank: 22
     },
     {
         id: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-28',
@@ -730,6 +734,7 @@ const contracts: TellorFeed[] = [
         retrieveData: {},
         refreshed: false,
         favoriteId: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-32',
+        rank: 10
     },
     {
         id: '0xCaC3937932621F62D94aCdE77bBB2a091FD26f58-1-33',

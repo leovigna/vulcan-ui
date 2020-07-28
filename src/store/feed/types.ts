@@ -33,6 +33,7 @@ export interface FeedBase {
     favorite?: ContractFavorite;
     protocolInfo?: Protocol;
     state?: FeedState;
+    rank?: number
 }
 export interface ChainlinkFeed extends FeedBase {
     latestAnswer: DrizzleCacheKey;

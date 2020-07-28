@@ -39,6 +39,7 @@ const contracts: CoinbaseFeed[] = [
         },
         symbol: 'BTC',
         index: 0,
+        rank: 7
     },
     {
         id: '0xfCEAdAFab14d46e20144F48824d0C09B1a03F2BC-eth',
@@ -56,6 +57,7 @@ const contracts: CoinbaseFeed[] = [
         },
         symbol: 'ETH',
         index: 1,
+        rank: 3
     },
     {
         id: '0xfCEAdAFab14d46e20144F48824d0C09B1a03F2BC-xtz',
@@ -124,6 +126,7 @@ const contracts: CoinbaseFeed[] = [
         },
         symbol: 'ZRX',
         index: 5,
+        rank: 19
     },
     {
         id: '0xfCEAdAFab14d46e20144F48824d0C09B1a03F2BC-bat',
@@ -141,6 +144,7 @@ const contracts: CoinbaseFeed[] = [
         },
         symbol: 'BAT',
         index: 6,
+        rank: 11
     },
     {
         id: '0xfCEAdAFab14d46e20144F48824d0C09B1a03F2BC-knc',
@@ -158,6 +162,7 @@ const contracts: CoinbaseFeed[] = [
         },
         symbol: 'KNC',
         index: 7,
+        rank: 15
     },
     {
         id: '0xfCEAdAFab14d46e20144F48824d0C09B1a03F2BC-link',
@@ -175,6 +180,7 @@ const contracts: CoinbaseFeed[] = [
         },
         symbol: 'LINK',
         index: 8,
+        rank: 23
     },
     {
         id: '0xfCEAdAFab14d46e20144F48824d0C09B1a03F2BC-comp',
